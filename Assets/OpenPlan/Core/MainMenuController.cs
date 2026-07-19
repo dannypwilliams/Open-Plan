@@ -9,7 +9,7 @@ namespace OpenPlan
         private void Start()
         {
             Time.timeScale = 1f;
-            if (AutomatedCaptureDirector.Requested || AutomatedPerformanceDirector.Requested)
+            if (AutomatedCaptureDirector.Requested || AutomatedPerformanceDirector.Requested || StandaloneInputSmokeDirector.Requested)
             {
                 OfficeStageSelection.SelectForNextLoad(OfficeStageSelection.Resolve(System.Environment.GetCommandLineArgs()));
                 SceneManager.LoadScene("Office");
@@ -40,7 +40,7 @@ namespace OpenPlan
             Button quit = OfficeUIFactory.Button(card, "Quit", "QUIT", OfficeUIFactory.Burgundy, Color.white,
                 new Vector2(.40f,.10f), new Vector2(.60f,.17f), Vector2.zero, Vector2.zero);
             quit.onClick.AddListener(Application.Quit);
-            OfficeUIFactory.Text(card, "Controls", "WHEEL zoom  •  MIDDLE DRAG pan  •  CLICK select  •  F follow  •  H hire  •  TAB overlay  •  SPACE pause  •  1/2/3 speed", 18f,
+            OfficeUIFactory.Text(card, "Controls", "CLICK select  •  HOLD + DRAG place  •  ESC / RIGHT CLICK cancel  •  WHEEL zoom  •  MIDDLE DRAG pan  •  F follow", 18f,
                 new Color(.73f,.66f,.56f), new Vector2(.06f,.01f), new Vector2(.94f,.08f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
             if (AutomatedVideoDirector.Requested)
                 gameObject.AddComponent<AutomatedVideoMenuDriver>();

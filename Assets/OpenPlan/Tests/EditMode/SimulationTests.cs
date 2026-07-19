@@ -146,6 +146,21 @@ namespace OpenPlan.Tests
             Object.DestroyImmediate(zoneObject);
         }
 
+        [Test] public void CarryGesture_UsesStrictPixelOrHoldThreshold()
+        {
+            Vector2 press = new Vector2(100f, 100f);
+            Assert.False(WorkerCarryController.ShouldBeginCarry(press, press + new Vector2(6f, 0f), .119f));
+            Assert.True(WorkerCarryController.ShouldBeginCarry(press, press + new Vector2(6.01f, 0f), .01f));
+            Assert.True(WorkerCarryController.ShouldBeginCarry(press, press, .12f));
+        }
+
+        [Test] public void CarryGesture_EscapeAndRightMouseAreBothCancellationInputs()
+        {
+            Assert.True(WorkerCarryController.ShouldCancel(true, false));
+            Assert.True(WorkerCarryController.ShouldCancel(false, true));
+            Assert.False(WorkerCarryController.ShouldCancel(false, false));
+        }
+
         [Test] public void StarterArtManifest_ContainsValidatedGeneratedAssets()
         {
             string root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));

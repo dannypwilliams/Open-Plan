@@ -47,3 +47,15 @@ Every placement zone now owns a stable identifier, use point, trigger footprint,
 ## D012 - Incremental Blender generation preserves established art
 
 The Blender generator accepts repeatable `--only` filters and merges those outputs into the existing manifest. Checkpoint 2 adds seven purpose-built assets without rewriting the 47 established-office assets; every new asset retains the same `.blend` to exported FBX to Unity FBX catalog contract.
+
+## D013 - Carry owns the complete left-button gesture
+
+`WorkerCarryController` is the sole owner of worker pointer-down, threshold detection, carry, drop, and simple-click delegation. The camera retains zoom, follow, double-click focus, middle-button pan, and legacy desk reassignment, but suppresses world input while the carry controller owns a gesture. This removes update-order races between selection and dragging.
+
+## D014 - Placement commands are transactional
+
+Workers snapshot their pre-carry position, rotation, autonomous state, target, timers, movement, and social partner. Zone capacity is reserved only through `OfficeDirector.TryIssueWorkerCommand` after the lowering animation. Rejection or interruption restores the snapshot and changes no needs, cooldowns, money, or occupancy.
+
+## D015 - Runtime feedback uses authored geometry
+
+Placement footprints derive directly from each zone's tested collider bounds. During carry, all enabled destinations render green, disabled or full destinations render red, the nearest footprint intensifies, and a cursor-adjacent label explains the activity or rejection. This keeps presentation and validation on one geometry contract.

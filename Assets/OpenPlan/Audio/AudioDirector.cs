@@ -8,6 +8,10 @@ namespace OpenPlan
         private AudioSource oneShot;
         private AudioClip confirm;
         private AudioClip taskDone;
+        private AudioClip placementSuccess;
+        private AudioClip placementRejected;
+        private bool suppressNextNoticeCue;
+        public string LastCue { get; private set; }
 
         public void Initialize(OfficeDirector office)
         {
@@ -20,8 +24,27 @@ namespace OpenPlan
             oneShot.volume = .22f;
             confirm = BuildTone("Paper stamp", .13f, 150f, 92f);
             taskDone = BuildTone("Task complete", .34f, 520f, 760f);
+            placementSuccess = BuildTone("Placement success", .16f, 360f, 520f);
+            placementRejected = BuildTone("Placement rejected", .18f, 210f, 145f);
             office.Tasks.TaskCompleted += _ => oneShot.PlayOneShot(taskDone);
-            office.Notice += _ => { if (oneShot != null) oneShot.PlayOneShot(confirm, .55f); };
+            office.Notice += _ =>
+            {
+                if (suppressNextNoticeCue) { suppressNextNoticeCue = false; return; }
+                if (oneShot != null) oneShot.PlayOneShot(confirm, .55f);
+            };
+        }
+
+        public void PlayPlacementSuccess()
+        {
+            LastCue = "placement-success";
+            if (oneShot != null) oneShot.PlayOneShot(placementSuccess, .72f);
+        }
+
+        public void PlayPlacementRejected()
+        {
+            LastCue = "placement-rejected";
+            suppressNextNoticeCue = true;
+            if (oneShot != null) oneShot.PlayOneShot(placementRejected, .64f);
         }
 
         private static AudioClip BuildNoise(string name, float length, float amplitude, int seed)

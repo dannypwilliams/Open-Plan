@@ -2,7 +2,7 @@
 
 OPEN PLAN is an isometric office-management simulation about guiding a tiny team and growing a struggling business. The current pivot starts with Morgan, Alex, and Sam in a cramped office. The player will pick workers up, place them at clear activity areas, earn money without a countdown, and purchase the neighboring unit to physically expand.
 
-Checkpoint 2 delivers the authored Starter Office: a cramped, low-budget 14-by-11-meter unit for Morgan, Alex, and Sam, plus a visible locked neighboring unit that previews the first expansion. Pickup-and-placement interaction, full activity effects, and the purchase sequence remain assigned to later checkpoints.
+Checkpoint 3 makes worker pickup and placement the primary interaction in the authored Starter Office. Workers can be clicked for information or lifted and dragged to readable activity footprints; invalid, occupied, and locked drops explain the rejection and safely restore the worker. Full activity effects and the neighboring-unit purchase sequence remain assigned to later checkpoints.
 
 ## Stages
 
@@ -17,6 +17,8 @@ Run a specific development stage with `-openplan-stage <stage name>`. Existing r
 - Mouse wheel: zoom.
 - Middle-mouse drag: pan.
 - Click: select a worker or choose a desk while reassigning.
+- Hold and drag a worker: lift and place them at Work, Rest, Water, Snack, Smoke, or Exit footprints.
+- Escape or right-click while carrying: cancel and return the worker safely.
 - `F`: follow the selected worker.
 - `H`: open hiring.
 - `Tab`: productivity overlay.
@@ -30,6 +32,6 @@ Run a specific development stage with `-openplan-stage <stage name>`. Existing r
 - Rebuild through **OPEN PLAN -> Build Windows Release**.
 - See [BUILD_AND_RUN.md](Docs/BUILD_AND_RUN.md) and [TEST_REPORT.md](Docs/TEST_REPORT.md) for commands and verification.
 
-The Blender catalog now contains 54 validated assets. Checkpoint 2 evidence is captured in `outputs/Screenshots/StarterOffice_Overview.png` and `outputs/Screenshots/StarterOffice_Close_Worker.png`.
+The Blender catalog contains 54 validated assets. Checkpoint 3 placement evidence is captured in `outputs/Screenshots/StarterOffice_Valid_Placement.png` and `outputs/Screenshots/StarterOffice_Invalid_Placement.png`.
 
 The previous Windows executable, screenshots, gameplay video, and package evidence remain preserved as the `a638304` Established Office release.

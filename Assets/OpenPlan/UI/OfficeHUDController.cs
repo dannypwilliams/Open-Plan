@@ -8,6 +8,10 @@ namespace OpenPlan
 {
     public sealed class OfficeHUDController : MonoBehaviour
     {
+        public bool HasModalOpen => (hiringPanel != null && hiringPanel.gameObject.activeSelf) ||
+                                    (confirmPanel != null && confirmPanel.gameObject.activeSelf) ||
+                                    (reportPanel != null && reportPanel.gameObject.activeSelf);
+
         private OfficeDirector office;
         private Canvas canvas;
         private TextMeshProUGUI hudText;
@@ -200,10 +204,7 @@ namespace OpenPlan
         private void RefreshModalVisibility()
         {
             if (inspector == null) return;
-            bool modalOpen = (hiringPanel != null && hiringPanel.gameObject.activeSelf) ||
-                             (confirmPanel != null && confirmPanel.gameObject.activeSelf) ||
-                             (reportPanel != null && reportPanel.gameObject.activeSelf);
-            inspector.gameObject.SetActive(WorkerSelection.Selected != null && !modalOpen);
+            inspector.gameObject.SetActive(WorkerSelection.Selected != null && !HasModalOpen);
         }
 
         private void RefreshAll()

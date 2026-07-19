@@ -18,7 +18,7 @@ The Main Menu always starts `StarterOffice`. Explicit developer and automation l
 
 Every player-directed placement is represented by a `WorkerCommand` containing the worker, destination `PlacementZone`, requested `PlacementActivity`, issue time, and player-placement origin. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office.
 
-The runtime boundaries and authored placement geometry are established. Click-and-drag interaction and complete activity behavior are delivered by later worker-placement checkpoints.
+The player presses and holds on a worker, then moves more than six screen pixels or holds for 0.12 seconds to begin carrying. A simple click only selects. Valid release lowers the worker, issues a `WorkerCommand`, and walks the final segment; invalid release restores position and state without consuming gameplay resources. Escape and right-click cancel. Complete activity effects are delivered by checkpoint 4.
 
 ## Simulation contract
 

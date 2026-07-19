@@ -18,6 +18,9 @@ namespace OpenPlan
         private LineRenderer selectionRing;
         private TextMeshPro stateIcon;
         private float phase;
+        private bool selected;
+        private bool hovered;
+        private bool carried;
 
         public void Initialize(Color clothing, Material ringMaterial)
         {
@@ -77,7 +80,35 @@ namespace OpenPlan
             stateIcon.rectTransform.sizeDelta = new Vector2(2f, 0.5f);
         }
 
-        public void SetSelected(bool selected) => selectionRing.enabled = selected;
+        public void SetSelected(bool value)
+        {
+            selected = value;
+            RefreshInteractionVisual();
+        }
+
+        public void SetHovered(bool value)
+        {
+            hovered = value;
+            RefreshInteractionVisual();
+        }
+
+        public void SetCarried(bool value)
+        {
+            carried = value;
+            RefreshInteractionVisual();
+        }
+
+        private void RefreshInteractionVisual()
+        {
+            if (selectionRing == null) return;
+            selectionRing.enabled = selected || hovered || carried;
+            Color color = carried ? new Color(.24f,.96f,.82f) :
+                hovered ? new Color(1f,.72f,.24f) : new Color(.30f,.88f,.78f);
+            selectionRing.startColor = color;
+            selectionRing.endColor = color;
+            selectionRing.widthMultiplier = carried ? .085f : hovered ? .060f : .035f;
+            selectionRing.transform.localScale = carried ? Vector3.one * 1.22f : hovered ? Vector3.one * 1.10f : Vector3.one;
+        }
 
         public void Tick(WorkerState state, bool moving, float productivity)
         {

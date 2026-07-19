@@ -15,7 +15,7 @@ namespace OpenPlan
         EnterOffice, WalkToDesk, Work, IdleAtDesk, SeekCoffee, UseCoffeeMachine,
         SeekWater, UseWaterCooler, SeekCoworker, Socialize, TakeBreak,
         WalkToMeeting, Meeting, ReturnToDesk, React, FiredReaction, PackDesk,
-        CarryBox, ExitOffice, RecoverFromStuck
+        CarryBox, ExitOffice, RecoverFromStuck, WalkToPlacement, BuySnack, Smoke, LeaveOffice
     }
 
     public enum StationKind { Coffee, Water, Break, Meeting, Elevator }

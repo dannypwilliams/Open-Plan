@@ -30,4 +30,4 @@ The editor menu **OPEN PLAN -> Generate Complete Project** regenerates materials
   -testResults "$env:TEMP\OpenPlan-PlayMode.xml"
 ```
 
-Checkpoint 2 passes 28 EditMode and 18 PlayMode tests. Blender validation additionally passes all 54 assets.
+Checkpoint 3 passes 30 EditMode and 26 PlayMode tests. Blender validation additionally passes all 54 assets. The packaged player also supports `-openplan-input-smoke`, which writes resolution-specific evidence under `outputs/Screenshots`.

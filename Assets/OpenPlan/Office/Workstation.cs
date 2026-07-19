@@ -15,6 +15,18 @@ namespace OpenPlan
 
         public bool IsAvailable => IsZoneEnabled && Assigned == null;
 
+        public override bool CanAcceptWorker(WorkerAgent worker, out string reason)
+        {
+            if (!base.CanAcceptWorker(worker, out reason))
+            {
+                if (IsZoneEnabled && Assigned != null && Assigned != worker) reason = "Desk occupied.";
+                return false;
+            }
+            if (Assigned != null && Assigned != worker) { reason = "Desk occupied."; return false; }
+            reason = null;
+            return true;
+        }
+
         public void Configure(int index, float noise, float light, float modifier, string zone, bool expansion,
             string stableIdentifier = null, bool zoneEnabled = true)
         {

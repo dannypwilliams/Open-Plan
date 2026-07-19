@@ -16,6 +16,10 @@ namespace OpenPlan
         public WorkdayDirector Workday { get; private set; }
         public HiringDirector Hiring { get; private set; }
         public FiringDirector Firing { get; private set; }
+        public OfficeHUDController HUD { get; private set; }
+        public AudioDirector Audio { get; private set; }
+        public WorkerCarryController CarryController { get; private set; }
+        public WorkerCommand LastIssuedCommand { get; private set; }
         public CoffeeStation Coffee { get; private set; }
         public WaterStation Water { get; private set; }
         public NeedStation Break { get; private set; }
@@ -42,6 +46,7 @@ namespace OpenPlan
         public bool Reassigning { get; private set; }
         public event Action RosterChanged;
         public event Action<string> Notice;
+        public event Action<WorkerCommand> WorkerCommandIssued;
 
         private readonly List<WorkerAgent> workers = new List<WorkerAgent>();
         private readonly List<Workstation> workstations = new List<Workstation>();
@@ -83,11 +88,15 @@ namespace OpenPlan
             BuildCandidates();
             SpawnStartingRoster();
             Economy.RecalculatePayroll(workers);
-            OfficeHUDController hud = gameObject.AddComponent<OfficeHUDController>();
-            hud.Initialize(this);
-            AudioDirector audioDirector = gameObject.AddComponent<AudioDirector>();
-            audioDirector.Initialize(this);
+            HUD = gameObject.AddComponent<OfficeHUDController>();
+            HUD.Initialize(this);
+            Audio = gameObject.AddComponent<AudioDirector>();
+            Audio.Initialize(this);
             EnsureCamera();
+            CarryController = gameObject.AddComponent<WorkerCarryController>();
+            CarryController.Initialize(this, Camera.main.GetComponent<OfficeCameraRig>(), HUD, Audio);
+            if (StandaloneInputSmokeDirector.Requested)
+                gameObject.AddComponent<StandaloneInputSmokeDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -107,7 +116,12 @@ namespace OpenPlan
 
         private void EnsureCamera()
         {
-            if (Camera.main != null) return;
+            if (Camera.main != null)
+            {
+                OfficeCameraRig existingRig = Camera.main.GetComponent<OfficeCameraRig>() ?? Camera.main.gameObject.AddComponent<OfficeCameraRig>();
+                existingRig.Initialize(this);
+                return;
+            }
             GameObject cameraObject = new GameObject("Office Camera");
             Camera camera = cameraObject.AddComponent<Camera>();
             cameraObject.AddComponent<AudioListener>();
@@ -205,6 +219,7 @@ namespace OpenPlan
         {
             reason = null;
             if (worker == null || worker.IsFired) { reason = "Select an active employee."; return false; }
+            CarryController?.CancelIfWorker(worker);
             const int severance = 110;
             Economy.PayFiring(severance);
             worker.Fire();
@@ -221,6 +236,8 @@ namespace OpenPlan
 
         public void CompleteFiring(WorkerAgent worker)
         {
+            CarryController?.CancelIfWorker(worker);
+            ReleaseTransientPlacement(worker);
             if (WorkerSelection.Selected == worker) WorkerSelection.Clear();
             workers.Remove(worker);
             Destroy(worker.gameObject);
@@ -249,6 +266,60 @@ namespace OpenPlan
             Notice?.Invoke($"{worker.Definition.displayName} reassigned to {destination.ZoneLabel}.");
             return true;
         }
+
+        public bool TryIssueWorkerCommand(WorkerAgent worker, PlacementZone destination,
+            out WorkerCommand command, out string reason)
+        {
+            command = null;
+            if (worker == null || !workers.Contains(worker)) { reason = "Worker is not part of this office."; return false; }
+            if (!worker.IsPlayerCarried) { reason = "Worker is not being carried."; return false; }
+            if (destination == null) { reason = "Drop on a marked activity area."; return false; }
+            if (!destination.CanAcceptWorker(worker, out reason)) return false;
+
+            PlacementZone previousActivity = worker.ActivePlacementZone;
+            if (destination is Workstation destinationDesk)
+            {
+                Workstation previousDesk = worker.Desk;
+                if (previousDesk != null && previousDesk != destinationDesk) previousDesk.Release(worker);
+                destinationDesk.Assign(worker);
+                if (destinationDesk.Assigned != worker)
+                {
+                    previousDesk?.Assign(worker);
+                    reason = "Desk occupied.";
+                    return false;
+                }
+            }
+            else if (!destination.TryOccupy(worker, out reason))
+            {
+                return false;
+            }
+
+            if (previousActivity != null && previousActivity != destination && previousActivity is not Workstation)
+                previousActivity.Vacate(worker);
+            worker.SetActivePlacementZone(destination);
+            command = new WorkerCommand(worker, destination, destination.Activity, Time.time, true);
+            if (!worker.CommitPlayerCommand(command))
+            {
+                if (destination is not Workstation) destination.Vacate(worker);
+                reason = "Worker could not accept the placement command.";
+                return false;
+            }
+
+            LastIssuedCommand = command;
+            WorkerCommandIssued?.Invoke(command);
+            reason = null;
+            return true;
+        }
+
+        public void ReleaseTransientPlacement(WorkerAgent worker)
+        {
+            if (worker == null) return;
+            PlacementZone current = worker.ActivePlacementZone;
+            if (current != null && current is not Workstation) current.Vacate(worker);
+            worker.SetActivePlacementZone(worker.Desk);
+        }
+
+        public void ShowNotice(string message) => Notice?.Invoke(message);
 
         public WorkerAgent FindSocialPartner(WorkerAgent asker)
         {
@@ -344,7 +415,7 @@ namespace OpenPlan
             => new WorkerDefinition { displayName = name, trait = trait, skill = skill, salary = salary, sociability = social, strength = strength, weakness = weakness, clothing = clothing };
         private static CandidateDefinition Candidate(WorkerDefinition worker, int cost) => new CandidateDefinition { worker = worker, hiringCost = cost };
 
-        public void Restart() { Time.timeScale = 1f; OfficeStageSelection.SelectForNextLoad(Stage); SceneManager.LoadScene("Office"); }
-        public void ReturnToMenu() { Time.timeScale = 1f; SceneManager.LoadScene("MainMenu"); }
+        public void Restart() { CarryController?.CancelCarry(true); Time.timeScale = 1f; OfficeStageSelection.SelectForNextLoad(Stage); SceneManager.LoadScene("Office"); }
+        public void ReturnToMenu() { CarryController?.CancelCarry(true); Time.timeScale = 1f; SceneManager.LoadScene("MainMenu"); }
     }
 }

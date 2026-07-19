@@ -1,6 +1,6 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 2 - Build the Starter Office
+- Current checkpoint: Worker-Placement Pivot 3 - Worker Pickup and Placement
 - Status: implementation, visual review, and verification PASS
 - Date: 2026-07-19
 - Branch: `codex/small-office-placement-pivot`
@@ -10,12 +10,13 @@
 - Starter roster: Morgan, Alex, Sam
 - Stages: Starter Office, Starter Office Expanded, Established Office
 - Starter timing: unlimited; no automatic finish or failure
-- Automated tests: 46/46 passed (28 EditMode, 18 PlayMode)
+- Automated tests: 56/56 passed (30 EditMode, 26 PlayMode)
 - Baseline before edits: 37/37 passed (24 EditMode, 13 PlayMode)
 - Original large office: preserved as Established Office
 - Blender assets: 54/54 validated; seven new starter-office assets include editable `.blend`, exported FBX, Unity FBX, catalog, and manifest entries
-- Windows player: rebuilt successfully for checkpoint 2
-- Visual evidence: `outputs/Screenshots/StarterOffice_Overview.png` and `outputs/Screenshots/StarterOffice_Close_Worker.png`
+- Windows player: rebuilt successfully for checkpoint 3
+- Standalone input smoke: 12/12 checks passed at both 1280x720 and 1920x1080
+- Visual evidence: `outputs/Screenshots/StarterOffice_Valid_Placement.png` and `outputs/Screenshots/StarterOffice_Invalid_Placement.png`
 - Existing release/package/media: preserved as historical `a638304` evidence
 - Critical issues: none
-- Next checkpoint: Implement worker pickup and placement
+- Next checkpoint: Make activity areas functional

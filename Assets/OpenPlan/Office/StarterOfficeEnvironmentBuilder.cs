@@ -101,6 +101,7 @@ namespace OpenPlan
 
             Workstation future = BuildDesk("DamagedDesk", new Vector3(3.7f,0f,2.5f), Quaternion.identity,
                 "starter.work.future", expanded, true, "VisitorChair", "CheapCRTMonitor", new Color(.32f,.34f,.35f));
+            if (!expanded) future.SetUnavailableReason("Desk unavailable.");
             future.gameObject.AddComponent<FutureDeskLocation>().Configure("future.starter.desk", false, expanded);
             if (!expanded) AddWorldLabel(future.transform, "Locked desk label", "DESK SLOT\nUNAVAILABLE", new Vector3(0f, 1.65f, 0f),
                 new Color(.95f,.55f,.22f), .34f);
@@ -177,7 +178,11 @@ namespace OpenPlan
                     $"neighbor.work.{i + 1:00}", expanded, true, i == 1 ? "OfficeChair" : "VisitorChair",
                     "CheapCRTMonitor", NeighborTint);
                 future.gameObject.AddComponent<FutureDeskLocation>().Configure($"future.neighbor.desk.{i + 1:00}", true, expanded);
-                if (!expanded) Tint(future.gameObject, NeighborTint);
+                if (!expanded)
+                {
+                    future.SetUnavailableReason("Area locked.");
+                    Tint(future.gameObject, NeighborTint);
+                }
             }
 
             GameObject utility = new GameObject("Neighbor Utility Corner");
@@ -185,6 +190,7 @@ namespace OpenPlan
             utility.transform.position = new Vector3(11.8f, 0f, 3.45f);
             AddPlacementZone(utility, PlacementActivity.Rest, Vector3.zero, "Rest",
                 "neighbor.rest.utility", expanded, new Vector2(1.6f, 1.4f), 2);
+            if (!expanded) utility.GetComponent<PlacementZone>().SetUnavailableReason("Area locked.");
             GameObject counter = catalog.Spawn("Counter", root, new Vector3(12.3f,0f,4.45f), Quaternion.identity, new Vector3(.62f,.85f,.72f));
             GameObject chair = catalog.Spawn("VisitorChair", root, new Vector3(11.5f,0f,3.9f), Quaternion.Euler(0f,160f,0f), Vector3.one * .70f);
             if (!expanded) { Tint(counter, NeighborTint); Tint(chair, NeighborTint); }

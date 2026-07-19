@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace OpenPlan
 {
+    public enum PlacementZoneVisualState { None, Valid, Invalid, HoveredValid, HoveredInvalid }
+
     /// <summary>Base component for a destination that translates placement into a clear worker activity.</summary>
     public class PlacementZone : MonoBehaviour
     {
@@ -13,12 +15,17 @@ namespace OpenPlan
         public BoxCollider FootprintCollider { get; private set; }
         public bool IsZoneEnabled { get; private set; }
         public bool IsHighlighted { get; private set; }
+        public PlacementZoneVisualState CarryVisualState { get; private set; }
         public int Capacity { get; private set; }
         public int Occupancy => occupants.Count;
         public Bounds FootprintBounds => FootprintCollider != null ? FootprintCollider.bounds : new Bounds(transform.position, Vector3.zero);
 
         private readonly HashSet<WorkerAgent> occupants = new HashSet<WorkerAgent>();
         private Renderer[] renderers;
+        private MeshRenderer footprintRenderer;
+        private Material footprintMaterial;
+        private Mesh footprintMesh;
+        private string unavailableReason;
 
         public virtual void Configure(PlacementActivity activity, Vector3 localPlacementPoint, string label = null,
             string stableIdentifier = null, bool zoneEnabled = true, Vector2 footprint = default, int capacity = 1)
@@ -44,12 +51,14 @@ namespace OpenPlan
             Vector2 size = footprint == default ? new Vector2(1.2f, 1.2f) : footprint;
             FootprintCollider.size = new Vector3(Mathf.Max(.2f, size.x), .12f, Mathf.Max(.2f, size.y));
             renderers = GetComponentsInChildren<Renderer>(true);
+            BuildFootprintVisual(footprintObject.transform, size);
         }
 
         public virtual bool CanAcceptWorker(WorkerAgent worker, out string reason)
         {
             if (worker == null) { reason = "A worker is required."; return false; }
-            if (!IsZoneEnabled) { reason = ActivityLabel + " is locked."; return false; }
+            if (worker.IsFired || worker.IsLeavingCompany) { reason = "Worker is leaving the company."; return false; }
+            if (!IsZoneEnabled) { reason = string.IsNullOrWhiteSpace(unavailableReason) ? ActivityLabel + " is locked." : unavailableReason; return false; }
             if (occupants.Contains(worker)) { reason = null; return true; }
             if (occupants.Count >= Capacity) { reason = ActivityLabel + " is occupied."; return false; }
             reason = null;
@@ -74,6 +83,8 @@ namespace OpenPlan
             if (!value) SetHighlight(false, Color.black);
         }
 
+        public void SetUnavailableReason(string reason) => unavailableReason = reason;
+
         public virtual void SetHighlight(bool value, Color color)
         {
             IsHighlighted = value;
@@ -81,9 +92,73 @@ namespace OpenPlan
             MaterialPropertyBlock block = new MaterialPropertyBlock();
             foreach (Renderer renderer in renderers)
             {
+                if (renderer == null) continue;
                 renderer.GetPropertyBlock(block);
                 block.SetColor("_EmissionColor", value ? color * 1.4f : Color.black);
                 renderer.SetPropertyBlock(block);
+            }
+        }
+
+        public void SetCarryVisualState(PlacementZoneVisualState state)
+        {
+            CarryVisualState = state;
+            if (state == PlacementZoneVisualState.None)
+            {
+                if (footprintRenderer != null) footprintRenderer.enabled = false;
+                SetHighlight(false, Color.black);
+                return;
+            }
+
+            bool valid = state == PlacementZoneVisualState.Valid || state == PlacementZoneVisualState.HoveredValid;
+            bool hovered = state == PlacementZoneVisualState.HoveredValid || state == PlacementZoneVisualState.HoveredInvalid;
+            Color color = valid ? new Color(.12f,.92f,.62f, hovered ? .52f : .24f) :
+                new Color(1f,.24f,.14f, hovered ? .52f : .22f);
+            if (footprintRenderer != null)
+            {
+                footprintRenderer.enabled = true;
+                footprintMaterial.color = color;
+            }
+            SetHighlight(true, new Color(color.r, color.g, color.b, 1f) * (hovered ? 1.15f : .72f));
+        }
+
+        private void BuildFootprintVisual(Transform parent, Vector2 size)
+        {
+            GameObject visual = new GameObject("Placement Feedback Footprint");
+            visual.transform.SetParent(parent, false);
+            visual.transform.localPosition = new Vector3(0f,.075f,0f);
+            footprintMesh = new Mesh { name = StableIdentifier + " Footprint" };
+            float x = Mathf.Max(.2f,size.x) * .5f;
+            float z = Mathf.Max(.2f,size.y) * .5f;
+            footprintMesh.vertices = new[]
+            {
+                new Vector3(-x,0f,-z), new Vector3(-x,0f,z),
+                new Vector3(x,0f,z), new Vector3(x,0f,-z)
+            };
+            footprintMesh.triangles = new[] { 0,1,2, 0,2,3 };
+            footprintMesh.RecalculateNormals();
+            visual.AddComponent<MeshFilter>().sharedMesh = footprintMesh;
+            footprintRenderer = visual.AddComponent<MeshRenderer>();
+            Shader shader = Shader.Find("Sprites/Default");
+            footprintMaterial = new Material(shader) { name = StableIdentifier + " Placement Feedback" };
+            footprintMaterial.color = Color.clear;
+            footprintMaterial.renderQueue = 3100;
+            footprintRenderer.sharedMaterial = footprintMaterial;
+            footprintRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            footprintRenderer.receiveShadows = false;
+            footprintRenderer.enabled = false;
+        }
+
+        private void OnDestroy()
+        {
+            if (Application.isPlaying)
+            {
+                if (footprintMaterial != null) Destroy(footprintMaterial);
+                if (footprintMesh != null) Destroy(footprintMesh);
+            }
+            else
+            {
+                if (footprintMaterial != null) DestroyImmediate(footprintMaterial);
+                if (footprintMesh != null) DestroyImmediate(footprintMesh);
             }
         }
 

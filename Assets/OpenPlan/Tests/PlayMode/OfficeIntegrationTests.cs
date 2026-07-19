@@ -20,6 +20,31 @@ namespace OpenPlan.Tests
             Assert.NotNull(Object.FindFirstObjectByType<OfficeDirector>());
         }
 
+        private static IEnumerator WaitForPickable(WorkerAgent worker)
+        {
+            float deadline = Time.realtimeSinceStartup + 3f;
+            while (worker != null && !worker.CanBeginPlayerCarry(out _) && Time.realtimeSinceStartup < deadline)
+                yield return null;
+            Assert.NotNull(worker);
+            Assert.True(worker.CanBeginPlayerCarry(out string reason), reason);
+        }
+
+        private static void StartCarry(WorkerCarryController controller, WorkerAgent worker)
+        {
+            Vector2 press = new Vector2(200f, 200f);
+            Assert.True(controller.BeginPointerGesture(worker, press, false));
+            Assert.True(controller.EvaluateCarryStart(press + new Vector2(7f,0f), .01f, worker.transform.position));
+            Assert.True(controller.IsCarrying);
+        }
+
+        private static PlacementZone FindZone(OfficeDirector office, string stableIdentifier)
+        {
+            foreach (PlacementZone zone in office.PlacementZones)
+                if (zone.StableIdentifier == stableIdentifier) return zone;
+            Assert.Fail("Missing placement zone " + stableIdentifier);
+            return null;
+        }
+
         [UnityTest] public IEnumerator MainMenuLoads()
         {
             SceneManager.LoadScene("MainMenu");
@@ -113,6 +138,209 @@ namespace OpenPlan.Tests
             Assert.That(rig.OrthographicSize, Is.EqualTo(office.Layout.OverviewOrthographicSize).Within(.1f));
             Assert.True(office.Layout.CameraContainsRequiredSpaces(Camera.main), "Overview clips a required Starter Office space.");
             Assert.That(rig.PanBounds, Is.EqualTo(office.Layout.PanBounds));
+        }
+
+        [UnityTest] public IEnumerator WorkerClickSelectsWithoutStartingCarryAndUiPressIsIgnored()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            WorkerSelection.Clear();
+
+            Assert.True(office.CarryController.BeginPointerGesture(worker, new Vector2(200f,200f), false));
+            office.CarryController.ReleaseAtZone(null);
+            Assert.That(WorkerSelection.Selected, Is.EqualTo(worker));
+            Assert.False(office.CarryController.IsCarrying);
+            Assert.That(office.CarryController.Phase, Is.EqualTo(WorkerCarryPhase.Idle));
+            Assert.True(GameObject.Find("Employee Card").activeInHierarchy);
+
+            WorkerSelection.Clear();
+            Assert.False(office.CarryController.BeginPointerGesture(worker, new Vector2(1900f,1040f), true));
+            Assert.False(office.CarryController.IsCarrying);
+            Assert.IsNull(WorkerSelection.Selected);
+            office.CarryController.CancelCarry(true);
+        }
+
+        [UnityTest] public IEnumerator CarryStartsOnlyPastThresholdAndImmediateCancelRestoresState()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            Vector3 original = worker.transform.position;
+            WorkerState originalState = worker.Runtime.behavior;
+            Vector2 press = new Vector2(320f,240f);
+
+            Assert.True(office.CarryController.BeginPointerGesture(worker, press, false));
+            Assert.False(office.CarryController.EvaluateCarryStart(press + new Vector2(6f,0f), .119f, original));
+            Assert.False(worker.IsPlayerCarried);
+            Assert.True(office.CarryController.EvaluateCarryStart(press + new Vector2(6.1f,0f), .01f, original));
+            Assert.That(worker.transform.position.y, Is.EqualTo(original.y + WorkerCarryController.CarryLiftMeters).Within(.01f));
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(originalState));
+
+            office.CarryController.CancelCarry(true);
+            Assert.False(worker.IsPlayerCarried);
+            Assert.That(Vector3.Distance(worker.transform.position, original), Is.LessThan(.001f));
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(originalState));
+        }
+
+        [UnityTest] public IEnumerator ValidDropIssuesCommandAndWorkerWalksFinalSegment()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            PlacementZone rest = FindZone(office, "starter.rest.break-nook");
+            bool movingWhenIssued = false;
+            office.WorkerCommandIssued += _ => movingWhenIssued = worker.IsMoving;
+
+            StartCarry(office.CarryController, worker);
+            Vector3 drop = rest.PlacementPoint.position + new Vector3(.78f,0f,.62f);
+            office.CarryController.UpdateCarriedPosition(drop, rest, new Vector2(620f,430f), true);
+            Assert.True(office.CarryController.HasValidTarget);
+            Assert.That(rest.CarryVisualState, Is.EqualTo(PlacementZoneVisualState.HoveredValid));
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("REST"));
+            office.CarryController.ReleaseAtZone(rest);
+            yield return new WaitForSeconds(.18f);
+
+            Assert.NotNull(office.LastIssuedCommand);
+            Assert.That(office.LastIssuedCommand.worker, Is.EqualTo(worker));
+            Assert.That(office.LastIssuedCommand.destinationZone, Is.EqualTo(rest));
+            Assert.That(office.LastIssuedCommand.requestedActivity, Is.EqualTo(PlacementActivity.Rest));
+            Assert.True(office.LastIssuedCommand.fromPlayerPlacement);
+            Assert.True(movingWhenIssued, "Worker movement must resume when the command is issued.");
+            Assert.That(office.Audio.LastCue, Is.EqualTo("placement-success"));
+            Assert.That(WorkerSelection.Selected, Is.EqualTo(worker));
+            yield return new WaitForSeconds(.7f);
+            Vector2 flatDelta = new Vector2(worker.transform.position.x - rest.PlacementPoint.position.x,
+                worker.transform.position.z - rest.PlacementPoint.position.z);
+            Assert.That(flatDelta.magnitude, Is.LessThan(.12f));
+        }
+
+        [UnityTest] public IEnumerator FloorOccupiedAndLockedDropsRejectAndRestoreWorker()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[1];
+            yield return WaitForPickable(worker);
+            Vector3 original = worker.transform.position;
+            int commandCount = 0;
+            office.WorkerCommandIssued += _ => commandCount++;
+
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(original + Vector3.right * 1.2f, null, new Vector2(500f,400f), true);
+            Assert.False(office.CarryController.HasValidTarget);
+            office.CarryController.ReleaseAtZone(null);
+            yield return new WaitForSeconds(.28f);
+            Assert.That(office.CarryController.LastRejectionReason, Does.Contain("marked activity area"));
+
+            Workstation occupied = office.Workers[0].Desk;
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(occupied.PlacementPoint.position, occupied, new Vector2(540f,400f), true);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("DESK OCCUPIED"));
+            office.CarryController.ReleaseAtZone(occupied);
+            yield return new WaitForSeconds(.28f);
+            Assert.That(office.CarryController.LastRejectionReason, Is.EqualTo("Desk occupied."));
+
+            PlacementZone locked = FindZone(office, "neighbor.work.01");
+            Vector3 lockedOriginal = worker.transform.position;
+            WorkerState lockedState = worker.Runtime.behavior;
+            float lockedEnergy = worker.Runtime.energy;
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(locked.PlacementPoint.position, locked, new Vector2(1000f,400f), true);
+            Assert.That(locked.CarryVisualState, Is.EqualTo(PlacementZoneVisualState.HoveredInvalid));
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("AREA LOCKED"));
+            office.CarryController.ReleaseAtZone(locked);
+            yield return new WaitForSeconds(.28f);
+
+            Assert.That(commandCount, Is.Zero);
+            Assert.That(office.Audio.LastCue, Is.EqualTo("placement-rejected"));
+            Assert.False(worker.IsPlayerCarried);
+            Assert.That(Vector3.Distance(worker.transform.position, lockedOriginal), Is.LessThan(.08f));
+            Assert.That(worker.LastRestoredCarryState, Is.EqualTo(lockedState));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(lockedEnergy).Within(.003f));
+            Assert.That(locked.Occupancy, Is.Zero);
+        }
+
+        [UnityTest] public IEnumerator ModalOpeningCancelsCarryAndReturnsWorkerToGround()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            Vector3 original = worker.transform.position;
+            StartCarry(office.CarryController, worker);
+            office.HUD.ShowHiringForCapture();
+            yield return null;
+            Assert.That(office.CarryController.Phase, Is.EqualTo(WorkerCarryPhase.Returning));
+            yield return new WaitForSeconds(.28f);
+            Assert.That(office.CarryController.Phase, Is.EqualTo(WorkerCarryPhase.Idle));
+            Assert.False(worker.IsPlayerCarried);
+            Assert.That(worker.transform.position.y, Is.EqualTo(original.y).Within(.001f));
+            office.HUD.HideHiringForCapture();
+        }
+
+        [UnityTest] public IEnumerator PauseFreezesPlacementAnimationThenPlacementCompletes()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            PlacementZone water = FindZone(office, "starter.water.cooler");
+            StartCarry(office.CarryController, worker);
+            Vector3 drop = water.PlacementPoint.position + new Vector3(.45f,0f,.30f);
+            office.CarryController.UpdateCarriedPosition(drop, water, new Vector2(700f,420f), true);
+            office.CarryController.ReleaseAtZone(water);
+            Vector3 frozen = worker.transform.position;
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            yield return new WaitForSecondsRealtime(.22f);
+            Assert.That(office.CarryController.Phase, Is.EqualTo(WorkerCarryPhase.Placing));
+            Assert.That(Vector3.Distance(worker.transform.position, frozen), Is.LessThan(.001f));
+            SimulationSpeedController.Instance.SetSpeed(1f);
+            yield return new WaitForSeconds(.18f);
+            Assert.That(office.LastIssuedCommand.destinationZone, Is.EqualTo(water));
+        }
+
+        [UnityTest] public IEnumerator AwayAndFiredWorkersCannotBePickedUp()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            Vector2 press = new Vector2(300f,300f);
+            Assert.True(office.CarryController.BeginPointerGesture(worker, press, false));
+            Assert.False(office.CarryController.EvaluateCarryStart(press + Vector2.right * 7f, .01f, worker.transform.position));
+            Assert.That(office.CarryController.LastRejectionReason, Does.Contain("away"));
+
+            yield return WaitForPickable(worker);
+            Assert.True(office.TryFire(worker, out string reason), reason);
+            Assert.True(office.CarryController.BeginPointerGesture(worker, press, false));
+            Assert.False(office.CarryController.EvaluateCarryStart(press + Vector2.right * 7f, .01f, worker.transform.position));
+            Assert.That(office.CarryController.LastRejectionReason, Does.Contain("leaving the company"));
+            Assert.False(worker.IsPlayerCarried);
+        }
+
+        [UnityTest] public IEnumerator RestartAndSceneChangeClearCarryWithoutElevatedWorkers()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            yield return WaitForPickable(office.Workers[0]);
+            StartCarry(office.CarryController, office.Workers[0]);
+            office.Restart();
+            yield return null;
+            yield return null;
+            OfficeDirector restarted = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.NotNull(restarted);
+            Assert.That(restarted.CarryController.Phase, Is.EqualTo(WorkerCarryPhase.Idle));
+            foreach (WorkerAgent worker in restarted.Workers)
+                Assert.That(worker.transform.position.y, Is.LessThan(.1f));
+
+            yield return WaitForPickable(restarted.Workers[0]);
+            StartCarry(restarted.CarryController, restarted.Workers[0]);
+            restarted.ReturnToMenu();
+            yield return null;
+            Assert.IsNull(Object.FindFirstObjectByType<WorkerCarryController>());
+            Assert.IsNull(WorkerSelection.Selected);
         }
 
         [UnityTest] public IEnumerator ExpandedStarterInitializesWithAdditionalSpace()
@@ -239,17 +467,33 @@ namespace OpenPlan.Tests
         [UnityTest] public IEnumerator UiSmokeAt1280x720()
         {
             Screen.SetResolution(1280, 720, false);
-            yield return LoadOffice();
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            yield return WaitForPickable(office.Workers[0]);
+            StartCarry(office.CarryController, office.Workers[0]);
+            PlacementZone rest = FindZone(office, "starter.rest.break-nook");
+            office.CarryController.UpdateCarriedPosition(rest.PlacementPoint.position, rest, new Vector2(1260f,700f), true);
             Assert.NotNull(Object.FindFirstObjectByType<Canvas>());
             Assert.That(Screen.width, Is.GreaterThanOrEqualTo(640));
+            Assert.True(office.CarryController.FeedbackVisible);
+            Assert.That(office.CarryController.FeedbackScreenPosition.x, Is.InRange(0f,(float)Screen.width));
+            office.CarryController.CancelCarry(true);
         }
 
         [UnityTest] public IEnumerator UiSmokeAt1920x1080()
         {
             Screen.SetResolution(1920, 1080, false);
-            yield return LoadOffice();
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            yield return WaitForPickable(office.Workers[0]);
+            StartCarry(office.CarryController, office.Workers[0]);
+            PlacementZone rest = FindZone(office, "starter.rest.break-nook");
+            office.CarryController.UpdateCarriedPosition(rest.PlacementPoint.position, rest, new Vector2(1900f,1060f), true);
             Assert.NotNull(Object.FindFirstObjectByType<Canvas>());
             Assert.That(Screen.height, Is.GreaterThanOrEqualTo(480));
+            Assert.True(office.CarryController.FeedbackVisible);
+            Assert.That(office.CarryController.FeedbackScreenPosition.y, Is.InRange(0f,(float)Screen.height));
+            office.CarryController.CancelCarry(true);
         }
 
         [UnityTest] public IEnumerator NoWorkerStaysInRecoveryDuringScriptedSession()

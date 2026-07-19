@@ -35,6 +35,33 @@ namespace OpenPlan
                 starterCamera.FocusWorker(starterWorker, true);
                 yield return new WaitForSecondsRealtime(1.2f);
                 yield return Capture("StarterOffice_Close_Worker.png");
+
+                WorkerCarryController carry = office.CarryController;
+                carry.ExternalPointerControl = true;
+                PlacementZone rest = FindZone("starter.rest.break-nook");
+                starterCamera.FocusPoint(new Vector3(-2.2f,0f,.8f), 7.2f);
+                yield return new WaitForSecondsRealtime(.7f);
+                Vector2 press = new Vector2(Screen.width * .42f, Screen.height * .56f);
+                carry.BeginPointerGesture(starterWorker, press, false);
+                carry.EvaluateCarryStart(press + Vector2.right * 7f, .01f, starterWorker.transform.position);
+                Vector3 validDrop = rest.PlacementPoint.position + new Vector3(.55f,0f,.42f);
+                carry.UpdateCarriedPosition(validDrop, rest, Camera.main.WorldToScreenPoint(validDrop), true);
+                yield return new WaitForSecondsRealtime(.25f);
+                yield return Capture("StarterOffice_Valid_Placement.png");
+                carry.CancelCarry(true);
+
+                PlacementZone locked = FindZone("neighbor.work.01");
+                starterCamera.FocusPoint(new Vector3(5.2f,0f,0f), 8.8f);
+                yield return new WaitForSecondsRealtime(.7f);
+                press = new Vector2(Screen.width * .40f, Screen.height * .58f);
+                carry.BeginPointerGesture(starterWorker, press, false);
+                carry.EvaluateCarryStart(press + Vector2.right * 7f, .01f, starterWorker.transform.position);
+                Vector3 invalidDrop = locked.PlacementPoint.position;
+                carry.UpdateCarriedPosition(invalidDrop, locked, Camera.main.WorldToScreenPoint(invalidDrop), true);
+                yield return new WaitForSecondsRealtime(.25f);
+                yield return Capture("StarterOffice_Invalid_Placement.png");
+                carry.CancelCarry(true);
+                carry.ExternalPointerControl = false;
                 File.WriteAllText(Path.Combine(output, "capture_complete.txt"), DateTime.UtcNow.ToString("O"));
                 Application.Quit(0);
                 yield break;
@@ -135,6 +162,13 @@ namespace OpenPlan
             float end = Time.realtimeSinceStartup + timeout;
             while (worker != null && worker.Runtime.behavior != wanted && Time.realtimeSinceStartup < end)
                 yield return null;
+        }
+
+        private PlacementZone FindZone(string stableIdentifier)
+        {
+            foreach (PlacementZone zone in office.PlacementZones)
+                if (zone.StableIdentifier == stableIdentifier) return zone;
+            return null;
         }
 
         private IEnumerator Capture(string file)

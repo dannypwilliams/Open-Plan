@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace OpenPlan
@@ -84,7 +83,7 @@ namespace OpenPlan
                 float scroll = mouse.scroll.ReadValue().y;
                 if (Mathf.Abs(scroll) > .1f)
                     targetSize = Mathf.Clamp(targetSize - scroll * profile.zoomSensitivity, profile.closeSize, OverviewSize());
-                if (mouse.middleButton.isPressed)
+                if (mouse.middleButton.isPressed && (office == null || office.CarryController == null || !office.CarryController.BlocksWorldInput))
                 {
                     Vector2 delta = mouse.delta.ReadValue();
                     follow.Stop();
@@ -95,7 +94,6 @@ namespace OpenPlan
                     focus.Set(new Vector3(Mathf.Clamp(focus.Target.x, bounds.min.x, bounds.max.x), 0f,
                         Mathf.Clamp(focus.Target.z, bounds.min.z, bounds.max.z)));
                 }
-                if (mouse.leftButton.wasPressedThisFrame && !PointerOverUI()) SelectUnderPointer(mouse.position.ReadValue());
             }
             if (keyboard != null)
             {
@@ -106,8 +104,12 @@ namespace OpenPlan
                 }
                 if (keyboard.escapeKey.wasPressedThisFrame)
                 {
-                    if (follow.Active) follow.Stop();
-                    else WorkerSelection.Clear();
+                    bool carryOwnsInput = office != null && office.CarryController != null && office.CarryController.BlocksWorldInput;
+                    if (!carryOwnsInput)
+                    {
+                        if (follow.Active) follow.Stop();
+                        else WorkerSelection.Clear();
+                    }
                 }
             }
             Vector3 desired = follow.Active && follow.Target != null ? follow.Target.transform.position : focus.Target;
@@ -117,7 +119,7 @@ namespace OpenPlan
             UpdateTransform(smoothed);
         }
 
-        private void SelectUnderPointer(Vector2 screenPosition)
+        public void HandleWorldClick(Vector2 screenPosition)
         {
             Ray ray = cameraComponent.ScreenPointToRay(screenPosition);
             if (!Physics.Raycast(ray, out RaycastHit hit, 120f)) { WorkerSelection.Clear(); return; }
@@ -169,7 +171,5 @@ namespace OpenPlan
         {
             transform.position = pivot - transform.forward * 38f;
         }
-
-        private static bool PointerOverUI() => EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 }
