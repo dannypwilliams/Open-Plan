@@ -106,6 +106,8 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneInputSmokeDirector>().Initialize(this);
             if (StandaloneActivityCycleDirector.Requested)
                 gameObject.AddComponent<StandaloneActivityCycleDirector>().Initialize(this);
+            if (StandaloneBehaviorSoakDirector.Requested)
+                gameObject.AddComponent<StandaloneBehaviorSoakDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -164,7 +166,7 @@ namespace OpenPlan
             {
                 WorkerDefinition[] starterDefinitions =
                 {
-                    Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly raises stress", new Color(.90f,.22f,.18f)),
+                    Def("Morgan", WorkerTrait.Hardworking, 1.34f, 390, .32f, "Prefers focused work and quiet rest", "Noise quickly raises stress", new Color(.90f,.22f,.18f)),
                     Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby mood", "Starts long conversations", new Color(.12f,.72f,.68f)),
                     Def("Sam", WorkerTrait.Lazy, .72f, 105, .44f, "Very low payroll cost", "Takes frequent breaks", new Color(.42f,.60f,.74f))
                 };
@@ -175,7 +177,7 @@ namespace OpenPlan
 
             WorkerDefinition[] definitions =
             {
-                Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly raises stress", new Color(.90f,.22f,.18f)),
+                Def("Morgan", WorkerTrait.Hardworking, 1.34f, 390, .32f, "Prefers focused work and quiet rest", "Noise quickly raises stress", new Color(.90f,.22f,.18f)),
                 Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby mood", "Starts long conversations", new Color(.12f,.72f,.68f)),
                 Def("Casey", WorkerTrait.Focused, .88f, 165, .30f, "Reliable deep work", "Dislikes loud clusters", new Color(.95f,.64f,.14f)),
                 Def("Jordan", WorkerTrait.Caffeinated, 1.02f, 240, .48f, "Strong post-coffee sprint", "Creates coffee traffic", new Color(.35f,.82f,.58f)),
@@ -341,7 +343,9 @@ namespace OpenPlan
             float bestScore = float.MaxValue;
             foreach (WorkerAgent worker in workers)
             {
-                if (worker == null || worker == asker || worker.IsFired || worker.Runtime.behavior == WorkerState.Socialize || worker.Runtime.behavior == WorkerState.CarryBox) continue;
+                if (worker == null || worker == asker || worker.IsFired || worker.IsAway || worker.IsPlayerCarried ||
+                    worker.HasPlayerCommandAuthority || worker.Runtime.behavior == WorkerState.Socialize ||
+                    worker.Runtime.behavior == WorkerState.CarryBox) continue;
                 float score = Vector3.SqrMagnitude(worker.transform.position - asker.transform.position) + Random.Range(0f, 4f);
                 if (score < bestScore) { best = worker; bestScore = score; }
             }
@@ -375,16 +379,17 @@ namespace OpenPlan
                 if (distance > 4.2f) continue;
                 if (other.Runtime.behavior == WorkerState.Socialize)
                 {
-                    float penalty = worker.Definition.trait == WorkerTrait.Focused ? .025f : worker.Definition.trait == WorkerTrait.Anxious ? .10f : .06f;
+                    float penalty = worker.Definition.trait == WorkerTrait.Focused ? .025f :
+                        worker.Definition.trait == WorkerTrait.Hardworking || worker.Definition.trait == WorkerTrait.Anxious ? .10f : .06f;
                     modifier -= penalty;
                     negative = "Distracted by conversation";
-                }
-                if (other.Definition.trait == WorkerTrait.Social && other.Runtime.behavior == WorkerState.Work)
-                {
-                    worker.Runtime.mood = Mathf.Clamp01(worker.Runtime.mood + Time.deltaTime * .0009f);
-                    worker.Runtime.stress = Mathf.Clamp01(worker.Runtime.stress - Time.deltaTime * .00035f);
-                    positive = $"Encouraged by {other.Definition.displayName}";
-                    modifier += .018f;
+                    if (other.Definition.trait == WorkerTrait.Social)
+                    {
+                        worker.Runtime.mood = Mathf.Clamp01(worker.Runtime.mood + Time.deltaTime * .0030f);
+                        worker.Runtime.stress = Mathf.Clamp01(worker.Runtime.stress - Time.deltaTime * .0008f);
+                        positive = $"Cheered by {other.Definition.displayName}'s conversation";
+                        modifier += .025f;
+                    }
                 }
                 if (other.Definition.trait == WorkerTrait.Focused && other.Runtime.effectiveProductivity > 1f)
                 {
@@ -398,6 +403,35 @@ namespace OpenPlan
                 }
             }
             return Mathf.Clamp(modifier, .82f, 1.18f);
+        }
+
+        public bool TryReserveAutonomousZone(WorkerAgent worker, PlacementActivity activity,
+            PlacementZone avoid, out PlacementZone reserved)
+        {
+            reserved = null;
+            for (int pass = 0; pass < 2; pass++)
+            {
+                foreach (PlacementZone zone in placementZones)
+                {
+                    if (zone == null || zone is Workstation || zone.Activity != activity) continue;
+                    if (pass == 0 && zone == avoid) continue;
+                    if (pass == 1 && zone != avoid) continue;
+                    if (!zone.TryOccupy(worker, out _)) continue;
+                    reserved = zone;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Vector3 GetWanderPoint(WorkerAgent worker)
+        {
+            Bounds bounds = Layout != null ? Layout.OverviewBounds : new Bounds(Vector3.zero, new Vector3(12f, 1f, 8f));
+            Vector3 extents = bounds.extents * .72f;
+            Vector3 point = bounds.center + new Vector3(Random.Range(-extents.x, extents.x), 0f,
+                Random.Range(-extents.z, extents.z));
+            point.y = worker == null ? 0f : worker.transform.position.y;
+            return point;
         }
 
         public void ToggleOverlay()

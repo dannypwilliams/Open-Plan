@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace OpenPlan
@@ -31,6 +32,14 @@ namespace OpenPlan
         public WorkerCommand LastPlayerCommand { get; private set; }
         public WorkerState LastRestoredCarryState { get; private set; }
         public float Productivity => Runtime.effectiveProductivity;
+        public string PersonalityLabel => Definition == null ? string.Empty : PersonalityRules.For(Definition.trait).Label;
+        public string CurrentActivityLabel => Runtime == null ? string.Empty : PrettyState(Runtime.behavior);
+        public string CurrentDestinationLabel => DestinationLabel();
+        public DistractionKind CurrentDistraction { get; private set; }
+        public bool HasPlayerCommandAuthority { get; private set; }
+        public float StateAge => stateTime;
+        public IReadOnlyCollection<WorkerState> ObservedStates => observedStates;
+        public IReadOnlyDictionary<DistractionKind, int> DistractionCounts => distractionCounts;
 
         private OfficeDirector office;
         private TaskQueue tasks;
@@ -42,11 +51,15 @@ namespace OpenPlan
         private float decisionTime;
         private float coffeeCooldown;
         private float socialCooldown;
+        private float earningsEmoteCooldown;
+        private float autonomousActivityDuration;
         private float stuckTime;
         private Vector3 previousPosition;
         private GameObject carriedBox;
         private PlacementZone commandedZone;
         private PlacementActivity? activeActivity;
+        private PlacementActivity? pendingPlacementActivity;
+        private PlacementZone lastAutonomousZone;
         private bool activityEffectApplied;
         private bool vendingChargedForCurrentUse;
         private bool? nextVendingMalfunctionOverride;
@@ -64,6 +77,10 @@ namespace OpenPlan
         private float preCarryStateLimit;
         private float preCarryDecisionTime;
         private bool preCarryWasMoving;
+        private bool preCarryCommandAuthority;
+        private DistractionKind preCarryDistraction;
+        private readonly HashSet<WorkerState> observedStates = new HashSet<WorkerState>();
+        private readonly Dictionary<DistractionKind, int> distractionCounts = new Dictionary<DistractionKind, int>();
 
         public void Initialize(OfficeDirector director, WorkerDefinition definition, Workstation desk, Vector3 spawn)
         {
@@ -81,7 +98,7 @@ namespace OpenPlan
             transform.position = spawn;
             previousPosition = spawn;
             Visuals = gameObject.AddComponent<WorkerVisuals>();
-            Visuals.Initialize(Definition.clothing, director.Catalog.GetMaterial("cyan"));
+            Visuals.Initialize(Definition.displayName, Definition.clothing, director.Catalog.GetMaterial("cyan"));
             CapsuleCollider capsule = GetComponent<CapsuleCollider>();
             capsule.center = new Vector3(0f, .85f, 0f);
             capsule.height = 1.8f;
@@ -114,6 +131,7 @@ namespace OpenPlan
             decisionTime -= dt;
             coffeeCooldown = Mathf.Max(0f, coffeeCooldown - dt);
             socialCooldown = Mathf.Max(0f, socialCooldown - dt);
+            earningsEmoteCooldown = Mathf.Max(0f, earningsEmoteCooldown - dt);
             Runtime.waterCooldown = Mathf.Max(0f, Runtime.waterCooldown - dt);
             Runtime.vendingCooldown = Mathf.Max(0f, Runtime.vendingCooldown - dt);
             Runtime.smokingCooldown = Mathf.Max(0f, Runtime.smokingCooldown - dt);
@@ -121,6 +139,12 @@ namespace OpenPlan
             Runtime.socialNeed = Mathf.Clamp01(Runtime.socialNeed + dt *
                 (Definition.trait == WorkerTrait.Social ? .010f : .006f));
             if (Runtime.energy < .34f) Runtime.lowEnergySeconds += dt;
+            if (CurrentDistraction != DistractionKind.None)
+            {
+                Runtime.distractionSeconds += dt;
+                Runtime.stress = Mathf.Clamp01(Runtime.stress - dt * .0015f *
+                    PersonalityRules.For(Definition.trait).AvoidanceStressRecovery);
+            }
 
             UpdateProductivity();
             TickState(dt);
@@ -140,7 +164,7 @@ namespace OpenPlan
                     break;
                 case WorkerState.WalkToPlacement:
                     if (commandedZone == null) ReturnToDesk();
-                    else MoveTowards(commandedZone.PlacementPoint.position, dt, WorkerState.WalkToPlacement);
+                    else MoveTowards(commandedZone.PositionFor(this), dt, WorkerState.WalkToPlacement);
                     break;
                 case WorkerState.Work:
                     TickWork(dt);
@@ -193,6 +217,14 @@ namespace OpenPlan
                 case WorkerState.Smoke:
                     if (stateTime >= stateLimit) CompleteSmoking();
                     break;
+                case WorkerState.LookAtPhone:
+                case WorkerState.StandConfused:
+                case WorkerState.Sleep:
+                    if (stateTime >= stateLimit) CompleteDistraction();
+                    break;
+                case WorkerState.Wander:
+                    TickWander(dt);
+                    break;
                 case WorkerState.WalkOutForAway:
                     MoveTowards(office.ExitOutsidePoint, dt, WorkerState.Away);
                     break;
@@ -230,36 +262,68 @@ namespace OpenPlan
         {
             IsMoving = false;
             float persistence = Definition.trait == WorkerTrait.Focused ? .72f :
+                Definition.trait == WorkerTrait.Hardworking ? .82f :
                 Definition.trait == WorkerTrait.Lazy ? 1.35f : 1f;
             Runtime.energy = SimulationRules.DecayEnergy(Runtime.energy, dt,
                 ActivityRules.WorkEnergyDrainPerSecond * persistence);
             Runtime.stress = Mathf.Clamp01(Runtime.stress + dt * ActivityRules.WorkStressGainPerSecond *
-                (Desk != null ? Mathf.Lerp(.75f, 1.45f, Desk.Noise) : 1f));
+                (Desk != null ? Mathf.Lerp(.75f, 1.45f, Desk.Noise) : 1f) *
+                PersonalityRules.For(Definition.trait).NoiseStressMultiplier);
             if (Runtime.stress > ActivityRules.HighStressThreshold)
                 Runtime.mood = Mathf.Clamp01(Runtime.mood - dt * ActivityRules.HighStressMoodDrainPerSecond);
             Runtime.workSeconds += dt * Runtime.effectiveProductivity;
             office.Cash.AccrueDeskIncome(Runtime.effectiveProductivity, dt);
             tasks.Contribute(Runtime.effectiveProductivity * dt * .38f);
+            if (earningsEmoteCooldown <= 0f && Runtime.effectiveProductivity > 1.05f &&
+                Runtime.focusedWorkSecondsRemaining <= 0f)
+            {
+                earningsEmoteCooldown = 18f;
+                Visuals?.ShowEmote(StatusEmote.Money, 1.4f);
+            }
+            if (HasPlayerCommandAuthority && Runtime.focusedWorkSecondsRemaining > 0f) return;
+            if (HasPlayerCommandAuthority && Runtime.focusedWorkSecondsRemaining <= 0f)
+                HasPlayerCommandAuthority = false;
             if (decisionTime <= 0f || stateTime >= stateLimit) Decide();
         }
 
         private void Decide()
         {
             if (IsFired || IsAway) return;
-            decisionTime = random.Range(5.5f, 8.5f);
-            if (Runtime.energy < .39f && coffeeCooldown <= 0f)
+            PersonalityProfile profile = PersonalityRules.For(Definition.trait);
+            decisionTime = random.Range(profile.DecisionMin, profile.DecisionMax);
+            Runtime.autonomyDecisions++;
+
+            if (Runtime.energy < .20f && coffeeCooldown <= 0f)
             {
                 SetTargetState(WorkerState.SeekCoffee, office.Coffee.UsePoint.position, 12f);
+                Visuals?.ShowEmote(StatusEmote.Tired, 1.8f);
                 return;
             }
-            if ((Runtime.energy < .28f || Runtime.mood < .40f || Runtime.stress > .78f) && random.Chance(.78f))
+
+            if (Runtime.energy < .25f || Runtime.stress > .84f)
             {
-                activeActivity = PlacementActivity.Rest;
-                activityEffectApplied = false;
-                transform.position = Vector3.MoveTowards(transform.position, office.Break.UsePoint.position, .5f);
-                SetState(WorkerState.TakeBreak, ActivityRules.RestDuration);
+                if (TryStartAutonomousActivity(PlacementActivity.Rest, ActivityRules.RestDuration,
+                    Definition.trait == WorkerTrait.Lazy ? DistractionKind.ExtendedBreak : DistractionKind.None)) return;
+            }
+
+            if (Runtime.stress > .58f && Runtime.smokingCooldown <= 0f && random.Chance(.16f))
+            {
+                if (TryStartAutonomousActivity(PlacementActivity.Smoke,
+                    PersonalityRules.DistractionDuration(Definition.trait, DistractionKind.ExtendedSmoke),
+                    DistractionKind.ExtendedSmoke)) return;
+            }
+
+            if (Runtime.energy < .39f && coffeeCooldown <= 0f && random.Chance(.72f))
+            {
+                SetTargetState(WorkerState.SeekCoffee, office.Coffee.UsePoint.position, 12f);
+                Visuals?.ShowEmote(StatusEmote.Tired, 1.8f);
                 return;
             }
+
+            if ((Runtime.energy < .62f || Runtime.mood < .55f) && Runtime.vendingCooldown <= 0f &&
+                office.Cash.CanAfford(ActivityRules.SnackCost) && random.Chance(.20f) &&
+                TryStartAutonomousActivity(PlacementActivity.BuySnack, ActivityRules.VendingDuration, DistractionKind.None)) return;
+
             float socialThreshold = Definition.trait == WorkerTrait.Social ? .52f : .78f;
             if (Runtime.socialNeed > socialThreshold && socialCooldown <= 0f)
             {
@@ -269,33 +333,139 @@ namespace OpenPlan
                     socialPartner = partner;
                     partner.AcceptSocial(this);
                     SetTargetState(WorkerState.SeekCoworker, partner.transform.position, 10f);
+                    Visuals?.ShowEmote(StatusEmote.Social, 2f);
                     return;
                 }
             }
-            if (Runtime.waterCooldown <= 0f && random.Chance(.10f + (1f - Runtime.mood) * .12f))
+
+            if (Runtime.waterCooldown <= 0f && random.Chance(.10f + (1f - Runtime.mood) * .12f) &&
+                TryStartAutonomousActivity(PlacementActivity.GetWater, ActivityRules.WaterDuration, DistractionKind.None)) return;
+
+            if (random.Chance(profile.DistractionChance))
             {
-                activeActivity = PlacementActivity.GetWater;
-                activityEffectApplied = false;
-                SetTargetState(WorkerState.SeekWater, office.Water.UsePoint.position, 12f);
+                StartDistraction(PersonalityRules.ChooseDistraction(Definition.trait, random));
                 return;
             }
-            if (Runtime.stress > .66f && random.Chance(.40f))
+
+            if ((Runtime.energy < .42f || Runtime.mood < .40f || Runtime.stress > .70f) && random.Chance(.58f) &&
+                TryStartAutonomousActivity(PlacementActivity.Rest, ActivityRules.RestDuration, DistractionKind.None)) return;
+
+            if (!random.Chance(profile.WorkPreference) && random.Chance(.24f))
             {
                 SetState(WorkerState.IdleAtDesk, random.Range(2.5f, 4.5f));
                 return;
             }
-            SetState(WorkerState.Work, random.Range(7f, Definition.trait == WorkerTrait.Focused ? 15f : 11f));
+            SetState(WorkerState.Work, random.Range(8f,
+                Definition.trait == WorkerTrait.Hardworking || Definition.trait == WorkerTrait.Focused ? 16f : 12f));
+        }
+
+        private bool TryStartAutonomousActivity(PlacementActivity activity, float duration, DistractionKind distraction)
+        {
+            if (!office.TryReserveAutonomousZone(this, activity, lastAutonomousZone, out PlacementZone zone)) return false;
+            lastAutonomousZone = zone;
+            commandedZone = zone;
+            pendingPlacementActivity = activity;
+            activeActivity = null;
+            activityEffectApplied = false;
+            vendingChargedForCurrentUse = false;
+            HadWaterSocialOpportunity = false;
+            SetActivePlacementZone(zone);
+            if (distraction != DistractionKind.None) RegisterDistraction(distraction);
+            autonomousActivityDuration = Mathf.Max(.25f, duration);
+            SetTargetState(WorkerState.WalkToPlacement, zone.PositionFor(this), 20f);
+            return true;
+        }
+
+        private void StartDistraction(DistractionKind kind)
+        {
+            float duration = PersonalityRules.DistractionDuration(Definition.trait, kind);
+            if (kind == DistractionKind.ExtendedWater && Runtime.waterCooldown <= 0f &&
+                TryStartAutonomousActivity(PlacementActivity.GetWater, duration, kind)) return;
+            if (kind == DistractionKind.ExtendedBreak &&
+                TryStartAutonomousActivity(PlacementActivity.Rest, duration, kind)) return;
+            if (kind == DistractionKind.ExtendedSmoke && Runtime.smokingCooldown <= 0f &&
+                TryStartAutonomousActivity(PlacementActivity.Smoke, duration, kind)) return;
+            if (kind == DistractionKind.VendingInterest && Runtime.vendingCooldown <= 0f &&
+                office.Cash.CanAfford(ActivityRules.SnackCost) &&
+                TryStartAutonomousActivity(PlacementActivity.BuySnack, duration, kind)) return;
+
+            RegisterDistraction(kind);
+            switch (kind)
+            {
+                case DistractionKind.Wander:
+                    target = office.GetWanderPoint(this);
+                    Visuals?.ShowEmote(StatusEmote.Question, 2.2f);
+                    SetState(WorkerState.Wander, duration);
+                    break;
+                case DistractionKind.Sleep:
+                    Visuals?.ShowEmote(StatusEmote.Tired, 3f);
+                    SetState(WorkerState.Sleep, duration);
+                    break;
+                case DistractionKind.Confused:
+                case DistractionKind.VendingInterest:
+                    Visuals?.ShowEmote(StatusEmote.Question, 2.5f);
+                    SetState(WorkerState.StandConfused, duration);
+                    break;
+                default:
+                    Visuals?.ShowEmote(StatusEmote.Exclamation, 2.2f);
+                    SetState(WorkerState.LookAtPhone, duration);
+                    break;
+            }
+        }
+
+        private void RegisterDistraction(DistractionKind kind)
+        {
+            CurrentDistraction = kind;
+            Runtime.distractionsStarted++;
+            if (!distractionCounts.ContainsKey(kind)) distractionCounts[kind] = 0;
+            distractionCounts[kind]++;
+        }
+
+        private void TickWander(float dt)
+        {
+            if (stateTime >= stateLimit)
+            {
+                CompleteDistraction();
+                return;
+            }
+            Vector3 flat = target - transform.position;
+            flat.y = 0f;
+            if (flat.sqrMagnitude < .12f) target = office.GetWanderPoint(this);
+            else
+            {
+                IsMoving = true;
+                Vector3 direction = flat.normalized;
+                transform.position += direction * (1.35f * dt);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), dt * 7f);
+            }
+        }
+
+        private void CompleteDistraction()
+        {
+            FinishDistractionCounters();
+            ReturnToDesk();
+        }
+
+        private void FinishDistractionCounters()
+        {
+            if (CurrentDistraction == DistractionKind.None) return;
+            Runtime.distractionsCompleted++;
+            CurrentDistraction = DistractionKind.None;
         }
 
         private void AcceptSocial(WorkerAgent initiator)
         {
-            if (IsFired || IsAway || Runtime.behavior == WorkerState.Socialize) return;
+            if (IsFired || IsAway || IsPlayerCarried || HasPlayerCommandAuthority ||
+                Runtime.behavior == WorkerState.Socialize) return;
             socialPartner = initiator;
-            SetState(WorkerState.Socialize, random.Range(4.5f, 7.5f));
+            SetState(WorkerState.Socialize, Definition.trait == WorkerTrait.Social ?
+                random.Range(8f, 13f) : random.Range(4.5f, 7.5f));
+            Visuals?.ShowEmote(StatusEmote.Social, 2f);
         }
 
         private void UpdateProductivity()
         {
+            float nearby = office.ComputeNearbyModifier(this, out string positive, out string negative);
             if (IsFired || IsAway || Runtime.behavior != WorkerState.Work)
             {
                 Runtime.effectiveProductivity = 0f;
@@ -303,14 +473,13 @@ namespace OpenPlan
                 return;
             }
 
-            office.ComputeNearbyModifier(this, out string positive, out string negative);
             float noise = Desk != null ? Desk.Noise : .5f;
             float workstation = Desk != null ? Desk.Modifier : 1f;
             float trait = ProductivityModel.TraitModifier(Definition.trait, noise,
                 office.Workday.Progress01, Runtime.energy);
             float focused = ProductivityModel.FocusedWorkModifier(Runtime.focusedWorkSecondsRemaining);
             Runtime.effectiveProductivity = ProductivityModel.Evaluate(Definition.skill, Runtime.energy,
-                Runtime.mood, Runtime.stress, workstation, trait, focused);
+                Runtime.mood, Runtime.stress, workstation * nearby, trait, focused);
             Runtime.positiveInfluence = Runtime.focusedWorkSecondsRemaining > 0f ?
                 $"Focused Work {Runtime.focusedWorkSecondsRemaining:0}s" :
                 positive ?? (Desk != null ? Desk.ZoneLabel : "Steady pace");
@@ -327,9 +496,13 @@ namespace OpenPlan
         private void ReturnToDesk()
         {
             if (IsFired) return;
+            FinishDistractionCounters();
             InterruptCurrentActivity();
             office.ReleaseTransientPlacement(this);
             commandedZone = null;
+            pendingPlacementActivity = null;
+            autonomousActivityDuration = 0f;
+            HasPlayerCommandAuthority = false;
             if (Desk == null) { SetState(WorkerState.IdleAtDesk, 2f); return; }
             SetTargetState(WorkerState.ReturnToDesk, Desk.WorkPoint.position, 16f);
         }
@@ -387,13 +560,14 @@ namespace OpenPlan
         private void SetState(WorkerState state, float limit)
         {
             Runtime.behavior = state;
+            observedStates.Add(state);
             stateTime = 0f;
             stateLimit = Mathf.Max(.25f, limit);
             IsMoving = state == WorkerState.WalkToDesk || state == WorkerState.ReturnToDesk ||
                        state == WorkerState.SeekCoffee || state == WorkerState.SeekWater ||
                        state == WorkerState.SeekCoworker || state == WorkerState.CarryBox ||
                        state == WorkerState.WalkToPlacement || state == WorkerState.WalkOutForAway ||
-                       state == WorkerState.ReturnFromAway;
+                       state == WorkerState.ReturnFromAway || state == WorkerState.Wander;
         }
 
         public bool CanAcceptPlacementActivity(PlacementActivity activity, out string reason)
@@ -463,6 +637,8 @@ namespace OpenPlan
             preCarryStateLimit = stateLimit;
             preCarryDecisionTime = decisionTime;
             preCarryWasMoving = IsMoving;
+            preCarryCommandAuthority = HasPlayerCommandAuthority;
+            preCarryDistraction = CurrentDistraction;
             IsPlayerCarried = true;
             IsMoving = false;
             Visuals?.SetCarried(true);
@@ -487,6 +663,8 @@ namespace OpenPlan
             stateLimit = preCarryStateLimit;
             decisionTime = preCarryDecisionTime;
             IsMoving = preCarryWasMoving;
+            HasPlayerCommandAuthority = preCarryCommandAuthority;
+            CurrentDistraction = preCarryDistraction;
             IsPlayerCarried = false;
             carrySnapshotValid = false;
             Visuals?.SetCarried(false);
@@ -498,6 +676,8 @@ namespace OpenPlan
             InterruptCurrentActivity();
             LastPlayerCommand = command;
             commandedZone = command.destinationZone;
+            pendingPlacementActivity = command.requestedActivity;
+            HasPlayerCommandAuthority = true;
             activeActivity = null;
             activityEffectApplied = false;
             vendingChargedForCurrentUse = false;
@@ -505,7 +685,7 @@ namespace OpenPlan
             IsPlayerCarried = false;
             carrySnapshotValid = false;
             Visuals?.SetCarried(false);
-            SetTargetState(WorkerState.WalkToPlacement, commandedZone.PlacementPoint.position, 20f);
+            SetTargetState(WorkerState.WalkToPlacement, commandedZone.PositionFor(this), 20f);
             return true;
         }
 
@@ -513,9 +693,9 @@ namespace OpenPlan
 
         private void ArriveAtPlayerPlacement()
         {
-            if (commandedZone == null || LastPlayerCommand == null) { ReturnToDesk(); return; }
+            if (commandedZone == null || !pendingPlacementActivity.HasValue) { ReturnToDesk(); return; }
             transform.rotation = commandedZone.PlacementPoint.rotation;
-            BeginPlacementActivity(LastPlayerCommand.requestedActivity);
+            BeginPlacementActivity(pendingPlacementActivity.Value);
         }
 
         private void BeginPlacementActivity(PlacementActivity activity)
@@ -525,26 +705,32 @@ namespace OpenPlan
             switch (activity)
             {
                 case PlacementActivity.Work:
-                    Runtime.focusedWorkSecondsRemaining = ActivityRules.FocusedWorkDuration;
-                    Visuals?.ShowEmote("\u2191", 2.4f);
+                    if (HasPlayerCommandAuthority)
+                        Runtime.focusedWorkSecondsRemaining = ActivityRules.FocusedWorkDuration;
+                    Visuals?.ShowEmote(StatusEmote.Focus, 2.4f);
                     commandedZone = null;
                     SetState(WorkerState.Work, 9999f);
                     break;
                 case PlacementActivity.Rest:
-                    SetState(WorkerState.TakeBreak, ActivityRules.RestDuration);
+                    Visuals?.ShowEmote(StatusEmote.Tired, 2.4f);
+                    SetState(WorkerState.TakeBreak, HasPlayerCommandAuthority ? ActivityRules.RestDuration :
+                        Mathf.Max(.25f, autonomousActivityDuration));
                     break;
                 case PlacementActivity.GetWater:
                     socialPartner = office.FindWorkerNear(this, transform.position, 2.6f);
                     HadWaterSocialOpportunity = socialPartner != null;
-                    if (HadWaterSocialOpportunity) Visuals?.ShowEmote("...", 2.0f);
-                    SetState(WorkerState.UseWaterCooler, ActivityRules.WaterDuration);
+                    Visuals?.ShowEmote(HadWaterSocialOpportunity ? StatusEmote.Social : StatusEmote.Water, 2.0f);
+                    SetState(WorkerState.UseWaterCooler, HasPlayerCommandAuthority ? ActivityRules.WaterDuration :
+                        Mathf.Max(.25f, autonomousActivityDuration));
                     break;
                 case PlacementActivity.BuySnack:
                     BeginVending();
                     break;
                 case PlacementActivity.Smoke:
                     BuildSmokingEffects();
-                    SetState(WorkerState.Smoke, ActivityRules.SmokingDuration);
+                    Visuals?.ShowEmote(StatusEmote.Cigarette, 2.2f);
+                    SetState(WorkerState.Smoke, HasPlayerCommandAuthority ? ActivityRules.SmokingDuration :
+                        Mathf.Max(.25f, autonomousActivityDuration));
                     break;
                 case PlacementActivity.LeaveOffice:
                     Runtime.awayReason = (AwayReason)random.Range(0, 4);
@@ -559,6 +745,7 @@ namespace OpenPlan
             {
                 ActivityRules.ApplyRest(Runtime);
                 activityEffectApplied = true;
+                Visuals?.ShowEmote(StatusEmote.Happy, 1.8f);
             }
             ReturnToDesk();
         }
@@ -569,6 +756,7 @@ namespace OpenPlan
             {
                 ActivityRules.ApplyWater(Runtime);
                 activityEffectApplied = true;
+                Visuals?.ShowEmote(StatusEmote.Water, 1.8f);
             }
             Runtime.waterCooldown = ActivityRules.WaterCooldown;
             if (HadWaterSocialOpportunity)
@@ -597,11 +785,13 @@ namespace OpenPlan
             nextVendingMalfunctionOverride = null;
             if (LastVendingMalfunction)
             {
-                Visuals?.ShowEmote("!", 3f);
+                Visuals?.ShowEmote(StatusEmote.Frustrated, 3f);
                 shakingMachine = commandedZone != null ? commandedZone.transform : null;
                 if (shakingMachine != null) shakingMachineBasePosition = shakingMachine.localPosition;
             }
-            SetState(WorkerState.BuySnack, ActivityRules.VendingDuration);
+            else Visuals?.ShowEmote(StatusEmote.Snack, 2f);
+            SetState(WorkerState.BuySnack, HasPlayerCommandAuthority ? ActivityRules.VendingDuration :
+                Mathf.Max(.25f, autonomousActivityDuration));
         }
 
         private void TickVendingReaction()
@@ -617,6 +807,7 @@ namespace OpenPlan
             {
                 ActivityRules.ApplySnack(Runtime, LastVendingMalfunction);
                 activityEffectApplied = true;
+                Visuals?.ShowEmote(LastVendingMalfunction ? StatusEmote.Sad : StatusEmote.Happy, 1.8f);
             }
             Runtime.vendingCooldown = ActivityRules.VendingCooldown;
             RestoreVendingMachine();
@@ -660,6 +851,7 @@ namespace OpenPlan
             {
                 ActivityRules.ApplySmoke(Runtime);
                 activityEffectApplied = true;
+                Visuals?.ShowEmote(StatusEmote.Happy, 1.6f);
             }
             Runtime.smokingCooldown = ActivityRules.SmokingCooldown;
             CleanupSmokingEffects();
@@ -698,6 +890,8 @@ namespace OpenPlan
 
         private void InterruptCurrentActivity()
         {
+            if (HasPlayerCommandAuthority && Runtime != null)
+                Runtime.focusedWorkSecondsRemaining = 0f;
             if (Runtime != null && !activityEffectApplied)
             {
                 if (Runtime.behavior == WorkerState.UseWaterCooler)
@@ -712,6 +906,10 @@ namespace OpenPlan
             if (Runtime != null && Runtime.behavior == WorkerState.Away)
                 SetWorkerVisible(true);
             activeActivity = null;
+            pendingPlacementActivity = null;
+            autonomousActivityDuration = 0f;
+            CurrentDistraction = DistractionKind.None;
+            HasPlayerCommandAuthority = false;
         }
 
         private void RestoreVendingMachine()
@@ -745,6 +943,13 @@ namespace OpenPlan
 
         public void QueueVendingOutcome(bool malfunction) => nextVendingMalfunctionOverride = malfunction;
 
+        public void BeginDistractionForTesting(DistractionKind kind)
+        {
+            if (Runtime == null || IsFired || IsAway || kind == DistractionKind.None) return;
+            InterruptCurrentActivity();
+            StartDistraction(kind);
+        }
+
         public void Fire()
         {
             if (IsFired) return;
@@ -770,8 +975,10 @@ namespace OpenPlan
 
         public void ReactToFiring(bool relief)
         {
-            if (IsFired || IsAway || Runtime.behavior == WorkerState.Socialize) return;
+            if (IsFired || IsAway || IsPlayerCarried || HasPlayerCommandAuthority ||
+                Runtime.behavior == WorkerState.Socialize) return;
             ActivityRules.ChangeNeeds(Runtime, 0f, relief ? .035f : -.07f, relief ? -.02f : .05f);
+            Visuals?.ShowEmote(relief ? StatusEmote.Happy : StatusEmote.Sad, 2.4f);
             SetState(WorkerState.React, 1.3f);
         }
 
@@ -824,8 +1031,46 @@ namespace OpenPlan
                 case WorkerState.WalkOutForAway: return "Walking through the exit";
                 case WorkerState.Away: return "Away from the office";
                 case WorkerState.ReturnFromAway: return "Returning to the office";
+                case WorkerState.LookAtPhone: return "Distracted by phone";
+                case WorkerState.Wander: return "Wandering briefly";
+                case WorkerState.StandConfused: return "Unsure what to do";
+                case WorkerState.Sleep: return "Fell asleep";
                 default: return "Away from desk";
             }
+        }
+
+        private string DestinationLabel()
+        {
+            if (IsPlayerCarried) return "Player is choosing";
+            if (Runtime == null) return "None";
+            if (Runtime.behavior == WorkerState.Wander) return "Around the office";
+            if (Runtime.behavior == WorkerState.SeekCoworker && socialPartner != null)
+                return socialPartner.Definition.displayName;
+            if (Runtime.behavior == WorkerState.SeekCoffee || Runtime.behavior == WorkerState.UseCoffeeMachine)
+                return "Coffee machine";
+            if (Runtime.behavior == WorkerState.WalkOutForAway || Runtime.behavior == WorkerState.Away)
+                return "Outside office";
+            if (Runtime.behavior == WorkerState.ReturnFromAway) return "Office entrance";
+            if (commandedZone != null) return commandedZone.ActivityLabel;
+            if (Runtime.behavior == WorkerState.Work || Runtime.behavior == WorkerState.ReturnToDesk ||
+                Runtime.behavior == WorkerState.WalkToDesk) return Desk == null ? "Desk" : Desk.ZoneLabel;
+            return "Current position";
+        }
+
+        private static string PrettyState(WorkerState state)
+        {
+            switch (state)
+            {
+                case WorkerState.LookAtPhone: return "Looking at phone";
+                case WorkerState.StandConfused: return "Standing confused";
+                case WorkerState.Sleep: return "Falling asleep";
+                case WorkerState.UseWaterCooler: return "Getting water";
+                case WorkerState.BuySnack: return "Buying a snack";
+            }
+            string name = state.ToString();
+            for (int i = 1; i < name.Length; i++)
+                if (char.IsUpper(name[i])) { name = name.Insert(i, " "); i++; }
+            return name;
         }
 
         private static string PrettyAwayReason(AwayReason reason)

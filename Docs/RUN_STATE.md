@@ -1,23 +1,26 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 4 - Functional Activity Areas
+- Current checkpoint: Worker-Placement Pivot 5 - Personality and Readable Status
 - Status: implementation, visual review, and verification PASS
 - Date: 2026-07-19
 - Branch: `codex/small-office-placement-pivot`
+- Previous checkpoint: `f551d99` (`feat: make worker placement activities functional`)
 - Base release: `a638304` (`release: pass phase 5 Windows prototype`)
 - Unity: 6000.5.1f1; Blender: 5.2.0 LTS
 - Default entry: Main Menu -> Starter Office
-- Starter roster: Morgan, Alex, Sam
+- Starter roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
 - Stages: Starter Office, Starter Office Expanded, Established Office
 - Starter timing: unlimited; no automatic finish or failure
-- Automated tests: 71/71 passed (35 EditMode, 36 PlayMode)
-- Baseline before edits: 37/37 passed (24 EditMode, 13 PlayMode)
+- Automated tests: 81/81 passed (39 EditMode, 42 PlayMode)
+- Previous checkpoint baseline: 71/71 passed (35 EditMode, 36 PlayMode)
 - Original large office: preserved as Established Office
-- Blender assets: 54/54 validated; seven new starter-office assets include editable `.blend`, exported FBX, Unity FBX, catalog, and manifest entries
-- Windows player: rebuilt successfully for checkpoint 4
+- Blender assets: 54/54 validated
+- Windows player: rebuilt successfully for checkpoint 5
 - Standalone input smoke: 12/12 checks passed at both 1280x720 and 1920x1080
 - Standalone activity cycle: 9/9 observations passed for pickup -> Get Water -> autonomous return
-- Activity evidence: `outputs/Screenshots/StarterOffice_ActivityCycle.txt` and `outputs/Screenshots/StarterOffice_Water_Activity.png`
+- Fifteen-minute behavior soak: PASS at 20x; 48 total distractions, varied states, no permanent idle/stuck worker, all capacities respected
+- Soak distraction rates: Morgan 2/105 (1.9%), Alex 13/100 (13.0%), Sam 33/93 (35.5%)
+- Personality evidence: `outputs/Screenshots/StarterOffice_BehaviorSoak.txt`, `StarterOffice_BehaviorSoak.png`, and `StarterOffice_NameTagClose.png`
 - Existing release/package/media: preserved as historical `a638304` evidence
 - Critical issues: none
-- Next checkpoint: Add personality and readable status
+- Next checkpoint: Physical neighboring-unit expansion

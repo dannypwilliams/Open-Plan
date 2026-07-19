@@ -1,0 +1,25 @@
+STATUS PASS
+SIMULATED MINUTES 15.02
+ACCELERATION 20x
+STARTING ROSTER Morgan=Hardworking, Alex=Social, Sam=Lazy
+OBSERVATIONS 20
+PASS  Morgan showed varied behavior (12 states)
+PASS  Morgan had readable distractions (2)
+PASS  Morgan is not permanently stuck
+PASS  Morgan has no permanent idle state
+RATE  Morgan 2/105 decisions = 1.9 %; 0.23 distraction minutes; states BuySnack, EnterOffice, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Socialize, StandConfused, UseWaterCooler, WalkToDesk, WalkToPlacement, Work
+KINDS Morgan Confused=1, Phone=1
+PASS  Alex showed varied behavior (13 states)
+PASS  Alex had readable distractions (13)
+PASS  Alex is not permanently stuck
+PASS  Alex has no permanent idle state
+RATE  Alex 13/100 decisions = 13.0 %; 2.73 distraction minutes; states EnterOffice, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Socialize, StandConfused, TakeBreak, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
+KINDS Alex Confused=2, ExtendedBreak=1, ExtendedWater=5, Phone=3, Wander=2
+PASS  Sam showed varied behavior (15 states)
+PASS  Sam had readable distractions (33)
+PASS  Sam is not permanently stuck
+PASS  Sam has no permanent idle state
+RATE  Sam 33/93 decisions = 35.5 %; 8.00 distraction minutes; states BuySnack, EnterOffice, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Sleep, Socialize, StandConfused, TakeBreak, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
+KINDS Sam Confused=3, ExtendedBreak=7, Phone=5, Sleep=9, VendingInterest=4, Wander=5
+PASS  office produced management decisions (48 distractions)
+PASS  all activity-zone capacity limits held

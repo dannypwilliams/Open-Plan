@@ -10,7 +10,8 @@ namespace OpenPlan
         {
             Time.timeScale = 1f;
             if (AutomatedCaptureDirector.Requested || AutomatedPerformanceDirector.Requested ||
-                StandaloneInputSmokeDirector.Requested || StandaloneActivityCycleDirector.Requested)
+                StandaloneInputSmokeDirector.Requested || StandaloneActivityCycleDirector.Requested ||
+                StandaloneBehaviorSoakDirector.Requested)
             {
                 OfficeStageSelection.SelectForNextLoad(OfficeStageSelection.Resolve(System.Environment.GetCommandLineArgs()));
                 SceneManager.LoadScene("Office");

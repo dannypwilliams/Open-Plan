@@ -2,7 +2,7 @@
 
 OPEN PLAN is an isometric office-management simulation about guiding a tiny team and growing a struggling business. The current pivot starts with Morgan, Alex, and Sam in a cramped office. The player will pick workers up, place them at clear activity areas, earn money without a countdown, and purchase the neighboring unit to physically expand.
 
-Checkpoint 4 makes every placement area functional. Desk work generates continuous cash; Rest, Water, Snack, Smoke, and Leave Office run distinct timed activities with readable poses, exact Energy/Mood/Stress effects, cooldowns, costs, props, and safe interruption. The neighboring-unit purchase sequence remains assigned to checkpoint 6.
+Checkpoint 5 makes the starting team individually recognizable. Morgan is Hardworking, Alex is Social, and Sam is Lazy; each now makes visibly different seeded choices, can become briefly distracted, and remains easy to redirect. Persistent camera-facing name tags, temporary text-safe emotes, and a fuller employee inspector make their current activity and destination readable. All placement activities from checkpoint 4 remain functional, and the neighboring-unit purchase sequence remains assigned to checkpoint 6.
 
 The Starter Office begins with $100. Desk work earns `$60/min × effective productivity`; pausing stops simulation income. Manual desk placement grants a non-stacking +20% Focused Work bonus for 30 simulation seconds.
 

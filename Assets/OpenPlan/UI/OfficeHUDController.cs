@@ -11,6 +11,7 @@ namespace OpenPlan
         public bool HasModalOpen => (hiringPanel != null && hiringPanel.gameObject.activeSelf) ||
                                     (confirmPanel != null && confirmPanel.gameObject.activeSelf) ||
                                     (reportPanel != null && reportPanel.gameObject.activeSelf);
+        public bool NameTagsEnabled => WorkerVisuals.GlobalNameTagsVisible;
 
         private OfficeDirector office;
         private Canvas canvas;
@@ -56,7 +57,11 @@ namespace OpenPlan
 
         private void Update()
         {
-            if (Keyboard.current != null && Keyboard.current.hKey.wasPressedThisFrame) ToggleHiring();
+            if (Keyboard.current != null)
+            {
+                if (Keyboard.current.hKey.wasPressedThisFrame) ToggleHiring();
+                if (Keyboard.current.nKey.wasPressedThisFrame) ToggleNameTags();
+            }
             refresh -= Time.unscaledDeltaTime;
             if (refresh <= 0f) { refresh = .16f; RefreshAll(); }
             if (noticeText != null && Time.unscaledTime > noticeUntil) noticeText.gameObject.SetActive(false);
@@ -68,13 +73,16 @@ namespace OpenPlan
             RectTransform top = OfficeUIFactory.Panel(canvas.transform, "Top HUD", OfficeUIFactory.DarkPanel,
                 new Vector2(.012f,.925f), new Vector2(.988f,.988f), Vector2.zero, Vector2.zero);
             hudText = OfficeUIFactory.Text(top, "Company readout", string.Empty, 24f, OfficeUIFactory.Paper,
-                Vector2.zero, new Vector2(.72f,1f), new Vector2(18f,0f), new Vector2(-4f,0f), TextAlignmentOptions.MidlineLeft);
+                Vector2.zero, new Vector2(.67f,1f), new Vector2(18f,0f), new Vector2(-4f,0f), TextAlignmentOptions.MidlineLeft);
             Button hire = OfficeUIFactory.Button(top, "Hire", "H  HIRE", OfficeUIFactory.Burgundy, OfficeUIFactory.Paper,
-                new Vector2(.74f,.12f), new Vector2(.82f,.88f), Vector2.zero, Vector2.zero);
+                new Vector2(.68f,.12f), new Vector2(.755f,.88f), Vector2.zero, Vector2.zero);
             hire.onClick.AddListener(ToggleHiring);
             Button overlay = OfficeUIFactory.Button(top, "Overlay", "TAB  OVERLAY", new Color(.12f,.34f,.36f), OfficeUIFactory.Paper,
-                new Vector2(.83f,.12f), new Vector2(.91f,.88f), Vector2.zero, Vector2.zero);
+                new Vector2(.76f,.12f), new Vector2(.835f,.88f), Vector2.zero, Vector2.zero);
             overlay.onClick.AddListener(office.ToggleOverlay);
+            Button names = OfficeUIFactory.Button(top, "Name tags", "N  NAMES", new Color(.20f,.31f,.42f), OfficeUIFactory.Paper,
+                new Vector2(.84f,.12f), new Vector2(.915f,.88f), Vector2.zero, Vector2.zero);
+            names.onClick.AddListener(ToggleNameTags);
             AddSpeedButton(top, ".92", "Ⅱ", 0f);
             AddSpeedButton(top, ".945", "1×", 1f);
             AddSpeedButton(top, ".97", "4×", 4f);
@@ -240,6 +248,17 @@ namespace OpenPlan
             string focused = state.focusedWorkSecondsRemaining > 0f ?
                 $"\nFOCUSED WORK +20%  {Mathf.CeilToInt(state.focusedWorkSecondsRemaining)}s" : string.Empty;
             inspectorText.text = $"<size=36><b>{worker.Definition.displayName}</b></size>\n{worker.Definition.trait}\n\nSKILL        {worker.Definition.skill:0.00}\nPRODUCTIVITY {state.effectiveProductivity:0.00}×\nENERGY       {Bar(state.energy)} {state.energy:P0}\nMOOD         {Bar(state.mood)} {state.mood:P0}\nSTRESS       {Bar(state.stress)} {state.stress:P0}\n\nCURRENT      {Pretty(state.behavior)}{away}{focused}\n\n<size=19><color=#267C78>+ {state.positiveInfluence}</color>\n<color=#9C332B>– {state.negativeInfluence}</color>\n\nASSIGNED  {desk}</size>";
+            inspectorText.text = BuildInspectorText(worker, state, desk, away, focused);
+        }
+
+        private static string BuildInspectorText(WorkerAgent worker, WorkerRuntimeState state,
+            string desk, string away, string focused)
+            => $"<size=36><b>{worker.Definition.displayName}</b></size>\nPERSONALITY  {worker.PersonalityLabel}\n\nSKILL        {worker.Definition.skill:0.00}\nPRODUCTIVITY {state.effectiveProductivity:0.00}x\nENERGY       {SafeBar(state.energy)} {state.energy:P0}\nMOOD         {SafeBar(state.mood)} {state.mood:P0}\nSTRESS       {SafeBar(state.stress)} {state.stress:P0}\n\nACTIVITY     {worker.CurrentActivityLabel}\nDESTINATION  {worker.CurrentDestinationLabel}{away}{focused}\n\n<size=19><color=#267C78>HELPS: {state.positiveInfluence}</color>\n<color=#9C332B>HURTS: {state.negativeInfluence}</color>\n\nASSIGNED  {desk}</size>";
+
+        public void ToggleNameTags()
+        {
+            WorkerVisuals.SetGlobalNameTagsVisible(!WorkerVisuals.GlobalNameTagsVisible);
+            ShowNotice(WorkerVisuals.GlobalNameTagsVisible ? "Worker name tags on." : "Worker name tags off.");
         }
 
         private void ToggleHiring()
@@ -302,6 +321,12 @@ namespace OpenPlan
         {
             int filled = Mathf.RoundToInt(Mathf.Clamp01(value) * 8f);
             return new string('■', filled) + new string('·', 8 - filled);
+        }
+
+        private static string SafeBar(float value)
+        {
+            int filled = Mathf.RoundToInt(Mathf.Clamp01(value) * 8f);
+            return new string('#', filled) + new string('-', 8 - filled);
         }
 
         private static string Pretty(WorkerState state)

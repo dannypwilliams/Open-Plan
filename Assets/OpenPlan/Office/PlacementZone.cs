@@ -21,6 +21,7 @@ namespace OpenPlan
         public Bounds FootprintBounds => FootprintCollider != null ? FootprintCollider.bounds : new Bounds(transform.position, Vector3.zero);
 
         private readonly HashSet<WorkerAgent> occupants = new HashSet<WorkerAgent>();
+        private readonly List<WorkerAgent> occupantOrder = new List<WorkerAgent>();
         private Renderer[] renderers;
         private MeshRenderer footprintRenderer;
         private Material footprintMaterial;
@@ -69,13 +70,25 @@ namespace OpenPlan
         public bool TryOccupy(WorkerAgent worker, out string reason)
         {
             if (!CanAcceptWorker(worker, out reason)) return false;
-            occupants.Add(worker);
+            if (occupants.Add(worker)) occupantOrder.Add(worker);
             return true;
+        }
+
+        public Vector3 PositionFor(WorkerAgent worker)
+        {
+            if (PlacementPoint == null) return transform.position;
+            int index = occupantOrder.IndexOf(worker);
+            if (index <= 0 || Capacity <= 1) return PlacementPoint.position;
+            int side = index % 2 == 1 ? 1 : -1;
+            int row = (index + 1) / 2;
+            return PlacementPoint.position + transform.right * side * row * .72f;
         }
 
         public void Vacate(WorkerAgent worker)
         {
-            if (worker != null) occupants.Remove(worker);
+            if (worker == null) return;
+            occupants.Remove(worker);
+            occupantOrder.Remove(worker);
         }
 
         public void SetZoneEnabled(bool value)

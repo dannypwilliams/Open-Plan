@@ -10,7 +10,19 @@ namespace OpenPlan
 
     public enum AwayReason { Lunch, Errand, LongBreak, OffSiteTask }
 
-    public enum WorkerTrait { Focused, Social, Ambitious, Lazy, Anxious, Caffeinated }
+    public enum WorkerTrait { Focused, Social, Ambitious, Lazy, Anxious, Caffeinated, Hardworking }
+
+    public enum DistractionKind
+    {
+        None, Phone, Wander, Confused, Sleep, ExtendedWater, ExtendedBreak,
+        VendingInterest, ExtendedSmoke
+    }
+
+    public enum StatusEmote
+    {
+        Happy, Sad, Frustrated, Tired, Water, Snack, Cigarette, Money,
+        Question, Exclamation, Social, Focus
+    }
 
     public enum WorkerState
     {
@@ -18,7 +30,7 @@ namespace OpenPlan
         SeekWater, UseWaterCooler, SeekCoworker, Socialize, TakeBreak,
         WalkToMeeting, Meeting, ReturnToDesk, React, FiredReaction, PackDesk,
         CarryBox, ExitOffice, RecoverFromStuck, WalkToPlacement, BuySnack, Smoke,
-        WalkOutForAway, Away, ReturnFromAway
+        WalkOutForAway, Away, ReturnFromAway, LookAtPhone, Wander, StandConfused, Sleep
     }
 
     public enum StationKind { Coffee, Water, Break, Meeting, Elevator }
@@ -75,6 +87,10 @@ namespace OpenPlan
         public float workSeconds;
         public float socialSeconds;
         public float lowEnergySeconds;
+        public int autonomyDecisions;
+        public int distractionsStarted;
+        public int distractionsCompleted;
+        public float distractionSeconds;
         public WorkerState behavior = WorkerState.EnterOffice;
         public string positiveInfluence = "Ready for the day";
         public string negativeInfluence = "Settling in";
@@ -143,6 +159,7 @@ namespace OpenPlan
                 case WorkerTrait.Lazy: return 0.88f;
                 case WorkerTrait.Anxious: return noise < 0.32f ? 1.16f : Mathf.Lerp(1.03f, 0.82f, noise);
                 case WorkerTrait.Caffeinated: return energy > 0.72f ? 1.10f : 0.96f;
+                case WorkerTrait.Hardworking: return noise < 0.35f ? 1.16f : Mathf.Lerp(1.08f, .86f, noise);
                 default: return 1f;
             }
         }
@@ -153,6 +170,105 @@ namespace OpenPlan
             float value = skill * EnergyModifier(energy) * MoodModifier(mood) *
                           InverseStressModifier(stress) * workstation * trait * manualFocusedWork;
             return Mathf.Clamp(value, Minimum, Maximum);
+        }
+    }
+
+    public readonly struct PersonalityProfile
+    {
+        public readonly string Label;
+        public readonly float DistractionChance;
+        public readonly float WorkPreference;
+        public readonly float NoiseStressMultiplier;
+        public readonly float AvoidanceStressRecovery;
+        public readonly float DecisionMin;
+        public readonly float DecisionMax;
+
+        public PersonalityProfile(string label, float distractionChance, float workPreference,
+            float noiseStressMultiplier, float avoidanceStressRecovery, float decisionMin, float decisionMax)
+        {
+            Label = label;
+            DistractionChance = distractionChance;
+            WorkPreference = workPreference;
+            NoiseStressMultiplier = noiseStressMultiplier;
+            AvoidanceStressRecovery = avoidanceStressRecovery;
+            DecisionMin = decisionMin;
+            DecisionMax = decisionMax;
+        }
+    }
+
+    /// <summary>Seeded, testable personality tuning used by live autonomy and soak tests.</summary>
+    public static class PersonalityRules
+    {
+        public static PersonalityProfile For(WorkerTrait trait)
+        {
+            switch (trait)
+            {
+                case WorkerTrait.Hardworking: return new PersonalityProfile("Hardworking", .07f, .78f, 1.48f, .55f, 7.0f, 10.0f);
+                case WorkerTrait.Social: return new PersonalityProfile("Social", .17f, .48f, 1.00f, 1.00f, 5.5f, 8.5f);
+                case WorkerTrait.Lazy: return new PersonalityProfile("Lazy", .30f, .28f, .78f, 1.65f, 4.8f, 7.5f);
+                default: return new PersonalityProfile(trait.ToString(), .14f, .52f, 1.00f, 1.00f, 5.5f, 8.5f);
+            }
+        }
+
+        public static DistractionKind ChooseDistraction(WorkerTrait trait, SeededRandomService random)
+        {
+            float roll = random.Value();
+            if (trait == WorkerTrait.Lazy)
+            {
+                if (roll < .26f) return DistractionKind.Sleep;
+                if (roll < .54f) return DistractionKind.Wander;
+                if (roll < .72f) return DistractionKind.ExtendedBreak;
+                if (roll < .86f) return DistractionKind.Phone;
+                if (roll < .94f) return DistractionKind.VendingInterest;
+                return DistractionKind.Confused;
+            }
+            if (trait == WorkerTrait.Social)
+            {
+                if (roll < .34f) return DistractionKind.ExtendedWater;
+                if (roll < .56f) return DistractionKind.Phone;
+                if (roll < .75f) return DistractionKind.Wander;
+                if (roll < .90f) return DistractionKind.Confused;
+                return DistractionKind.ExtendedBreak;
+            }
+            if (trait == WorkerTrait.Hardworking)
+            {
+                if (roll < .36f) return DistractionKind.Phone;
+                if (roll < .67f) return DistractionKind.Confused;
+                if (roll < .88f) return DistractionKind.Wander;
+                return DistractionKind.ExtendedBreak;
+            }
+            if (roll < .24f) return DistractionKind.Phone;
+            if (roll < .47f) return DistractionKind.Wander;
+            if (roll < .65f) return DistractionKind.Confused;
+            if (roll < .80f) return DistractionKind.ExtendedWater;
+            if (roll < .91f) return DistractionKind.ExtendedBreak;
+            return DistractionKind.Sleep;
+        }
+
+        public static float DistractionDuration(WorkerTrait trait, DistractionKind kind)
+        {
+            float duration;
+            switch (kind)
+            {
+                case DistractionKind.Confused: duration = 6f; break;
+                case DistractionKind.Phone: duration = 8f; break;
+                case DistractionKind.VendingInterest: duration = 8f; break;
+                case DistractionKind.ExtendedWater: duration = trait == WorkerTrait.Social ? 16f : 11f; break;
+                case DistractionKind.ExtendedBreak: duration = trait == WorkerTrait.Lazy ? 18f : 12f; break;
+                case DistractionKind.ExtendedSmoke: duration = 18f; break;
+                case DistractionKind.Sleep: duration = trait == WorkerTrait.Lazy ? 18f : 12f; break;
+                default: duration = trait == WorkerTrait.Lazy ? 16f : trait == WorkerTrait.Hardworking ? 8f : 12f; break;
+            }
+            return Mathf.Clamp(duration, 6f, 18f);
+        }
+
+        public static int CountDistractions(WorkerTrait trait, int seed, int decisions)
+        {
+            SeededRandomService random = new SeededRandomService(seed);
+            int count = 0;
+            float chance = For(trait).DistractionChance;
+            for (int i = 0; i < decisions; i++) if (random.Chance(chance)) count++;
+            return count;
         }
     }
 

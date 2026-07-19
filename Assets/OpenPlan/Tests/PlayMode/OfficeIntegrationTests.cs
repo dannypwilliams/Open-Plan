@@ -375,7 +375,7 @@ namespace OpenPlan.Tests
             yield return WaitForState(worker, WorkerState.Work);
             Assert.That(worker.Runtime.focusedWorkSecondsRemaining, Is.InRange(29f, ActivityRules.FocusedWorkDuration));
             Assert.That(ProductivityModel.FocusedWorkModifier(worker.Runtime.focusedWorkSecondsRemaining), Is.EqualTo(1.2f));
-            Assert.That(worker.Visuals.CurrentEmote, Is.EqualTo("\u2191"));
+            Assert.That(worker.Visuals.CurrentEmote, Is.EqualTo("FOCUS"));
 
             yield return PlaceWorker(office, worker, worker.Desk);
             yield return WaitForState(worker, WorkerState.Work);
@@ -779,6 +779,119 @@ namespace OpenPlan.Tests
             yield return new WaitForSeconds(32f);
             foreach (WorkerAgent worker in office.Workers)
                 Assert.That(worker.Runtime.behavior, Is.Not.EqualTo(WorkerState.RecoverFromStuck));
+        }
+
+        [UnityTest] public IEnumerator StarterWorkersExposeNamedPersonalityAndReadableNameTags()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.That(office.Workers[0].Definition.trait, Is.EqualTo(WorkerTrait.Hardworking));
+            Assert.That(office.Workers[1].Definition.trait, Is.EqualTo(WorkerTrait.Social));
+            Assert.That(office.Workers[2].Definition.trait, Is.EqualTo(WorkerTrait.Lazy));
+            foreach (WorkerAgent worker in office.Workers)
+            {
+                Assert.That(worker.Visuals.NameTagText, Is.EqualTo(worker.Definition.displayName));
+                Assert.NotNull(worker.Visuals.NameTagTransform);
+                Assert.NotNull(worker.Visuals.EmoteTransform);
+                Assert.That(worker.Visuals.EmoteTransform.position.y - worker.Visuals.NameTagTransform.position.y,
+                    Is.GreaterThan(.60f));
+            }
+        }
+
+        [UnityTest] public IEnumerator NameTagsTrackFaceScaleFadeAndToggle()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return null;
+            Vector3 before = worker.Visuals.NameTagTransform.position;
+            worker.transform.position += Vector3.right * 1.5f;
+            yield return null;
+            Assert.That(worker.Visuals.NameTagTransform.position.x - before.x, Is.EqualTo(1.5f).Within(.08f));
+            Assert.That(Quaternion.Angle(worker.Visuals.NameTagTransform.rotation, Camera.main.transform.rotation), Is.LessThan(.5f));
+
+            worker.Visuals.ComputeNameTagPresentation(6f);
+            float closeScale = worker.Visuals.NameTagScale;
+            float closeAlpha = worker.Visuals.NameTagAlpha;
+            worker.Visuals.ComputeNameTagPresentation(14f);
+            Assert.That(worker.Visuals.NameTagScale, Is.LessThan(closeScale));
+            Assert.That(worker.Visuals.NameTagAlpha, Is.LessThan(closeAlpha));
+            office.HUD.ToggleNameTags();
+            yield return null;
+            Assert.False(office.HUD.NameTagsEnabled);
+            Assert.False(worker.Visuals.NameTagTransform.gameObject.activeSelf);
+            office.HUD.ToggleNameTags();
+            yield return null;
+            Assert.True(office.HUD.NameTagsEnabled);
+        }
+
+        [UnityTest] public IEnumerator EmotesExpireCleanlyAndUseSafeText()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            WorkerAgent worker = Object.FindFirstObjectByType<OfficeDirector>().Workers[0];
+            yield return WaitForPickable(worker);
+            Assert.True(worker.BeginPlayerCarry(out _));
+            worker.Visuals.ShowEmote(StatusEmote.Happy, .10f);
+            yield return null;
+            Assert.That(worker.Visuals.CurrentEmote, Is.EqualTo("HAPPY"));
+            Assert.True(worker.Visuals.IsEmoteVisible);
+            yield return new WaitForSeconds(.16f);
+            Assert.That(worker.Visuals.CurrentEmote, Is.Empty);
+            Assert.False(worker.Visuals.IsEmoteVisible);
+            Assert.That(WorkerVisuals.SafeText("\u25A1", "?"), Is.EqualTo("?"));
+            worker.CancelPlayerCarryImmediate();
+        }
+
+        [UnityTest] public IEnumerator OptionalDistractionCanBeRedirectedByManualCommand()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[2];
+            yield return WaitForPickable(worker);
+            worker.BeginDistractionForTesting(DistractionKind.Phone);
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(WorkerState.LookAtPhone));
+            Assert.That(worker.Productivity, Is.Zero);
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.rest.break-nook"));
+            yield return WaitForState(worker, WorkerState.TakeBreak);
+            Assert.That(worker.CurrentDistraction, Is.EqualTo(DistractionKind.None));
+            Assert.True(worker.HasPlayerCommandAuthority);
+        }
+
+        [UnityTest] public IEnumerator ManualFocusedWorkOverridesAutonomyForThirtySecondWindow()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[2];
+            yield return PlaceWorker(office, worker, worker.Desk);
+            yield return WaitForState(worker, WorkerState.Work);
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return new WaitForSeconds(12f);
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(WorkerState.Work));
+            Assert.True(worker.HasPlayerCommandAuthority);
+            Assert.That(worker.Runtime.focusedWorkSecondsRemaining, Is.InRange(17f, 19f));
+        }
+
+        [UnityTest] public IEnumerator ActivityZoneCapacityRejectsWorkerBeyondCapacity()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            PlacementZone rest = FindZone(office, "starter.rest.break-nook");
+            yield return PlaceWorker(office, office.Workers[0], rest);
+            yield return WaitForState(office.Workers[0], WorkerState.TakeBreak);
+            yield return PlaceWorker(office, office.Workers[1], rest);
+            yield return WaitForState(office.Workers[1], WorkerState.TakeBreak);
+            Assert.That(rest.Occupancy, Is.EqualTo(rest.Capacity));
+            WorkerAgent third = office.Workers[2];
+            yield return WaitForPickable(third);
+            StartCarry(office.CarryController, third);
+            office.CarryController.UpdateCarriedPosition(rest.PlacementPoint.position, rest,
+                new Vector2(Screen.width * .5f, Screen.height * .5f), true);
+            Assert.False(office.CarryController.HasValidTarget);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("OCCUPIED"));
+            office.CarryController.ReleaseAtZone(rest);
+            yield return new WaitForSeconds(.28f);
+            Assert.That(rest.Occupancy, Is.EqualTo(rest.Capacity));
+            Assert.False(third.IsPlayerCarried);
         }
     }
 }

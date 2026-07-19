@@ -36,6 +36,17 @@ The player presses and holds on a worker, then moves more than six screen pixels
 - Smoke lasts 12 seconds, grants Mood +0.05 and Stress -0.30, then enters a 45-second cooldown. Its worker-held cigarette and restrained particles are transient and always cleaned up.
 - Leave Office walks through the real exit, selects Lunch, Errand, Long break, or Off-site task, hides only outside, recovers Energy +0.45, Mood +0.12, and Stress -0.35 over 30 seconds, then reappears at the entrance and returns to autonomous work.
 
+## Personality and status contract
+
+- Morgan is Hardworking: high skill, the strongest work preference, the lowest seeded distraction rate, and increased Stress gain from noisy workstations.
+- Alex is Social: moderate skill, a mid-range distraction rate, longer water-cooler conversations, and a Mood benefit for nearby workers while socializing.
+- Sam is Lazy: lower skill, the highest seeded distraction rate, extra Stress recovery while avoiding work, and weighted sleep, wandering, vending interest, and extended breaks.
+- Autonomous workers can work, rest, get water, buy a useful affordable snack, socialize, smoke when stressed, wander, and enter seeded 6-18 second distractions before returning to work.
+- A player placement overrides optional autonomy. Manual Work guarantees its 30-second Focused Work period; other manual activities retain their minimum duration unless interrupted by another player command or a critical invalidation.
+- Every worker has a camera-facing head-following name tag using the bundled font. Tags scale and fade at overview zoom and can be toggled with `N` or the HUD button.
+- Status emotes are brief event feedback, use ASCII-safe bundled-font text, expire cleanly, and remain separate from persistent name tags.
+- The employee inspector reports personality, activity, destination, Energy, Mood, Stress, productivity, focused time, away details, and plain-language positive/negative factors.
+
 ## Simulation contract
 
 - Starter stages have no countdown and do not finish or fail automatically.

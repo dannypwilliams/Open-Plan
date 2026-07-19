@@ -294,5 +294,51 @@ namespace OpenPlan.Tests
             for (int i = 0; i < 6; i++) traits.Add((WorkerTrait)(i % 6));
             Assert.That(traits.Count, Is.EqualTo(6));
         }
+
+        [Test] public void StartingPersonalities_HaveStatisticallyDistinctSeededDistractionRates()
+        {
+            int hardworking = PersonalityRules.CountDistractions(WorkerTrait.Hardworking, 19680412, 10000);
+            int social = PersonalityRules.CountDistractions(WorkerTrait.Social, 19680412, 10000);
+            int lazy = PersonalityRules.CountDistractions(WorkerTrait.Lazy, 19680412, 10000);
+            Assert.That(hardworking, Is.InRange(600, 800));
+            Assert.That(social, Is.InRange(1550, 1850));
+            Assert.That(lazy, Is.InRange(2850, 3150));
+            Assert.That(social, Is.GreaterThan(hardworking * 2));
+            Assert.That(lazy, Is.GreaterThan(social * 1.5f));
+        }
+
+        [Test] public void PersonalityProfiles_EncodeTheStartingWorkerDifferences()
+        {
+            PersonalityProfile morgan = PersonalityRules.For(WorkerTrait.Hardworking);
+            PersonalityProfile alex = PersonalityRules.For(WorkerTrait.Social);
+            PersonalityProfile sam = PersonalityRules.For(WorkerTrait.Lazy);
+            Assert.That(morgan.WorkPreference, Is.GreaterThan(alex.WorkPreference));
+            Assert.That(alex.WorkPreference, Is.GreaterThan(sam.WorkPreference));
+            Assert.That(morgan.NoiseStressMultiplier, Is.GreaterThan(alex.NoiseStressMultiplier));
+            Assert.That(sam.AvoidanceStressRecovery, Is.GreaterThan(alex.AvoidanceStressRecovery));
+        }
+
+        [Test] public void EverySeededDistractionDurationStaysInsideReadableContract()
+        {
+            foreach (DistractionKind kind in System.Enum.GetValues(typeof(DistractionKind)))
+            {
+                if (kind == DistractionKind.None) continue;
+                Assert.That(PersonalityRules.DistractionDuration(WorkerTrait.Hardworking, kind), Is.InRange(6f, 18f), kind.ToString());
+                Assert.That(PersonalityRules.DistractionDuration(WorkerTrait.Social, kind), Is.InRange(6f, 18f), kind.ToString());
+                Assert.That(PersonalityRules.DistractionDuration(WorkerTrait.Lazy, kind), Is.InRange(6f, 18f), kind.ToString());
+            }
+        }
+
+        [Test] public void EmoteFallbacksAreAsciiAndRejectMissingGlyphSymbols()
+        {
+            foreach (StatusEmote emote in System.Enum.GetValues(typeof(StatusEmote)))
+            {
+                string text = WorkerVisuals.TextFor(emote);
+                Assert.That(text, Is.Not.Empty, emote.ToString());
+                Assert.That(WorkerVisuals.SafeText(text, "!"), Is.EqualTo(text));
+            }
+            Assert.That(WorkerVisuals.SafeText("\u25A1", "?"), Is.EqualTo("?"));
+            Assert.That(WorkerVisuals.SafeText("\u2191", "FOCUS"), Is.EqualTo("FOCUS"));
+        }
     }
 }
