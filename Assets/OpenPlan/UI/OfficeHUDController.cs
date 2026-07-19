@@ -209,13 +209,16 @@ namespace OpenPlan
         private void RefreshAll()
         {
             if (office == null) return;
-            float remaining = office.Workday.Remaining;
+            float remaining = office.Workday.IsTimed ? office.Workday.Remaining : 0f;
             int minutes = Mathf.FloorToInt(remaining / 60f);
             int seconds = Mathf.FloorToInt(remaining % 60f);
+            string clock = office.Workday.IsTimed ? $"DAY  {minutes:00}:{seconds:00}" : "OPEN ENDED";
             string speed = SimulationSpeedController.Instance == null || SimulationSpeedController.Instance.IsPaused ? "PAUSED" : SimulationSpeedController.Instance.Speed + "×";
-            hudText.text = $"DAY  {minutes:00}:{seconds:00}     REVENUE  ${office.Economy.Revenue:N0} / ${office.Economy.DailyTarget:N0}     CASH  ${office.Economy.Cash:N0}     PAYROLL  ${office.Economy.Payroll:N0}     TEAM  {office.ActiveWorkerCount}/12     {speed}";
+            hudText.text = $"{clock}     REVENUE  ${office.Economy.Revenue:N0} / ${office.Economy.DailyTarget:N0}     CASH  ${office.Economy.Cash:N0}     PAYROLL  ${office.Economy.Payroll:N0}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
             TaskRuntime task = office.Tasks.Current;
             taskText.text = task == null ? "INBOX CLEAR" : $"REACH TODAY'S REVENUE TARGET\n{task.definition.title.ToUpperInvariant()}  {office.Tasks.Progress01:P0}  •  ${task.definition.revenue:N0}";
+            if (office.Stage != OfficeStage.EstablishedOffice && task != null)
+                taskText.text = $"EARN THE NEIGHBORING UNIT - NO TIME LIMIT\n{task.definition.title.ToUpperInvariant()}  {office.Tasks.Progress01:P0}  -  ${task.definition.revenue:N0}";
             RefreshInspector();
         }
 

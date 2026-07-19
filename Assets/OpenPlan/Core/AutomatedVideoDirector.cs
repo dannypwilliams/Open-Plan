@@ -10,6 +10,7 @@ namespace OpenPlan
         private IEnumerator Start()
         {
             yield return new WaitForSecondsRealtime(7f);
+            OfficeStageSelection.SelectForNextLoad(OfficeStageSelection.Resolve(Environment.GetCommandLineArgs()));
             UnityEngine.SceneManagement.SceneManager.LoadScene("Office");
         }
     }
@@ -32,6 +33,20 @@ namespace OpenPlan
             OfficeHUDController hud = FindFirstObjectByType<OfficeHUDController>();
             SimulationSpeedController.Instance.SetSpeed(1f);
             cameraRig.Overview();
+
+            if (office.Stage != OfficeStage.EstablishedOffice)
+            {
+                yield return new WaitForSecondsRealtime(12f);
+                WorkerSelection.Select(office.Workers[0]);
+                cameraRig.FocusWorker(office.Workers[0], true);
+                yield return new WaitForSecondsRealtime(12f);
+                WorkerSelection.Clear();
+                cameraRig.Overview();
+                yield return new WaitForSecondsRealtime(8f);
+                Application.Quit(0);
+                yield break;
+            }
+
             yield return new WaitForSecondsRealtime(11f);
 
             WorkerAgent focusWorker = office.Workers[2];

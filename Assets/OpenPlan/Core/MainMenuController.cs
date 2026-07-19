@@ -11,6 +11,7 @@ namespace OpenPlan
             Time.timeScale = 1f;
             if (AutomatedCaptureDirector.Requested || AutomatedPerformanceDirector.Requested)
             {
+                OfficeStageSelection.SelectForNextLoad(OfficeStageSelection.Resolve(System.Environment.GetCommandLineArgs()));
                 SceneManager.LoadScene("Office");
                 return;
             }
@@ -31,11 +32,11 @@ namespace OpenPlan
                 new Vector2(.08f,.64f), new Vector2(.92f,.90f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
             OfficeUIFactory.Text(card, "Subtitle", "A TINY OFFICE WITH VERY LARGE OPINIONS", 24f, OfficeUIFactory.Orange,
                 new Vector2(.10f,.58f), new Vector2(.90f,.68f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
-            OfficeUIFactory.Text(card, "Pitch", "Observe the room. Hire carefully. Seat people wisely.\nReach $1,500 before the five-minute workday ends.", 27f, OfficeUIFactory.Paper,
+            OfficeUIFactory.Text(card, "Pitch", "Start small. Guide three workers. Earn the neighboring unit.\nThere is no countdown â€” expand when the business is ready.", 27f, OfficeUIFactory.Paper,
                 new Vector2(.12f,.38f), new Vector2(.88f,.56f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
             Button start = OfficeUIFactory.Button(card, "Start", "START WORKDAY", OfficeUIFactory.Orange, Color.white,
                 new Vector2(.28f,.22f), new Vector2(.72f,.33f), Vector2.zero, Vector2.zero);
-            start.onClick.AddListener(() => SceneManager.LoadScene("Office"));
+            start.onClick.AddListener(StartStarterOffice);
             Button quit = OfficeUIFactory.Button(card, "Quit", "QUIT", OfficeUIFactory.Burgundy, Color.white,
                 new Vector2(.40f,.10f), new Vector2(.60f,.17f), Vector2.zero, Vector2.zero);
             quit.onClick.AddListener(Application.Quit);
@@ -45,6 +46,12 @@ namespace OpenPlan
                 gameObject.AddComponent<AutomatedVideoMenuDriver>();
             if (PackageVerificationDirector.Requested)
                 gameObject.AddComponent<PackageVerificationMenuDriver>().Initialize(PackageVerificationDirector.Stage >= 2);
+        }
+
+        public void StartStarterOffice()
+        {
+            OfficeStageSelection.SelectForNextLoad(OfficeStage.StarterOffice);
+            SceneManager.LoadScene("Office");
         }
     }
 }

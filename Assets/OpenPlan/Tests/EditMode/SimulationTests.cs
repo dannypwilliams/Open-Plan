@@ -115,6 +115,36 @@ namespace OpenPlan.Tests
         [Test] public void WorkdayTimer_IsFiveMinutes()
             => Assert.That(WorkdayDirector.Duration, Is.EqualTo(300f));
 
+        [Test] public void StageSelection_DefaultsToStarterAndParsesExplicitStages()
+        {
+            Assert.That(OfficeStageSelection.Resolve(new string[0]), Is.EqualTo(OfficeStage.StarterOffice));
+            Assert.That(OfficeStageSelection.Resolve(new[] { "-openplan-stage", "EstablishedOffice" }), Is.EqualTo(OfficeStage.EstablishedOffice));
+            Assert.That(OfficeStageSelection.Resolve(new[] { "-openplan-stage=expanded" }), Is.EqualTo(OfficeStage.StarterOfficeExpanded));
+        }
+
+        [Test] public void LegacyCaptureSelection_IsEstablishedUnlessExplicitlyOverridden()
+        {
+            Assert.That(OfficeStageSelection.Resolve(new[] { "-openplan-capture" }), Is.EqualTo(OfficeStage.EstablishedOffice));
+            Assert.That(OfficeStageSelection.Resolve(new[] { "-openplan-capture", "-openplan-stage", "starter" }), Is.EqualTo(OfficeStage.StarterOffice));
+        }
+
+        [Test] public void WorkerCommand_RecordsPlacementIntent()
+        {
+            GameObject workerObject = new GameObject("Command worker");
+            WorkerAgent worker = workerObject.AddComponent<WorkerAgent>();
+            GameObject zoneObject = new GameObject("Command zone");
+            PlacementZone zone = zoneObject.AddComponent<ActivityPlacementZone>();
+            zone.Configure(PlacementActivity.GetWater, Vector3.zero);
+            WorkerCommand command = new WorkerCommand(worker, zone, PlacementActivity.GetWater, 12.5f, true);
+            Assert.That(command.worker, Is.EqualTo(worker));
+            Assert.That(command.destinationZone, Is.EqualTo(zone));
+            Assert.That(command.requestedActivity, Is.EqualTo(PlacementActivity.GetWater));
+            Assert.That(command.issueTime, Is.EqualTo(12.5f));
+            Assert.True(command.fromPlayerPlacement);
+            Object.DestroyImmediate(workerObject);
+            Object.DestroyImmediate(zoneObject);
+        }
+
         [Test] public void EndOfDayCalculation_UsesAllCosts()
         {
             int net = 1800 - 1200 - 250 - 110;

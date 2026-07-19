@@ -1,22 +1,32 @@
-# OPEN PLAN — Master Roadmap
+# OPEN PLAN - Master Roadmap
 
-Final status: all phases passed; release, media, tests, performance probe, and extracted-package verification completed on 2026-07-19.
+Status: worker-placement pivot checkpoint 1 implemented on 2026-07-19.
 
-## Product contract
+## Product direction
 
-Build one polished, five-minute, miniature office-management workday. The prototype proves that workers are charming to watch, seating decisions change output, and an orthographic camera moves smoothly between an individual and the whole floor.
+The first demo begins with a modest three-worker business and centers on picking up workers and placing them at readable activity areas. Work earns money without a time limit. The first milestone purchases and physically opens the neighboring unit. The released large office is retained as a later Established Office preview.
 
-## Phases
+## Pivot checkpoints
 
-| Phase | Outcome | Gate |
+| Checkpoint | Outcome | Gate |
 |---|---|---|
-| 0 | Unity 6 URP baseline, source layout, contracts, Blender and Git verification | Project imports and scripts compile |
-| 1 | Lit diorama beauty slice, camera, two workers, first generated assets | Three useful camera scales and an attractive no-UI composition |
-| 2 | Four-worker autonomous simulation | Work, needs, socializing, recovery, follow, pause and speeds are legible |
-| 3 | Complete management loop | Six workers, hiring, firing, seating, economy, tasks and report work |
-| 4 | Complete one-floor art pass | Authored office zones, props, lighting and readable navigation |
-| 5 | UI, audio, tests, balance, media, Windows build and verified package | Playable release launches from extracted ZIP |
+| 1 | Establish stage architecture and preserve the released office | Starter and Established stages initialize; menu defaults to Starter; all tests pass |
+| 2 | Build the authored Starter Office | Modest office is readable, attractive, and correctly framed |
+| 3 | Implement worker pickup and placement | Click-and-drag placement is clear, cancellable, and robust |
+| 4 | Make activity areas functional | Work, Rest, Water, Snack, Smoke, and Exit complete their loops |
+| 5 | Add personality and readable status | Needs, traits, names, states, and emotes explain behavior |
+| 6 | Add physical expansion | A $1,000 purchase opens the neighboring unit in-world |
+| 7 | Build tutorial and presentation | A new player can understand and complete the loop |
+| 8 | Balance, validate, and package | Tests, soak, media, Windows ZIP, and friend-demo flow pass |
+
+## Preserved release checkpoint
+
+Commit `a638304` remains the reference release for the original Established Office. Its large environment builder, art, amenities, camera composition, hiring/firing flow, screenshots, media, and release evidence are preserved. The pivot reuses its core simulation rather than replacing it.
 
 ## Stable-checkpoint policy
 
-Every phase ends with a report, an updated `RUN_STATE.md`, test or launch evidence, and a Git checkpoint. Scope remains one office floor; no campaign, city, building construction, multiplayer, or advanced persistence.
+Every checkpoint ends with updated run-state documentation, complete automated tests, an intentional worktree audit, and a Git checkpoint. Later work must not make the Established Office the default entry path.
+
+## Current non-goals
+
+Multiple purchasable properties; multiple cities or districts; multiple floors; managers and specialized roles; rival companies; promotions and relationships; complex finance; furniture-placement mode; and save-game persistence.

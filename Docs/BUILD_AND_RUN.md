@@ -1,34 +1,33 @@
 # Build and Run
 
-## Run the release
+## Open in Unity
 
-Launch `C:\Users\danny\Documents\GitHub\OpenPlan\outputs\OpenPlan-Windows\OpenPlan.exe`, or extract `outputs/OpenPlan-Windows.zip` and run `OpenPlan.exe` from the extracted `OpenPlan-Windows` folder. No Unity, Blender, repository, or absolute source path is required by the player.
+Open `C:\Users\danny\Documents\GitHub\OpenPlan` with Unity 6000.5.1f1.
 
-## Open and rebuild
+The normal Main Menu path starts the Starter Office. To open a stage directly from a development or automated player launch, add one of:
 
-Use Unity Hub with Unity 6000.5.1f1 and open `C:\Users\danny\Documents\GitHub\OpenPlan`. The editor menu **OPEN PLAN → Generate Complete Project** regenerates materials, catalogs, URP settings, and scenes. **OPEN PLAN → Build Windows Release** writes the required player.
-
-Equivalent PowerShell command:
-
-```powershell
-& 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics -quit `
-  -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' `
-  -executeMethod OpenPlan.Editor.ReleasePipeline.BuildWindows `
-  -logFile 'C:\Users\danny\Documents\GitHub\OpenPlan\Logs\build-windows.log'
+```text
+-openplan-stage StarterOffice
+-openplan-stage StarterOfficeExpanded
+-openplan-stage EstablishedOffice
 ```
 
-The pipeline builds a non-development Windows x64 player at `outputs/OpenPlan-Windows/OpenPlan.exe`.
+The existing `-openplan-capture`, `-openplan-video`, `-openplan-performance`, and `-openplan-verify-package` paths select Established Office by default unless paired with an explicit stage argument.
+
+## Generate and build
+
+The editor menu **OPEN PLAN -> Generate Complete Project** regenerates materials, catalogs, render settings, and the shared Main Menu and Office bootstrap scenes. **OPEN PLAN -> Build Windows Release** writes `outputs/OpenPlan-Windows/OpenPlan.exe`.
 
 ## Tests
 
 ```powershell
 & 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
   -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' -runTests -testPlatform EditMode `
-  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\Logs\EditMode-results.xml'
+  -testResults "$env:TEMP\OpenPlan-EditMode.xml"
 
 & 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
   -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' -runTests -testPlatform PlayMode `
-  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\Logs\PlayMode-results.xml'
+  -testResults "$env:TEMP\OpenPlan-PlayMode.xml"
 ```
 
-The final run passed 24 EditMode and 13 PlayMode tests.
+Checkpoint 1 passes 27 EditMode and 16 PlayMode tests.

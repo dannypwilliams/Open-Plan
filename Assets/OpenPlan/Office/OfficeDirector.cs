@@ -8,6 +8,7 @@ namespace OpenPlan
 {
     public sealed class OfficeDirector : MonoBehaviour
     {
+        public OfficeStage Stage { get; private set; }
         public OfficeAssetCatalog Catalog { get; private set; }
         public SeededRandomService Random { get; private set; }
         public TaskQueue Tasks { get; private set; }
@@ -21,7 +22,9 @@ namespace OpenPlan
         public NeedStation Elevator { get; private set; }
         public IReadOnlyList<WorkerAgent> Workers => workers;
         public IReadOnlyList<Workstation> Workstations => workstations;
+        public IReadOnlyList<PlacementZone> PlacementZones => placementZones;
         public IReadOnlyList<CandidateDefinition> Candidates => candidates;
+        public int WorkerCapacity => workstations.Count;
         public int ActiveWorkerCount { get { int count = 0; foreach (WorkerAgent worker in workers) if (worker != null && !worker.IsFired) count++; return count; } }
         public int Hires { get; private set; }
         public int Firings { get; private set; }
@@ -32,12 +35,14 @@ namespace OpenPlan
 
         private readonly List<WorkerAgent> workers = new List<WorkerAgent>();
         private readonly List<Workstation> workstations = new List<Workstation>();
+        private readonly List<PlacementZone> placementZones = new List<PlacementZone>();
         private readonly List<CandidateDefinition> candidates = new List<CandidateDefinition>();
         private int candidateSerial;
         private float overlayTick;
 
         private void Awake()
         {
+            Stage = OfficeStageSelection.ConsumeForOffice();
             Catalog = Resources.Load<OfficeAssetCatalog>("OpenPlanAssetCatalog");
             if (Catalog == null) { Debug.LogError("OPEN PLAN asset catalog missing. Run the release pipeline."); enabled = false; return; }
             Random = new SeededRandomService(19680412);
@@ -50,10 +55,11 @@ namespace OpenPlan
 
         private void Start()
         {
-            Transform world = new GameObject("Office Diorama").transform;
-            OfficeEnvironmentBuilder environment = new OfficeEnvironmentBuilder(Catalog, world);
+            Transform world = new GameObject(Stage + " Environment").transform;
+            IOfficeEnvironmentBuilder environment = CreateEnvironment(world);
             environment.Build();
             workstations.AddRange(environment.Workstations);
+            placementZones.AddRange(environment.PlacementZones);
             Coffee = environment.Coffee;
             Water = environment.Water;
             Break = environment.Break;
@@ -81,6 +87,13 @@ namespace OpenPlan
                 gameObject.AddComponent<AutomatedPerformanceDirector>().Initialize();
         }
 
+        private IOfficeEnvironmentBuilder CreateEnvironment(Transform world)
+        {
+            if (Stage == OfficeStage.EstablishedOffice)
+                return new OfficeEnvironmentBuilder(Catalog, world);
+            return new StarterOfficeEnvironmentBuilder(Catalog, world, Stage == OfficeStage.StarterOfficeExpanded);
+        }
+
         private void EnsureCamera()
         {
             if (Camera.main != null) return;
@@ -89,7 +102,7 @@ namespace OpenPlan
             cameraObject.AddComponent<AudioListener>();
             camera.tag = "MainCamera";
             camera.orthographic = true;
-            camera.orthographicSize = 17.8f;
+            camera.orthographicSize = Stage == OfficeStage.EstablishedOffice ? 17.8f : 11.5f;
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(.035f,.018f,.015f);
             cameraObject.AddComponent<OfficeCameraRig>().Initialize(this);
@@ -113,6 +126,19 @@ namespace OpenPlan
 
         private void SpawnStartingRoster()
         {
+            if (Stage != OfficeStage.EstablishedOffice)
+            {
+                WorkerDefinition[] starterDefinitions =
+                {
+                    Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly erodes focus", new Color(.90f,.22f,.18f)),
+                    Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby morale", "Starts long conversations", new Color(.12f,.72f,.68f)),
+                    Def("Sam", WorkerTrait.Lazy, .72f, 105, .44f, "Very low payroll cost", "Takes frequent breaks", new Color(.42f,.60f,.74f))
+                };
+                for (int i = 0; i < starterDefinitions.Length; i++)
+                    SpawnWorker(starterDefinitions[i], workstations[i], Elevator.UsePoint.position + new Vector3(i * .22f, 0f, 0f));
+                return;
+            }
+
             WorkerDefinition[] definitions =
             {
                 Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly erodes focus", new Color(.90f,.22f,.18f)),
@@ -150,7 +176,7 @@ namespace OpenPlan
         {
             reason = null;
             if (candidateIndex < 0 || candidateIndex >= candidates.Count) { reason = "Candidate is no longer available."; return false; }
-            if (ActiveWorkerCount >= 12) { reason = "Office capacity reached (12)."; return false; }
+            if (ActiveWorkerCount >= WorkerCapacity) { reason = $"Office capacity reached ({WorkerCapacity})."; return false; }
             Workstation desk = FindAvailableDesk();
             if (desk == null) { reason = "No available desk."; return false; }
             CandidateDefinition candidate = candidates[candidateIndex];
@@ -307,7 +333,7 @@ namespace OpenPlan
             => new WorkerDefinition { displayName = name, trait = trait, skill = skill, salary = salary, sociability = social, strength = strength, weakness = weakness, clothing = clothing };
         private static CandidateDefinition Candidate(WorkerDefinition worker, int cost) => new CandidateDefinition { worker = worker, hiringCost = cost };
 
-        public void Restart() { Time.timeScale = 1f; SceneManager.LoadScene("Office"); }
+        public void Restart() { Time.timeScale = 1f; OfficeStageSelection.SelectForNextLoad(Stage); SceneManager.LoadScene("Office"); }
         public void ReturnToMenu() { Time.timeScale = 1f; SceneManager.LoadScene("MainMenu"); }
     }
 }

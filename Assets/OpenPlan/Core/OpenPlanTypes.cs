@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace OpenPlan
 {
+    public enum OfficeStage { StarterOffice, StarterOfficeExpanded, EstablishedOffice }
+
+    public enum PlacementActivity { Work, Rest, GetWater, BuySnack, Smoke, LeaveOffice }
+
     public enum WorkerTrait { Focused, Social, Ambitious, Lazy, Anxious, Caffeinated }
 
     public enum WorkerState
@@ -15,6 +19,26 @@ namespace OpenPlan
     }
 
     public enum StationKind { Coffee, Water, Break, Meeting, Elevator }
+
+    [Serializable]
+    public sealed class WorkerCommand
+    {
+        public WorkerAgent worker;
+        public PlacementZone destinationZone;
+        public PlacementActivity requestedActivity;
+        public float issueTime;
+        public bool fromPlayerPlacement;
+
+        public WorkerCommand(WorkerAgent worker, PlacementZone destinationZone,
+            PlacementActivity requestedActivity, float issueTime, bool fromPlayerPlacement)
+        {
+            this.worker = worker;
+            this.destinationZone = destinationZone;
+            this.requestedActivity = requestedActivity;
+            this.issueTime = issueTime;
+            this.fromPlayerPlacement = fromPlayerPlacement;
+        }
+    }
 
     [Serializable]
     public sealed class WorkerDefinition

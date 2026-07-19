@@ -3,14 +3,16 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 
 namespace OpenPlan.Tests
 {
     public sealed class OfficeIntegrationTests
     {
-        private static IEnumerator LoadOffice()
+        private static IEnumerator LoadOffice(OfficeStage stage = OfficeStage.EstablishedOffice)
         {
             Time.timeScale = 1f;
+            OfficeStageSelection.SelectForNextLoad(stage);
             SceneManager.LoadScene("Office");
             yield return null;
             yield return null;
@@ -24,10 +26,48 @@ namespace OpenPlan.Tests
             Assert.NotNull(Object.FindFirstObjectByType<MainMenuController>());
         }
 
+        [UnityTest] public IEnumerator MainMenuStartEntersStarterOffice()
+        {
+            OfficeStageSelection.ClearPendingSelection();
+            SceneManager.LoadScene("MainMenu");
+            yield return null;
+            Button start = GameObject.Find("Start").GetComponent<Button>();
+            Assert.NotNull(start);
+            start.onClick.Invoke();
+            yield return null;
+            yield return null;
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.NotNull(office);
+            Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOffice));
+        }
+
+        [UnityTest] public IEnumerator StarterOfficeInitializesIndependentlyWithThreeWorkers()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOffice));
+            Assert.That(office.Workers.Count, Is.EqualTo(3));
+            Assert.That(office.Workstations.Count, Is.EqualTo(3));
+            Assert.False(office.Workday.IsTimed);
+            foreach (PlacementActivity activity in System.Enum.GetValues(typeof(PlacementActivity)))
+                Assert.That(office.PlacementZones, Has.Some.Property("Activity").EqualTo(activity));
+        }
+
+        [UnityTest] public IEnumerator ExpandedStarterInitializesWithAdditionalSpace()
+        {
+            yield return LoadOffice(OfficeStage.StarterOfficeExpanded);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOfficeExpanded));
+            Assert.That(office.Workers.Count, Is.EqualTo(3));
+            Assert.That(office.Workstations.Count, Is.EqualTo(6));
+            Assert.False(office.Workday.IsTimed);
+        }
+
         [UnityTest] public IEnumerator OfficeSceneLoadsAndWorkersSpawn()
         {
             yield return LoadOffice();
             OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.That(office.Stage, Is.EqualTo(OfficeStage.EstablishedOffice));
             Assert.That(office.Workers.Count, Is.EqualTo(6));
             Assert.That(office.Workstations.Count, Is.EqualTo(12));
             Assert.NotNull(office.Coffee);

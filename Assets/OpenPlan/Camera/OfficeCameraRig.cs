@@ -42,6 +42,7 @@ namespace OpenPlan
         private float zoomVelocity;
         private float lastClickTime;
         private WorkerAgent lastClicked;
+        private Vector3 overviewCenter;
 
         public float OrthographicSize => cameraComponent != null ? cameraComponent.orthographicSize : targetSize;
         public bool IsFollowing => follow.Active;
@@ -58,10 +59,12 @@ namespace OpenPlan
             cameraComponent.nearClipPlane = .1f;
             cameraComponent.farClipPlane = 120f;
             cameraComponent.allowHDR = true;
-            targetSize = profile.overviewSize;
-            focus.Set(Vector3.zero);
+            targetSize = director != null && director.Stage != OfficeStage.EstablishedOffice ? 11.5f : profile.overviewSize;
+            overviewCenter = director == null || director.Stage == OfficeStage.EstablishedOffice ? Vector3.zero :
+                director.Stage == OfficeStage.StarterOfficeExpanded ? new Vector3(1.2f, 0f, 0f) : new Vector3(-2.4f, 0f, 0f);
+            focus.Set(overviewCenter);
             transform.rotation = Quaternion.Euler(58f, 45f, 0f);
-            UpdateTransform(Vector3.zero);
+            UpdateTransform(overviewCenter);
         }
 
         private void Start()
@@ -78,7 +81,7 @@ namespace OpenPlan
             {
                 float scroll = mouse.scroll.ReadValue().y;
                 if (Mathf.Abs(scroll) > .1f)
-                    targetSize = Mathf.Clamp(targetSize - scroll * profile.zoomSensitivity, profile.closeSize, profile.overviewSize);
+                    targetSize = Mathf.Clamp(targetSize - scroll * profile.zoomSensitivity, profile.closeSize, OverviewSize());
                 if (mouse.middleButton.isPressed)
                 {
                     Vector2 delta = mouse.delta.ReadValue();
@@ -143,16 +146,18 @@ namespace OpenPlan
         public void Overview()
         {
             follow.Stop();
-            focus.Set(Vector3.zero);
-            targetSize = profile.overviewSize;
+            focus.Set(overviewCenter);
+            targetSize = OverviewSize();
         }
 
         public void FocusPoint(Vector3 point, float size)
         {
             follow.Stop();
             focus.Set(point);
-            targetSize = Mathf.Clamp(size, profile.closeSize, profile.overviewSize);
+            targetSize = Mathf.Clamp(size, profile.closeSize, OverviewSize());
         }
+
+        private float OverviewSize() => office != null && office.Stage != OfficeStage.EstablishedOffice ? 11.5f : profile.overviewSize;
 
         private Vector3 CurrentPivot() => transform.position + transform.forward * 38f;
 

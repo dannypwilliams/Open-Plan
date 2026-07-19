@@ -22,6 +22,17 @@ namespace OpenPlan
 
         private IEnumerator CaptureSequence()
         {
+            if (office.Stage != OfficeStage.EstablishedOffice)
+            {
+                yield return new WaitForSecondsRealtime(2f);
+                Camera.main.GetComponent<OfficeCameraRig>().Overview();
+                WorkerSelection.Clear();
+                yield return Capture(office.Stage + "_Overview.png");
+                File.WriteAllText(Path.Combine(output, "capture_complete.txt"), DateTime.UtcNow.ToString("O"));
+                Application.Quit(0);
+                yield break;
+            }
+
             yield return new WaitForSecondsRealtime(11f);
             OfficeCameraRig cameraRig = Camera.main.GetComponent<OfficeCameraRig>();
             WorkerSelection.Clear();

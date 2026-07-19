@@ -1,14 +1,20 @@
-# OPEN PLAN — Run State
+# OPEN PLAN - Run State
 
-- Current phase: 5 — release complete
-- Status: PASS
+- Current checkpoint: Worker-Placement Pivot 1 - Establish the Pivot
+- Status: implementation and pre-final verification PASS
+- Date: 2026-07-19
+- Branch: `codex/small-office-placement-pivot`
+- Base release: `a638304` (`release: pass phase 5 Windows prototype`)
 - Unity: 6000.5.1f1; Blender: 5.2.0 LTS
-- Blender assets: 47/47 validated
-- Automated tests: 37/37 passed (24 EditMode, 13 PlayMode)
-- Release performance: 119.88 fps average, 118.54 fps 1% low at 1920×1080
-- Windows player: `outputs/OpenPlan-Windows/OpenPlan.exe`
-- Package: `outputs/OpenPlan-Windows.zip`; final extracted-copy verification PASS
-- Evidence: 15 screenshots, 108-second gameplay MP4 with AAC audio, six-frame contact sheet
-- Product readiness: 79/100, all category floors passed
+- Default entry: Main Menu -> Starter Office
+- Starter roster: Morgan, Alex, Sam
+- Stages: Starter Office, Starter Office Expanded, Established Office
+- Starter timing: unlimited; no automatic finish or failure
+- Automated tests: 43/43 passed (27 EditMode, 16 PlayMode)
+- Baseline before edits: 37/37 passed (24 EditMode, 13 PlayMode)
+- Original large office: preserved as Established Office
+- Existing Windows release/package/media: preserved as historical `a638304` evidence; not rebuilt at this architecture checkpoint
 - Critical issues: none
-- Last stable checkpoint: final release build and package verification
+- Next checkpoint: Build the authored Starter Office
+
+The untracked `Docs/Prompts/` set existed before implementation and is intentionally not part of this checkpoint commit.

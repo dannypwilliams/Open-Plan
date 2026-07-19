@@ -11,8 +11,10 @@ namespace OpenPlan
         public const float Duration = 300f;
         public float Elapsed { get; private set; }
         public bool IsEnded { get; private set; }
-        public float Remaining => Mathf.Max(0f, Duration - Elapsed);
-        public float Progress01 => Mathf.Clamp01(Elapsed / Duration);
+        public bool IsTimed { get; private set; }
+        public float Remaining => IsTimed ? Mathf.Max(0f, Duration - Elapsed) : float.PositiveInfinity;
+        public float Progress01 => IsTimed ? Mathf.Clamp01(Elapsed / Duration) :
+            economy == null ? 0f : Mathf.Clamp01((float)economy.Revenue / Mathf.Max(1, economy.DailyTarget));
 
         private OfficeDirector office;
         private EconomyDirector economy;
@@ -25,14 +27,15 @@ namespace OpenPlan
             tasks = taskQueue;
             Elapsed = 0f;
             IsEnded = false;
+            IsTimed = office.Stage == OfficeStage.EstablishedOffice;
         }
 
         private void Update()
         {
             if (IsEnded || office == null) return;
             Elapsed += Time.deltaTime;
-            Tick?.Invoke(Remaining);
-            if (Elapsed >= Duration) Finish();
+            Tick?.Invoke(IsTimed ? Remaining : Elapsed);
+            if (IsTimed && Elapsed >= Duration) Finish();
         }
 
         public WorkdaySummary BuildSummary()

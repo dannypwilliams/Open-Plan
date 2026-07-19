@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace OpenPlan
 {
-    public sealed class Workstation : MonoBehaviour
+    public sealed class Workstation : PlacementZone
     {
         public int Index { get; private set; }
         public float Noise { get; private set; }
@@ -28,10 +28,8 @@ namespace OpenPlan
             BoxCollider clickCollider = gameObject.AddComponent<BoxCollider>();
             clickCollider.center = new Vector3(0f, 0.48f, 0f);
             clickCollider.size = new Vector3(1.85f, 1.0f, 1.05f);
-            GameObject point = new GameObject("WorkPoint");
-            point.transform.SetParent(transform, false);
-            point.transform.localPosition = new Vector3(0f, 0f, -0.95f);
-            WorkPoint = point.transform;
+            Configure(PlacementActivity.Work, new Vector3(0f, 0f, -0.95f), "Work");
+            WorkPoint = PlacementPoint;
         }
 
         public void Assign(WorkerAgent worker)

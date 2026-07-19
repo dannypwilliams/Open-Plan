@@ -14,7 +14,12 @@ namespace OpenPlan
         private IEnumerator Run()
         {
             yield return new WaitForSecondsRealtime(1.5f);
-            if (!finish) { SceneManager.LoadScene("Office"); yield break; }
+            if (!finish)
+            {
+                OfficeStageSelection.SelectForNextLoad(OfficeStageSelection.Resolve(Environment.GetCommandLineArgs()));
+                SceneManager.LoadScene("Office");
+                yield break;
+            }
             string marker = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "package-verification-pass.txt"));
             File.WriteAllText(marker, DateTime.UtcNow.ToString("O"));
             Debug.Log("PACKAGE VERIFY: return to menu and close PASS");
@@ -44,6 +49,14 @@ namespace OpenPlan
             Debug.Log("PACKAGE VERIFY: select worker PASS");
             SimulationSpeedController.Instance.SetSpeed(4f);
             Debug.Log("PACKAGE VERIFY: speed controls PASS");
+            if (office.Stage != OfficeStage.EstablishedOffice)
+            {
+                if (office.Workers.Count != 3) throw new InvalidOperationException("Starter stage did not create three workers");
+                Debug.Log($"PACKAGE VERIFY: {office.Stage} initialization PASS");
+                Stage = 1;
+                office.Restart();
+                yield break;
+            }
             if (!office.TryHire(0, out string hireReason)) throw new InvalidOperationException("Hire failed: " + hireReason);
             Debug.Log("PACKAGE VERIFY: hire PASS");
             office.BeginReassign();

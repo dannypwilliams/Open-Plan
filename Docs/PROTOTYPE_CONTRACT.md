@@ -1,20 +1,44 @@
 # Prototype Contract
 
-## Must prove
+## Current product direction
 
-1. Six tiny workers remain entertaining without player input.
-2. Hiring, firing and fixed-desk reassignment have visible economic and productivity consequences.
-3. Orthographic zoom and focus move smoothly from one worker to the complete diorama.
+OPEN PLAN is now a worker-placement-driven office simulation. The normal playable path starts in a cramped Level One office with Morgan, Alex, and Sam. The player observes the team, directs workers toward clear activity areas, earns cash without a countdown, and works toward purchasing the neighboring unit.
 
-## Required playable loop
+The released large office from commit `a638304` remains intact as the Established Office stage. It is a future-stage preview, not the normal starting environment.
 
-The player starts with $4,000, six employees, eight available desks, four expansion desks, three candidates, a shared task queue and a $1,500 daily target. A workday lasts 300 simulation seconds at 1×. The player can select, follow, reassign, hire, fire, pause, change speed and toggle productivity indicators. A printed report closes the day and supports restart or menu return.
+## Stage contract
 
-## Strict non-goals
+- `StarterOffice`: the default stage, with three workers and a temporary minimal environment.
+- `StarterOfficeExpanded`: the same business after its first physical expansion, with additional floor space and desk capacity.
+- `EstablishedOffice`: the preserved six-worker, twelve-desk released office and its management systems.
 
-No city, second floor, construction, furniture placement, departments, tech trees, finance metagame, commutes, families, romance, multiplayer, leaderboards, campaign saves, procedural city, photorealism or external runtime AI.
+The Main Menu always starts `StarterOffice`. Explicit developer and automation launches can select a stage with `-openplan-stage <StarterOffice|StarterOfficeExpanded|EstablishedOffice>`. Existing capture, video, performance, and package-verification arguments default to `EstablishedOffice` when no stage override is supplied so prior release evidence remains reproducible.
+
+## Placement architecture contract
+
+Every player-directed placement is represented by a `WorkerCommand` containing the worker, destination `PlacementZone`, requested `PlacementActivity`, issue time, and player-placement origin. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office.
+
+This checkpoint establishes those runtime boundaries. Click-and-drag interaction and complete activity behavior are delivered by later worker-placement checkpoints.
+
+## Simulation contract
+
+- Starter stages have no countdown and do not finish or fail automatically.
+- The first objective is to earn enough cash to purchase the neighboring unit.
+- The Established Office retains its released worker simulation, hiring, firing, reassignment, task economy, amenities, camera composition, and optional five-minute legacy workday.
+- Core worker, task, economy, UI, audio, and camera systems are shared across stages.
+
+## Current non-goals
+
+- Multiple purchasable properties.
+- Multiple cities or districts.
+- Multiple floors.
+- Managers and specialized roles.
+- Rival companies.
+- Promotions and relationships.
+- Complex finance.
+- Furniture-placement mode.
+- Save-game persistence.
 
 ## Completion evidence
 
-Source compile, EditMode and PlayMode results, actual 1920×1080 captures, a launchable Windows player, a ZIP extracted into a separate directory and a smoke-test record are required. Compile success alone is not completion.
-
+Each checkpoint must compile, run the complete EditMode and PlayMode suites, preserve prior release assets and evidence, document intentional migrations, and end with only intentional source changes.
