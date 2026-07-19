@@ -1,0 +1,384 @@
+{
+  "generator": "generate_open_plan_assets.py",
+  "blender": "5.2.0 LTS",
+  "unit": "meter",
+  "asset_count": 47,
+  "assets": [
+    {
+      "name": "Desk_A",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Desk_A.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Desk_A.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Desk_A.blend",
+      "objects": 6,
+      "triangles": 60
+    },
+    {
+      "name": "Desk_B",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Desk_B.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Desk_B.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Desk_B.blend",
+      "objects": 7,
+      "triangles": 72
+    },
+    {
+      "name": "OfficeChair",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_OfficeChair.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_OfficeChair.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_OfficeChair.blend",
+      "objects": 14,
+      "triangles": 364
+    },
+    {
+      "name": "Monitor",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Monitor.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Monitor.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Monitor.blend",
+      "objects": 5,
+      "triangles": 48
+    },
+    {
+      "name": "Keyboard",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Keyboard.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Keyboard.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Keyboard.blend",
+      "objects": 29,
+      "triangles": 336
+    },
+    {
+      "name": "Mouse",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Mouse.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Mouse.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Mouse.blend",
+      "objects": 2,
+      "triangles": 224
+    },
+    {
+      "name": "DeskLamp",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_DeskLamp.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_DeskLamp.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_DeskLamp.blend",
+      "objects": 4,
+      "triangles": 164
+    },
+    {
+      "name": "Mug",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Mug.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Mug.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Mug.blend",
+      "objects": 3,
+      "triangles": 252
+    },
+    {
+      "name": "PaperStack",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_PaperStack.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_PaperStack.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_PaperStack.blend",
+      "objects": 5,
+      "triangles": 48
+    },
+    {
+      "name": "FileTray",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_FileTray.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_FileTray.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_FileTray.blend",
+      "objects": 4,
+      "triangles": 36
+    },
+    {
+      "name": "DeskPlant",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_DeskPlant.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_DeskPlant.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_DeskPlant.blend",
+      "objects": 6,
+      "triangles": 940
+    },
+    {
+      "name": "CubicleDivider",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_CubicleDivider.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_CubicleDivider.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CubicleDivider.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "Nameplate",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Nameplate.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Nameplate.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Nameplate.blend",
+      "objects": 2,
+      "triangles": 12
+    },
+    {
+      "name": "WaterCooler",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_WaterCooler.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_WaterCooler.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_WaterCooler.blend",
+      "objects": 5,
+      "triangles": 128
+    },
+    {
+      "name": "CoffeeMachine",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_CoffeeMachine.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_CoffeeMachine.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CoffeeMachine.blend",
+      "objects": 4,
+      "triangles": 36
+    },
+    {
+      "name": "VendingMachine",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_VendingMachine.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_VendingMachine.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_VendingMachine.blend",
+      "objects": 4,
+      "triangles": 36
+    },
+    {
+      "name": "Printer",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Printer.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Printer.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Printer.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "Copier",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Copier.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Copier.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Copier.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "FilingCabinet",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_FilingCabinet.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_FilingCabinet.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_FilingCabinet.blend",
+      "objects": 10,
+      "triangles": 108
+    },
+    {
+      "name": "TrashBin",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_TrashBin.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_TrashBin.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_TrashBin.blend",
+      "objects": 3,
+      "triangles": 236
+    },
+    {
+      "name": "RecyclingBin",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_RecyclingBin.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_RecyclingBin.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_RecyclingBin.blend",
+      "objects": 3,
+      "triangles": 236
+    },
+    {
+      "name": "NoticeBoard",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_NoticeBoard.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_NoticeBoard.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_NoticeBoard.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "Clock",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Clock.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Clock.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Clock.blend",
+      "objects": 4,
+      "triangles": 148
+    },
+    {
+      "name": "ExitSign",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_ExitSign.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_ExitSign.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_ExitSign.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "ConferenceTable",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_ConferenceTable.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_ConferenceTable.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_ConferenceTable.blend",
+      "objects": 4,
+      "triangles": 36
+    },
+    {
+      "name": "MeetingChair",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_MeetingChair.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_MeetingChair.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_MeetingChair.blend",
+      "objects": 14,
+      "triangles": 364
+    },
+    {
+      "name": "Whiteboard",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Whiteboard.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Whiteboard.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Whiteboard.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "DisplayScreen",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_DisplayScreen.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_DisplayScreen.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_DisplayScreen.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "ReceptionDesk",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_ReceptionDesk.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_ReceptionDesk.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_ReceptionDesk.blend",
+      "objects": 4,
+      "triangles": 36
+    },
+    {
+      "name": "WaitingBench",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_WaitingBench.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_WaitingBench.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_WaitingBench.blend",
+      "objects": 5,
+      "triangles": 48
+    },
+    {
+      "name": "CompanySign",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_CompanySign.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_CompanySign.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CompanySign.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "VisitorChair",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_VisitorChair.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_VisitorChair.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_VisitorChair.blend",
+      "objects": 14,
+      "triangles": 364
+    },
+    {
+      "name": "Elevator",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Elevator.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Elevator.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Elevator.blend",
+      "objects": 7,
+      "triangles": 72
+    },
+    {
+      "name": "FloorSlab",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_FloorSlab.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_FloorSlab.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_FloorSlab.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "PartialWall",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_PartialWall.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_PartialWall.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_PartialWall.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "GlassWall",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_GlassWall.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_GlassWall.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_GlassWall.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "WindowModule",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_WindowModule.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_WindowModule.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_WindowModule.blend",
+      "objects": 6,
+      "triangles": 60
+    },
+    {
+      "name": "StructuralColumn",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_StructuralColumn.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_StructuralColumn.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_StructuralColumn.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "Door",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Door.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Door.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Door.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "Bookshelf",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Bookshelf.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Bookshelf.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Bookshelf.blend",
+      "objects": 22,
+      "triangles": 252
+    },
+    {
+      "name": "Counter",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Counter.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Counter.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Counter.blend",
+      "objects": 5,
+      "triangles": 48
+    },
+    {
+      "name": "Cabinet",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Cabinet.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Cabinet.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Cabinet.blend",
+      "objects": 10,
+      "triangles": 108
+    },
+    {
+      "name": "PottedPlant",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_PottedPlant.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_PottedPlant.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_PottedPlant.blend",
+      "objects": 8,
+      "triangles": 1200
+    },
+    {
+      "name": "TallPlant",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_TallPlant.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_TallPlant.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_TallPlant.blend",
+      "objects": 10,
+      "triangles": 1648
+    },
+    {
+      "name": "CardboardBox",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_CardboardBox.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_CardboardBox.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CardboardBox.blend",
+      "objects": 4,
+      "triangles": 36
+    },
+    {
+      "name": "ElevatorIndicator",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_ElevatorIndicator.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_ElevatorIndicator.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_ElevatorIndicator.blend",
+      "objects": 3,
+      "triangles": 24
+    },
+    {
+      "name": "Worker",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Worker.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Worker.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Worker.blend",
+      "objects": 13,
+      "triangles": 1724
+    }
+  ]
+}

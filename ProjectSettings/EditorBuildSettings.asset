@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/OpenPlan/Scenes/MainMenu.unity
+    guid: 5f30eca911cd48b428fbc5f547665677
+  - enabled: 1
+    path: Assets/OpenPlan/Scenes/Office.unity
+    guid: 247632671c0de8245b4755bac60b0bd3
   m_configObjects: {}
