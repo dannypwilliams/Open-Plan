@@ -1,0 +1,9 @@
+{
+  "resolution": "1920x1080",
+  "sampleSeconds": 20,
+  "frames": 2398,
+  "averageFps": 119.88,
+  "onePercentLowFps": 118.54,
+  "worstFrameMs": 8.49,
+  "peakGcAllocatedInFrameBytes": 0
+}

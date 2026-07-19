@@ -20,6 +20,6 @@
 sysinfo.txt
 crashlytics-build.properties
 outputs/OpenPlan-Windows/
-outputs/PackageVerification/
+outputs/PackageVerification*/
+outputs/OpenPlan-Windows-pre-*.zip
 Tools/Blender/Logs/*.log
-

@@ -1,5 +1,7 @@
 # OPEN PLAN — Master Roadmap
 
+Final status: all phases passed; release, media, tests, performance probe, and extracted-package verification completed on 2026-07-19.
+
 ## Product contract
 
 Build one polished, five-minute, miniature office-management workday. The prototype proves that workers are charming to watch, seating decisions change output, and an orthographic camera moves smoothly between an individual and the whole floor.
@@ -18,4 +20,3 @@ Build one polished, five-minute, miniature office-management workday. The protot
 ## Stable-checkpoint policy
 
 Every phase ends with a report, an updated `RUN_STATE.md`, test or launch evidence, and a Git checkpoint. Scope remains one office floor; no campaign, city, building construction, multiplayer, or advanced persistence.
-
