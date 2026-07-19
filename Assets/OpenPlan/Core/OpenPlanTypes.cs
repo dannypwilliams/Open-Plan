@@ -8,6 +8,8 @@ namespace OpenPlan
 
     public enum PlacementActivity { Work, Rest, GetWater, BuySnack, Smoke, LeaveOffice }
 
+    public enum AwayReason { Lunch, Errand, LongBreak, OffSiteTask }
+
     public enum WorkerTrait { Focused, Social, Ambitious, Lazy, Anxious, Caffeinated }
 
     public enum WorkerState
@@ -15,7 +17,8 @@ namespace OpenPlan
         EnterOffice, WalkToDesk, Work, IdleAtDesk, SeekCoffee, UseCoffeeMachine,
         SeekWater, UseWaterCooler, SeekCoworker, Socialize, TakeBreak,
         WalkToMeeting, Meeting, ReturnToDesk, React, FiredReaction, PackDesk,
-        CarryBox, ExitOffice, RecoverFromStuck, WalkToPlacement, BuySnack, Smoke, LeaveOffice
+        CarryBox, ExitOffice, RecoverFromStuck, WalkToPlacement, BuySnack, Smoke,
+        WalkOutForAway, Away, ReturnFromAway
     }
 
     public enum StationKind { Coffee, Water, Break, Meeting, Elevator }
@@ -59,10 +62,16 @@ namespace OpenPlan
     public sealed class WorkerRuntimeState
     {
         [Range(0f, 1f)] public float energy = 0.86f;
-        [Range(0f, 1f)] public float focus = 0.82f;
-        [Range(0f, 1f)] public float morale = 0.78f;
+        [Range(0f, 1f)] public float mood = 0.78f;
+        [Range(0f, 1f)] public float stress = 0.22f;
         [Range(0f, 1f)] public float socialNeed = 0.15f;
         public float effectiveProductivity = 1f;
+        public float focusedWorkSecondsRemaining;
+        public float waterCooldown;
+        public float vendingCooldown;
+        public float smokingCooldown;
+        public float awaySecondsRemaining;
+        public AwayReason awayReason;
         public float workSeconds;
         public float socialSeconds;
         public float lowEnergySeconds;
@@ -119,9 +128,10 @@ namespace OpenPlan
         public const float Minimum = 0.10f;
         public const float Maximum = 2.50f;
 
-        public static float FocusModifier(float focus) => Mathf.Lerp(0.45f, 1.15f, Mathf.Clamp01(focus));
         public static float EnergyModifier(float energy) => Mathf.Lerp(0.55f, 1.10f, Mathf.Clamp01(energy));
-        public static float MoraleModifier(float morale) => Mathf.Lerp(0.70f, 1.10f, Mathf.Clamp01(morale));
+        public static float MoodModifier(float mood) => Mathf.Lerp(0.70f, 1.10f, Mathf.Clamp01(mood));
+        public static float InverseStressModifier(float stress) => Mathf.Lerp(1.15f, 0.55f, Mathf.Clamp01(stress));
+        public static float FocusedWorkModifier(float remainingSeconds) => remainingSeconds > 0f ? 1.20f : 1f;
 
         public static float TraitModifier(WorkerTrait trait, float noise, float companyProgress, float energy)
         {
@@ -137,12 +147,51 @@ namespace OpenPlan
             }
         }
 
-        public static float Evaluate(float skill, float focus, float energy, float morale,
-            float workstation, float nearby, float trait)
+        public static float Evaluate(float skill, float energy, float mood, float stress,
+            float workstation, float trait, float manualFocusedWork)
         {
-            float value = skill * FocusModifier(focus) * EnergyModifier(energy) *
-                          MoraleModifier(morale) * workstation * nearby * trait;
+            float value = skill * EnergyModifier(energy) * MoodModifier(mood) *
+                          InverseStressModifier(stress) * workstation * trait * manualFocusedWork;
             return Mathf.Clamp(value, Minimum, Maximum);
+        }
+    }
+
+    /// <summary>One readable tuning table for all player-directed activity effects.</summary>
+    public static class ActivityRules
+    {
+        public const float RestDuration = 20f;
+        public const float WaterDuration = 6f;
+        public const float VendingDuration = 8f;
+        public const float SmokingDuration = 12f;
+        public const float AwayDuration = 30f;
+        public const float FocusedWorkDuration = 30f;
+        public const float WaterCooldown = 35f;
+        public const float VendingCooldown = 45f;
+        public const float SmokingCooldown = 45f;
+        public const float SnackCost = 15f;
+        public const float VendingMalfunctionChance = .10f;
+        public const float WorkEnergyDrainPerSecond = .0018f;
+        public const float WorkStressGainPerSecond = .0012f;
+        public const float HighStressThreshold = .70f;
+        public const float HighStressMoodDrainPerSecond = .0005f;
+
+        public static void ChangeNeeds(WorkerRuntimeState state, float energy, float mood, float stress)
+        {
+            if (state == null) return;
+            state.energy = Mathf.Clamp01(state.energy + energy);
+            state.mood = Mathf.Clamp01(state.mood + mood);
+            state.stress = Mathf.Clamp01(state.stress + stress);
+        }
+
+        public static void ApplyRest(WorkerRuntimeState state) => ChangeNeeds(state, .35f, .12f, -.25f);
+        public static void ApplyWater(WorkerRuntimeState state) => ChangeNeeds(state, .08f, .05f, -.05f);
+        public static void ApplySnack(WorkerRuntimeState state, bool malfunction)
+            => ChangeNeeds(state, malfunction ? .05f : .25f, malfunction ? -.05f : .15f, malfunction ? 0f : -.08f);
+        public static void ApplySmoke(WorkerRuntimeState state) => ChangeNeeds(state, 0f, .05f, -.30f);
+        public static void ApplyAwayStep(WorkerRuntimeState state, float simulationSeconds)
+        {
+            float fraction = Mathf.Max(0f, simulationSeconds) / AwayDuration;
+            ChangeNeeds(state, .45f * fraction, .12f * fraction, -.35f * fraction);
         }
     }
 
@@ -152,7 +201,7 @@ namespace OpenPlan
             => Mathf.Clamp01(current - Mathf.Max(0f, deltaSeconds) * Mathf.Max(0f, rate));
         public static float RestoreCoffee(float current, bool caffeinated)
             => Mathf.Clamp01(current + (caffeinated ? .62f : .42f));
-        public static float ChangeMorale(float current, float amount) => Mathf.Clamp01(current + amount);
+        public static float ChangeMood(float current, float amount) => Mathf.Clamp01(current + amount);
         public static bool CooldownReady(float cooldown) => cooldown <= 0f;
         public static float ScaledDelta(float unscaledDelta, float speed) => Mathf.Max(0f, unscaledDelta) * Mathf.Clamp(speed, 0f, 4f);
         public static float ClampZoom(float value, float close, float overview) => Mathf.Clamp(value, close, overview);

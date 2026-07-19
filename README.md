@@ -2,7 +2,9 @@
 
 OPEN PLAN is an isometric office-management simulation about guiding a tiny team and growing a struggling business. The current pivot starts with Morgan, Alex, and Sam in a cramped office. The player will pick workers up, place them at clear activity areas, earn money without a countdown, and purchase the neighboring unit to physically expand.
 
-Checkpoint 3 makes worker pickup and placement the primary interaction in the authored Starter Office. Workers can be clicked for information or lifted and dragged to readable activity footprints; invalid, occupied, and locked drops explain the rejection and safely restore the worker. Full activity effects and the neighboring-unit purchase sequence remain assigned to later checkpoints.
+Checkpoint 4 makes every placement area functional. Desk work generates continuous cash; Rest, Water, Snack, Smoke, and Leave Office run distinct timed activities with readable poses, exact Energy/Mood/Stress effects, cooldowns, costs, props, and safe interruption. The neighboring-unit purchase sequence remains assigned to checkpoint 6.
+
+The Starter Office begins with $100. Desk work earns `$60/min × effective productivity`; pausing stops simulation income. Manual desk placement grants a non-stacking +20% Focused Work bonus for 30 simulation seconds.
 
 ## Stages
 
@@ -32,6 +34,6 @@ Run a specific development stage with `-openplan-stage <stage name>`. Existing r
 - Rebuild through **OPEN PLAN -> Build Windows Release**.
 - See [BUILD_AND_RUN.md](Docs/BUILD_AND_RUN.md) and [TEST_REPORT.md](Docs/TEST_REPORT.md) for commands and verification.
 
-The Blender catalog contains 54 validated assets. Checkpoint 3 placement evidence is captured in `outputs/Screenshots/StarterOffice_Valid_Placement.png` and `outputs/Screenshots/StarterOffice_Invalid_Placement.png`.
+The Blender catalog contains 54 validated assets. Placement evidence and the checkpoint 4 packaged activity-cycle report are preserved under `outputs/Screenshots`.
 
 The previous Windows executable, screenshots, gameplay video, and package evidence remain preserved as the `a638304` Established Office release.

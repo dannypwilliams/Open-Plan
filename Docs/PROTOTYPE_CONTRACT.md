@@ -18,7 +18,23 @@ The Main Menu always starts `StarterOffice`. Explicit developer and automation l
 
 Every player-directed placement is represented by a `WorkerCommand` containing the worker, destination `PlacementZone`, requested `PlacementActivity`, issue time, and player-placement origin. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office.
 
-The player presses and holds on a worker, then moves more than six screen pixels or holds for 0.12 seconds to begin carrying. A simple click only selects. Valid release lowers the worker, issues a `WorkerCommand`, and walks the final segment; invalid release restores position and state without consuming gameplay resources. Escape and right-click cancel. Complete activity effects are delivered by checkpoint 4.
+The player presses and holds on a worker, then moves more than six screen pixels or holds for 0.12 seconds to begin carrying. A simple click only selects. Valid release lowers the worker, issues a `WorkerCommand`, and walks the final segment; invalid release restores position and state without consuming gameplay resources. Escape and right-click cancel.
+
+## Needs, productivity, and cash contract
+
+- Player-facing needs are Energy and Mood (higher is better) plus Stress (lower is better), each clamped to 0-1. The former Focus and Morale needs no longer exist.
+- Productivity is `skill × energy modifier × mood modifier × inverse stress modifier × workstation modifier × trait modifier × Focused Work modifier`, clamped to 0.10x-2.50x.
+- Starter cash begins at $100. Desk work earns `$60/min × effective productivity` continuously in simulation time; pause stops income. Current cash and lifetime earned are tracked separately.
+- Manual Work placement refreshes a +20% Focused Work modifier to 30 seconds; it never stacks.
+
+## Activity contract
+
+- Work drains Energy at 0.0018/s before trait persistence, raises Stress at 0.0012/s before workstation noise, and drains Mood at 0.0005/s above 0.70 Stress.
+- Rest lasts 20 seconds and grants Energy +0.35, Mood +0.12, Stress -0.25.
+- Get Water lasts 6 seconds and grants Energy +0.08, Mood +0.05, Stress -0.05, followed by a 35-second cooldown. A nearby worker permits a short social beat.
+- Buy Snack charges $15 exactly once when use begins, lasts 8 seconds, and then enters a 45-second cooldown. Normal: Energy +0.25, Mood +0.15, Stress -0.08. Seeded 10% malfunction: Energy +0.05, Mood -0.05, no Stress change; the charge remains.
+- Smoke lasts 12 seconds, grants Mood +0.05 and Stress -0.30, then enters a 45-second cooldown. Its worker-held cigarette and restrained particles are transient and always cleaned up.
+- Leave Office walks through the real exit, selects Lunch, Errand, Long break, or Off-site task, hides only outside, recovers Energy +0.45, Mood +0.12, and Stress -0.35 over 30 seconds, then reappears at the entrance and returns to autonomous work.
 
 ## Simulation contract
 

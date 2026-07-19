@@ -9,14 +9,14 @@ namespace OpenPlan.Tests
     {
         [Test] public void ProductivityFormula_UsesReadableFactors()
         {
-            float value = ProductivityModel.Evaluate(1.1f, .8f, .7f, .9f, 1.05f, .98f, 1.1f);
+            float value = ProductivityModel.Evaluate(1.1f, .7f, .9f, .2f, 1.05f, 1.1f, 1.2f);
             Assert.That(value, Is.InRange(.8f, 1.6f));
         }
 
-        [TestCase(0f, 0f, 0f, .1f)]
-        [TestCase(9f, 1f, 1f, 2.5f)]
-        public void ProductivityFormula_Clamps(float skill, float focus, float energy, float expected)
-            => Assert.That(ProductivityModel.Evaluate(skill, focus, energy, energy, 1f, 1f, 1f), Is.EqualTo(expected).Within(.001f));
+        [TestCase(0f, 0f, 0f, 1f, .1f)]
+        [TestCase(9f, 1f, 1f, 0f, 2.5f)]
+        public void ProductivityFormula_Clamps(float skill, float energy, float mood, float stress, float expected)
+            => Assert.That(ProductivityModel.Evaluate(skill, energy, mood, stress, 1f, 1f, 1f), Is.EqualTo(expected).Within(.001f));
 
         [Test] public void TraitModifiers_AreContextual()
         {
@@ -25,16 +25,15 @@ namespace OpenPlan.Tests
             Assert.That(ProductivityModel.TraitModifier(WorkerTrait.Caffeinated, .4f, .5f, .9f), Is.GreaterThan(ProductivityModel.TraitModifier(WorkerTrait.Caffeinated, .4f, .5f, .3f)));
         }
 
-        [Test] public void NearbyWorkerModifier_RemainsBounded()
+        [Test] public void FocusedWorkModifier_IsTwentyPercentAndDoesNotStack()
         {
-            float low = ProductivityModel.Evaluate(1f, .8f, .8f, .8f, 1f, .82f, 1f);
-            float high = ProductivityModel.Evaluate(1f, .8f, .8f, .8f, 1f, 1.18f, 1f);
-            Assert.That(high, Is.GreaterThan(low));
-            Assert.That(high / low, Is.LessThan(1.5f));
+            Assert.That(ProductivityModel.FocusedWorkModifier(0f), Is.EqualTo(1f));
+            Assert.That(ProductivityModel.FocusedWorkModifier(30f), Is.EqualTo(1.2f));
+            Assert.That(ProductivityModel.FocusedWorkModifier(60f), Is.EqualTo(1.2f));
         }
 
-        [Test] public void FocusModifier_DecaysOutputAndRestoresOutput()
-            => Assert.That(ProductivityModel.FocusModifier(.9f), Is.GreaterThan(ProductivityModel.FocusModifier(.2f)));
+        [Test] public void InverseStressModifier_RewardLowStress()
+            => Assert.That(ProductivityModel.InverseStressModifier(.2f), Is.GreaterThan(ProductivityModel.InverseStressModifier(.9f)));
 
         [Test] public void EnergyDecay_IsBounded()
             => Assert.That(SimulationRules.DecayEnergy(.5f, 1000f), Is.EqualTo(0f));
@@ -42,10 +41,92 @@ namespace OpenPlan.Tests
         [Test] public void CoffeeRestore_CaffeinatedGetsLargerBoost()
             => Assert.That(SimulationRules.RestoreCoffee(.2f, true), Is.GreaterThan(SimulationRules.RestoreCoffee(.2f, false)));
 
-        [Test] public void MoraleChanges_ClampToValidRange()
+        [Test] public void MoodChanges_ClampToValidRange()
         {
-            Assert.That(SimulationRules.ChangeMorale(.9f, .5f), Is.EqualTo(1f));
-            Assert.That(SimulationRules.ChangeMorale(.1f, -.5f), Is.EqualTo(0f));
+            Assert.That(SimulationRules.ChangeMood(.9f, .5f), Is.EqualTo(1f));
+            Assert.That(SimulationRules.ChangeMood(.1f, -.5f), Is.EqualTo(0f));
+        }
+
+        [Test] public void ActivityEffects_AreExactAndNeedsClamp()
+        {
+            var state = new WorkerRuntimeState { energy = .40f, mood = .40f, stress = .60f };
+            ActivityRules.ApplyRest(state);
+            Assert.That(state.energy, Is.EqualTo(.75f).Within(.0001f));
+            Assert.That(state.mood, Is.EqualTo(.52f).Within(.0001f));
+            Assert.That(state.stress, Is.EqualTo(.35f).Within(.0001f));
+            ActivityRules.ChangeNeeds(state, 2f, 2f, -2f);
+            Assert.That(state.energy, Is.EqualTo(1f));
+            Assert.That(state.mood, Is.EqualTo(1f));
+            Assert.That(state.stress, Is.EqualTo(0f));
+        }
+
+        [Test] public void WaterSnackSmokeAndAwayEffects_AreExact()
+        {
+            var water = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
+            ActivityRules.ApplyWater(water);
+            Assert.That(water.energy, Is.EqualTo(.48f).Within(.0001f));
+            Assert.That(water.mood, Is.EqualTo(.45f).Within(.0001f));
+            Assert.That(water.stress, Is.EqualTo(.55f).Within(.0001f));
+
+            var snack = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
+            ActivityRules.ApplySnack(snack, false);
+            Assert.That(snack.energy, Is.EqualTo(.65f).Within(.0001f));
+            Assert.That(snack.mood, Is.EqualTo(.55f).Within(.0001f));
+            Assert.That(snack.stress, Is.EqualTo(.52f).Within(.0001f));
+
+            var malfunction = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
+            ActivityRules.ApplySnack(malfunction, true);
+            Assert.That(malfunction.energy, Is.EqualTo(.45f).Within(.0001f));
+            Assert.That(malfunction.mood, Is.EqualTo(.35f).Within(.0001f));
+            Assert.That(malfunction.stress, Is.EqualTo(.6f).Within(.0001f));
+
+            var smoke = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
+            ActivityRules.ApplySmoke(smoke);
+            Assert.That(smoke.mood, Is.EqualTo(.45f).Within(.0001f));
+            Assert.That(smoke.stress, Is.EqualTo(.3f).Within(.0001f));
+
+            var away = new WorkerRuntimeState { energy = .2f, mood = .3f, stress = .8f };
+            ActivityRules.ApplyAwayStep(away, ActivityRules.AwayDuration);
+            Assert.That(away.energy, Is.EqualTo(.65f).Within(.0001f));
+            Assert.That(away.mood, Is.EqualTo(.42f).Within(.0001f));
+            Assert.That(away.stress, Is.EqualTo(.45f).Within(.0001f));
+        }
+
+        [Test] public void ActivityDurationsCostsAndCooldowns_AreContractValues()
+        {
+            Assert.That(ActivityRules.RestDuration, Is.EqualTo(20f));
+            Assert.That(ActivityRules.WaterDuration, Is.EqualTo(6f));
+            Assert.That(ActivityRules.VendingDuration, Is.EqualTo(8f));
+            Assert.That(ActivityRules.SmokingDuration, Is.EqualTo(12f));
+            Assert.That(ActivityRules.AwayDuration, Is.EqualTo(30f));
+            Assert.That(ActivityRules.FocusedWorkDuration, Is.EqualTo(30f));
+            Assert.That(ActivityRules.WaterCooldown, Is.EqualTo(35f));
+            Assert.That(ActivityRules.VendingCooldown, Is.EqualTo(45f));
+            Assert.That(ActivityRules.SmokingCooldown, Is.EqualTo(45f));
+            Assert.That(ActivityRules.SnackCost, Is.EqualTo(15f));
+        }
+
+        [Test] public void SeededVendingMalfunction_IsRepeatableAtTenPercentRule()
+        {
+            Assert.True(new SeededRandomService(14).Chance(ActivityRules.VendingMalfunctionChance));
+            Assert.False(new SeededRandomService(0).Chance(ActivityRules.VendingMalfunctionChance));
+        }
+
+        [Test] public void CashDirector_StartsAtOneHundredAndAccruesContinuousIncome()
+        {
+            GameObject go = new GameObject("Cash test");
+            CashDirector cash = go.AddComponent<CashDirector>();
+            cash.Initialize();
+            Assert.That(cash.CurrentCash, Is.EqualTo(100f));
+            cash.AccrueDeskIncome(2f, 30f);
+            Assert.That(cash.CurrentCash, Is.EqualTo(160f).Within(.0001f));
+            Assert.That(cash.LifetimeEarned, Is.EqualTo(60f).Within(.0001f));
+            cash.AccrueDeskIncome(2f, 0f);
+            Assert.That(cash.CurrentCash, Is.EqualTo(160f).Within(.0001f));
+            Assert.True(cash.TrySpend(15f));
+            Assert.That(cash.CurrentCash, Is.EqualTo(145f).Within(.0001f));
+            Assert.That(cash.LifetimeSpent, Is.EqualTo(15f).Within(.0001f));
+            Object.DestroyImmediate(go);
         }
 
         [Test] public void SocialCooldown_BlocksUntilZero()

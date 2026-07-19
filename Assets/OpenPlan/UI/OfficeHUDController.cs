@@ -215,11 +215,17 @@ namespace OpenPlan
             int seconds = Mathf.FloorToInt(remaining % 60f);
             string clock = office.Workday.IsTimed ? $"DAY  {minutes:00}:{seconds:00}" : "OPEN ENDED";
             string speed = SimulationSpeedController.Instance == null || SimulationSpeedController.Instance.IsPaused ? "PAUSED" : SimulationSpeedController.Instance.Speed + "×";
-            hudText.text = $"{clock}     REVENUE  ${office.Economy.Revenue:N0} / ${office.Economy.DailyTarget:N0}     CASH  ${office.Economy.Cash:N0}     PAYROLL  ${office.Economy.Payroll:N0}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
             TaskRuntime task = office.Tasks.Current;
-            taskText.text = task == null ? "INBOX CLEAR" : $"REACH TODAY'S REVENUE TARGET\n{task.definition.title.ToUpperInvariant()}  {office.Tasks.Progress01:P0}  •  ${task.definition.revenue:N0}";
-            if (office.Stage != OfficeStage.EstablishedOffice && task != null)
-                taskText.text = $"EARN THE NEIGHBORING UNIT - NO TIME LIMIT\n{task.definition.title.ToUpperInvariant()}  {office.Tasks.Progress01:P0}  -  ${task.definition.revenue:N0}";
+            if (office.Stage == OfficeStage.EstablishedOffice)
+            {
+                hudText.text = $"{clock}     REVENUE  ${office.Economy.Revenue:N0} / ${office.Economy.DailyTarget:N0}     CASH  ${office.Economy.Cash:N0}     PAYROLL  ${office.Economy.Payroll:N0}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
+                taskText.text = task == null ? "INBOX CLEAR" : $"REACH TODAY'S REVENUE TARGET\n{task.definition.title.ToUpperInvariant()}  {office.Tasks.Progress01:P0}  -  ${task.definition.revenue:N0}";
+            }
+            else
+            {
+                hudText.text = $"{clock}     CASH  ${office.Cash.CurrentCash:N2}     LIFETIME EARNED  ${office.Cash.LifetimeEarned:N2}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
+                taskText.text = $"EARN $1,000 TO PURCHASE THE NEIGHBORING UNIT - NO TIME LIMIT\nDESK WORK EARNS $60/MIN × PRODUCTIVITY";
+            }
             RefreshInspector();
         }
 
@@ -229,7 +235,11 @@ namespace OpenPlan
             if (worker == null || inspectorText == null) return;
             WorkerRuntimeState state = worker.Runtime;
             string desk = worker.Desk != null ? $"Desk {worker.Desk.Index + 1} / {worker.Desk.ZoneLabel}" : "Unassigned";
-            inspectorText.text = $"<size=36><b>{worker.Definition.displayName}</b></size>\n{worker.Definition.trait}  •  ${worker.Definition.salary:N0}/day\n\nSKILL        {worker.Definition.skill:0.00}\nPRODUCTIVITY {state.effectiveProductivity:0.00}×\nENERGY       {Bar(state.energy)} {state.energy:P0}\nFOCUS        {Bar(state.focus)} {state.focus:P0}\nMORALE       {Bar(state.morale)} {state.morale:P0}\n\nCURRENT  {Pretty(state.behavior)}\n\n<size=19><color=#267C78>+ {state.positiveInfluence}</color>\n<color=#9C332B>– {state.negativeInfluence}</color>\n\nASSIGNED  {desk}</size>";
+            string away = state.behavior == WorkerState.Away ?
+                $"\nAWAY         {worker.AwayReasonLabel}  •  RETURN {Mathf.CeilToInt(state.awaySecondsRemaining)}s" : string.Empty;
+            string focused = state.focusedWorkSecondsRemaining > 0f ?
+                $"\nFOCUSED WORK +20%  {Mathf.CeilToInt(state.focusedWorkSecondsRemaining)}s" : string.Empty;
+            inspectorText.text = $"<size=36><b>{worker.Definition.displayName}</b></size>\n{worker.Definition.trait}\n\nSKILL        {worker.Definition.skill:0.00}\nPRODUCTIVITY {state.effectiveProductivity:0.00}×\nENERGY       {Bar(state.energy)} {state.energy:P0}\nMOOD         {Bar(state.mood)} {state.mood:P0}\nSTRESS       {Bar(state.stress)} {state.stress:P0}\n\nCURRENT      {Pretty(state.behavior)}{away}{focused}\n\n<size=19><color=#267C78>+ {state.positiveInfluence}</color>\n<color=#9C332B>– {state.negativeInfluence}</color>\n\nASSIGNED  {desk}</size>";
         }
 
         private void ToggleHiring()

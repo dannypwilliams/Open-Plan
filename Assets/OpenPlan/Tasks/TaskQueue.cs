@@ -27,7 +27,7 @@ namespace OpenPlan
                     title = names[i % names.Length],
                     workRequired = random.Range(74f, 108f),
                     revenue = random.Range(180, 325),
-                    preference = i % 3 == 0 ? "Deep focus" : i % 3 == 1 ? "Collaboration" : "General",
+                    preference = i % 3 == 0 ? "Deep work" : i % 3 == 1 ? "Collaboration" : "General",
                     priority = 3 - (i % 3)
                 });
             }

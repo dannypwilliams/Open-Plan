@@ -13,6 +13,7 @@ namespace OpenPlan
         public SeededRandomService Random { get; private set; }
         public TaskQueue Tasks { get; private set; }
         public EconomyDirector Economy { get; private set; }
+        public CashDirector Cash { get; private set; }
         public WorkdayDirector Workday { get; private set; }
         public HiringDirector Hiring { get; private set; }
         public FiringDirector Firing { get; private set; }
@@ -29,6 +30,10 @@ namespace OpenPlan
         public IReadOnlyList<Workstation> Workstations => workstations;
         public IReadOnlyList<PlacementZone> PlacementZones => placementZones;
         public IReadOnlyList<CandidateDefinition> Candidates => candidates;
+        public Vector3 ExitOutsidePoint => Elevator == null ? Vector3.zero : Elevator.UsePoint.position +
+            (Stage == OfficeStage.EstablishedOffice ? Vector3.forward * 2.1f : Vector3.forward * 2.0f);
+        public Vector3 EntranceInsidePoint => Elevator == null ? Vector3.zero : Elevator.UsePoint.position +
+            (Stage == OfficeStage.EstablishedOffice ? Vector3.back * .8f : Vector3.back * 1.25f);
         public int WorkerCapacity
         {
             get
@@ -63,6 +68,7 @@ namespace OpenPlan
             Random = new SeededRandomService(19680412);
             Tasks = GetComponent<TaskQueue>() ?? gameObject.AddComponent<TaskQueue>();
             Economy = GetComponent<EconomyDirector>() ?? gameObject.AddComponent<EconomyDirector>();
+            Cash = GetComponent<CashDirector>() ?? gameObject.AddComponent<CashDirector>();
             Workday = GetComponent<WorkdayDirector>() ?? gameObject.AddComponent<WorkdayDirector>();
             Hiring = GetComponent<HiringDirector>() ?? gameObject.AddComponent<HiringDirector>();
             Firing = GetComponent<FiringDirector>() ?? gameObject.AddComponent<FiringDirector>();
@@ -82,6 +88,7 @@ namespace OpenPlan
             Layout = environment.Layout;
             Tasks.Initialize(Random);
             Economy.Initialize(Tasks);
+            Cash.Initialize();
             Workday.Initialize(this, Economy, Tasks);
             Hiring.Initialize(this);
             Firing.Initialize(this);
@@ -97,6 +104,8 @@ namespace OpenPlan
             CarryController.Initialize(this, Camera.main.GetComponent<OfficeCameraRig>(), HUD, Audio);
             if (StandaloneInputSmokeDirector.Requested)
                 gameObject.AddComponent<StandaloneInputSmokeDirector>().Initialize(this);
+            if (StandaloneActivityCycleDirector.Requested)
+                gameObject.AddComponent<StandaloneActivityCycleDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -155,8 +164,8 @@ namespace OpenPlan
             {
                 WorkerDefinition[] starterDefinitions =
                 {
-                    Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly erodes focus", new Color(.90f,.22f,.18f)),
-                    Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby morale", "Starts long conversations", new Color(.12f,.72f,.68f)),
+                    Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly raises stress", new Color(.90f,.22f,.18f)),
+                    Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby mood", "Starts long conversations", new Color(.12f,.72f,.68f)),
                     Def("Sam", WorkerTrait.Lazy, .72f, 105, .44f, "Very low payroll cost", "Takes frequent breaks", new Color(.42f,.60f,.74f))
                 };
                 for (int i = 0; i < starterDefinitions.Length; i++)
@@ -166,11 +175,11 @@ namespace OpenPlan
 
             WorkerDefinition[] definitions =
             {
-                Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly erodes focus", new Color(.90f,.22f,.18f)),
-                Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby morale", "Starts long conversations", new Color(.12f,.72f,.68f)),
-                Def("Casey", WorkerTrait.Focused, .88f, 165, .30f, "Reliable deep focus", "Dislikes loud clusters", new Color(.95f,.64f,.14f)),
+                Def("Morgan", WorkerTrait.Anxious, 1.34f, 390, .32f, "Exceptional in quiet areas", "Noise quickly raises stress", new Color(.90f,.22f,.18f)),
+                Def("Alex", WorkerTrait.Social, .98f, 235, .92f, "Raises nearby mood", "Starts long conversations", new Color(.12f,.72f,.68f)),
+                Def("Casey", WorkerTrait.Focused, .88f, 165, .30f, "Reliable deep work", "Dislikes loud clusters", new Color(.95f,.64f,.14f)),
                 Def("Jordan", WorkerTrait.Caffeinated, 1.02f, 240, .48f, "Strong post-coffee sprint", "Creates coffee traffic", new Color(.35f,.82f,.58f)),
-                Def("Taylor", WorkerTrait.Ambitious, 1.28f, 365, .52f, "Thrives beside strong peers", "Morale follows company results", new Color(.55f,.22f,.42f)),
+                Def("Taylor", WorkerTrait.Ambitious, 1.28f, 365, .52f, "Thrives beside strong peers", "Mood follows company results", new Color(.55f,.22f,.42f)),
                 Def("Sam", WorkerTrait.Lazy, .72f, 105, .44f, "Very low payroll cost", "Takes frequent breaks", new Color(.42f,.60f,.74f))
             };
             int[] deskIndices = { 0, 6, 4, 3, 5, 7 };
@@ -192,7 +201,7 @@ namespace OpenPlan
         {
             candidates.Clear();
             candidates.Add(Candidate(Def("Riley", WorkerTrait.Focused, .94f, 175, .28f, "Dependable and quiet", "Not exceptional at rush work", new Color(.92f,.48f,.24f)), 380));
-            candidates.Add(Candidate(Def("Cameron", WorkerTrait.Social, 1.05f, 245, .94f, "Excellent morale influence", "Can create a social pile-up", new Color(.26f,.72f,.78f)), 520));
+            candidates.Add(Candidate(Def("Cameron", WorkerTrait.Social, 1.05f, 245, .94f, "Excellent mood influence", "Can create a social pile-up", new Color(.26f,.72f,.78f)), 520));
             candidates.Add(Candidate(Def("Avery", WorkerTrait.Anxious, 1.38f, 405, .35f, "Outstanding potential output", "Needs a genuinely quiet seat", new Color(.74f,.28f,.38f)), 690));
             candidateSerial = 0;
         }
@@ -258,6 +267,11 @@ namespace OpenPlan
             WorkerAgent worker = WorkerSelection.Selected;
             if (!Reassigning || worker == null || destination == null) return false;
             if (!destination.IsAvailable && destination.Assigned != worker) { Notice?.Invoke("That desk is occupied."); return false; }
+            if (!destination.CanAcceptWorker(worker, out string validationReason))
+            {
+                Notice?.Invoke(validationReason);
+                return false;
+            }
             Workstation previous = worker.Desk;
             if (previous != null && previous != destination) previous.Release(worker);
             destination.Assign(worker);
@@ -334,6 +348,21 @@ namespace OpenPlan
             return best;
         }
 
+        public WorkerAgent FindWorkerNear(WorkerAgent asker, Vector3 point, float radius)
+        {
+            WorkerAgent best = null;
+            float bestDistance = radius * radius;
+            foreach (WorkerAgent worker in workers)
+            {
+                if (worker == null || worker == asker || worker.IsFired || worker.IsAway) continue;
+                float distance = (worker.transform.position - point).sqrMagnitude;
+                if (distance > bestDistance) continue;
+                bestDistance = distance;
+                best = worker;
+            }
+            return best;
+        }
+
         public float ComputeNearbyModifier(WorkerAgent worker, out string positive, out string negative)
         {
             positive = null;
@@ -352,7 +381,8 @@ namespace OpenPlan
                 }
                 if (other.Definition.trait == WorkerTrait.Social && other.Runtime.behavior == WorkerState.Work)
                 {
-                    worker.Runtime.morale = Mathf.Clamp01(worker.Runtime.morale + Time.deltaTime * .0009f);
+                    worker.Runtime.mood = Mathf.Clamp01(worker.Runtime.mood + Time.deltaTime * .0009f);
+                    worker.Runtime.stress = Mathf.Clamp01(worker.Runtime.stress - Time.deltaTime * .00035f);
                     positive = $"Encouraged by {other.Definition.displayName}";
                     modifier += .018f;
                 }

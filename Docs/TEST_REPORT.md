@@ -1,17 +1,17 @@
 # Test Report
 
-Worker-placement pivot checkpoint 3 on Unity 6000.5.1f1:
+Worker-placement pivot checkpoint 4 on Unity 6000.5.1f1:
 
 | Suite | Passed | Failed | Duration |
 |---|---:|---:|---:|
-| EditMode | 30 | 0 | 0.070 s |
-| PlayMode | 26 | 0 | 38.632 s |
-| Total | 56 | 0 | 38.702 s |
+| EditMode | 35 | 0 | 0.082 s |
+| PlayMode | 36 | 0 | 73.265 s |
+| Total | 71 | 0 | 73.347 s |
 
 The pre-edit baseline passed 24 EditMode and 13 PlayMode tests (37 total).
 
-EditMode coverage now also verifies the strict greater-than-six-pixel drag threshold, 0.12-second hold threshold, and both cancellation inputs.
+EditMode coverage verifies the placement thresholds plus the Energy/Mood/Stress productivity formula, 0.10x-2.50x clamp, non-stacking Focused Work modifier, all exact activity deltas, durations, cooldowns, $15 snack cost, deterministic 10% malfunction rule, needs clamping, and continuous cash math.
 
-PlayMode coverage verifies click-only selection, UI suppression, carry-state suspension, valid command issue, final walking movement, ordinary-floor rejection, occupied and locked rejection, exact restoration, modal cancellation, pause behavior, away/fired safety, restart and scene cleanup, and feedback layout at 1280x720 and 1920x1080. Prior Starter and Established Office integration coverage remains in the same suite.
+PlayMode coverage additionally completes Work, Rest, Water, normal and malfunctioning vending, Smoke, and Leave Office lifecycles. It verifies exact effects and cooldowns, a single vending charge, insufficient-cash rejection, Focused Work refresh, paused income, water social opportunity, smoke prop/particle cleanup, interruption safety, away recovery/return, firing while away, and prior Starter/Established integration behavior.
 
-The Windows player build and Blender validation (54/54) also passed. The packaged player completed a 12-check Input System mouse smoke at both target resolutions; reports and valid/invalid screenshots are preserved under `outputs/Screenshots`. Historical release evidence from `a638304` remains preserved.
+The Windows player build and Blender validation (54/54) also passed. The packaged player completed the existing 12-check Input System mouse smoke at both target resolutions and a 9-observation full Get Water activity cycle. Reports and screenshots are preserved under `outputs/Screenshots`. Historical release evidence from `a638304` remains preserved.

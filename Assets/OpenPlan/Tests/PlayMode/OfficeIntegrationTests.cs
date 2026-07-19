@@ -45,6 +45,29 @@ namespace OpenPlan.Tests
             return null;
         }
 
+        private static IEnumerator PlaceWorker(OfficeDirector office, WorkerAgent worker, PlacementZone zone)
+        {
+            yield return WaitForPickable(worker);
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(zone.PlacementPoint.position, zone,
+                new Vector2(Screen.width * .5f, Screen.height * .5f), true);
+            Assert.True(office.CarryController.HasValidTarget, office.CarryController.FeedbackText);
+            office.CarryController.ReleaseAtZone(zone);
+            yield return new WaitForSeconds(.20f);
+            Assert.That(office.LastIssuedCommand?.destinationZone, Is.EqualTo(zone));
+            worker.transform.position = zone.PlacementPoint.position;
+            yield return null;
+        }
+
+        private static IEnumerator WaitForState(WorkerAgent worker, WorkerState state, float realSeconds = 8f)
+        {
+            float deadline = Time.realtimeSinceStartup + realSeconds;
+            while (worker != null && worker.Runtime.behavior != state && Time.realtimeSinceStartup < deadline)
+                yield return null;
+            Assert.NotNull(worker);
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(state));
+        }
+
         [UnityTest] public IEnumerator MainMenuLoads()
         {
             SceneManager.LoadScene("MainMenu");
@@ -341,6 +364,258 @@ namespace OpenPlan.Tests
             yield return null;
             Assert.IsNull(Object.FindFirstObjectByType<WorkerCarryController>());
             Assert.IsNull(WorkerSelection.Selected);
+        }
+
+        [UnityTest] public IEnumerator FocusedWorkRefreshesWithoutStackingAndCashPauses()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return PlaceWorker(office, worker, worker.Desk);
+            yield return WaitForState(worker, WorkerState.Work);
+            Assert.That(worker.Runtime.focusedWorkSecondsRemaining, Is.InRange(29f, ActivityRules.FocusedWorkDuration));
+            Assert.That(ProductivityModel.FocusedWorkModifier(worker.Runtime.focusedWorkSecondsRemaining), Is.EqualTo(1.2f));
+            Assert.That(worker.Visuals.CurrentEmote, Is.EqualTo("\u2191"));
+
+            yield return PlaceWorker(office, worker, worker.Desk);
+            yield return WaitForState(worker, WorkerState.Work);
+            Assert.That(worker.Runtime.focusedWorkSecondsRemaining, Is.InRange(29f, ActivityRules.FocusedWorkDuration));
+
+            float cash = office.Cash.CurrentCash;
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            yield return new WaitForSecondsRealtime(.35f);
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(cash).Within(.0001f));
+            SimulationSpeedController.Instance.SetSpeed(1f);
+            yield return new WaitForSeconds(.35f);
+            Assert.That(office.Cash.CurrentCash, Is.GreaterThan(cash));
+            Assert.That(office.Cash.LifetimeEarned, Is.GreaterThan(0f));
+        }
+
+        [UnityTest] public IEnumerator RestAppliesExactNeedsAfterTwentySeconds()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.rest.break-nook"));
+            yield return WaitForState(worker, WorkerState.TakeBreak);
+            worker.Runtime.energy = .40f;
+            worker.Runtime.mood = .40f;
+            worker.Runtime.stress = .60f;
+            Assert.That(worker.ActivitySecondsRemaining, Is.GreaterThan(19f));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnToDesk, 7f);
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.75f).Within(.002f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.52f).Within(.002f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.35f).Within(.002f));
+        }
+
+        [UnityTest] public IEnumerator WaterAppliesExactEffectsCooldownAndSocialOpportunity()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            WorkerAgent partner = office.Workers[1];
+            PlacementZone water = FindZone(office, "starter.water.cooler");
+            yield return WaitForPickable(partner);
+            Assert.True(partner.BeginPlayerCarry(out _));
+            partner.SetPlayerCarryPosition(water.PlacementPoint.position + Vector3.right);
+            yield return PlaceWorker(office, worker, water);
+            yield return WaitForState(worker, WorkerState.UseWaterCooler);
+            worker.Runtime.energy = .40f;
+            worker.Runtime.mood = .40f;
+            worker.Runtime.stress = .60f;
+            Assert.True(worker.HadWaterSocialOpportunity);
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnToDesk, 4f);
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.48f).Within(.002f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.45f).Within(.002f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.55f).Within(.002f));
+            Assert.That(worker.Runtime.waterCooldown, Is.InRange(34f, ActivityRules.WaterCooldown));
+            partner.CancelPlayerCarryImmediate();
+        }
+
+        [UnityTest] public IEnumerator VendingChargesOnceAndAppliesNormalResult()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(office.Workers[1]);
+            yield return WaitForPickable(office.Workers[2]);
+            Assert.True(office.Workers[1].BeginPlayerCarry(out _));
+            Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+            worker.QueueVendingOutcome(false);
+            float cashBefore = office.Cash.CurrentCash;
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.snack.vending"));
+            yield return WaitForState(worker, WorkerState.BuySnack);
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(cashBefore - 15f).Within(.02f));
+            Assert.That(worker.VendingCharges, Is.EqualTo(1));
+            worker.Runtime.energy = .40f;
+            worker.Runtime.mood = .40f;
+            worker.Runtime.stress = .60f;
+            yield return null;
+            Assert.That(worker.VendingCharges, Is.EqualTo(1));
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(cashBefore - 15f).Within(.02f));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnToDesk, 5f);
+            Assert.False(worker.LastVendingMalfunction);
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.65f).Within(.002f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.55f).Within(.002f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.52f).Within(.002f));
+            Assert.That(worker.Runtime.vendingCooldown, Is.InRange(44f, ActivityRules.VendingCooldown));
+            office.Workers[1].CancelPlayerCarryImmediate();
+            office.Workers[2].CancelPlayerCarryImmediate();
+        }
+
+        [UnityTest] public IEnumerator SeededVendingMalfunctionRetainsChargeAndShowsFrustration()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(office.Workers[1]);
+            yield return WaitForPickable(office.Workers[2]);
+            Assert.True(office.Workers[1].BeginPlayerCarry(out _));
+            Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+            worker.QueueVendingOutcome(true);
+            float cashBefore = office.Cash.CurrentCash;
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.snack.vending"));
+            yield return WaitForState(worker, WorkerState.BuySnack);
+            worker.Runtime.energy = .40f;
+            worker.Runtime.mood = .40f;
+            worker.Runtime.stress = .60f;
+            Assert.True(worker.LastVendingMalfunction);
+            Assert.That(worker.Visuals.CurrentEmote, Is.EqualTo("!"));
+            Assert.That(office.Cash.CurrentCash, Is.LessThan(cashBefore - 14.8f));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnToDesk, 5f);
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.45f).Within(.002f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.35f).Within(.002f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.60f).Within(.002f));
+            Assert.That(worker.VendingCharges, Is.EqualTo(1));
+            office.Workers[1].CancelPlayerCarryImmediate();
+            office.Workers[2].CancelPlayerCarryImmediate();
+        }
+
+        [UnityTest] public IEnumerator InsufficientCashRejectsVendingBeforeCharge()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            yield return WaitForPickable(office.Workers[1]);
+            yield return WaitForPickable(office.Workers[2]);
+            Assert.True(office.Workers[1].BeginPlayerCarry(out _));
+            Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+            float spend = office.Cash.CurrentCash - 14f;
+            Assert.True(office.Cash.TrySpend(spend));
+            float cash = office.Cash.CurrentCash;
+            PlacementZone vending = FindZone(office, "starter.snack.vending");
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(vending.PlacementPoint.position, vending,
+                new Vector2(700f,420f), true);
+            Assert.False(office.CarryController.HasValidTarget);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("NEED $15 CASH"));
+            office.CarryController.ReleaseAtZone(vending);
+            yield return new WaitForSeconds(.28f);
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(cash).Within(.0001f));
+            Assert.That(worker.VendingCharges, Is.Zero);
+            Assert.That(office.CarryController.LastRejectionReason, Does.Contain("$15"));
+            office.Workers[1].CancelPlayerCarryImmediate();
+            office.Workers[2].CancelPlayerCarryImmediate();
+        }
+
+        [UnityTest] public IEnumerator SmokeCreatesAndCleansPropsWithExactEffects()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.smoke.exterior"));
+            yield return WaitForState(worker, WorkerState.Smoke);
+            worker.Runtime.energy = .40f;
+            worker.Runtime.mood = .40f;
+            worker.Runtime.stress = .60f;
+            Assert.True(worker.HasSmokingProp);
+            Assert.True(worker.HasSmokeParticles);
+            Assert.That(worker.ActivitySecondsRemaining, Is.GreaterThan(11f));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnToDesk, 6f);
+            Assert.False(worker.HasSmokingProp);
+            Assert.False(worker.HasSmokeParticles);
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.40f).Within(.002f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.45f).Within(.002f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.30f).Within(.002f));
+            Assert.That(worker.Runtime.smokingCooldown, Is.InRange(44f, ActivityRules.SmokingCooldown));
+        }
+
+        [UnityTest] public IEnumerator InterruptedSmokeCleansEffectsAndLeavesWorkerValid()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.smoke.exterior"));
+            yield return WaitForState(worker, WorkerState.Smoke);
+            Assert.True(worker.HasSmokingProp);
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.rest.break-nook"));
+            Assert.False(worker.HasSmokingProp);
+            Assert.False(worker.HasSmokeParticles);
+            Assert.That(worker.Runtime.smokingCooldown, Is.InRange(44f, ActivityRules.SmokingCooldown));
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(WorkerState.TakeBreak));
+            Assert.False(worker.IsFired);
+            Assert.False(worker.IsPlayerCarried);
+        }
+
+        [UnityTest] public IEnumerator LeaveOfficeCompletesAwayRecoveryAndReturnLifecycle()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(office.Workers[1]);
+            yield return WaitForPickable(office.Workers[2]);
+            Assert.True(office.Workers[1].BeginPlayerCarry(out _));
+            Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.exit.main"));
+            yield return WaitForState(worker, WorkerState.WalkOutForAway);
+            Assert.True(worker.IsVisibleInOffice);
+            worker.transform.position = office.ExitOutsidePoint;
+            yield return null;
+            yield return WaitForState(worker, WorkerState.Away);
+            worker.Runtime.energy = .20f;
+            worker.Runtime.mood = .30f;
+            worker.Runtime.stress = .80f;
+            Assert.False(worker.IsVisibleInOffice);
+            Assert.That(worker.Runtime.awaySecondsRemaining, Is.InRange(29f, ActivityRules.AwayDuration));
+            Assert.That(new[] { "Lunch", "Errand", "Long break", "Off-site task" }, Does.Contain(worker.AwayReasonLabel));
+            float cash = office.Cash.CurrentCash;
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnFromAway, 10f);
+            Assert.True(worker.IsVisibleInOffice);
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.65f).Within(.006f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.42f).Within(.006f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.45f).Within(.006f));
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(cash).Within(.01f));
+            worker.transform.position = office.EntranceInsidePoint;
+            yield return null;
+            yield return WaitForState(worker, WorkerState.ReturnToDesk);
+            office.Workers[1].CancelPlayerCarryImmediate();
+            office.Workers[2].CancelPlayerCarryImmediate();
+        }
+
+        [UnityTest] public IEnumerator FiringDuringAwaySafelyResolvesHiddenState()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.exit.main"));
+            yield return WaitForState(worker, WorkerState.WalkOutForAway);
+            worker.transform.position = office.ExitOutsidePoint;
+            yield return null;
+            yield return WaitForState(worker, WorkerState.Away);
+            Assert.False(worker.IsVisibleInOffice);
+            Assert.True(office.TryFire(worker, out string reason), reason);
+            Assert.True(worker.IsVisibleInOffice);
+            Assert.True(worker.IsFired);
+            Assert.That(worker.Runtime.awaySecondsRemaining, Is.Zero);
+            Assert.False(worker.HasSmokingProp);
+            Assert.False(worker.HasSmokeParticles);
         }
 
         [UnityTest] public IEnumerator ExpandedStarterInitializesWithAdditionalSpace()

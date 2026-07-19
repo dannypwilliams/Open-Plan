@@ -59,3 +59,15 @@ Workers snapshot their pre-carry position, rotation, autonomous state, target, t
 ## D015 - Runtime feedback uses authored geometry
 
 Placement footprints derive directly from each zone's tested collider bounds. During carry, all enabled destinations render green, disabled or full destinations render red, the nearest footprint intensifies, and a cursor-adjacent label explains the activity or rejection. This keeps presentation and validation on one geometry contract.
+
+## D016 - Three explainable needs replace Focus and Morale
+
+Worker state exposes only Energy, Mood, and Stress. Productivity is the documented product of skill, Energy, Mood, inverse Stress, workstation, trait, and the manual Focused Work modifier, clamped to 0.10x-2.50x. Social and noise behavior may change Mood or Stress, but no hidden need multiplier participates in the formula.
+
+## D017 - Activity effects are timed transactions
+
+Every placement has one begin, completion, and interruption path. Costs occur once at use begin; need effects occur once at successful completion; cooldowns are set to their full documented value on completion or interruption. Transient vending motion, cigarettes, smoke particles, occupancy, and away visibility are restored by the same cleanup boundary used for new commands, firing, restart, and scene destruction.
+
+## D018 - Placement work owns the open-ended cash ledger
+
+`CashDirector` starts at $100 and accrues fractional cash from desk work at $60 per productivity-minute. It tracks current cash, lifetime earned, and lifetime spent independently. The Established Office's prior `EconomyDirector` remains available only for its preserved task, hiring, payroll, and report compatibility path.

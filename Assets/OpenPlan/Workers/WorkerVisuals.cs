@@ -21,6 +21,10 @@ namespace OpenPlan
         private bool selected;
         private bool hovered;
         private bool carried;
+        private string transientEmote;
+        private float transientEmoteUntil;
+
+        public string CurrentEmote => transientEmoteUntil > Time.time ? transientEmote : string.Empty;
 
         public void Initialize(Color clothing, Material ringMaterial)
         {
@@ -98,6 +102,12 @@ namespace OpenPlan
             RefreshInteractionVisual();
         }
 
+        public void ShowEmote(string text, float duration)
+        {
+            transientEmote = text;
+            transientEmoteUntil = Time.time + Mathf.Max(.1f, duration);
+        }
+
         private void RefreshInteractionVisual()
         {
             if (selectionRing == null) return;
@@ -116,7 +126,8 @@ namespace OpenPlan
             float bob = moving ? Mathf.Abs(Mathf.Sin(phase)) * 0.075f : Mathf.Sin(phase * 0.35f) * 0.015f;
             // The FBX child retains a 100x importer scale. Offset its root from the
             // unscaled gameplay wrapper so a 7.5 cm bob stays 7.5 cm in world space.
-            if (visualRoot != null) visualRoot.localPosition = visualRootBase + Vector3.up * bob;
+            float activityOffset = state == WorkerState.TakeBreak ? -.32f : state == WorkerState.Work ? -.20f : 0f;
+            if (visualRoot != null) visualRoot.localPosition = visualRootBase + Vector3.up * (bob + activityOffset);
 
             float gesture = Mathf.Sin(phase * 1.7f);
             if (armL != null && armR != null)
@@ -137,6 +148,18 @@ namespace OpenPlan
                         armR.localRotation = armRBase * Quaternion.Euler(78f, 0f, -20f);
                         armL.localRotation = armLBase;
                         break;
+                    case WorkerState.TakeBreak:
+                        armL.localRotation = armLBase * Quaternion.Euler(-12f + gesture * 10f, 0f, 34f);
+                        armR.localRotation = armRBase * Quaternion.Euler(-8f - gesture * 10f, 0f, -34f);
+                        break;
+                    case WorkerState.BuySnack:
+                        armR.localRotation = armRBase * Quaternion.Euler(48f + gesture * 20f, 0f, -28f);
+                        armL.localRotation = armLBase * Quaternion.Euler(18f, 0f, 18f);
+                        break;
+                    case WorkerState.Smoke:
+                        armR.localRotation = armRBase * Quaternion.Euler(88f + gesture * 6f, 0f, -34f);
+                        armL.localRotation = armLBase * Quaternion.Euler(8f, 0f, 18f);
+                        break;
                     case WorkerState.CarryBox:
                         armL.localRotation = armLBase * Quaternion.Euler(72f, 0f, 24f);
                         armR.localRotation = armRBase * Quaternion.Euler(72f, 0f, -24f);
@@ -154,7 +177,7 @@ namespace OpenPlan
             }
             if (stateIcon != null)
             {
-                stateIcon.text = IconFor(state);
+                stateIcon.text = transientEmoteUntil > Time.time ? transientEmote : IconFor(state);
                 stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
                     productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
                 Camera camera = Camera.main;
@@ -170,10 +193,15 @@ namespace OpenPlan
                 case WorkerState.SeekCoffee:
                 case WorkerState.UseCoffeeMachine: return "C";
                 case WorkerState.SeekWater:
-                case WorkerState.UseWaterCooler: return "◆";
+                case WorkerState.UseWaterCooler: return "H2O";
                 case WorkerState.Socialize:
                 case WorkerState.SeekCoworker: return "•••";
                 case WorkerState.TakeBreak: return "Z";
+                case WorkerState.BuySnack: return "$15";
+                case WorkerState.Smoke: return "SMK";
+                case WorkerState.WalkOutForAway: return "OUT";
+                case WorkerState.Away: return "AWAY";
+                case WorkerState.ReturnFromAway: return "BACK";
                 case WorkerState.FiredReaction: return "!";
                 case WorkerState.PackDesk:
                 case WorkerState.CarryBox: return "BOX";

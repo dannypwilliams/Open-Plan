@@ -1,6 +1,6 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 3 - Worker Pickup and Placement
+- Current checkpoint: Worker-Placement Pivot 4 - Functional Activity Areas
 - Status: implementation, visual review, and verification PASS
 - Date: 2026-07-19
 - Branch: `codex/small-office-placement-pivot`
@@ -10,13 +10,14 @@
 - Starter roster: Morgan, Alex, Sam
 - Stages: Starter Office, Starter Office Expanded, Established Office
 - Starter timing: unlimited; no automatic finish or failure
-- Automated tests: 56/56 passed (30 EditMode, 26 PlayMode)
+- Automated tests: 71/71 passed (35 EditMode, 36 PlayMode)
 - Baseline before edits: 37/37 passed (24 EditMode, 13 PlayMode)
 - Original large office: preserved as Established Office
 - Blender assets: 54/54 validated; seven new starter-office assets include editable `.blend`, exported FBX, Unity FBX, catalog, and manifest entries
-- Windows player: rebuilt successfully for checkpoint 3
+- Windows player: rebuilt successfully for checkpoint 4
 - Standalone input smoke: 12/12 checks passed at both 1280x720 and 1920x1080
-- Visual evidence: `outputs/Screenshots/StarterOffice_Valid_Placement.png` and `outputs/Screenshots/StarterOffice_Invalid_Placement.png`
+- Standalone activity cycle: 9/9 observations passed for pickup -> Get Water -> autonomous return
+- Activity evidence: `outputs/Screenshots/StarterOffice_ActivityCycle.txt` and `outputs/Screenshots/StarterOffice_Water_Activity.png`
 - Existing release/package/media: preserved as historical `a638304` evidence
 - Critical issues: none
-- Next checkpoint: Make activity areas functional
+- Next checkpoint: Add personality and readable status

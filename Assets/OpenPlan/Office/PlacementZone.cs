@@ -59,6 +59,7 @@ namespace OpenPlan
             if (worker == null) { reason = "A worker is required."; return false; }
             if (worker.IsFired || worker.IsLeavingCompany) { reason = "Worker is leaving the company."; return false; }
             if (!IsZoneEnabled) { reason = string.IsNullOrWhiteSpace(unavailableReason) ? ActivityLabel + " is locked." : unavailableReason; return false; }
+            if (worker.Runtime != null && !worker.CanAcceptPlacementActivity(Activity, out reason)) return false;
             if (occupants.Contains(worker)) { reason = null; return true; }
             if (occupants.Count >= Capacity) { reason = ActivityLabel + " is occupied."; return false; }
             reason = null;
