@@ -106,6 +106,8 @@ MonoBehaviour:
   - key: WindowModule
     prefab: {fileID: 919132149155446097, guid: 7f2df5f580b6407458e73bc9dc8ee8d1, type: 3}
   - key: Worker
+    prefab: {fileID: 3906667351153504515, guid: ae7429c600e6b7c49b51f57cadb49f90, type: 3}
+  - key: WorkerLegacy
     prefab: {fileID: 919132149155446097, guid: 59bca0102e563224aa52fb4e16c029d5, type: 3}
   materials:
   - key: walnut

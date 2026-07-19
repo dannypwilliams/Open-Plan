@@ -19,10 +19,33 @@ namespace OpenPlan
         private TextMeshPro stateIcon;
         private float phase;
 
+        // Animator-driven visuals (e.g. the rigged Stickman). When a valid humanoid
+        // Animator is present on the visual model we drive it by state instead of
+        // rotating named body-part transforms. Falls back to the legacy procedural
+        // path when no Animator exists (the original code-generated OP_Worker model).
+        private Animator animator;
+        private int currentStateHash;
+        private static readonly int WalkHash = Animator.StringToHash("Walk");
+        private static readonly int IdleHash = Animator.StringToHash("Idle");
+        private static readonly int SittingHash = Animator.StringToHash("Sitting");
+        private bool AnimatorMode => animator != null;
+
         public void Initialize(Color clothing, Material ringMaterial)
         {
             visualRoot = FindDeep(transform, "Worker_Visual");
             if (visualRoot != null) visualRootBase = visualRoot.localPosition;
+
+            // Prefer an Animator on the visual model (rigged-character path).
+            animator = GetComponentInChildren<Animator>(true);
+            if (animator != null && (animator.avatar == null || !animator.avatar.isValid))
+                animator = null; // invalid rig -> fall back to procedural path
+            if (animator != null)
+            {
+                animator.applyRootMotion = false; // gameplay drives position/rotation
+                animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+            }
+
+            // Legacy named body parts (present only on the old OP_Worker model).
             body = FindDeep(transform, "Body");
             head = FindDeep(transform, "Head");
             armL = FindDeep(transform, "Arm_L");
@@ -32,16 +55,27 @@ namespace OpenPlan
             if (armL != null) armLBase = armL.localRotation;
             if (armR != null) armRBase = armR.localRotation;
 
+            ApplyClothing(clothing);
+            BuildSelectionRing(ringMaterial);
+            BuildStateIcon();
+        }
+
+        private void ApplyClothing(Color clothing)
+        {
             MaterialPropertyBlock block = new MaterialPropertyBlock();
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
-                if (!renderer.name.Contains("Body") && !renderer.name.Contains("Arm")) continue;
+                if (renderer is LineRenderer) continue; // skip our own selection ring
+                bool isBodyPart = renderer.name.Contains("Body") || renderer.name.Contains("Arm");
+                // Legacy model: tint only the named shirt/arm parts. Rigged model: a
+                // single skinned mesh -> tint the whole figure with the clothing color.
+                bool tint = AnimatorMode ? renderer is SkinnedMeshRenderer : isBodyPart;
+                if (!tint) continue;
                 renderer.GetPropertyBlock(block);
                 block.SetColor("_BaseColor", clothing);
+                block.SetColor("_Color", clothing);
                 renderer.SetPropertyBlock(block);
             }
-            BuildSelectionRing(ringMaterial);
-            BuildStateIcon();
         }
 
         private void BuildSelectionRing(Material ringMaterial)
@@ -80,6 +114,43 @@ namespace OpenPlan
         public void SetSelected(bool selected) => selectionRing.enabled = selected;
 
         public void Tick(WorkerState state, bool moving, float productivity)
+        {
+            if (AnimatorMode)
+                TickAnimator(state, moving);
+            else
+                TickProcedural(state, moving);
+            TickStateIcon(state, productivity);
+        }
+
+        private void TickAnimator(WorkerState state, bool moving)
+        {
+            int target = IdleHash;
+            if (moving)
+            {
+                target = WalkHash;
+            }
+            else
+            {
+                switch (state)
+                {
+                    case WorkerState.Work:
+                    case WorkerState.IdleAtDesk:
+                    case WorkerState.Meeting:
+                        target = SittingHash;
+                        break;
+                    default:
+                        target = IdleHash;
+                        break;
+                }
+            }
+            if (target != currentStateHash)
+            {
+                currentStateHash = target;
+                animator.CrossFadeInFixedTime(target, 0.18f, 0);
+            }
+        }
+
+        private void TickProcedural(WorkerState state, bool moving)
         {
             phase += Time.deltaTime * (moving ? 8f : 4f);
             float bob = moving ? Mathf.Abs(Mathf.Sin(phase)) * 0.075f : Mathf.Sin(phase * 0.35f) * 0.015f;
@@ -121,14 +192,16 @@ namespace OpenPlan
                 legL.localRotation = Quaternion.Euler(gesture * 20f, 0f, 0f);
                 legR.localRotation = Quaternion.Euler(-gesture * 20f, 0f, 0f);
             }
-            if (stateIcon != null)
-            {
-                stateIcon.text = IconFor(state);
-                stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
-                    productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
-                Camera camera = Camera.main;
-                if (camera != null) stateIcon.transform.rotation = camera.transform.rotation;
-            }
+        }
+
+        private void TickStateIcon(WorkerState state, float productivity)
+        {
+            if (stateIcon == null) return;
+            stateIcon.text = IconFor(state);
+            stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
+                productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
+            Camera camera = Camera.main;
+            if (camera != null) stateIcon.transform.rotation = camera.transform.rotation;
         }
 
         private static string IconFor(WorkerState state)
