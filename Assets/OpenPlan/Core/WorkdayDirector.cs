@@ -27,7 +27,7 @@ namespace OpenPlan
             tasks = taskQueue;
             Elapsed = 0f;
             IsEnded = false;
-            IsTimed = office.Stage == OfficeStage.EstablishedOffice;
+            IsTimed = office.Stage == OfficeStage.EstablishedOffice && !office.IsEstablishedPreview;
         }
 
         private void Update()

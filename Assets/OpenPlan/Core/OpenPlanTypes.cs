@@ -30,7 +30,8 @@ namespace OpenPlan
         SeekWater, UseWaterCooler, SeekCoworker, Socialize, TakeBreak,
         WalkToMeeting, Meeting, ReturnToDesk, React, FiredReaction, PackDesk,
         CarryBox, ExitOffice, RecoverFromStuck, WalkToPlacement, BuySnack, Smoke,
-        WalkOutForAway, Away, ReturnFromAway, LookAtPhone, Wander, StandConfused, Sleep
+        WalkOutForAway, Away, ReturnFromAway, LookAtPhone, Wander, StandConfused, Sleep,
+        Unassigned
     }
 
     public enum StationKind { Coffee, Water, Break, Meeting, Elevator }
@@ -308,6 +309,35 @@ namespace OpenPlan
         {
             float fraction = Mathf.Max(0f, simulationSeconds) / AwayDuration;
             ChangeNeeds(state, .45f * fraction, .12f * fraction, -.35f * fraction);
+        }
+    }
+
+    public static class ExpansionRules
+    {
+        public const float PurchasePrice = 1000f;
+        public const int AdditionalDeskCapacity = 3;
+        public const float ExpectedSnackOverheadPerMinute = 5.4f;
+
+        public static bool CanPurchase(float cash, bool alreadyExpanded)
+            => !alreadyExpanded && cash + .0001f >= PurchasePrice;
+
+        public static float PurchaseProgress(float cash)
+            => Mathf.Clamp01(Mathf.Max(0f, cash) / PurchasePrice);
+
+        public static float ExpectedStartingIncomePerMinute()
+        {
+            float morgan = 1.34f * .94f;
+            float alex = .98f * .81f;
+            float sam = .72f * .60f;
+            return (morgan + alex + sam) * CashDirector.IncomePerProductivityMinute;
+        }
+
+        public static float ExpectedMinutesToAfford(float startingCash = CashDirector.StartingCash)
+        {
+            float remaining = Mathf.Max(0f, PurchasePrice - startingCash);
+            float expectedNetIncome = Mathf.Max(1f,
+                ExpectedStartingIncomePerMinute() - ExpectedSnackOverheadPerMinute);
+            return remaining / expectedNetIncome;
         }
     }
 

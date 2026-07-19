@@ -14,6 +14,12 @@ namespace OpenPlan
         private readonly OfficeAssetCatalog catalog;
         private readonly Transform root;
         private readonly bool expanded;
+        private GameObject connectingWall;
+        private GameObject doorwayTrim;
+        private OfficeObstacleVolume connectingObstacle;
+        private Light neighborLight;
+        private TextMeshPro neighborPurchaseLabel;
+        private readonly List<Renderer> neighborRenderers = new List<Renderer>();
 
         public List<Workstation> Workstations { get; } = new List<Workstation>();
         public List<PlacementZone> PlacementZones { get; } = new List<PlacementZone>();
@@ -41,13 +47,16 @@ namespace OpenPlan
             BuildClutterAndDetails();
             BuildLighting();
             PlacementZones.AddRange(Workstations);
+            BuildExpansionController();
         }
 
         private void BuildLayoutContract()
         {
             Layout = root.gameObject.AddComponent<OfficeStageLayout>();
             Layout.Configure(new Bounds(new Vector3(2f, 0f, 0f), new Vector3(25f, 4f, 15.5f)),
-                new Bounds(new Vector3(1.5f, 0f, 0f), new Vector3(18f, 1f, 9f)), 12.6f);
+                expanded ? new Bounds(new Vector3(2f, 0f, 0f), new Vector3(26f, 1f, 10f)) :
+                    new Bounds(new Vector3(-1f, 0f, 0f), new Vector3(16f, 1f, 9f)),
+                expanded ? 13.2f : 11.8f);
             Layout.AddOverviewPoint("starter-southwest", new Vector3(-8f, 0f, -5.5f));
             Layout.AddOverviewPoint("starter-northeast", new Vector3(6f, 0f, 5.5f));
             Layout.AddOverviewPoint("neighbor-southeast", new Vector3(14f, 0f, -5.5f));
@@ -63,6 +72,7 @@ namespace OpenPlan
         {
             catalog.Spawn("FloorSlab", root, new Vector3(-1f, 0f, 0f), Quaternion.identity, new Vector3(.467f, 1f, .50f));
             GameObject neighborFloor = catalog.Spawn("FloorSlab", root, new Vector3(10f, -.02f, 0f), Quaternion.identity, new Vector3(.267f, 1f, .50f));
+            AddNeighborRenderers(neighborFloor);
             Tint(neighborFloor, expanded ? new Color(.55f,.48f,.38f,1f) : new Color(.20f,.24f,.25f,1f));
 
             for (int i = 0; i < 4; i++)
@@ -72,16 +82,20 @@ namespace OpenPlan
 
             AddWall("wall.shared.south", new Vector3(6f, 0f, -3.8f), Quaternion.Euler(0f, 90f, 0f), new Vector3(.85f,1f,1f));
             AddWall("wall.shared.north", new Vector3(6f, 0f, 3.8f), Quaternion.Euler(0f, 90f, 0f), new Vector3(.85f,1f,1f));
-            if (!expanded)
+            connectingWall = catalog.Spawn("ConnectingWallTrim", root, new Vector3(6f, 0f, 0f),
+                Quaternion.Euler(0f, 90f, 0f), Vector3.one);
+            connectingWall.name = "Removable Connecting Wall";
+            connectingObstacle = AddObstacle(connectingWall, "wall.shared.removable",
+                new Vector3(0f, .75f, 0f), new Vector3(3.6f, 1.5f, .28f));
+            doorwayTrim = catalog.Spawn("ConnectingWallTrim", root, new Vector3(6f, 0f, 0f),
+                Quaternion.Euler(0f, 90f, 0f), new Vector3(1f,1f,.22f));
+            doorwayTrim.name = "Open Doorway Trim";
+            doorwayTrim.SetActive(expanded);
+            connectingWall.SetActive(!expanded);
+            if (expanded)
             {
-                GameObject connectingWall = catalog.Spawn("ConnectingWallTrim", root, new Vector3(6f, 0f, 0f),
-                    Quaternion.Euler(0f, 90f, 0f), Vector3.one);
-                AddObstacle(connectingWall, "wall.shared.removable", new Vector3(0f, .75f, 0f), new Vector3(3.6f, 1.5f, .28f));
-            }
-            else
-            {
-                catalog.Spawn("ConnectingWallTrim", root, new Vector3(6f, 0f, 0f),
-                    Quaternion.Euler(0f, 90f, 0f), new Vector3(1f,1f,.22f));
+                connectingObstacle.VolumeCollider.enabled = false;
+                Layout.UnregisterObstacle(connectingObstacle);
             }
 
             AddWall("wall.neighbor.north.1", new Vector3(8f, 0f, 5.5f), Quaternion.identity, Vector3.one);
@@ -100,10 +114,10 @@ namespace OpenPlan
                 "starter.work.03", true, false, "MeetingChair", "CheapCRTMonitor", new Color(.42f,.30f,.48f));
 
             Workstation future = BuildDesk("DamagedDesk", new Vector3(3.7f,0f,2.5f), Quaternion.identity,
-                "starter.work.future", expanded, true, "VisitorChair", "CheapCRTMonitor", new Color(.32f,.34f,.35f));
-            if (!expanded) future.SetUnavailableReason("Desk unavailable.");
-            future.gameObject.AddComponent<FutureDeskLocation>().Configure("future.starter.desk", false, expanded);
-            if (!expanded) AddWorldLabel(future.transform, "Locked desk label", "DESK SLOT\nUNAVAILABLE", new Vector3(0f, 1.65f, 0f),
+                "starter.work.future", false, true, "VisitorChair", "CheapCRTMonitor", new Color(.32f,.34f,.35f));
+            future.SetUnavailableReason("Reserved for a later milestone.");
+            future.gameObject.AddComponent<FutureDeskLocation>().Configure("future.starter.desk", false, false);
+            AddWorldLabel(future.transform, "Locked desk label", "DESK SLOT\nFUTURE MILESTONE", new Vector3(0f, 1.65f, 0f),
                 new Color(.95f,.55f,.22f), .34f);
         }
 
@@ -162,8 +176,9 @@ namespace OpenPlan
         private void BuildLockedNeighbor()
         {
             GameObject sign = catalog.Spawn("NeighborSign", root, new Vector3(10f, .05f, 3.85f), Quaternion.identity, Vector3.one);
+            AddNeighborRenderers(sign);
             Tint(sign, expanded ? new Color(.70f,.58f,.36f) : NeighborTint);
-            AddWorldLabel(sign.transform, "Neighbor purchase sign",
+            neighborPurchaseLabel = AddWorldLabel(sign.transform, "Neighbor purchase sign",
                 expanded ? "UNIT NEXT DOOR\nPURCHASED" : "UNIT NEXT DOOR\nLOCKED  -  $1,000",
                 new Vector3(0f, 1.25f, -.18f), expanded ? new Color(.55f,1f,.68f) : new Color(1f,.72f,.30f), .64f);
 
@@ -177,6 +192,7 @@ namespace OpenPlan
                     i % 2 == 0 ? Quaternion.Euler(0f,180f,0f) : Quaternion.identity,
                     $"neighbor.work.{i + 1:00}", expanded, true, i == 1 ? "OfficeChair" : "VisitorChair",
                     "CheapCRTMonitor", NeighborTint);
+                AddNeighborRenderers(future.gameObject);
                 future.gameObject.AddComponent<FutureDeskLocation>().Configure($"future.neighbor.desk.{i + 1:00}", true, expanded);
                 if (!expanded)
                 {
@@ -193,6 +209,8 @@ namespace OpenPlan
             if (!expanded) utility.GetComponent<PlacementZone>().SetUnavailableReason("Area locked.");
             GameObject counter = catalog.Spawn("Counter", root, new Vector3(12.3f,0f,4.45f), Quaternion.identity, new Vector3(.62f,.85f,.72f));
             GameObject chair = catalog.Spawn("VisitorChair", root, new Vector3(11.5f,0f,3.9f), Quaternion.Euler(0f,160f,0f), Vector3.one * .70f);
+            AddNeighborRenderers(counter);
+            AddNeighborRenderers(chair);
             if (!expanded) { Tint(counter, NeighborTint); Tint(chair, NeighborTint); }
         }
 
@@ -258,7 +276,7 @@ namespace OpenPlan
 
             AddPointLight("Break nook lamp", new Vector3(-4.2f,2.4f,3.5f), new Color(1f,.48f,.22f), 4.2f, 1.9f);
             AddPointLight("Starter utility lamp", new Vector3(.2f,2.3f,4.0f), new Color(.95f,.54f,.28f), 4.4f, 1.7f);
-            AddPointLight("Neighbor dim practical", new Vector3(10.2f,2.4f,.2f), new Color(.24f,.42f,.46f), 5.2f, expanded ? 1.8f : .48f);
+            neighborLight = AddPointLight("Neighbor dim practical", new Vector3(10.2f,2.4f,.2f), new Color(.24f,.42f,.46f), 5.2f, expanded ? 1.8f : .48f);
         }
 
         private Workstation BuildDesk(string deskAsset, Vector3 position, Quaternion facing, string stableIdentifier,
@@ -297,11 +315,12 @@ namespace OpenPlan
             AddObstacle(wall, identifier, new Vector3(0f,.75f,0f), new Vector3(4f * scale.x,1.55f,.24f));
         }
 
-        private void AddObstacle(GameObject owner, string identifier, Vector3 localCenter, Vector3 size)
+        private OfficeObstacleVolume AddObstacle(GameObject owner, string identifier, Vector3 localCenter, Vector3 size)
         {
             OfficeObstacleVolume obstacle = owner.AddComponent<OfficeObstacleVolume>();
             obstacle.Configure(identifier, localCenter, size);
             Layout.RegisterObstacle(obstacle);
+            return obstacle;
         }
 
         private void AddPrimaryRoute(string identifier, Vector3 position, Vector3 size)
@@ -314,7 +333,7 @@ namespace OpenPlan
             Layout.RegisterPrimaryRoute(route);
         }
 
-        private void AddPointLight(string name, Vector3 position, Color color, float range, float intensity)
+        private Light AddPointLight(string name, Vector3 position, Color color, float range, float intensity)
         {
             GameObject lightObject = new GameObject(name);
             lightObject.transform.SetParent(root, false);
@@ -325,9 +344,10 @@ namespace OpenPlan
             light.range = range;
             light.intensity = intensity;
             light.shadows = LightShadows.None;
+            return light;
         }
 
-        private static void AddWorldLabel(Transform parent, string name, string copy, Vector3 localPosition, Color color, float scale)
+        private static TextMeshPro AddWorldLabel(Transform parent, string name, string copy, Vector3 localPosition, Color color, float scale)
         {
             GameObject labelObject = new GameObject(name);
             labelObject.transform.SetParent(parent, false);
@@ -342,6 +362,22 @@ namespace OpenPlan
             text.enableWordWrapping = false;
             text.rectTransform.sizeDelta = new Vector2(7f, 2.5f);
             labelObject.AddComponent<WorldSpaceOfficeLabel>();
+            return text;
+        }
+
+        private void AddNeighborRenderers(GameObject owner)
+        {
+            if (owner == null) return;
+            foreach (Renderer renderer in owner.GetComponentsInChildren<Renderer>(true))
+                if (renderer != null && !neighborRenderers.Contains(renderer)) neighborRenderers.Add(renderer);
+        }
+
+        private void BuildExpansionController()
+        {
+            OfficeExpansionController controller = root.gameObject.AddComponent<OfficeExpansionController>();
+            controller.Configure(expanded, connectingWall, connectingObstacle, doorwayTrim, neighborLight,
+                neighborPurchaseLabel, neighborRenderers.ToArray(), Workstations.ToArray(), PlacementZones.ToArray(),
+                root.GetComponentsInChildren<FutureDeskLocation>(true));
         }
 
         private static void Tint(GameObject owner, Color color)

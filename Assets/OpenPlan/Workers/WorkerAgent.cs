@@ -158,6 +158,9 @@ namespace OpenPlan
                 case WorkerState.EnterOffice:
                     if (stateTime >= stateLimit) GoToDesk();
                     break;
+                case WorkerState.Unassigned:
+                    IsMoving = false;
+                    break;
                 case WorkerState.WalkToDesk:
                 case WorkerState.ReturnToDesk:
                     MoveTowards(Desk != null ? Desk.WorkPoint.position : transform.position, dt, WorkerState.Work);
@@ -489,7 +492,7 @@ namespace OpenPlan
 
         private void GoToDesk()
         {
-            if (Desk == null) return;
+            if (Desk == null) { SetState(WorkerState.Unassigned, 9999f); return; }
             SetTargetState(WorkerState.WalkToDesk, Desk.WorkPoint.position, 16f);
         }
 
@@ -503,7 +506,7 @@ namespace OpenPlan
             pendingPlacementActivity = null;
             autonomousActivityDuration = 0f;
             HasPlayerCommandAuthority = false;
-            if (Desk == null) { SetState(WorkerState.IdleAtDesk, 2f); return; }
+            if (Desk == null) { SetState(WorkerState.Unassigned, 9999f); return; }
             SetTargetState(WorkerState.ReturnToDesk, Desk.WorkPoint.position, 16f);
         }
 
@@ -1035,6 +1038,7 @@ namespace OpenPlan
                 case WorkerState.Wander: return "Wandering briefly";
                 case WorkerState.StandConfused: return "Unsure what to do";
                 case WorkerState.Sleep: return "Fell asleep";
+                case WorkerState.Unassigned: return "Waiting for a desk assignment";
                 default: return "Away from desk";
             }
         }
@@ -1044,6 +1048,7 @@ namespace OpenPlan
             if (IsPlayerCarried) return "Player is choosing";
             if (Runtime == null) return "None";
             if (Runtime.behavior == WorkerState.Wander) return "Around the office";
+            if (Runtime.behavior == WorkerState.Unassigned) return "Open desk";
             if (Runtime.behavior == WorkerState.SeekCoworker && socialPartner != null)
                 return socialPartner.Definition.displayName;
             if (Runtime.behavior == WorkerState.SeekCoffee || Runtime.behavior == WorkerState.UseCoffeeMachine)

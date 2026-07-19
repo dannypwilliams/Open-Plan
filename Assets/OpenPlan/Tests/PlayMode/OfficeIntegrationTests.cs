@@ -625,8 +625,141 @@ namespace OpenPlan.Tests
             Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOfficeExpanded));
             Assert.That(office.Workers.Count, Is.EqualTo(3));
             Assert.That(office.Workstations.Count, Is.EqualTo(7));
-            Assert.That(office.WorkerCapacity, Is.EqualTo(7));
+            Assert.That(office.WorkerCapacity, Is.EqualTo(6));
             Assert.False(office.Workday.IsTimed);
+            Assert.True(office.ExpansionComplete);
+            Assert.True(office.Expansion.ConnectingWallOpen);
+            Assert.True(office.Expansion.DoorwayTrimVisible);
+        }
+
+        [UnityTest] public IEnumerator ExpansionAffordabilityTracksCashAndVendingSpendCanDisableIt()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            Assert.False(office.CanPurchaseExpansion);
+            Assert.False(office.TryPurchaseExpansion(out _));
+            office.Cash.AccrueDeskIncome(15f, 60f);
+            Assert.True(office.CanPurchaseExpansion);
+            yield return new WaitForSecondsRealtime(.2f);
+            Assert.True(office.HUD.PurchaseButtonInteractable);
+            Assert.That(office.HUD.GoalText, Does.Contain("OBJECTIVE: Earn $1,000 and purchase the neighboring unit."));
+            Assert.That(office.HUD.GoalText, Does.Contain("EXPANSION PRICE  $1,000"));
+            Assert.That(office.HUD.GoalText, Does.Contain("COMBINED INCOME"));
+            Assert.That(office.HUD.GoalText, Does.Contain("The neighboring unit is available."));
+            Button purchase = GameObject.Find("Purchase Next Door").GetComponent<Button>();
+            purchase.onClick.Invoke();
+            Assert.True(office.HUD.PurchasePanelVisible);
+            Component unlocks = GameObject.Find("Unlocks").GetComponent("TextMeshProUGUI");
+            string unlockCopy = (string)unlocks.GetType().GetProperty("text").GetValue(unlocks);
+            Assert.That(unlockCopy, Does.Contain("Adjacent floor space"));
+            Assert.That(unlockCopy, Does.Contain("Connecting wall removal and open doorway"));
+            Assert.That(unlockCopy, Does.Contain("Three additional desk locations"));
+            Assert.That(unlockCopy, Does.Contain("Capacity for three additional workers"));
+            Assert.That(unlockCopy, Does.Contain("Access to the Established Office preview"));
+            Assert.True(office.Cash.TrySpend(ActivityRules.SnackCost));
+            Assert.False(office.CanPurchaseExpansion);
+            yield return new WaitForSecondsRealtime(.2f);
+            Assert.False(office.HUD.PurchaseButtonInteractable);
+        }
+
+        [UnityTest] public IEnumerator PurchaseDeductsExactlyOnceAndPhysicallyUnlocksNeighbor()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            float oldPanWidth = office.Layout.PanBounds.size.x;
+            office.Cash.AccrueDeskIncome(15f, 60f);
+            float before = office.Cash.CurrentCash;
+            yield return new WaitForSecondsRealtime(.2f);
+            GameObject.Find("Purchase Next Door").GetComponent<Button>().onClick.Invoke();
+            GameObject.Find("Confirm").GetComponent<Button>().onClick.Invoke();
+            Assert.That(before - office.Cash.CurrentCash, Is.EqualTo(ExpansionRules.PurchasePrice).Within(.001f));
+            Assert.False(office.TryPurchaseExpansion(out _));
+            Assert.That(office.Expansion.PurchaseCount, Is.EqualTo(1));
+            yield return new WaitForSecondsRealtime(1.5f);
+
+            Assert.True(office.ExpansionComplete);
+            Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOfficeExpanded));
+            Assert.True(office.Expansion.ConnectingWallOpen);
+            Assert.True(office.Expansion.DoorwayTrimVisible);
+            Assert.True(office.Expansion.NavigationEnabled);
+            Assert.That(office.WorkerCapacity, Is.EqualTo(6));
+            Assert.That(FindZone(office, "neighbor.rest.utility").IsZoneEnabled, Is.True);
+            Assert.That(office.Layout.PanBounds.size.x, Is.GreaterThan(oldPanWidth));
+            Assert.That(Camera.main.GetComponent<OfficeCameraRig>().OverviewCenter, Is.EqualTo(office.Layout.OverviewCenter));
+            Assert.True(office.HUD.PreviewButtonVisible);
+        }
+
+        [UnityTest] public IEnumerator ExpandedHiringCreatesUnassignedEntranceWorkerWhoCanBePlaced()
+        {
+            yield return LoadOffice(OfficeStage.StarterOfficeExpanded);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            office.Cash.AccrueDeskIncome(7f, 60f);
+            float cashBefore = office.Cash.CurrentCash;
+            string candidateName = office.Candidates[0].worker.displayName;
+            Assert.True(office.TryHire(0, out string reason), reason);
+            Assert.That(cashBefore - office.Cash.CurrentCash, Is.EqualTo(380f).Within(.001f));
+            Assert.That(office.ActiveWorkerCount, Is.EqualTo(4));
+            WorkerAgent hire = office.Workers[office.Workers.Count - 1];
+            Assert.That(hire.Definition.displayName, Is.EqualTo(candidateName));
+            Assert.IsNull(hire.Desk);
+            yield return WaitForState(hire, WorkerState.Unassigned, 3f);
+
+            Workstation neighborDesk = FindZone(office, "neighbor.work.01") as Workstation;
+            yield return PlaceWorker(office, hire, neighborDesk);
+            Assert.That(hire.Desk, Is.EqualTo(neighborDesk));
+            Assert.That(neighborDesk.Assigned, Is.EqualTo(hire));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            float earnedAtPlacement = office.Cash.LifetimeEarned;
+            yield return new WaitForSeconds(2f);
+            Assert.False(office.Workday.IsEnded);
+            Assert.That(office.ActiveWorkerCount, Is.EqualTo(4));
+            Assert.That(office.Cash.LifetimeEarned, Is.GreaterThan(earnedAtPlacement));
+        }
+
+        [UnityTest] public IEnumerator EstablishedPreviewLoadsUntimedAndReturnsToStarterMenu()
+        {
+            yield return LoadOffice(OfficeStage.StarterOfficeExpanded);
+            OfficeDirector starter = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.True(starter.HUD.PreviewButtonVisible);
+            starter.VisitEstablishedOfficePreview();
+            yield return null;
+            yield return null;
+            OfficeDirector preview = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.True(preview.IsEstablishedPreview);
+            Assert.That(preview.Stage, Is.EqualTo(OfficeStage.EstablishedOffice));
+            Assert.False(preview.Workday.IsTimed);
+            Assert.NotNull(GameObject.Find("Future Stage Banner"));
+            preview.ReturnFromPreviewToMenu();
+            yield return null;
+            yield return null;
+            Assert.NotNull(Object.FindFirstObjectByType<MainMenuController>());
+        }
+
+        [UnityTest] public IEnumerator RestartReconstructsLockedAndExpandedStarterStates()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector locked = Object.FindFirstObjectByType<OfficeDirector>();
+            locked.Restart();
+            yield return null;
+            yield return null;
+            locked = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.That(locked.Stage, Is.EqualTo(OfficeStage.StarterOffice));
+            Assert.That(locked.WorkerCapacity, Is.EqualTo(3));
+            Assert.False(locked.Expansion.ConnectingWallOpen);
+
+            locked.Cash.AccrueDeskIncome(15f, 60f);
+            Assert.True(locked.TryPurchaseExpansion(out string reason), reason);
+            yield return new WaitForSecondsRealtime(1.5f);
+            OfficeDirector expanded = locked;
+            expanded.Restart();
+            yield return null;
+            yield return null;
+            expanded = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.That(expanded.Stage, Is.EqualTo(OfficeStage.StarterOfficeExpanded));
+            Assert.That(expanded.WorkerCapacity, Is.EqualTo(6));
+            Assert.True(expanded.Expansion.ConnectingWallOpen);
         }
 
         [UnityTest] public IEnumerator OfficeSceneLoadsAndWorkersSpawn()

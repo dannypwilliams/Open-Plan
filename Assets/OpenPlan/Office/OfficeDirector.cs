@@ -26,6 +26,24 @@ namespace OpenPlan
         public NeedStation Break { get; private set; }
         public NeedStation Elevator { get; private set; }
         public OfficeStageLayout Layout { get; private set; }
+        public OfficeExpansionController Expansion { get; private set; }
+        public bool InputLocked { get; private set; }
+        public bool IsEstablishedPreview { get; private set; }
+        public bool ExpansionComplete => Stage == OfficeStage.StarterOfficeExpanded ||
+                                         (Expansion != null && Expansion.IsExpanded);
+        public bool CanPurchaseExpansion => Expansion != null &&
+            ExpansionRules.CanPurchase(Cash.CurrentCash, Expansion.IsExpanded) && !Expansion.IsAnimating;
+        public bool CanHireWorkers => Stage == OfficeStage.EstablishedOffice || ExpansionComplete;
+        public float CombinedIncomePerMinute
+        {
+            get
+            {
+                float total = 0f;
+                foreach (WorkerAgent worker in workers)
+                    if (worker != null && !worker.IsFired) total += worker.Productivity;
+                return total * CashDirector.IncomePerProductivityMinute;
+            }
+        }
         public IReadOnlyList<WorkerAgent> Workers => workers;
         public IReadOnlyList<Workstation> Workstations => workstations;
         public IReadOnlyList<PlacementZone> PlacementZones => placementZones;
@@ -63,6 +81,7 @@ namespace OpenPlan
         private void Awake()
         {
             Stage = OfficeStageSelection.ConsumeForOffice();
+            IsEstablishedPreview = OfficeStageSelection.ConsumePreviewForOffice();
             Catalog = Resources.Load<OfficeAssetCatalog>("OpenPlanAssetCatalog");
             if (Catalog == null) { Debug.LogError("OPEN PLAN asset catalog missing. Run the release pipeline."); enabled = false; return; }
             Random = new SeededRandomService(19680412);
@@ -102,12 +121,16 @@ namespace OpenPlan
             EnsureCamera();
             CarryController = gameObject.AddComponent<WorkerCarryController>();
             CarryController.Initialize(this, Camera.main.GetComponent<OfficeCameraRig>(), HUD, Audio);
+            Expansion = world.GetComponent<OfficeExpansionController>();
+            Expansion?.Initialize(this);
             if (StandaloneInputSmokeDirector.Requested)
                 gameObject.AddComponent<StandaloneInputSmokeDirector>().Initialize(this);
             if (StandaloneActivityCycleDirector.Requested)
                 gameObject.AddComponent<StandaloneActivityCycleDirector>().Initialize(this);
             if (StandaloneBehaviorSoakDirector.Requested)
                 gameObject.AddComponent<StandaloneBehaviorSoakDirector>().Initialize(this);
+            if (StandaloneExpansionCaptureDirector.Requested)
+                gameObject.AddComponent<StandaloneExpansionCaptureDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -146,6 +169,7 @@ namespace OpenPlan
 
         private void Update()
         {
+            if (InputLocked) return;
             Keyboard keyboard = Keyboard.current;
             if (keyboard != null)
             {
@@ -193,7 +217,7 @@ namespace OpenPlan
             GameObject workerObject = Catalog.Spawn("Worker", transform, spawn, Quaternion.identity, Vector3.one);
             workerObject.name = "Worker_" + definition.displayName;
             WorkerAgent agent = workerObject.AddComponent<WorkerAgent>();
-            desk.Assign(agent);
+            desk?.Assign(agent);
             agent.Initialize(this, definition, desk, spawn);
             workers.Add(agent);
             return agent;
@@ -212,17 +236,28 @@ namespace OpenPlan
         {
             reason = null;
             if (candidateIndex < 0 || candidateIndex >= candidates.Count) { reason = "Candidate is no longer available."; return false; }
+            if (!CanHireWorkers) { reason = "Purchase the neighboring unit to unlock hiring."; return false; }
             if (ActiveWorkerCount >= WorkerCapacity) { reason = $"Office capacity reached ({WorkerCapacity})."; return false; }
             Workstation desk = FindAvailableDesk();
             if (desk == null) { reason = "No available desk."; return false; }
             CandidateDefinition candidate = candidates[candidateIndex];
-            if (!Economy.PayHiring(candidate.hiringCost)) { reason = $"Need ${candidate.hiringCost:N0} cash to hire."; return false; }
-            SpawnWorker(candidate.worker, desk, Elevator.UsePoint.position);
+            bool starter = Stage != OfficeStage.EstablishedOffice;
+            if (starter)
+            {
+                if (!Cash.TrySpend(candidate.hiringCost)) { reason = $"Need ${candidate.hiringCost:N0} cash to hire."; return false; }
+                SpawnWorker(candidate.worker, null, Elevator.UsePoint.position);
+            }
+            else
+            {
+                if (!Economy.PayHiring(candidate.hiringCost)) { reason = $"Need ${candidate.hiringCost:N0} cash to hire."; return false; }
+                SpawnWorker(candidate.worker, desk, Elevator.UsePoint.position);
+            }
             Hires++;
             candidates[candidateIndex] = NextCandidate();
             Economy.RecalculatePayroll(workers);
             RosterChanged?.Invoke();
-            Notice?.Invoke($"{candidate.worker.displayName} hired — heading to desk {desk.Index + 1}.");
+            Notice?.Invoke(starter ? $"{candidate.worker.displayName} hired — drag them from the entrance to an open desk." :
+                $"{candidate.worker.displayName} hired — heading to desk {desk.Index + 1}.");
             return true;
         }
 
@@ -336,6 +371,39 @@ namespace OpenPlan
         }
 
         public void ShowNotice(string message) => Notice?.Invoke(message);
+
+        public bool TryPurchaseExpansion(out string reason)
+            => Expansion != null ? Expansion.TryPurchase(out reason) : FailExpansion(out reason);
+
+        private static bool FailExpansion(out string reason)
+        {
+            reason = "The neighboring unit is unavailable.";
+            return false;
+        }
+
+        public void SetInputLocked(bool locked) => InputLocked = locked;
+
+        public void MarkExpansionComplete()
+        {
+            if (Stage != OfficeStage.EstablishedOffice) Stage = OfficeStage.StarterOfficeExpanded;
+            RosterChanged?.Invoke();
+        }
+
+        public void VisitEstablishedOfficePreview()
+        {
+            CarryController?.CancelCarry(true);
+            Time.timeScale = 1f;
+            OfficeStageSelection.SelectEstablishedPreview();
+            SceneManager.LoadScene("Office");
+        }
+
+        public void ReturnFromPreviewToMenu()
+        {
+            CarryController?.CancelCarry(true);
+            Time.timeScale = 1f;
+            OfficeStageSelection.ClearPendingSelection();
+            SceneManager.LoadScene("MainMenu");
+        }
 
         public WorkerAgent FindSocialPartner(WorkerAgent asker)
         {
@@ -479,7 +547,21 @@ namespace OpenPlan
             => new WorkerDefinition { displayName = name, trait = trait, skill = skill, salary = salary, sociability = social, strength = strength, weakness = weakness, clothing = clothing };
         private static CandidateDefinition Candidate(WorkerDefinition worker, int cost) => new CandidateDefinition { worker = worker, hiringCost = cost };
 
-        public void Restart() { CarryController?.CancelCarry(true); Time.timeScale = 1f; OfficeStageSelection.SelectForNextLoad(Stage); SceneManager.LoadScene("Office"); }
-        public void ReturnToMenu() { CarryController?.CancelCarry(true); Time.timeScale = 1f; SceneManager.LoadScene("MainMenu"); }
+        public void Restart()
+        {
+            CarryController?.CancelCarry(true);
+            Time.timeScale = 1f;
+            if (IsEstablishedPreview) OfficeStageSelection.SelectEstablishedPreview();
+            else OfficeStageSelection.SelectForNextLoad(Stage);
+            SceneManager.LoadScene("Office");
+        }
+
+        public void ReturnToMenu()
+        {
+            CarryController?.CancelCarry(true);
+            Time.timeScale = 1f;
+            OfficeStageSelection.ClearPendingSelection();
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

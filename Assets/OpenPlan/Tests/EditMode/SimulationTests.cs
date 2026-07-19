@@ -340,5 +340,21 @@ namespace OpenPlan.Tests
             Assert.That(WorkerVisuals.SafeText("\u25A1", "?"), Is.EqualTo("?"));
             Assert.That(WorkerVisuals.SafeText("\u2191", "FOCUS"), Is.EqualTo("FOCUS"));
         }
+
+        [Test] public void ExpansionAffordabilityRequiresFullPriceAndNeverAutoSpends()
+        {
+            Assert.False(ExpansionRules.CanPurchase(999.99f, false));
+            Assert.True(ExpansionRules.CanPurchase(1000f, false));
+            Assert.True(ExpansionRules.CanPurchase(1200f, false));
+            Assert.False(ExpansionRules.CanPurchase(1200f, true));
+            Assert.That(ExpansionRules.PurchaseProgress(500f), Is.EqualTo(.5f));
+            Assert.That(ExpansionRules.PurchaseProgress(1200f), Is.EqualTo(1f));
+        }
+
+        [Test] public void ExpansionExpectedAffordabilityUsesStartingTeamAndSnackOverhead()
+        {
+            Assert.That(ExpansionRules.ExpectedStartingIncomePerMinute(), Is.EqualTo(149.124f).Within(.001f));
+            Assert.That(ExpansionRules.ExpectedMinutesToAfford(), Is.InRange(6.2f, 6.3f));
+        }
     }
 }

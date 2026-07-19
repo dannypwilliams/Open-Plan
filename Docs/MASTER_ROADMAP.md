@@ -1,6 +1,6 @@
 # OPEN PLAN - Master Roadmap
 
-Status: worker-placement pivot checkpoint 4 implemented on 2026-07-19.
+Status: worker-placement pivot checkpoint 6 implemented on 2026-07-19.
 
 ## Product direction
 
@@ -14,8 +14,8 @@ The first demo begins with a modest three-worker business and centers on picking
 | 2 | Build the authored Starter Office | PASS - modest office and locked neighbor are readable, attractive, correctly framed, and validated |
 | 3 | Implement worker pickup and placement | PASS - click-and-drag placement is clear, cancellable, robust, and standalone-smoke tested |
 | 4 | Make activity areas functional | PASS - all six loops have timed behavior, exact needs/economic effects, cleanup, and standalone evidence |
-| 5 | Add personality and readable status | Needs, traits, names, states, and emotes explain behavior |
-| 6 | Add physical expansion | A $1,000 purchase opens the neighboring unit in-world |
+| 5 | Add personality and readable status | PASS - needs, traits, names, states, emotes, and soak evidence explain behavior |
+| 6 | Add physical expansion | PASS - deliberate $1,000 purchase opens the unit in-world, adds three-worker capacity, and unlocks preview |
 | 7 | Build tutorial and presentation | A new player can understand and complete the loop |
 | 8 | Balance, validate, and package | Tests, soak, media, Windows ZIP, and friend-demo flow pass |
 

@@ -1,12 +1,12 @@
 # Known Issues and Limitations
 
-No blocker or critical issue is known for worker-placement pivot checkpoint 4.
+No blocker or critical issue is known for worker-placement pivot checkpoint 6.
 
 ## Checkpoint limitations
 
-- The six activity loops are functional; checkpoint 5 remains responsible for deeper personality-specific reactions and expanded status presentation.
-- The neighboring unit, removable wall, purchase sign, and expanded stage are present, but the in-game purchase and wall-opening sequence belongs to checkpoint 6.
-- Starter UI still reuses parts of the released management HUD, including hiring, firing, task, and report surfaces that will be revised during later pivot checkpoints.
+- The first expansion is intentionally the only property purchase in this demo slice.
+- Expansion state persists across an in-session expanded restart, but there is intentionally no save persistence after quitting or returning to the main menu.
+- The starter flow is open-ended and has no workday result screen; the Established Office's direct non-preview development route retains its legacy five-minute report loop.
 - The Established Office retains direct deterministic steering, procedural character animation, restrained audio, and its legacy five-minute report loop.
 - There is no save system, localization, remappable controls, or settings menu.
 

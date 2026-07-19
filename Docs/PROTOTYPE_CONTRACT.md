@@ -9,7 +9,7 @@ The released large office from commit `a638304` remains intact as the Establishe
 ## Stage contract
 
 - `StarterOffice`: the default authored stage, with three workers, three occupied desks, one unavailable desk, and a visible locked neighboring unit.
-- `StarterOfficeExpanded`: the same business after its first physical expansion, with both units and seven available desk locations.
+- `StarterOfficeExpanded`: the same business after its first physical expansion, with both units, six available desk locations, and capacity for three additional workers.
 - `EstablishedOffice`: the preserved six-worker, twelve-desk released office and its management systems.
 
 The Main Menu always starts `StarterOffice`. Explicit developer and automation launches can select a stage with `-openplan-stage <StarterOffice|StarterOfficeExpanded|EstablishedOffice>`. Existing capture, video, performance, and package-verification arguments default to `EstablishedOffice` when no stage override is supplied so prior release evidence remains reproducible.
@@ -50,7 +50,10 @@ The player presses and holds on a worker, then moves more than six screen pixels
 ## Simulation contract
 
 - Starter stages have no countdown and do not finish or fail automatically.
-- The first objective is to earn enough cash to purchase the neighboring unit.
+- The first objective is `Earn $1,000 and purchase the neighboring unit.` Reaching $1,000 enables confirmation but never spends automatically; snack purchases can disable affordability again.
+- Confirmed purchase deducts exactly $1,000 once and, in the current world, lights the adjacent floor, opens the connecting wall, reveals trim, enables navigation, three desk zones and the secondary rest corner, and updates camera bounds.
+- The expanded starter stage unlocks three displayed-fee hires. Each enters unassigned and becomes productive only after the player drags them onto an available desk.
+- Expansion unlocks `VISIT ESTABLISHED OFFICE PREVIEW`; that route is marked as a future business stage, is untimed, and returns to the Starter Office main menu.
 - The Established Office retains its released worker simulation, hiring, firing, reassignment, task economy, amenities, camera composition, and optional five-minute legacy workday.
 - Core worker, task, economy, UI, audio, and camera systems are shared across stages.
 

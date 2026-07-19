@@ -10,6 +10,7 @@ namespace OpenPlan
         private AudioClip taskDone;
         private AudioClip placementSuccess;
         private AudioClip placementRejected;
+        private AudioClip expansionPurchase;
         private bool suppressNextNoticeCue;
         public string LastCue { get; private set; }
 
@@ -26,6 +27,7 @@ namespace OpenPlan
             taskDone = BuildTone("Task complete", .34f, 520f, 760f);
             placementSuccess = BuildTone("Placement success", .16f, 360f, 520f);
             placementRejected = BuildTone("Placement rejected", .18f, 210f, 145f);
+            expansionPurchase = BuildTone("Expansion purchase", .48f, 260f, 820f);
             office.Tasks.TaskCompleted += _ => oneShot.PlayOneShot(taskDone);
             office.Notice += _ =>
             {
@@ -45,6 +47,13 @@ namespace OpenPlan
             LastCue = "placement-rejected";
             suppressNextNoticeCue = true;
             if (oneShot != null) oneShot.PlayOneShot(placementRejected, .64f);
+        }
+
+        public void PlayExpansionPurchase()
+        {
+            LastCue = "expansion-purchase";
+            suppressNextNoticeCue = true;
+            if (oneShot != null) oneShot.PlayOneShot(expansionPurchase, .90f);
         }
 
         private static AudioClip BuildNoise(string name, float length, float amplitude, int seed)

@@ -10,8 +10,13 @@ namespace OpenPlan
     {
         public bool HasModalOpen => (hiringPanel != null && hiringPanel.gameObject.activeSelf) ||
                                     (confirmPanel != null && confirmPanel.gameObject.activeSelf) ||
+                                    (purchasePanel != null && purchasePanel.gameObject.activeSelf) ||
                                     (reportPanel != null && reportPanel.gameObject.activeSelf);
         public bool NameTagsEnabled => WorkerVisuals.GlobalNameTagsVisible;
+        public bool PurchasePanelVisible => purchasePanel != null && purchasePanel.gameObject.activeSelf;
+        public bool PurchaseButtonInteractable => purchaseButton != null && purchaseButton.interactable;
+        public bool PreviewButtonVisible => previewButton != null && previewButton.gameObject.activeSelf;
+        public string GoalText => taskText == null ? string.Empty : taskText.text;
 
         private OfficeDirector office;
         private Canvas canvas;
@@ -24,8 +29,12 @@ namespace OpenPlan
         private RectTransform candidateContent;
         private RectTransform confirmPanel;
         private RectTransform reportPanel;
+        private RectTransform purchasePanel;
         private TextMeshProUGUI confirmText;
         private TextMeshProUGUI reportText;
+        private Button hireButton;
+        private Button purchaseButton;
+        private Button previewButton;
         private WorkerAgent pendingFire;
         private float refresh;
         private float noticeUntil;
@@ -38,8 +47,11 @@ namespace OpenPlan
             office.RosterChanged += RefreshCandidates;
             office.Notice += ShowNotice;
             office.Workday.Ended += ShowReport;
-            office.Tasks.TaskChanged += _ => RefreshAll();
-            office.Tasks.TaskCompleted += task => ShowNotice($"TASK COMPLETE  +${task.revenue:N0}  {task.title}");
+            if (office.Stage == OfficeStage.EstablishedOffice && !office.IsEstablishedPreview)
+            {
+                office.Tasks.TaskChanged += _ => RefreshAll();
+                office.Tasks.TaskCompleted += task => ShowNotice($"TASK COMPLETE  +${task.revenue:N0}  {task.title}");
+            }
             OnSelection(null);
             RefreshAll();
         }
@@ -74,9 +86,9 @@ namespace OpenPlan
                 new Vector2(.012f,.925f), new Vector2(.988f,.988f), Vector2.zero, Vector2.zero);
             hudText = OfficeUIFactory.Text(top, "Company readout", string.Empty, 24f, OfficeUIFactory.Paper,
                 Vector2.zero, new Vector2(.67f,1f), new Vector2(18f,0f), new Vector2(-4f,0f), TextAlignmentOptions.MidlineLeft);
-            Button hire = OfficeUIFactory.Button(top, "Hire", "H  HIRE", OfficeUIFactory.Burgundy, OfficeUIFactory.Paper,
+            hireButton = OfficeUIFactory.Button(top, "Hire", "H  HIRE", OfficeUIFactory.Burgundy, OfficeUIFactory.Paper,
                 new Vector2(.68f,.12f), new Vector2(.755f,.88f), Vector2.zero, Vector2.zero);
-            hire.onClick.AddListener(ToggleHiring);
+            hireButton.onClick.AddListener(ToggleHiring);
             Button overlay = OfficeUIFactory.Button(top, "Overlay", "TAB  OVERLAY", new Color(.12f,.34f,.36f), OfficeUIFactory.Paper,
                 new Vector2(.76f,.12f), new Vector2(.835f,.88f), Vector2.zero, Vector2.zero);
             overlay.onClick.AddListener(office.ToggleOverlay);
@@ -88,9 +100,12 @@ namespace OpenPlan
             AddSpeedButton(top, ".97", "4×", 4f);
 
             RectTransform objective = OfficeUIFactory.Panel(canvas.transform, "Objective", new Color(.90f,.67f,.28f,.96f),
-                new Vector2(.018f,.79f), new Vector2(.31f,.91f), Vector2.zero, Vector2.zero);
-            taskText = OfficeUIFactory.Text(objective, "Task", string.Empty, 23f, OfficeUIFactory.Ink,
-                Vector2.zero, Vector2.one, new Vector2(16f,8f), new Vector2(-12f,-8f), TextAlignmentOptions.MidlineLeft);
+                new Vector2(.018f,.61f), new Vector2(.35f,.91f), Vector2.zero, Vector2.zero);
+            taskText = OfficeUIFactory.Text(objective, "Task", string.Empty, 20f, OfficeUIFactory.Ink,
+                new Vector2(0f,.28f), Vector2.one, new Vector2(16f,8f), new Vector2(-12f,-8f), TextAlignmentOptions.MidlineLeft);
+            purchaseButton = OfficeUIFactory.Button(objective, "Purchase Next Door", "PURCHASE NEXT DOOR", OfficeUIFactory.Burgundy, Color.white,
+                new Vector2(.05f,.05f), new Vector2(.95f,.24f), Vector2.zero, Vector2.zero);
+            purchaseButton.onClick.AddListener(AskPurchaseExpansion);
 
             inspector = OfficeUIFactory.Panel(canvas.transform, "Employee Card", new Color(.91f,.83f,.68f,.97f),
                 new Vector2(.755f,.10f), new Vector2(.982f,.90f), Vector2.zero, Vector2.zero);
@@ -113,7 +128,10 @@ namespace OpenPlan
 
             BuildHiringPanel();
             BuildConfirmation();
-            BuildReport();
+            if (office.Stage == OfficeStage.EstablishedOffice && !office.IsEstablishedPreview) BuildReport();
+            if (office.Stage != OfficeStage.EstablishedOffice) BuildExpansionConfirmation();
+            if (office.IsEstablishedPreview) BuildPreviewBanner();
+            else if (office.Stage != OfficeStage.EstablishedOffice) BuildPreviewButton();
             noticeText = OfficeUIFactory.Text(canvas.transform, "Notice", string.Empty, 25f, Color.white,
                 new Vector2(.24f,.035f), new Vector2(.76f,.09f), Vector2.zero, Vector2.zero, TextAlignmentOptions.Center);
             noticeText.gameObject.AddComponent<Outline>().effectColor = new Color(0f,0f,0f,.9f);
@@ -186,6 +204,64 @@ namespace OpenPlan
             confirmPanel.gameObject.SetActive(false);
         }
 
+        private void BuildExpansionConfirmation()
+        {
+            purchasePanel = OfficeUIFactory.Panel(canvas.transform, "Expansion Purchase Confirmation", new Color(.91f,.83f,.68f,.995f),
+                new Vector2(.25f,.22f), new Vector2(.75f,.78f), Vector2.zero, Vector2.zero);
+            OfficeUIFactory.Text(purchasePanel, "Header", "PURCHASE THE UNIT NEXT DOOR?", 31f, OfficeUIFactory.Burgundy,
+                new Vector2(.06f,.84f), new Vector2(.94f,.96f), Vector2.zero, Vector2.zero, TextAlignmentOptions.Center);
+            OfficeUIFactory.Text(purchasePanel, "Unlocks",
+                "PRICE  $1,000\n\nUNLOCKS EXACTLY:\n• Adjacent floor space\n• Connecting wall removal and open doorway\n• Three additional desk locations\n• Capacity for three additional workers\n• Access to the Established Office preview",
+                24f, OfficeUIFactory.Ink, new Vector2(.09f,.27f), new Vector2(.91f,.83f), Vector2.zero, Vector2.zero);
+            Button cancel = OfficeUIFactory.Button(purchasePanel, "Cancel", "NOT YET", new Color(.12f,.42f,.44f), Color.white,
+                new Vector2(.08f,.08f), new Vector2(.45f,.20f), Vector2.zero, Vector2.zero);
+            cancel.onClick.AddListener(() => { purchasePanel.gameObject.SetActive(false); RefreshModalVisibility(); });
+            Button confirm = OfficeUIFactory.Button(purchasePanel, "Confirm", "BUY FOR $1,000", OfficeUIFactory.Orange, Color.white,
+                new Vector2(.52f,.08f), new Vector2(.92f,.20f), Vector2.zero, Vector2.zero);
+            confirm.onClick.AddListener(ConfirmPurchaseExpansion);
+            purchasePanel.gameObject.SetActive(false);
+        }
+
+        private void BuildPreviewButton()
+        {
+            previewButton = OfficeUIFactory.Button(canvas.transform, "Established Office Preview",
+                "VISIT ESTABLISHED OFFICE PREVIEW", new Color(.12f,.42f,.44f), Color.white,
+                new Vector2(.018f,.51f), new Vector2(.35f,.59f), Vector2.zero, Vector2.zero);
+            previewButton.onClick.AddListener(office.VisitEstablishedOfficePreview);
+            previewButton.gameObject.SetActive(false);
+        }
+
+        private void BuildPreviewBanner()
+        {
+            RectTransform preview = OfficeUIFactory.Panel(canvas.transform, "Future Stage Banner", new Color(.90f,.67f,.28f,.97f),
+                new Vector2(.34f,.82f), new Vector2(.66f,.91f), Vector2.zero, Vector2.zero);
+            OfficeUIFactory.Text(preview, "Future Stage", "FUTURE BUSINESS STAGE PREVIEW", 25f, OfficeUIFactory.Ink,
+                new Vector2(.03f,.16f), new Vector2(.68f,.84f), Vector2.zero, Vector2.zero, TextAlignmentOptions.Center);
+            Button back = OfficeUIFactory.Button(preview, "Return", "RETURN TO STARTER OFFICE MENU", OfficeUIFactory.Burgundy, Color.white,
+                new Vector2(.70f,.14f), new Vector2(.97f,.86f), Vector2.zero, Vector2.zero);
+            back.onClick.AddListener(office.ReturnFromPreviewToMenu);
+        }
+
+        private void AskPurchaseExpansion()
+        {
+            if (!office.CanPurchaseExpansion)
+            {
+                ShowNotice($"Need ${ExpansionRules.PurchasePrice:N0} cash to purchase the neighboring unit.");
+                return;
+            }
+            hiringPanel.gameObject.SetActive(false);
+            confirmPanel.gameObject.SetActive(false);
+            purchasePanel.gameObject.SetActive(true);
+            RefreshModalVisibility();
+        }
+
+        private void ConfirmPurchaseExpansion()
+        {
+            purchasePanel.gameObject.SetActive(false);
+            if (!office.TryPurchaseExpansion(out string reason)) ShowNotice(reason);
+            RefreshModalVisibility();
+        }
+
         private void BuildReport()
         {
             reportPanel = OfficeUIFactory.Panel(canvas.transform, "Report", new Color(.92f,.85f,.70f,.995f),
@@ -224,16 +300,35 @@ namespace OpenPlan
             string clock = office.Workday.IsTimed ? $"DAY  {minutes:00}:{seconds:00}" : "OPEN ENDED";
             string speed = SimulationSpeedController.Instance == null || SimulationSpeedController.Instance.IsPaused ? "PAUSED" : SimulationSpeedController.Instance.Speed + "×";
             TaskRuntime task = office.Tasks.Current;
-            if (office.Stage == OfficeStage.EstablishedOffice)
+            if (office.Stage == OfficeStage.EstablishedOffice && !office.IsEstablishedPreview)
             {
                 hudText.text = $"{clock}     REVENUE  ${office.Economy.Revenue:N0} / ${office.Economy.DailyTarget:N0}     CASH  ${office.Economy.Cash:N0}     PAYROLL  ${office.Economy.Payroll:N0}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
                 taskText.text = task == null ? "INBOX CLEAR" : $"REACH TODAY'S REVENUE TARGET\n{task.definition.title.ToUpperInvariant()}  {office.Tasks.Progress01:P0}  -  ${task.definition.revenue:N0}";
             }
+            else if (office.IsEstablishedPreview)
+            {
+                hudText.text = $"OPEN ENDED     FUTURE BUSINESS STAGE     CASH  ${office.Economy.Cash:N0}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
+                taskText.text = "FUTURE BUSINESS STAGE PREVIEW\nExplore the preserved large office, then return to the Starter Office menu.";
+            }
             else
             {
                 hudText.text = $"{clock}     CASH  ${office.Cash.CurrentCash:N2}     LIFETIME EARNED  ${office.Cash.LifetimeEarned:N2}     TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}     {speed}";
-                taskText.text = $"EARN $1,000 TO PURCHASE THE NEIGHBORING UNIT - NO TIME LIMIT\nDESK WORK EARNS $60/MIN × PRODUCTIVITY";
+                float progress = office.ExpansionComplete ? 1f : ExpansionRules.PurchaseProgress(office.Cash.CurrentCash);
+                string availability = office.ExpansionComplete ? "FIRST EXPANSION COMPLETE — continue growing at your pace." :
+                    office.CanPurchaseExpansion ? "The neighboring unit is available." :
+                    $"${Mathf.Max(0f, ExpansionRules.PurchasePrice - office.Cash.CurrentCash):N2} still needed.";
+                taskText.text = $"OBJECTIVE: Earn $1,000 and purchase the neighboring unit.\n" +
+                    $"CURRENT CASH  ${office.Cash.CurrentCash:N2}     LIFETIME  ${office.Cash.LifetimeEarned:N2}\n" +
+                    $"EXPANSION PRICE  ${ExpansionRules.PurchasePrice:N0}     PROGRESS  {progress:P0}\n" +
+                    $"COMBINED INCOME  ${office.CombinedIncomePerMinute:N2}/MIN\n{availability}";
             }
+            if (purchaseButton != null)
+            {
+                purchaseButton.gameObject.SetActive(office.Stage != OfficeStage.EstablishedOffice && !office.ExpansionComplete);
+                purchaseButton.interactable = office.CanPurchaseExpansion;
+            }
+            if (hireButton != null) hireButton.interactable = office.CanHireWorkers;
+            if (previewButton != null) previewButton.gameObject.SetActive(office.ExpansionComplete);
             RefreshInspector();
         }
 
@@ -263,6 +358,11 @@ namespace OpenPlan
 
         private void ToggleHiring()
         {
+            if (!office.CanHireWorkers)
+            {
+                ShowNotice("Purchase the neighboring unit to unlock hiring.");
+                return;
+            }
             bool visible = !hiringPanel.gameObject.activeSelf;
             if (visible) RefreshCandidates();
             hiringPanel.gameObject.SetActive(visible);
@@ -301,6 +401,7 @@ namespace OpenPlan
 
         private void ShowReport(WorkdaySummary summary)
         {
+            if (reportPanel == null || office.IsEstablishedPreview || !office.Workday.IsTimed) return;
             hiringPanel.gameObject.SetActive(false);
             confirmPanel.gameObject.SetActive(false);
             string stamp = summary.targetReached ? "<color=#287B62><size=42><b>TARGET APPROVED</b></size></color>" : "<color=#A13B2E><size=42><b>TARGET MISSED</b></size></color>";

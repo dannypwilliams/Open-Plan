@@ -7,6 +7,7 @@ namespace OpenPlan
     {
         public const string StageArgument = "-openplan-stage";
         private static OfficeStage? nextStage;
+        private static bool nextLoadIsPreview;
 
         public static OfficeStage Resolve(string[] arguments, OfficeStage fallback = OfficeStage.StarterOffice)
         {
@@ -37,7 +38,24 @@ namespace OpenPlan
             return fallback;
         }
 
-        public static void SelectForNextLoad(OfficeStage stage) => nextStage = stage;
+        public static void SelectForNextLoad(OfficeStage stage)
+        {
+            nextStage = stage;
+            nextLoadIsPreview = false;
+        }
+
+        public static void SelectEstablishedPreview()
+        {
+            nextStage = OfficeStage.EstablishedOffice;
+            nextLoadIsPreview = true;
+        }
+
+        public static bool ConsumePreviewForOffice()
+        {
+            bool preview = nextLoadIsPreview;
+            nextLoadIsPreview = false;
+            return preview;
+        }
 
         public static OfficeStage ConsumeForOffice()
         {
@@ -50,7 +68,11 @@ namespace OpenPlan
             return Resolve(Environment.GetCommandLineArgs());
         }
 
-        public static void ClearPendingSelection() => nextStage = null;
+        public static void ClearPendingSelection()
+        {
+            nextStage = null;
+            nextLoadIsPreview = false;
+        }
 
         private static bool HasArgument(string[] arguments, string wanted)
             => Array.Exists(arguments, argument => string.Equals(argument, wanted, StringComparison.OrdinalIgnoreCase));

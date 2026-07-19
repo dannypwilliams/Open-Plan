@@ -1,26 +1,28 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 5 - Personality and Readable Status
+- Current checkpoint: Worker-Placement Pivot 6 - Untimed Physical Expansion
 - Status: implementation, visual review, and verification PASS
 - Date: 2026-07-19
 - Branch: `codex/small-office-placement-pivot`
-- Previous checkpoint: `f551d99` (`feat: make worker placement activities functional`)
+- Previous checkpoint: `8e2ef4b` (`feat: add worker personality and readable status feedback`)
 - Base release: `a638304` (`release: pass phase 5 Windows prototype`)
 - Unity: 6000.5.1f1; Blender: 5.2.0 LTS
 - Default entry: Main Menu -> Starter Office
 - Starter roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
 - Stages: Starter Office, Starter Office Expanded, Established Office
 - Starter timing: unlimited; no automatic finish or failure
-- Automated tests: 81/81 passed (39 EditMode, 42 PlayMode)
-- Previous checkpoint baseline: 71/71 passed (35 EditMode, 36 PlayMode)
+- Expansion economy: $100 start, $1,000 deliberate purchase, about 6.26 expected minutes at the starting-team model after snack overhead
+- Expanded capacity: six desks total; three new hires arrive unassigned at the entrance
+- Automated tests: 88/88 passed (41 EditMode, 47 PlayMode)
+- Previous checkpoint baseline: 81/81 passed (39 EditMode, 42 PlayMode)
 - Original large office: preserved as Established Office
 - Blender assets: 54/54 validated
-- Windows player: rebuilt successfully for checkpoint 5
+- Windows player: rebuilt successfully for checkpoint 6
 - Standalone input smoke: 12/12 checks passed at both 1280x720 and 1920x1080
 - Standalone activity cycle: 9/9 observations passed for pickup -> Get Water -> autonomous return
 - Fifteen-minute behavior soak: PASS at 20x; 48 total distractions, varied states, no permanent idle/stuck worker, all capacities respected
 - Soak distraction rates: Morgan 2/105 (1.9%), Alex 13/100 (13.0%), Sam 33/93 (35.5%)
-- Personality evidence: `outputs/Screenshots/StarterOffice_BehaviorSoak.txt`, `StarterOffice_BehaviorSoak.png`, and `StarterOffice_NameTagClose.png`
+- Expansion evidence: `outputs/Screenshots/StarterOffice_BeforeExpansion.png`, `StarterOffice_AfterExpansion.png`, and `StarterOffice_ExpansionCapture.txt`
 - Existing release/package/media: preserved as historical `a638304` evidence
 - Critical issues: none
-- Next checkpoint: Physical neighboring-unit expansion
+- Next checkpoint: Tutorial and presentation

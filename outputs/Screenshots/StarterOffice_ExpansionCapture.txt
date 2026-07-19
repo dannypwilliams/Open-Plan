@@ -1,0 +1,13 @@
+captured_utc=2026-07-19T22:44:24.8571838Z
+starting_capture_cash=100.00
+affordable_cash=1000.00
+purchased=True
+purchase_reason=none
+purchase_deduction=1000.00
+expanded=True
+wall_open=True
+doorway_trim=True
+navigation=True
+capacity=6
+pan_width=26.00
+expected_minutes_to_afford=6.26

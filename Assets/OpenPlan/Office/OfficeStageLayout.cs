@@ -38,6 +38,11 @@ namespace OpenPlan
             if (obstacle != null && !obstacles.Contains(obstacle)) obstacles.Add(obstacle);
         }
 
+        public void UnregisterObstacle(OfficeObstacleVolume obstacle)
+        {
+            if (obstacle != null) obstacles.Remove(obstacle);
+        }
+
         public void RegisterPrimaryRoute(PrimaryRouteVolume route)
         {
             if (route != null && !primaryRoutes.Contains(route)) primaryRoutes.Add(route);
@@ -114,5 +119,7 @@ namespace OpenPlan
             IsNeighboringUnit = neighboringUnit;
             IsAvailable = available;
         }
+
+        public void SetAvailable(bool available) => IsAvailable = available;
     }
 }

@@ -76,6 +76,11 @@ namespace OpenPlan
 
         private void Update()
         {
+            if (office != null && office.InputLocked)
+            {
+                UpdateTransform(CurrentPivot());
+                return;
+            }
             Mouse mouse = Mouse.current;
             Keyboard keyboard = Keyboard.current;
             if (mouse != null)
@@ -154,6 +159,20 @@ namespace OpenPlan
             follow.Stop();
             focus.Set(overviewCenter);
             targetSize = OverviewSize();
+        }
+
+        public void ApplyLayoutChange(bool showOverview)
+        {
+            if (office == null || office.Layout == null) return;
+            overviewCenter = office.Layout.OverviewCenter;
+            if (showOverview) Overview();
+            else
+            {
+                focus.Set(overviewCenter);
+                targetSize = OverviewSize();
+                cameraComponent.orthographicSize = targetSize;
+                UpdateTransform(overviewCenter);
+            }
         }
 
         public void FocusPoint(Vector3 point, float size)

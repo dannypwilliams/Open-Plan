@@ -64,6 +64,11 @@ namespace OpenPlan
         private void Update()
         {
             if (office == null) return;
+            if (office.InputLocked)
+            {
+                if (Phase != WorkerCarryPhase.Idle) CancelCarry(true, "Input paused during expansion.");
+                return;
+            }
             if (worldCamera == null) worldCamera = Camera.main;
 
             if (Phase == WorkerCarryPhase.Placing || Phase == WorkerCarryPhase.Returning)
@@ -144,7 +149,7 @@ namespace OpenPlan
 
         public bool BeginPointerGesture(WorkerAgent worker, Vector2 screenPosition, bool pointerOverUi)
         {
-            if (Phase != WorkerCarryPhase.Idle) return false;
+            if (Phase != WorkerCarryPhase.Idle || (office != null && office.InputLocked)) return false;
             pointerScreenPosition = pressScreenPosition = screenPosition;
             pressTime = Time.unscaledTime;
             uiGesture = pointerOverUi;
