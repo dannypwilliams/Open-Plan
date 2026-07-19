@@ -1,0 +1,7 @@
+{
+  "name": "OpenPlan.EditModeTests",
+  "rootNamespace": "OpenPlan.Tests",
+  "references": ["OpenPlan.Runtime"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "OpenPlan.PlayModeTests",
+  "rootNamespace": "OpenPlan.Tests",
+  "references": ["OpenPlan.Runtime"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}
