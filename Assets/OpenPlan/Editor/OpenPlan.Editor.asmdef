@@ -1,0 +1,12 @@
+{
+  "name": "OpenPlan.Editor",
+  "rootNamespace": "OpenPlan.Editor",
+  "references": [
+    "OpenPlan.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
+    ,"Unity.TextMeshPro"
+  ],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

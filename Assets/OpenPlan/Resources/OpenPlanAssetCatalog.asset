@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffafca01c04df1c41ab4bb5b16f7be5c, type: 3}
+  m_Name: OpenPlanAssetCatalog
+  m_EditorClassIdentifier: OpenPlan.Runtime::OpenPlan.OfficeAssetCatalog
+  prefabs:
+  - key: Bookshelf
+    prefab: {fileID: 919132149155446097, guid: 6797c7fdb32c80e4e8da7123a8a8a0d8, type: 3}
+  - key: Cabinet
+    prefab: {fileID: 919132149155446097, guid: c17105ac6f7c77c41b339083f1ef3521, type: 3}
+  - key: CardboardBox
+    prefab: {fileID: 919132149155446097, guid: 3d336c6fa5de5804d991c2476558c707, type: 3}
+  - key: Clock
+    prefab: {fileID: 919132149155446097, guid: 7da8f5bf76b650f4099824332efd79e3, type: 3}
+  - key: CoffeeMachine
+    prefab: {fileID: 919132149155446097, guid: e1bc34fabc4c13c4d9a84b287f00f1bb, type: 3}
+  - key: CompanySign
+    prefab: {fileID: 919132149155446097, guid: e7b4a895caca6b249bc444e358ec075c, type: 3}
+  - key: ConferenceTable
+    prefab: {fileID: 919132149155446097, guid: e8334744cf5275f4f9c0c3fc6048640a, type: 3}
+  - key: Copier
+    prefab: {fileID: 919132149155446097, guid: 4ce11708557cf5e46b12414256c40752, type: 3}
+  - key: Counter
+    prefab: {fileID: 919132149155446097, guid: aee2e1a6acc5c0c4f883cbc722f3b968, type: 3}
+  - key: CubicleDivider
+    prefab: {fileID: 919132149155446097, guid: 80fb19ffe94c7324dbd4e2d9c138d1ba, type: 3}
+  - key: DeskLamp
+    prefab: {fileID: 919132149155446097, guid: 38c6a0e75ecf333428f179659fdb9f60, type: 3}
+  - key: DeskPlant
+    prefab: {fileID: 919132149155446097, guid: eb6c99234384f7c44966fc4a0ca2fa65, type: 3}
+  - key: Desk_A
+    prefab: {fileID: 919132149155446097, guid: aabf028a40ad4354bbd363276a8d0b75, type: 3}
+  - key: Desk_B
+    prefab: {fileID: 919132149155446097, guid: cce0cd08e89693b4ca511c27640a444d, type: 3}
+  - key: DisplayScreen
+    prefab: {fileID: 919132149155446097, guid: 8aec8b80454342548ad06465d9a85338, type: 3}
+  - key: Door
+    prefab: {fileID: 919132149155446097, guid: fb9deaf99686dd1409fdad8f31a64308, type: 3}
+  - key: Elevator
+    prefab: {fileID: 919132149155446097, guid: 1ca2aea376e3f2a4f8a0a5d8171b651f, type: 3}
+  - key: ElevatorIndicator
+    prefab: {fileID: 919132149155446097, guid: 61233337bbb235f41a3a6cff0e74cee7, type: 3}
+  - key: ExitSign
+    prefab: {fileID: 919132149155446097, guid: 0222584f3f7300c4f8bda263ccfdb1ca, type: 3}
+  - key: FileTray
+    prefab: {fileID: 919132149155446097, guid: c3c8231c277e12f4cbbc36c91bd288d5, type: 3}
+  - key: FilingCabinet
+    prefab: {fileID: 919132149155446097, guid: 5936b4cd3dc139641919715d3012a52e, type: 3}
+  - key: FloorSlab
+    prefab: {fileID: 919132149155446097, guid: 88c57e240d5fcc24db9c4196f16111be, type: 3}
+  - key: GlassWall
+    prefab: {fileID: 919132149155446097, guid: 8d0f9853424e26546852c91b4a28c017, type: 3}
+  - key: Keyboard
+    prefab: {fileID: 919132149155446097, guid: 59d86fe8e7ad7ff4cb3d26a61ce0d9df, type: 3}
+  - key: MeetingChair
+    prefab: {fileID: 919132149155446097, guid: 2fbc8a8d85278de4b8ed79e728e27155, type: 3}
+  - key: Monitor
+    prefab: {fileID: 919132149155446097, guid: f1a5c50d0408fea4bbe5c96180694189, type: 3}
+  - key: Mouse
+    prefab: {fileID: 919132149155446097, guid: c96d6d47f05a2b147b44f78ced99a18b, type: 3}
+  - key: Mug
+    prefab: {fileID: 919132149155446097, guid: 85aa3febc820e314594f67bce8e19bb3, type: 3}
+  - key: Nameplate
+    prefab: {fileID: 919132149155446097, guid: c0596249f500e3d49ba4826abab1e6d2, type: 3}
+  - key: NoticeBoard
+    prefab: {fileID: 919132149155446097, guid: 1b74a06f36d244247871189df21b7b84, type: 3}
+  - key: OfficeChair
+    prefab: {fileID: 919132149155446097, guid: 2cd02dbe28473ac4ea534762aec7fd04, type: 3}
+  - key: PaperStack
+    prefab: {fileID: 919132149155446097, guid: e872e61898fa5144ea936abe03f1b468, type: 3}
+  - key: PartialWall
+    prefab: {fileID: 919132149155446097, guid: 2224c257f16b94e4a986b51f93fd99d9, type: 3}
+  - key: PottedPlant
+    prefab: {fileID: 919132149155446097, guid: 39d234c9bbad44a46a13bc64176bcdb3, type: 3}
+  - key: Printer
+    prefab: {fileID: 919132149155446097, guid: f9176760ce969ee46a1e8ca0d68fe1fe, type: 3}
+  - key: ReceptionDesk
+    prefab: {fileID: 919132149155446097, guid: fcedc29662e20b54eae1930f6a13643a, type: 3}
+  - key: RecyclingBin
+    prefab: {fileID: 919132149155446097, guid: 52445db1e6f585d489f5b96d1ce1f79e, type: 3}
+  - key: StructuralColumn
+    prefab: {fileID: 919132149155446097, guid: 14761e8bc519d324da3262a2dd1e0462, type: 3}
+  - key: TallPlant
+    prefab: {fileID: 919132149155446097, guid: 8bc44b75cf1d5ab4c9b5dd1304f2ba07, type: 3}
+  - key: TrashBin
+    prefab: {fileID: 919132149155446097, guid: b52fb0640336b0143a5f6a98f92c4b08, type: 3}
+  - key: VendingMachine
+    prefab: {fileID: 919132149155446097, guid: 7854bf4e45ea6034ea9530999824bb2f, type: 3}
+  - key: VisitorChair
+    prefab: {fileID: 919132149155446097, guid: 5ab7434c3b36f194d97ba71e5ac92611, type: 3}
+  - key: WaitingBench
+    prefab: {fileID: 919132149155446097, guid: f06419e205cd97b45a9cf9f4eef95f7f, type: 3}
+  - key: WaterCooler
+    prefab: {fileID: 919132149155446097, guid: c186f373f14874a48bd5eb5d83fecfa5, type: 3}
+  - key: Whiteboard
+    prefab: {fileID: 919132149155446097, guid: d6b0477b39c0f2d43bf544d2c5ba2aa4, type: 3}
+  - key: WindowModule
+    prefab: {fileID: 919132149155446097, guid: 7f2df5f580b6407458e73bc9dc8ee8d1, type: 3}
+  - key: Worker
+    prefab: {fileID: 919132149155446097, guid: 59bca0102e563224aa52fb4e16c029d5, type: 3}
+  materials:
+  - key: walnut
+    material: {fileID: 2100000, guid: 3aee42ba63c1d4e4cb3da32481f1fc41, type: 2}
+  - key: light_wood
+    material: {fileID: 2100000, guid: a34f69f1e4112e145806ca79ea9b1ce8, type: 2}
+  - key: cream
+    material: {fileID: 2100000, guid: a599fc85d4c737a4b91edd95af2f3218, type: 2}
+  - key: burgundy
+    material: {fileID: 2100000, guid: 11a9071bfff5d194fa08b93c6f930cce, type: 2}
+  - key: carpet
+    material: {fileID: 2100000, guid: b446bd707ed024a4b88906ac94fb8174, type: 2}
+  - key: metal
+    material: {fileID: 2100000, guid: 34c9eebc05f30ea4d80b6d383cc19534, type: 2}
+  - key: dark
+    material: {fileID: 2100000, guid: 59f36c19e34b5e74a85ce7971c944657, type: 2}
+  - key: cyan
+    material: {fileID: 2100000, guid: 413472a4b32376448951fc8ad000246f, type: 2}
+  - key: blue
+    material: {fileID: 2100000, guid: efba5513d0b76e74f99cc6f0d4a1ea50, type: 2}
+  - key: amber
+    material: {fileID: 2100000, guid: 95c5ee06b53efce44bbab779c24d1350, type: 2}
+  - key: green
+    material: {fileID: 2100000, guid: dcf25649262eaaf428d2b87b9a6aaeb6, type: 2}
+  - key: paper
+    material: {fileID: 2100000, guid: 38231b1c934cc6a4fbda46e1329acb34, type: 2}
+  - key: cardboard
+    material: {fileID: 2100000, guid: a14747fda1a244c478e42bc8573d749e, type: 2}
+  - key: leaf
+    material: {fileID: 2100000, guid: 65ce0e2eb4c87cb4597c20e277f7979e, type: 2}
+  - key: skin
+    material: {fileID: 2100000, guid: 72dcc77c7b02b76419c4ff9d0af5a8a5, type: 2}
+  - key: coral
+    material: {fileID: 2100000, guid: 4257e4ba154379f40b0aea2b5e7e495a, type: 2}
