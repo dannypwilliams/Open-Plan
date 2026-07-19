@@ -35,3 +35,15 @@ Starter stages never auto-finish. Their progress is tied to revenue. The Establi
 ## D009 - Scope boundary for checkpoint 1
 
 The Starter Office is intentionally a temporary minimal environment at this checkpoint. Placement data and all six zone types exist, but player carrying, complete activity effects, and the physical purchase interaction remain assigned to their dedicated later checkpoints.
+
+## D010 - Authored starter and visible expansion promise
+
+Checkpoint 2 replaces the temporary environment with a 14-by-11-meter struggling office, three occupied workstations, six supporting activity zones, and one unavailable starter desk. A dim neighboring unit remains visible behind a removable shared wall, with three future desks, a utility nook, and an explicit purchase sign. This makes expansion physically legible before the purchase interaction exists.
+
+## D011 - Placement geometry is explicit and testable
+
+Every placement zone now owns a stable identifier, use point, trigger footprint, capacity, occupancy, enabled state, highlight state, and local validation method. The stage layout separately records obstacles, primary routes, camera framing, and required overview points so navigation and presentation constraints can be tested without relying on visual inspection alone.
+
+## D012 - Incremental Blender generation preserves established art
+
+The Blender generator accepts repeatable `--only` filters and merges those outputs into the existing manifest. Checkpoint 2 adds seven purpose-built assets without rewriting the 47 established-office assets; every new asset retains the same `.blend` to exported FBX to Unity FBX catalog contract.

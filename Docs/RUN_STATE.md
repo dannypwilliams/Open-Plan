@@ -1,7 +1,7 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 1 - Establish the Pivot
-- Status: implementation and pre-final verification PASS
+- Current checkpoint: Worker-Placement Pivot 2 - Build the Starter Office
+- Status: implementation, visual review, and verification PASS
 - Date: 2026-07-19
 - Branch: `codex/small-office-placement-pivot`
 - Base release: `a638304` (`release: pass phase 5 Windows prototype`)
@@ -10,11 +10,12 @@
 - Starter roster: Morgan, Alex, Sam
 - Stages: Starter Office, Starter Office Expanded, Established Office
 - Starter timing: unlimited; no automatic finish or failure
-- Automated tests: 43/43 passed (27 EditMode, 16 PlayMode)
+- Automated tests: 46/46 passed (28 EditMode, 18 PlayMode)
 - Baseline before edits: 37/37 passed (24 EditMode, 13 PlayMode)
 - Original large office: preserved as Established Office
-- Existing Windows release/package/media: preserved as historical `a638304` evidence; not rebuilt at this architecture checkpoint
+- Blender assets: 54/54 validated; seven new starter-office assets include editable `.blend`, exported FBX, Unity FBX, catalog, and manifest entries
+- Windows player: rebuilt successfully for checkpoint 2
+- Visual evidence: `outputs/Screenshots/StarterOffice_Overview.png` and `outputs/Screenshots/StarterOffice_Close_Worker.png`
+- Existing release/package/media: preserved as historical `a638304` evidence
 - Critical issues: none
-- Next checkpoint: Build the authored Starter Office
-
-The untracked `Docs/Prompts/` set existed before implementation and is intentionally not part of this checkpoint commit.
+- Next checkpoint: Implement worker pickup and placement

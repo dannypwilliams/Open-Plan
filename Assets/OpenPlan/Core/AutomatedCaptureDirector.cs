@@ -24,10 +24,17 @@ namespace OpenPlan
         {
             if (office.Stage != OfficeStage.EstablishedOffice)
             {
-                yield return new WaitForSecondsRealtime(2f);
-                Camera.main.GetComponent<OfficeCameraRig>().Overview();
+                yield return new WaitForSecondsRealtime(3f);
+                OfficeCameraRig starterCamera = Camera.main.GetComponent<OfficeCameraRig>();
+                starterCamera.Overview();
                 WorkerSelection.Clear();
-                yield return Capture(office.Stage + "_Overview.png");
+                yield return new WaitForSecondsRealtime(.8f);
+                yield return Capture("StarterOffice_Overview.png");
+                WorkerAgent starterWorker = office.Workers[0];
+                WorkerSelection.Select(starterWorker);
+                starterCamera.FocusWorker(starterWorker, true);
+                yield return new WaitForSecondsRealtime(1.2f);
+                yield return Capture("StarterOffice_Close_Worker.png");
                 File.WriteAllText(Path.Combine(output, "capture_complete.txt"), DateTime.UtcNow.ToString("O"));
                 Application.Quit(0);
                 yield break;

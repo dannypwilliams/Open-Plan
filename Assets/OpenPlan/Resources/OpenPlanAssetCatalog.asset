@@ -13,12 +13,20 @@ MonoBehaviour:
   m_Name: OpenPlanAssetCatalog
   m_EditorClassIdentifier: OpenPlan.Runtime::OpenPlan.OfficeAssetCatalog
   prefabs:
+  - key: Ashtray
+    prefab: {fileID: 919132149155446097, guid: 55f1a7922f6c7864a8913a8184cec68e, type: 3}
   - key: Bookshelf
     prefab: {fileID: 919132149155446097, guid: 6797c7fdb32c80e4e8da7123a8a8a0d8, type: 3}
   - key: Cabinet
     prefab: {fileID: 919132149155446097, guid: c17105ac6f7c77c41b339083f1ef3521, type: 3}
   - key: CardboardBox
     prefab: {fileID: 919132149155446097, guid: 3d336c6fa5de5804d991c2476558c707, type: 3}
+  - key: CheapCRTMonitor
+    prefab: {fileID: 919132149155446097, guid: f545a160b6b55684b8aedb17cb533a11, type: 3}
+  - key: CheapVendingMachine
+    prefab: {fileID: 919132149155446097, guid: f1af0c07e2964e34da94c9075c65ea79, type: 3}
+  - key: Cigarette
+    prefab: {fileID: 919132149155446097, guid: a62a52d1b5425e041a2c800d0c0fd51e, type: 3}
   - key: Clock
     prefab: {fileID: 919132149155446097, guid: 7da8f5bf76b650f4099824332efd79e3, type: 3}
   - key: CoffeeMachine
@@ -27,12 +35,16 @@ MonoBehaviour:
     prefab: {fileID: 919132149155446097, guid: e7b4a895caca6b249bc444e358ec075c, type: 3}
   - key: ConferenceTable
     prefab: {fileID: 919132149155446097, guid: e8334744cf5275f4f9c0c3fc6048640a, type: 3}
+  - key: ConnectingWallTrim
+    prefab: {fileID: 919132149155446097, guid: 837bb600570397641ba9d90fb5fde0f4, type: 3}
   - key: Copier
     prefab: {fileID: 919132149155446097, guid: 4ce11708557cf5e46b12414256c40752, type: 3}
   - key: Counter
     prefab: {fileID: 919132149155446097, guid: aee2e1a6acc5c0c4f883cbc722f3b968, type: 3}
   - key: CubicleDivider
     prefab: {fileID: 919132149155446097, guid: 80fb19ffe94c7324dbd4e2d9c138d1ba, type: 3}
+  - key: DamagedDesk
+    prefab: {fileID: 919132149155446097, guid: cb63ca34db09a9e42bd154806d4321b3, type: 3}
   - key: DeskLamp
     prefab: {fileID: 919132149155446097, guid: 38c6a0e75ecf333428f179659fdb9f60, type: 3}
   - key: DeskPlant
@@ -71,6 +83,8 @@ MonoBehaviour:
     prefab: {fileID: 919132149155446097, guid: 85aa3febc820e314594f67bce8e19bb3, type: 3}
   - key: Nameplate
     prefab: {fileID: 919132149155446097, guid: c0596249f500e3d49ba4826abab1e6d2, type: 3}
+  - key: NeighborSign
+    prefab: {fileID: 919132149155446097, guid: 9340a5e7540db464f8981e57ad0ffc7c, type: 3}
   - key: NoticeBoard
     prefab: {fileID: 919132149155446097, guid: 1b74a06f36d244247871189df21b7b84, type: 3}
   - key: OfficeChair

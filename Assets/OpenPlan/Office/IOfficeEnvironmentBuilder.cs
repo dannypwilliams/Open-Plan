@@ -10,6 +10,7 @@ namespace OpenPlan
         WaterStation Water { get; }
         NeedStation Break { get; }
         NeedStation Elevator { get; }
+        OfficeStageLayout Layout { get; }
         void Build();
     }
 }

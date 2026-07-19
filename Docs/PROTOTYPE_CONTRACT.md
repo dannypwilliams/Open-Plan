@@ -8,8 +8,8 @@ The released large office from commit `a638304` remains intact as the Establishe
 
 ## Stage contract
 
-- `StarterOffice`: the default stage, with three workers and a temporary minimal environment.
-- `StarterOfficeExpanded`: the same business after its first physical expansion, with additional floor space and desk capacity.
+- `StarterOffice`: the default authored stage, with three workers, three occupied desks, one unavailable desk, and a visible locked neighboring unit.
+- `StarterOfficeExpanded`: the same business after its first physical expansion, with both units and seven available desk locations.
 - `EstablishedOffice`: the preserved six-worker, twelve-desk released office and its management systems.
 
 The Main Menu always starts `StarterOffice`. Explicit developer and automation launches can select a stage with `-openplan-stage <StarterOffice|StarterOfficeExpanded|EstablishedOffice>`. Existing capture, video, performance, and package-verification arguments default to `EstablishedOffice` when no stage override is supplied so prior release evidence remains reproducible.
@@ -18,7 +18,7 @@ The Main Menu always starts `StarterOffice`. Explicit developer and automation l
 
 Every player-directed placement is represented by a `WorkerCommand` containing the worker, destination `PlacementZone`, requested `PlacementActivity`, issue time, and player-placement origin. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office.
 
-This checkpoint establishes those runtime boundaries. Click-and-drag interaction and complete activity behavior are delivered by later worker-placement checkpoints.
+The runtime boundaries and authored placement geometry are established. Click-and-drag interaction and complete activity behavior are delivered by later worker-placement checkpoints.
 
 ## Simulation contract
 

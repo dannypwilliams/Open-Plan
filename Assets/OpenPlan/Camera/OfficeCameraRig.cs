@@ -46,6 +46,8 @@ namespace OpenPlan
 
         public float OrthographicSize => cameraComponent != null ? cameraComponent.orthographicSize : targetSize;
         public bool IsFollowing => follow.Active;
+        public Vector3 OverviewCenter => overviewCenter;
+        public Bounds PanBounds => office != null && office.Layout != null ? office.Layout.PanBounds : new Bounds(Vector3.zero, new Vector3(22f, 1f, 16f));
 
         public void Initialize(OfficeDirector director)
         {
@@ -59,9 +61,9 @@ namespace OpenPlan
             cameraComponent.nearClipPlane = .1f;
             cameraComponent.farClipPlane = 120f;
             cameraComponent.allowHDR = true;
-            targetSize = director != null && director.Stage != OfficeStage.EstablishedOffice ? 11.5f : profile.overviewSize;
-            overviewCenter = director == null || director.Stage == OfficeStage.EstablishedOffice ? Vector3.zero :
-                director.Stage == OfficeStage.StarterOfficeExpanded ? new Vector3(1.2f, 0f, 0f) : new Vector3(-2.4f, 0f, 0f);
+            targetSize = director != null && director.Layout != null ? director.Layout.OverviewOrthographicSize : profile.overviewSize;
+            overviewCenter = director != null && director.Layout != null ? director.Layout.OverviewCenter : Vector3.zero;
+            cameraComponent.orthographicSize = targetSize;
             focus.Set(overviewCenter);
             transform.rotation = Quaternion.Euler(58f, 45f, 0f);
             UpdateTransform(overviewCenter);
@@ -89,7 +91,9 @@ namespace OpenPlan
                     Vector3 right = transform.right; right.y = 0f; right.Normalize();
                     Vector3 forward = Vector3.Cross(right, Vector3.up).normalized;
                     focus.Add((-right * delta.x - forward * delta.y) * (profile.panSensitivity * targetSize));
-                    focus.Set(new Vector3(Mathf.Clamp(focus.Target.x, -11f, 11f), 0f, Mathf.Clamp(focus.Target.z, -8f, 8f)));
+                    Bounds bounds = PanBounds;
+                    focus.Set(new Vector3(Mathf.Clamp(focus.Target.x, bounds.min.x, bounds.max.x), 0f,
+                        Mathf.Clamp(focus.Target.z, bounds.min.z, bounds.max.z)));
                 }
                 if (mouse.leftButton.wasPressedThisFrame && !PointerOverUI()) SelectUnderPointer(mouse.position.ReadValue());
             }
@@ -157,7 +161,7 @@ namespace OpenPlan
             targetSize = Mathf.Clamp(size, profile.closeSize, OverviewSize());
         }
 
-        private float OverviewSize() => office != null && office.Stage != OfficeStage.EstablishedOffice ? 11.5f : profile.overviewSize;
+        private float OverviewSize() => office != null && office.Layout != null ? office.Layout.OverviewOrthographicSize : profile.overviewSize;
 
         private Vector3 CurrentPivot() => transform.position + transform.forward * 38f;
 

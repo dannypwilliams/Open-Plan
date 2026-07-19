@@ -16,6 +16,7 @@ namespace OpenPlan
         public WaterStation Water { get; private set; }
         public NeedStation Break { get; private set; }
         public NeedStation Elevator { get; private set; }
+        public OfficeStageLayout Layout { get; private set; }
 
         public OfficeEnvironmentBuilder(OfficeAssetCatalog assetCatalog, Transform parent)
         {
@@ -25,6 +26,11 @@ namespace OpenPlan
 
         public void Build()
         {
+            Layout = root.gameObject.AddComponent<OfficeStageLayout>();
+            Layout.Configure(new Bounds(Vector3.zero, new Vector3(30f, 4f, 22f)),
+                new Bounds(Vector3.zero, new Vector3(22f, 1f, 16f)), 18.5f);
+            Layout.AddOverviewPoint("established-southwest", new Vector3(-14f, 0f, -10f));
+            Layout.AddOverviewPoint("established-northeast", new Vector3(14f, 0f, 10f));
             catalog.Spawn("FloorSlab", root, Vector3.zero, Quaternion.identity, Vector3.one);
             BuildShell();
             BuildReception();
@@ -79,7 +85,8 @@ namespace OpenPlan
                 GameObject desk = catalog.Spawn(i % 4 == 3 ? "Desk_B" : "Desk_A", root, positions[i], facing, Vector3.one);
                 Workstation station = desk.AddComponent<Workstation>();
                 float modifier = Mathf.Lerp(0.90f, 1.10f, light[i]) * Mathf.Lerp(1.06f, 0.94f, noise[i]);
-                station.Configure(i, noise[i], light[i], modifier, zones[i], i >= 8);
+                station.Configure(i, noise[i], light[i], modifier, zones[i], i >= 8,
+                    $"established.work.{i + 1:00}", true);
                 Workstations.Add(station);
                 Vector3 forward = facing * Vector3.forward;
                 catalog.Spawn("OfficeChair", root, positions[i] - forward * 0.92f, facing, Vector3.one * 0.92f);

@@ -1,6 +1,6 @@
 # OPEN PLAN - Master Roadmap
 
-Status: worker-placement pivot checkpoint 1 implemented on 2026-07-19.
+Status: worker-placement pivot checkpoint 2 implemented on 2026-07-19.
 
 ## Product direction
 
@@ -10,8 +10,8 @@ The first demo begins with a modest three-worker business and centers on picking
 
 | Checkpoint | Outcome | Gate |
 |---|---|---|
-| 1 | Establish stage architecture and preserve the released office | Starter and Established stages initialize; menu defaults to Starter; all tests pass |
-| 2 | Build the authored Starter Office | Modest office is readable, attractive, and correctly framed |
+| 1 | Establish stage architecture and preserve the released office | PASS - Starter and Established stages initialize; menu defaults to Starter; all tests pass |
+| 2 | Build the authored Starter Office | PASS - modest office and locked neighbor are readable, attractive, correctly framed, and validated |
 | 3 | Implement worker pickup and placement | Click-and-drag placement is clear, cancellable, and robust |
 | 4 | Make activity areas functional | Work, Rest, Water, Snack, Smoke, and Exit complete their loops |
 | 5 | Add personality and readable status | Needs, traits, names, states, and emotes explain behavior |

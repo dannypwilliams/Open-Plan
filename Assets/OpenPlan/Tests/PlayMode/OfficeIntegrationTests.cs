@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,10 +48,71 @@ namespace OpenPlan.Tests
             OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
             Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOffice));
             Assert.That(office.Workers.Count, Is.EqualTo(3));
-            Assert.That(office.Workstations.Count, Is.EqualTo(3));
+            Assert.That(office.Workstations.Count, Is.EqualTo(7));
+            Assert.That(office.WorkerCapacity, Is.EqualTo(3));
             Assert.False(office.Workday.IsTimed);
-            foreach (PlacementActivity activity in System.Enum.GetValues(typeof(PlacementActivity)))
-                Assert.That(office.PlacementZones, Has.Some.Property("Activity").EqualTo(activity));
+            var expectedActiveZones = new Dictionary<PlacementActivity, int>
+            {
+                { PlacementActivity.Work, 3 }, { PlacementActivity.Rest, 1 },
+                { PlacementActivity.GetWater, 1 }, { PlacementActivity.BuySnack, 1 },
+                { PlacementActivity.Smoke, 1 }, { PlacementActivity.LeaveOffice, 1 }
+            };
+            foreach (KeyValuePair<PlacementActivity, int> expected in expectedActiveZones)
+            {
+                int actual = 0;
+                foreach (PlacementZone zone in office.PlacementZones)
+                    if (zone.IsZoneEnabled && zone.Activity == expected.Key) actual++;
+                Assert.That(actual, Is.EqualTo(expected.Value), expected.Key.ToString());
+            }
+
+            var identifiers = new HashSet<string>();
+            foreach (PlacementZone zone in office.PlacementZones)
+            {
+                Assert.False(string.IsNullOrWhiteSpace(zone.StableIdentifier));
+                Assert.True(identifiers.Add(zone.StableIdentifier), "Duplicate zone ID " + zone.StableIdentifier);
+                Assert.False(string.IsNullOrWhiteSpace(zone.ActivityLabel));
+                Assert.NotNull(zone.PlacementPoint);
+                Assert.NotNull(zone.FootprintCollider);
+                Assert.That(zone.Capacity, Is.GreaterThan(0));
+            }
+
+            int occupiedDesks = 0;
+            foreach (Workstation desk in office.Workstations)
+                if (desk.IsZoneEnabled && desk.Assigned != null) occupiedDesks++;
+            Assert.That(occupiedDesks, Is.EqualTo(3));
+            Assert.That(office.Workers[0].Definition.displayName, Is.EqualTo("Morgan"));
+            Assert.That(office.Workers[1].Definition.displayName, Is.EqualTo("Alex"));
+            Assert.That(office.Workers[2].Definition.displayName, Is.EqualTo("Sam"));
+        }
+
+        [UnityTest] public IEnumerator LockedNeighborZonesRejectWorkersAndRoutesStayClear()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            int lockedNeighborZones = 0;
+            foreach (PlacementZone zone in office.PlacementZones)
+            {
+                if (!zone.StableIdentifier.StartsWith("neighbor.")) continue;
+                lockedNeighborZones++;
+                Assert.False(zone.IsZoneEnabled);
+                Assert.False(zone.CanAcceptWorker(office.Workers[0], out string reason));
+                Assert.That(reason, Does.Contain("locked"));
+            }
+            Assert.That(lockedNeighborZones, Is.EqualTo(4));
+            Assert.True(office.Layout.ValidateZoneGeometry(office.PlacementZones, out string geometryReason), geometryReason);
+        }
+
+        [UnityTest] public IEnumerator StarterCameraOverviewContainsEveryRequiredSpace()
+        {
+            Screen.SetResolution(1920, 1080, false);
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            OfficeCameraRig rig = Camera.main.GetComponent<OfficeCameraRig>();
+            rig.Overview();
+            yield return new WaitForSecondsRealtime(.4f);
+            Assert.That(rig.OrthographicSize, Is.EqualTo(office.Layout.OverviewOrthographicSize).Within(.1f));
+            Assert.True(office.Layout.CameraContainsRequiredSpaces(Camera.main), "Overview clips a required Starter Office space.");
+            Assert.That(rig.PanBounds, Is.EqualTo(office.Layout.PanBounds));
         }
 
         [UnityTest] public IEnumerator ExpandedStarterInitializesWithAdditionalSpace()
@@ -59,7 +121,8 @@ namespace OpenPlan.Tests
             OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
             Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOfficeExpanded));
             Assert.That(office.Workers.Count, Is.EqualTo(3));
-            Assert.That(office.Workstations.Count, Is.EqualTo(6));
+            Assert.That(office.Workstations.Count, Is.EqualTo(7));
+            Assert.That(office.WorkerCapacity, Is.EqualTo(7));
             Assert.False(office.Workday.IsTimed);
         }
 

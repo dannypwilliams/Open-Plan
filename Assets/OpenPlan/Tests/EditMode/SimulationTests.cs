@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -143,6 +144,27 @@ namespace OpenPlan.Tests
             Assert.True(command.fromPlayerPlacement);
             Object.DestroyImmediate(workerObject);
             Object.DestroyImmediate(zoneObject);
+        }
+
+        [Test] public void StarterArtManifest_ContainsValidatedGeneratedAssets()
+        {
+            string root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            string manifestPath = Path.Combine(root, "Docs", "ASSET_MANIFEST.json");
+            Assert.True(File.Exists(manifestPath));
+            string manifest = File.ReadAllText(manifestPath);
+            Assert.That(manifest, Does.Contain("\"asset_count\": 54"));
+            string[] assets =
+            {
+                "DamagedDesk", "CheapCRTMonitor", "CheapVendingMachine", "Ashtray",
+                "Cigarette", "NeighborSign", "ConnectingWallTrim"
+            };
+            foreach (string asset in assets)
+            {
+                Assert.That(manifest, Does.Contain("\"name\": \"" + asset + "\""));
+                Assert.True(File.Exists(Path.Combine(root, "Tools", "Blender", "Source", "OP_" + asset + ".blend")));
+                Assert.True(File.Exists(Path.Combine(root, "Tools", "Blender", "Exports", "OP_" + asset + ".fbx")));
+                Assert.True(File.Exists(Path.Combine(root, "Assets", "OpenPlan", "Art", "Models", "OP_" + asset + ".fbx")));
+            }
         }
 
         [Test] public void EndOfDayCalculation_UsesAllCosts()

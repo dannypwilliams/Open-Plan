@@ -20,11 +20,21 @@ namespace OpenPlan
         public WaterStation Water { get; private set; }
         public NeedStation Break { get; private set; }
         public NeedStation Elevator { get; private set; }
+        public OfficeStageLayout Layout { get; private set; }
         public IReadOnlyList<WorkerAgent> Workers => workers;
         public IReadOnlyList<Workstation> Workstations => workstations;
         public IReadOnlyList<PlacementZone> PlacementZones => placementZones;
         public IReadOnlyList<CandidateDefinition> Candidates => candidates;
-        public int WorkerCapacity => workstations.Count;
+        public int WorkerCapacity
+        {
+            get
+            {
+                int count = 0;
+                foreach (Workstation workstation in workstations)
+                    if (workstation != null && workstation.IsZoneEnabled) count++;
+                return count;
+            }
+        }
         public int ActiveWorkerCount { get { int count = 0; foreach (WorkerAgent worker in workers) if (worker != null && !worker.IsFired) count++; return count; } }
         public int Hires { get; private set; }
         public int Firings { get; private set; }
@@ -64,6 +74,7 @@ namespace OpenPlan
             Water = environment.Water;
             Break = environment.Break;
             Elevator = environment.Elevator;
+            Layout = environment.Layout;
             Tasks.Initialize(Random);
             Economy.Initialize(Tasks);
             Workday.Initialize(this, Economy, Tasks);
