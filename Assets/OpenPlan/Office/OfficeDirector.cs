@@ -145,6 +145,8 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneFriendDemoDirector>().Initialize(this);
             if (StandaloneFoundationCheckpointDirector.Requested)
                 gameObject.AddComponent<StandaloneFoundationCheckpointDirector>().Initialize(this);
+            if (StandaloneFiveNeedsCheckpointDirector.Requested)
+                gameObject.AddComponent<StandaloneFiveNeedsCheckpointDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -492,8 +494,6 @@ namespace OpenPlan
                     negative = "Distracted by conversation";
                     if (other.Definition.trait == WorkerTrait.Social)
                     {
-                        worker.Runtime.mood = Mathf.Clamp01(worker.Runtime.mood + Time.deltaTime * .0030f);
-                        worker.Runtime.stress = Mathf.Clamp01(worker.Runtime.stress - Time.deltaTime * .0008f);
                         positive = $"Cheered by {other.Definition.displayName}'s conversation";
                         modifier += .025f;
                     }

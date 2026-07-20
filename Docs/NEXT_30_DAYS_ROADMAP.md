@@ -159,6 +159,8 @@ The month ships a minimum build mode, not a complete construction game.
 
 Goal: five needs and paired qualifications drive autonomous, readable behavior in the existing starter office.
 
+Checkpoint status on 2026-07-20: Day 2's live five-need model, migrated activities, five-row inspector, restroom, and deterministic matrix ship in `01_FiveNeeds`. Day 3 comprehensive critical-need autonomy and every later item below remain future work; this roadmap is not complete.
+
 ### Day 1 - Integration contract and instrumentation
 
 - Freeze the public alpha interfaces for need values, qualification pairs, worker placement results, incident state, contract state, and campaign snapshots.

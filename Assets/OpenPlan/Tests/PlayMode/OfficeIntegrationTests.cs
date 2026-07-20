@@ -115,7 +115,8 @@ namespace OpenPlan.Tests
             {
                 { PlacementActivity.Work, 3 }, { PlacementActivity.Rest, 1 },
                 { PlacementActivity.GetWater, 1 }, { PlacementActivity.BuySnack, 1 },
-                { PlacementActivity.Smoke, 1 }, { PlacementActivity.LeaveOffice, 1 }
+                { PlacementActivity.Smoke, 1 }, { PlacementActivity.LeaveOffice, 1 },
+                { PlacementActivity.UseRestroom, 1 }
             };
             foreach (KeyValuePair<PlacementActivity, int> expected in expectedActiveZones)
             {
@@ -325,6 +326,9 @@ namespace OpenPlan.Tests
             worker.Runtime.smokingCooldown = 34f;
             float energy = worker.Runtime.energy;
             float mood = worker.Runtime.mood;
+            float hunger = worker.Runtime.hunger;
+            float bathroom = worker.Runtime.bathroom;
+            float inspiration = worker.Runtime.inspiration;
             float stress = worker.Runtime.stress;
             float cash = office.Cash.CurrentCash;
             float committedWaterCooldown = -1f;
@@ -350,6 +354,9 @@ namespace OpenPlan.Tests
             Assert.That(committedSmokingCooldown, Is.EqualTo(34f).Within(.001f));
             Assert.That(worker.Runtime.energy, Is.EqualTo(energy).Within(.001f));
             Assert.That(worker.Runtime.mood, Is.EqualTo(mood).Within(.001f));
+            Assert.That(worker.Runtime.hunger, Is.EqualTo(hunger).Within(.001f));
+            Assert.That(worker.Runtime.bathroom, Is.EqualTo(bathroom).Within(.001f));
+            Assert.That(worker.Runtime.inspiration, Is.EqualTo(inspiration).Within(.001f));
             Assert.That(worker.Runtime.stress, Is.EqualTo(stress).Within(.001f));
             Assert.That(office.Cash.CurrentCash, Is.EqualTo(cash).Within(.001f));
             Assert.That(WorkerSelection.Selected, Is.SameAs(worker));
@@ -540,13 +547,15 @@ namespace OpenPlan.Tests
             yield return WaitForState(worker, WorkerState.TakeBreak);
             worker.Runtime.energy = .40f;
             worker.Runtime.mood = .40f;
+            worker.Runtime.inspiration = .40f;
             worker.Runtime.stress = .60f;
             Assert.That(worker.ActivitySecondsRemaining, Is.GreaterThan(19f));
             SimulationSpeedController.Instance.SetSpeed(4f);
             yield return WaitForState(worker, WorkerState.ReturnToDesk, 7f);
-            Assert.That(worker.Runtime.energy, Is.EqualTo(.75f).Within(.002f));
-            Assert.That(worker.Runtime.mood, Is.EqualTo(.52f).Within(.002f));
-            Assert.That(worker.Runtime.stress, Is.EqualTo(.35f).Within(.002f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.718f).Within(.004f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.538f).Within(.004f));
+            Assert.That(worker.Runtime.inspiration, Is.EqualTo(.518f).Within(.004f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.38f).Within(.002f));
         }
 
         [UnityTest] public IEnumerator WaterAppliesExactEffectsCooldownAndSocialOpportunity()
@@ -563,13 +572,15 @@ namespace OpenPlan.Tests
             yield return WaitForState(worker, WorkerState.UseWaterCooler);
             worker.Runtime.energy = .40f;
             worker.Runtime.mood = .40f;
+            worker.Runtime.bathroom = .15f;
             worker.Runtime.stress = .60f;
             Assert.True(worker.HadWaterSocialOpportunity);
             SimulationSpeedController.Instance.SetSpeed(4f);
             yield return WaitForState(worker, WorkerState.ReturnToDesk, 4f);
-            Assert.That(worker.Runtime.energy, Is.EqualTo(.48f).Within(.002f));
-            Assert.That(worker.Runtime.mood, Is.EqualTo(.45f).Within(.002f));
-            Assert.That(worker.Runtime.stress, Is.EqualTo(.55f).Within(.002f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.459f).Within(.003f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.440f).Within(.003f));
+            Assert.That(worker.Runtime.bathroom, Is.EqualTo(.232f).Within(.004f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.56f).Within(.002f));
             Assert.That(worker.Runtime.waterCooldown, Is.InRange(34f, ActivityRules.WaterCooldown));
             partner.CancelPlayerCarryImmediate();
         }
@@ -599,9 +610,10 @@ namespace OpenPlan.Tests
             SimulationSpeedController.Instance.SetSpeed(4f);
             yield return WaitForState(worker, WorkerState.ReturnToDesk, 5f);
             Assert.False(worker.LastVendingMalfunction);
-            Assert.That(worker.Runtime.energy, Is.EqualTo(.65f).Within(.002f));
-            Assert.That(worker.Runtime.mood, Is.EqualTo(.55f).Within(.002f));
-            Assert.That(worker.Runtime.stress, Is.EqualTo(.52f).Within(.002f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.459f).Within(.004f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.479f).Within(.004f));
+            Assert.That(worker.Runtime.hunger, Is.EqualTo(0f).Within(.002f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(.55f).Within(.002f));
             Assert.That(worker.Runtime.vendingCooldown, Is.InRange(44f, ActivityRules.VendingCooldown));
             office.Workers[1].CancelPlayerCarryImmediate();
             office.Workers[2].CancelPlayerCarryImmediate();
@@ -629,8 +641,8 @@ namespace OpenPlan.Tests
             Assert.That(office.Cash.CurrentCash, Is.LessThan(cashBefore - 14.8f));
             SimulationSpeedController.Instance.SetSpeed(4f);
             yield return WaitForState(worker, WorkerState.ReturnToDesk, 5f);
-            Assert.That(worker.Runtime.energy, Is.EqualTo(.45f).Within(.002f));
-            Assert.That(worker.Runtime.mood, Is.EqualTo(.35f).Within(.002f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.409f).Within(.004f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.359f).Within(.004f));
             Assert.That(worker.Runtime.stress, Is.EqualTo(.60f).Within(.002f));
             Assert.That(worker.VendingCharges, Is.EqualTo(1));
             office.Workers[1].CancelPlayerCarryImmediate();
@@ -681,8 +693,8 @@ namespace OpenPlan.Tests
             yield return WaitForState(worker, WorkerState.ReturnToDesk, 6f);
             Assert.False(worker.HasSmokingProp);
             Assert.False(worker.HasSmokeParticles);
-            Assert.That(worker.Runtime.energy, Is.EqualTo(.40f).Within(.002f));
-            Assert.That(worker.Runtime.mood, Is.EqualTo(.45f).Within(.002f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.399f).Within(.003f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.469f).Within(.003f));
             Assert.That(worker.Runtime.stress, Is.EqualTo(.30f).Within(.002f));
             Assert.That(worker.Runtime.smokingCooldown, Is.InRange(44f, ActivityRules.SmokingCooldown));
         }
@@ -721,6 +733,9 @@ namespace OpenPlan.Tests
             yield return WaitForState(worker, WorkerState.Away);
             worker.Runtime.energy = .20f;
             worker.Runtime.mood = .30f;
+            worker.Runtime.hunger = .80f;
+            worker.Runtime.bathroom = .80f;
+            worker.Runtime.inspiration = .30f;
             worker.Runtime.stress = .80f;
             Assert.False(worker.IsVisibleInOffice);
             Assert.That(worker.Runtime.awaySecondsRemaining, Is.InRange(29f, ActivityRules.AwayDuration));
@@ -729,8 +744,11 @@ namespace OpenPlan.Tests
             SimulationSpeedController.Instance.SetSpeed(4f);
             yield return WaitForState(worker, WorkerState.ReturnFromAway, 10f);
             Assert.True(worker.IsVisibleInOffice);
-            Assert.That(worker.Runtime.energy, Is.EqualTo(.65f).Within(.006f));
-            Assert.That(worker.Runtime.mood, Is.EqualTo(.42f).Within(.006f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(.58f).Within(.006f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(.45f).Within(.006f));
+            Assert.That(worker.Runtime.hunger, Is.EqualTo(.45f).Within(.006f));
+            Assert.That(worker.Runtime.bathroom, Is.EqualTo(.40f).Within(.006f));
+            Assert.That(worker.Runtime.inspiration, Is.EqualTo(.46f).Within(.006f));
             Assert.That(worker.Runtime.stress, Is.EqualTo(.45f).Within(.006f));
             Assert.That(office.Cash.CurrentCash, Is.EqualTo(cash).Within(.01f));
             worker.transform.position = office.EntranceInsidePoint;
@@ -1488,6 +1506,224 @@ namespace OpenPlan.Tests
             yield return new WaitForSeconds(.28f);
             Assert.That(rest.Occupancy, Is.EqualTo(rest.Capacity));
             Assert.False(third.IsPlayerCarried);
+        }
+
+        [UnityTest] public IEnumerator FiveNeedsInitializeHealthyAndAllChangeDuringSimulation()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            office.Tutorial.SkipTutorial();
+            WorkerAgent worker = office.Workers[0];
+            float[] before = SnapshotNeeds(worker.Runtime);
+            foreach (NeedDefinition definition in NeedCatalog.All)
+                Assert.That(definition.Status(worker.Runtime.GetNeed(definition.Kind)), Is.EqualTo(NeedStatus.Healthy));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return new WaitForSecondsRealtime(.7f);
+            float[] after = SnapshotNeeds(worker.Runtime);
+            for (int i = 0; i < after.Length; i++)
+                Assert.That(after[i], Is.Not.EqualTo(before[i]).Within(.00001f), NeedCatalog.All[i].DisplayName);
+        }
+
+        [UnityTest] public IEnumerator PauseAndTutorialModalFreezeEveryNeedExactly()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            float[] before = SnapshotNeeds(worker.Runtime);
+            office.Tutorial.StartTutorial(true);
+            yield return new WaitForSecondsRealtime(.4f);
+            AssertNeedsEqual(before, worker.Runtime, .000001f);
+            office.Tutorial.SkipTutorial();
+            SimulationSpeedController.Instance.SetSpeed(1f);
+            yield return new WaitForSecondsRealtime(.2f);
+            Assert.That(SnapshotNeeds(worker.Runtime), Is.Not.EqualTo(before));
+        }
+
+        [UnityTest] public IEnumerator EquivalentSimulatedPartitionsProduceEquivalentNeedsInPlayMode()
+        {
+            var single = new WorkerRuntimeState();
+            var partitioned = new WorkerRuntimeState();
+            var twoTimes = new WorkerRuntimeState();
+            var fourTimes = new WorkerRuntimeState();
+            NeedCatalog.Initialize(single, "Partition", 44);
+            NeedCatalog.Initialize(partitioned, "Partition", 44);
+            NeedCatalog.Initialize(twoTimes, "Partition", 44);
+            NeedCatalog.Initialize(fourTimes, "Partition", 44);
+            NeedSimulation.Tick(single, WorkerState.Work, 40f);
+            for (int i = 0; i < 40; i++) NeedSimulation.Tick(partitioned, WorkerState.Work, 1f);
+            for (int i = 0; i < 20; i++)
+                NeedSimulation.Tick(twoTimes, WorkerState.Work, SimulationRules.ScaledDelta(1f, 2f));
+            for (int i = 0; i < 10; i++)
+                NeedSimulation.Tick(fourTimes, WorkerState.Work, SimulationRules.ScaledDelta(1f, 4f));
+            AssertNeedsEqual(SnapshotNeeds(single), partitioned, .00002f);
+            AssertNeedsEqual(SnapshotNeeds(single), twoTimes, .00002f);
+            AssertNeedsEqual(SnapshotNeeds(single), fourTimes, .00002f);
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator SelectingEmployeeDoesNotResetOrMutateNeedsWhilePaused()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[1];
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            float[] before = SnapshotNeeds(worker.Runtime);
+            WorkerSelection.Select(worker);
+            yield return new WaitForSecondsRealtime(.25f);
+            Assert.That(WorkerSelection.Selected, Is.SameAs(worker));
+            AssertNeedsEqual(before, worker.Runtime, .000001f);
+        }
+
+        [UnityTest] public IEnumerator RestroomInfluenceStartsUseRecoversBathroomAndReleasesCapacity()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            PlacementZone restroom = FindZone(office, "starter.restroom.main");
+            Vector3 influencedPoint = restroom.PlacementPoint.position + Vector3.right *
+                (restroom.FootprintBounds.extents.x + .20f);
+            Assert.False(restroom.FootprintBounds.Contains(new Vector3(influencedPoint.x,
+                restroom.FootprintBounds.center.y, influencedPoint.z)));
+            Assert.That(WorkerCarryController.ResolveInfluencingZone(office.PlacementZones, influencedPoint), Is.SameAs(restroom));
+            yield return PlaceWorker(office, worker, restroom);
+            yield return WaitForState(worker, WorkerState.UseRestroom);
+            worker.Runtime.bathroom = .90f;
+            Assert.That(restroom.Occupancy, Is.EqualTo(1));
+            Assert.True(worker.IsVisibleInOffice);
+            Assert.That(worker.Visuals.CurrentEmote, Is.EqualTo("WC"));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.ReturnToDesk, 4f);
+            Assert.That(worker.Runtime.bathroom, Is.InRange(.115f,.135f));
+            Assert.That(restroom.Occupancy, Is.Zero);
+            Assert.True(worker.IsVisibleInOffice);
+            Assert.False(worker.IsPlayerCarried);
+        }
+
+        [UnityTest] public IEnumerator RestartDuringRestroomUseLeavesNoReservationOrHiddenWorker()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return PlaceWorker(office, worker, FindZone(office, "starter.restroom.main"));
+            yield return WaitForState(worker, WorkerState.UseRestroom);
+            office.Restart();
+            yield return null;
+            yield return null;
+            OfficeDirector restarted = Object.FindFirstObjectByType<OfficeDirector>();
+            PlacementZone restroom = FindZone(restarted, "starter.restroom.main");
+            Assert.That(restroom.Occupancy, Is.Zero);
+            foreach (WorkerAgent current in restarted.Workers)
+            {
+                Assert.True(current.IsVisibleInOffice);
+                Assert.That(current.Runtime.behavior, Is.Not.EqualTo(WorkerState.UseRestroom));
+            }
+        }
+
+        [UnityTest] public IEnumerator InspectorShowsFiveRowsUrgencyCopyAndNoStressGauge()
+        {
+            Screen.SetResolution(1920, 1080, false);
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            WorkerSelection.Select(worker);
+            yield return new WaitForSecondsRealtime(.25f);
+            Assert.True(office.HUD.InspectorVisible);
+            Assert.That(office.HUD.VisibleNeedRowCount, Is.EqualTo(5));
+            EmployeeNeedRow[] rows = Object.FindObjectsByType<EmployeeNeedRow>(FindObjectsSortMode.None);
+            Assert.That(rows.Length, Is.EqualTo(5));
+            Assert.That(System.Array.Exists(rows, row => row.DisplayedText.Contains("HUNGER URG")), Is.True);
+            Assert.That(System.Array.Exists(rows, row => row.DisplayedText.Contains("BATH URG")), Is.True);
+            Assert.IsNull(GameObject.Find("Stress Need"));
+            Assert.That(office.HUD.InspectorText, Does.Contain("ACTIVITY"));
+            Assert.That(office.HUD.InspectorText, Does.Contain("OUTPUT"));
+        }
+
+        [UnityTest] public IEnumerator UrgentNeedStateRemainsTextReadableAt1280x720()
+        {
+            Screen.SetResolution(1280, 720, false);
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            worker.Runtime.hunger = .74f;
+            worker.Runtime.bathroom = .72f;
+            WorkerSelection.Select(worker);
+            yield return new WaitForSecondsRealtime(.25f);
+            EmployeeNeedRow[] rows = Object.FindObjectsByType<EmployeeNeedRow>(FindObjectsSortMode.None);
+            EmployeeNeedRow hunger = System.Array.Find(rows, row => row.Kind == NeedKind.Hunger);
+            EmployeeNeedRow bathroom = System.Array.Find(rows, row => row.Kind == NeedKind.Bathroom);
+            Assert.That(hunger.Status, Is.EqualTo(NeedStatus.Urgent));
+            Assert.That(hunger.DisplayedText, Does.Contain("Hungry"));
+            Assert.That(bathroom.Status, Is.EqualTo(NeedStatus.Urgent));
+            Assert.That(bathroom.DisplayedText, Does.Contain("Urgent"));
+            RectTransform card = GameObject.Find("Employee Card").GetComponent<RectTransform>();
+            Assert.That(card.anchorMin.x, Is.GreaterThanOrEqualTo(0f));
+            Assert.That(card.anchorMax.x, Is.LessThanOrEqualTo(1f));
+        }
+
+        [UnityTest] public IEnumerator DesklessPhoneWorkerUsesFiveNeedsAndStillEarns()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            office.Cash.AccrueDeskIncome(7f, 60f);
+            Assert.True(office.TryHire(0, out string reason), reason);
+            WorkerAgent phone = office.Workers[office.Workers.Count - 1];
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(phone, WorkerState.Unassigned, 3f);
+            float[] needs = SnapshotNeeds(phone.Runtime);
+            float cash = office.Cash.CurrentCash;
+            yield return new WaitForSecondsRealtime(.6f);
+            Assert.True(phone.IsPhoneWorking);
+            AssertNeedsChanged(needs, phone.Runtime);
+            Assert.Greater(office.Cash.CurrentCash, cash);
+            WorkerSelection.Select(phone);
+            yield return new WaitForSecondsRealtime(.2f);
+            Assert.That(office.HUD.VisibleNeedRowCount, Is.EqualTo(5));
+        }
+
+        [UnityTest] public IEnumerator StartingWorkersHaveRepeatableNonidenticalHealthyNeedOffsets()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            float[] morgan = SnapshotNeeds(office.Workers[0].Runtime);
+            float[] alex = SnapshotNeeds(office.Workers[1].Runtime);
+            float[] sam = SnapshotNeeds(office.Workers[2].Runtime);
+            Assert.That(morgan, Is.Not.EqualTo(alex));
+            Assert.That(alex, Is.Not.EqualTo(sam));
+            foreach (WorkerAgent worker in office.Workers)
+                foreach (NeedDefinition definition in NeedCatalog.All)
+                    Assert.That(definition.Status(worker.Runtime.GetNeed(definition.Kind)), Is.EqualTo(NeedStatus.Healthy));
+        }
+
+        [UnityTest] public IEnumerator TutorialCopyNamesFiveNeedsUrgenciesStressAndFutureAutonomy()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            string copy = TutorialCopy.Body(TutorialStep.ManageTheirNeeds);
+            Assert.That(copy, Does.Contain("five live needs"));
+            Assert.That(copy, Does.Contain("Hunger and Bathroom are urgency meters"));
+            Assert.That(copy, Does.Contain("Stress is a separate temporary influence"));
+            Assert.That(copy, Does.Contain("next milestone"));
+        }
+
+        private static float[] SnapshotNeeds(WorkerRuntimeState state)
+        {
+            float[] values = new float[NeedCatalog.All.Length];
+            for (int i = 0; i < values.Length; i++) values[i] = state.GetNeed(NeedCatalog.All[i].Kind);
+            return values;
+        }
+
+        private static void AssertNeedsEqual(float[] expected, WorkerRuntimeState actual, float tolerance)
+        {
+            for (int i = 0; i < expected.Length; i++)
+                Assert.That(actual.GetNeed(NeedCatalog.All[i].Kind), Is.EqualTo(expected[i]).Within(tolerance),
+                    NeedCatalog.All[i].DisplayName);
+        }
+
+        private static void AssertNeedsChanged(float[] expected, WorkerRuntimeState actual)
+        {
+            for (int i = 0; i < expected.Length; i++)
+                Assert.That(actual.GetNeed(NeedCatalog.All[i].Kind), Is.Not.EqualTo(expected[i]).Within(.00001f),
+                    NeedCatalog.All[i].DisplayName);
         }
     }
 }

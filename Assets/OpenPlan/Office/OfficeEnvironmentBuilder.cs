@@ -126,6 +126,11 @@ namespace OpenPlan
             smoking.transform.SetParent(root, false);
             smoking.transform.position = new Vector3(12.2f, 0f, 9.0f);
             AddPlacementZone(smoking, PlacementActivity.Smoke, Vector3.zero);
+
+            GameObject restroom = new GameObject("Established Restroom Entrance");
+            restroom.transform.SetParent(root, false);
+            restroom.transform.position = new Vector3(-12.2f, 0f, 1.5f);
+            AddPlacementZone(restroom, PlacementActivity.UseRestroom, Vector3.zero);
         }
 
         private void BuildMeetingAndManager()

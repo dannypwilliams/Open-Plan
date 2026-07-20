@@ -39,11 +39,11 @@ namespace OpenPlan
                 case TutorialStep.PutThemToWork:
                     return "Release the worker at an available desk. Manual Work grants FOCUSED WORK: +20% productivity for 30 simulation seconds. Watch company cash begin to accrue.";
                 case TutorialStep.ManageTheirNeeds:
-                    return "Energy and Mood work best when high. Stress works best when low. Rest restores all three strongly; Water gives a smaller quick recovery.\n\nPlace a worker at Rest or Water.";
+                    return "Every employee has five live needs. Happiness, Inspiration, and Energy work best when high. Hunger and Bathroom are urgency meters, so lower is better. Stress is a separate temporary influence, not a sixth need.\n\nPlace a worker at Rest, Water, Vending, or the Restroom entrance. Full autonomous recovery arrives in the next milestone.";
                 case TutorialStep.RedirectADistraction:
                     return "Workers sometimes follow their personalities instead of the plan. The highlighted worker has entered a deterministic tutorial distraction.\n\nPick them up and redirect them to Work, Rest, or Water.";
                 case TutorialStep.TryTheOffice:
-                    return "The office remains yours to experiment with. WATER restores needs. VENDING costs $15 and can malfunction. EXIT sends a worker away temporarily. SMOKING lowers Stress but takes time. You do not need to try every action now.";
+                    return "The office remains yours to experiment with. REST restores Energy, Happiness, and Inspiration. WATER adds Bathroom urgency. VENDING costs $15 and lowers Hunger. RESTROOM lowers Bathroom urgency. EXIT sends a worker away temporarily and recovers all needs over time. SMOKING lowers Stress but takes time.";
                 case TutorialStep.Expand:
                     return "Earn $1,000 and purchase the neighboring unit. Reaching $1,000 only makes PURCHASE NEXT DOOR available—it never spends automatically. The tutorial ends here while normal play continues at your pace.";
                 default: return string.Empty;
@@ -114,7 +114,9 @@ namespace OpenPlan
                                                     AutomatedVideoDirector.Requested ||
                                                     AutomatedPerformanceDirector.Requested ||
                                                     PackageVerificationDirector.Requested ||
-                                                    StandaloneFriendDemoDirector.Requested;
+                                                    StandaloneFriendDemoDirector.Requested ||
+                                                    StandaloneFoundationCheckpointDirector.Requested ||
+                                                    StandaloneFiveNeedsCheckpointDirector.Requested;
             bool shouldAutoStart = StandaloneTutorialPlaythroughDirector.Requested ||
                                    (!Application.isBatchMode && !anotherAutomationOwnsTheSession);
             if (office.Stage == OfficeStage.StarterOffice && shouldAutoStart)
@@ -509,7 +511,7 @@ namespace OpenPlan
                 new Vector2(.06f,.84f), new Vector2(.72f,.96f), Vector2.zero, Vector2.zero, TextAlignmentOptions.MidlineLeft);
             OfficeUIFactory.Text(helpPanel, "Help Copy",
                 "PLACE PEOPLE, THEN WATCH THE OFFICE RESPOND\n\n" + TutorialCopy.Controls +
-                "\n\nNEEDS\nEnergy and Mood: higher is better. Stress: lower is better.\n\nPLACEMENT\n✓ VALID means the activity can accept this worker. × UNAVAILABLE and × OCCUPIED explain blocked areas.\n\nECONOMY\nDesk work earns cash continuously. There is no countdown and no automatic spending.",
+                "\n\nFIVE NEEDS\nHappiness, Inspiration, Energy: higher is better. Hunger and Bathroom: lower is better. Stress is a separate influence. Select an employee for status words and hover any row for recovery help.\n\nPLACEMENT\nVALID means the activity can accept this worker. UNAVAILABLE and OCCUPIED explain blocked areas. Manual placement drives recovery in this checkpoint; full autonomous need recovery is not active yet.\n\nECONOMY\nDesk and phone work earn cash continuously. There is no countdown and no automatic spending.",
                 23f, OfficeUIFactory.Paper, new Vector2(.06f,.20f), new Vector2(.94f,.83f), Vector2.zero, Vector2.zero);
             Button close = OfficeUIFactory.Button(helpPanel, "Close Help", "CLOSE", OfficeUIFactory.Teal, Color.white,
                 new Vector2(.06f,.06f), new Vector2(.26f,.15f), Vector2.zero, Vector2.zero);

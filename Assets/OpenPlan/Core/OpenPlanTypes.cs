@@ -6,7 +6,7 @@ namespace OpenPlan
 {
     public enum OfficeStage { StarterOffice, StarterOfficeExpanded, EstablishedOffice }
 
-    public enum PlacementActivity { Work, Rest, GetWater, BuySnack, Smoke, LeaveOffice }
+    public enum PlacementActivity { Work, Rest, GetWater, BuySnack, Smoke, LeaveOffice, UseRestroom }
 
     public enum AwayReason { Lunch, Errand, LongBreak, OffSiteTask }
 
@@ -21,7 +21,7 @@ namespace OpenPlan
     public enum StatusEmote
     {
         Happy, Sad, Frustrated, Tired, Water, Snack, Cigarette, Money,
-        Question, Exclamation, Social, Focus
+        Question, Exclamation, Social, Focus, Restroom
     }
 
     public enum WorkerState
@@ -31,7 +31,7 @@ namespace OpenPlan
         WalkToMeeting, Meeting, ReturnToDesk, React, FiredReaction, PackDesk,
         CarryBox, ExitOffice, RecoverFromStuck, WalkToPlacement, BuySnack, Smoke,
         WalkOutForAway, Away, ReturnFromAway, LookAtPhone, Wander, StandConfused, Sleep,
-        Unassigned
+        Unassigned, UseRestroom
     }
 
     public enum StationKind { Coffee, Water, Break, Meeting, Elevator }
@@ -114,7 +114,6 @@ namespace OpenPlan
         [Range(0f, 1f)] public float bathroom = 0.15f;
         [Range(0f, 1f)] public float inspiration = 0.72f;
         [Range(0f, 1f)] public float energy = 0.86f;
-        [Range(0f, 1f)] public float mood = 0.78f;
         [Range(0f, 1f)] public float stress = 0.22f;
         [Range(0f, 1f)] public float socialNeed = 0.15f;
         public float effectiveProductivity = 1f;
@@ -134,10 +133,53 @@ namespace OpenPlan
         public WorkerState behavior = WorkerState.EnterOffice;
         public string positiveInfluence = "Ready for the day";
         public string negativeInfluence = "Settling in";
+
+        /// <summary>Legacy presentation alias. Happiness is the only stored value.</summary>
+        public float mood
+        {
+            get => happiness;
+            set => happiness = Mathf.Clamp01(value);
+        }
+
+        public float GetNeed(NeedKind kind)
+        {
+            switch (kind)
+            {
+                case NeedKind.Happiness: return happiness;
+                case NeedKind.Hunger: return hunger;
+                case NeedKind.Bathroom: return bathroom;
+                case NeedKind.Inspiration: return inspiration;
+                case NeedKind.Energy: return energy;
+                default: return 0f;
+            }
+        }
+
+        public void SetNeed(NeedKind kind, float value)
+        {
+            value = float.IsNaN(value) || float.IsInfinity(value) ? NeedCatalog.Get(kind).DefaultValue : Mathf.Clamp01(value);
+            switch (kind)
+            {
+                case NeedKind.Happiness: happiness = value; break;
+                case NeedKind.Hunger: hunger = value; break;
+                case NeedKind.Bathroom: bathroom = value; break;
+                case NeedKind.Inspiration: inspiration = value; break;
+                case NeedKind.Energy: energy = value; break;
+            }
+        }
+
+        public void ChangeNeed(NeedKind kind, float amount) => SetNeed(kind, GetNeed(kind) + amount);
+
+        public void ClampNeeds()
+        {
+            foreach (NeedDefinition definition in NeedCatalog.All)
+                SetNeed(definition.Kind, GetNeed(definition.Kind));
+            stress = float.IsNaN(stress) || float.IsInfinity(stress) ? NeedCatalog.DefaultStress : Mathf.Clamp01(stress);
+        }
     }
 
     public enum EmployeeTraitPolarity { Strength, Liability }
     public enum NeedKind { Happiness, Hunger, Bathroom, Inspiration, Energy }
+    public enum NeedStatus { Healthy, Caution, Urgent, Critical }
     public enum IncidentKind
     {
         PrinterJam, InternetOutage, PowerFailure, CoffeeSpill, WaterLeak, CloggedRestroom,
@@ -174,10 +216,78 @@ namespace OpenPlan
     [Serializable]
     public sealed class NeedDefinition
     {
-        public NeedKind kind;
-        public string displayName;
-        public float criticalThreshold;
-        public float decayPerSecond;
+        public string Id { get; }
+        public NeedKind Kind { get; }
+        public string DisplayName { get; }
+        public bool HighIsGood { get; }
+        public float DefaultValue { get; }
+        public float PassiveChangePerSecond { get; }
+        public float CautionThreshold { get; }
+        public float UrgentThreshold { get; }
+        public float CriticalThreshold { get; }
+        public string Description { get; }
+        public string HealthyText { get; }
+        public string CautionText { get; }
+        public string UrgentText { get; }
+        public string CriticalText { get; }
+        public string RecoveryHint { get; }
+        public Color UiColor { get; }
+        public string[] ImprovingActivities { get; }
+        public string HealthyTooltip => HealthyText + ". " + RecoveryHint;
+        public string WarningTooltip => CautionText + ". " + RecoveryHint;
+        public string CriticalTooltip => CriticalText + ". " + RecoveryHint;
+
+        public NeedDefinition(string id, NeedKind kind, string displayName, bool highIsGood,
+            float defaultValue, float passiveChangePerSecond, float cautionThreshold,
+            float urgentThreshold, float criticalThreshold, string description,
+            string healthyText, string cautionText, string urgentText, string criticalText,
+            string recoveryHint, Color uiColor, params string[] improvingActivities)
+        {
+            Id = id;
+            Kind = kind;
+            DisplayName = displayName;
+            HighIsGood = highIsGood;
+            DefaultValue = defaultValue;
+            PassiveChangePerSecond = passiveChangePerSecond;
+            CautionThreshold = cautionThreshold;
+            UrgentThreshold = urgentThreshold;
+            CriticalThreshold = criticalThreshold;
+            Description = description;
+            HealthyText = healthyText;
+            CautionText = cautionText;
+            UrgentText = urgentText;
+            CriticalText = criticalText;
+            RecoveryHint = recoveryHint;
+            UiColor = uiColor;
+            ImprovingActivities = improvingActivities ?? Array.Empty<string>();
+        }
+
+        public NeedStatus Status(float value)
+        {
+            value = Mathf.Clamp01(value);
+            if (HighIsGood)
+            {
+                if (value < CriticalThreshold) return NeedStatus.Critical;
+                if (value < UrgentThreshold) return NeedStatus.Urgent;
+                if (value < CautionThreshold) return NeedStatus.Caution;
+                return NeedStatus.Healthy;
+            }
+            if (value > CriticalThreshold) return NeedStatus.Critical;
+            if (value > UrgentThreshold) return NeedStatus.Urgent;
+            if (value > CautionThreshold) return NeedStatus.Caution;
+            return NeedStatus.Healthy;
+        }
+
+        public string StatusText(float value)
+        {
+            switch (Status(value))
+            {
+                case NeedStatus.Critical: return CriticalText;
+                case NeedStatus.Urgent: return UrgentText;
+                case NeedStatus.Caution: return CautionText;
+                default: return HealthyText;
+            }
+        }
     }
 
     [Serializable]
@@ -325,6 +435,17 @@ namespace OpenPlan
 
         public static float EnergyModifier(float energy) => Mathf.Lerp(0.55f, 1.10f, Mathf.Clamp01(energy));
         public static float MoodModifier(float mood) => Mathf.Lerp(0.70f, 1.10f, Mathf.Clamp01(mood));
+        public static float InspirationModifier(float inspiration) => Mathf.Lerp(.78f, 1.08f, Mathf.Clamp01(inspiration));
+        public static float UrgencyModifier(float urgency)
+        {
+            urgency = Mathf.Clamp01(urgency);
+            if (urgency <= NeedCatalog.UrgencyCaution) return 1f;
+            if (urgency <= NeedCatalog.UrgencyUrgent)
+                return Mathf.Lerp(1f, .88f, Mathf.InverseLerp(NeedCatalog.UrgencyCaution, NeedCatalog.UrgencyUrgent, urgency));
+            if (urgency <= NeedCatalog.UrgencyCritical)
+                return Mathf.Lerp(.88f, .70f, Mathf.InverseLerp(NeedCatalog.UrgencyUrgent, NeedCatalog.UrgencyCritical, urgency));
+            return Mathf.Lerp(.70f, .55f, Mathf.InverseLerp(NeedCatalog.UrgencyCritical, 1f, urgency));
+        }
         public static float InverseStressModifier(float stress) => Mathf.Lerp(1.15f, 0.55f, Mathf.Clamp01(stress));
         public static float FocusedWorkModifier(float remainingSeconds) => remainingSeconds > 0f ? 1.20f : 1f;
 
@@ -348,6 +469,17 @@ namespace OpenPlan
         {
             float value = skill * EnergyModifier(energy) * MoodModifier(mood) *
                           InverseStressModifier(stress) * workstation * trait * manualFocusedWork;
+            return Mathf.Clamp(value, Minimum, Maximum);
+        }
+
+        public static float Evaluate(float skill, WorkerRuntimeState needs,
+            float workstation, float trait, float manualFocusedWork)
+        {
+            if (needs == null) return Minimum;
+            float value = skill * EnergyModifier(needs.energy) * MoodModifier(needs.happiness) *
+                          InspirationModifier(needs.inspiration) * UrgencyModifier(needs.hunger) *
+                          UrgencyModifier(needs.bathroom) * InverseStressModifier(needs.stress) *
+                          workstation * trait * manualFocusedWork;
             return Mathf.Clamp(value, Minimum, Maximum);
         }
     }
@@ -458,6 +590,7 @@ namespace OpenPlan
         public const float WaterDuration = 6f;
         public const float VendingDuration = 8f;
         public const float SmokingDuration = 12f;
+        public const float RestroomDuration = 8f;
         public const float AwayDuration = 30f;
         public const float FocusedWorkDuration = 30f;
         public const float WaterCooldown = 35f;
@@ -470,23 +603,66 @@ namespace OpenPlan
         public const float HighStressThreshold = .70f;
         public const float HighStressMoodDrainPerSecond = .0005f;
 
-        public static void ChangeNeeds(WorkerRuntimeState state, float energy, float mood, float stress)
+        public static void ChangeNeeds(WorkerRuntimeState state, float energy, float happiness, float stress)
         {
             if (state == null) return;
-            state.energy = Mathf.Clamp01(state.energy + energy);
-            state.mood = Mathf.Clamp01(state.mood + mood);
+            state.ChangeNeed(NeedKind.Energy, energy);
+            state.ChangeNeed(NeedKind.Happiness, happiness);
             state.stress = Mathf.Clamp01(state.stress + stress);
         }
 
-        public static void ApplyRest(WorkerRuntimeState state) => ChangeNeeds(state, .35f, .12f, -.25f);
-        public static void ApplyWater(WorkerRuntimeState state) => ChangeNeeds(state, .08f, .05f, -.05f);
+        public static void ApplyRest(WorkerRuntimeState state)
+        {
+            ChangeNeeds(state, .32f, .14f, -.22f);
+            state?.ChangeNeed(NeedKind.Inspiration, .12f);
+        }
+
+        public static void ApplyWater(WorkerRuntimeState state)
+        {
+            ChangeNeeds(state, .06f, .04f, -.04f);
+            state?.ChangeNeed(NeedKind.Inspiration, .03f);
+            state?.ChangeNeed(NeedKind.Bathroom, .08f);
+        }
+
         public static void ApplySnack(WorkerRuntimeState state, bool malfunction)
-            => ChangeNeeds(state, malfunction ? .05f : .25f, malfunction ? -.05f : .15f, malfunction ? 0f : -.08f);
-        public static void ApplySmoke(WorkerRuntimeState state) => ChangeNeeds(state, 0f, .05f, -.30f);
+        {
+            if (state == null) return;
+            ChangeNeeds(state, malfunction ? .01f : .06f, malfunction ? -.04f : .08f, malfunction ? 0f : -.05f);
+            state.ChangeNeed(NeedKind.Hunger, malfunction ? -.08f : -.72f);
+        }
+
+        public static void ApplyCoffee(WorkerRuntimeState state, bool caffeinated)
+        {
+            if (state == null) return;
+            ChangeNeeds(state, caffeinated ? .50f : .34f, .04f, -.08f);
+            state.ChangeNeed(NeedKind.Inspiration, .12f);
+            state.ChangeNeed(NeedKind.Bathroom, .06f);
+        }
+
+        public static void ApplySmoke(WorkerRuntimeState state)
+        {
+            ChangeNeeds(state, 0f, .07f, -.30f);
+            state?.ChangeNeed(NeedKind.Inspiration, .06f);
+        }
+
+        public static void ApplyRestroom(WorkerRuntimeState state)
+        {
+            if (state == null) return;
+            ChangeNeeds(state, 0f, .02f, -.04f);
+            state.ChangeNeed(NeedKind.Bathroom, -.78f);
+        }
+
+        public static void ApplySocialStep(WorkerRuntimeState state, float simulationSeconds)
+        {
+            if (state == null || simulationSeconds <= 0f) return;
+            state.ChangeNeed(NeedKind.Happiness, simulationSeconds * .018f);
+            state.ChangeNeed(NeedKind.Inspiration, simulationSeconds * .008f);
+            state.stress = Mathf.Clamp01(state.stress - simulationSeconds * .009f);
+        }
+
         public static void ApplyAwayStep(WorkerRuntimeState state, float simulationSeconds)
         {
-            float fraction = Mathf.Max(0f, simulationSeconds) / AwayDuration;
-            ChangeNeeds(state, .45f * fraction, .12f * fraction, -.35f * fraction);
+            NeedSimulation.Tick(state, WorkerState.Away, simulationSeconds);
         }
     }
 

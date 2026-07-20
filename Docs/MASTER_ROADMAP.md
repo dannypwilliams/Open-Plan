@@ -1,10 +1,10 @@
 # OPEN PLAN - Master Roadmap
 
-Status: all eight worker-placement pivot checkpoints are preserved; Endless Office Alpha Checkpoint `00_Foundation` is complete on 2026-07-20. The 30-day Alpha roadmap is not complete.
+Status: all eight worker-placement pivot checkpoints and Endless Office Alpha Checkpoints `00_Foundation` and `01_FiveNeeds` are complete on 2026-07-20. The 30-day Alpha roadmap is not complete.
 
 ## Product direction
 
-The playable foundation centers on managing three opinionated workers through direct pickup and placement on ordinary ground or inside proximity influence. Work begins at `$0` without a countdown. Hiring is available whenever affordable and may exceed desk count through 50% phone work. The first physical expansion opens the neighboring unit and three additional desk locations; it is not a hiring gate.
+The playable foundation centers on managing opinionated workers through direct pickup and placement on ordinary ground or inside proximity influence. Work begins at `$0` without a countdown. Hiring is available whenever affordable and may exceed desk count through 50% phone work. Every employee has live Happiness, Hunger, Bathroom, Inspiration, and Energy. The first physical expansion opens the neighboring unit and three additional desks; it is not a hiring gate.
 
 ## Pivot checkpoints
 
@@ -23,15 +23,17 @@ The playable foundation centers on managing three opinionated workers through di
 
 | Checkpoint | Outcome | Gate |
 |---|---|---|
-| 00 Foundation | Normalize camera zoom; drop anywhere on unlocked ground; add deterministic activity influence; start at `$0`; allow pre-expansion/deskless hiring and phone work; revise starter-office presentation; freeze foundational data contracts; establish repeatable package verification | PASS - 117 automated tests, non-development Windows player, fresh ZIP/SHA-256, exact extracted smoke, dual-resolution screenshots, manifest, and playtest guide |
-| 01 and later | Implement the live systems sequenced in `NEXT_30_DAYS_ROADMAP.md` | NOT STARTED |
+| 00 Foundation | Normalize camera zoom; drop anywhere on unlocked ground; add deterministic activity influence; start at `$0`; allow pre-expansion/deskless hiring and phone work; revise presentation; freeze data contracts; establish repeatable package verification | PASS - 117 automated tests, non-development player, fresh ZIP/SHA-256, exact extracted smoke, dual-resolution screenshots, manifest, and guide |
+| 01 Five Needs | Activate Happiness, Hunger, Bathroom, Inspiration, and Energy; migrate activities/productivity; add five-row inspector and functional restroom; verify determinism and exact extracted package | PASS - 168 automated tests, 3/10/30-worker matrix, non-development player, fresh ZIP/SHA-256, preserved exact extraction, nine captures, manifest, and guide |
+| 02 Need Autonomy | Comprehensive critical-need destination selection, station reservations, fallback, and navigation recovery | NOT STARTED |
+| 03 and later | Qualifications, training, workdays/contracts, payroll/reputation, incidents, furniture, persistence, and final balance/package work sequenced in `NEXT_30_DAYS_ROADMAP.md` | NOT STARTED |
 
 ## Preserved release provenance
 
-Commit `a638304` remains the reference release for the original Established Office. Its media, performance, package, and ZIP evidence are archived under `outputs/PreviousRelease/EstablishedOffice-a638304`. The pivot reuses the original simulation and retains the larger office as a preview.
+Commit `a638304` remains the reference release for the original Established Office. Its media, performance, package, and ZIP evidence are archived under `outputs/PreviousRelease/EstablishedOffice-a638304`. Checkpoint 00 evidence remains under its original path and is not overwritten by Prompt 01.
 
 ## Next decision gate
 
-Run the Checkpoint 00 15–20 minute playtest and collect all fifteen answers plus defect reports. Begin Prompt 01 only after feedback confirms that zoom, ordinary-ground placement, proximity influence, invalid explanations, `$0`, pre-expansion hiring, phone work, the smoking alcove, and the water landmark are understandable and no critical lifecycle defect appears.
+Run the Checkpoint 01 15-20 minute playtest and collect all fourteen answers plus defect reports. Begin Prompt 02 only after players understand the three high-good and two urgency needs, can find/use the restroom, can read the inspector at 1280x720, and encounter no stuck/hidden worker or critical lifecycle defect.
 
-The active production plan is [NEXT_30_DAYS_ROADMAP.md](NEXT_30_DAYS_ROADMAP.md), targeting an Endless Office Alpha with repeated workdays, needs, paired qualifications, incidents, furniture spending, expansion, and persistence.
+The active production plan is [NEXT_30_DAYS_ROADMAP.md](NEXT_30_DAYS_ROADMAP.md). Checkpoint 01 activates need simulation only; it does not claim the full 30-day Alpha roadmap is complete.

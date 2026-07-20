@@ -171,6 +171,17 @@ namespace OpenPlan
             Coffee = coffee.AddComponent<CoffeeStation>();
             Coffee.Configure(StationKind.Coffee, new Vector3(0f,0f,-.9f));
 
+            GameObject restroom = new GameObject("Starter Restroom Entrance");
+            restroom.transform.SetParent(root, false);
+            restroom.transform.position = new Vector3(-7.25f, 0f, .10f);
+            AddPlacementZone(restroom, PlacementActivity.UseRestroom, Vector3.zero, "Use Restroom",
+                "starter.restroom.main", true, new Vector2(.65f, .60f), 1);
+            GameObject restroomDoor = catalog.Spawn("Door", root, new Vector3(-7.86f, 0f, .10f),
+                Quaternion.Euler(0f, 90f, 0f), new Vector3(.82f, .92f, .82f));
+            Tint(restroomDoor, new Color(.77f, .76f, .70f));
+            AddWorldLabel(restroom.transform, "Restroom label", "RESTROOM\nPLACE NEAR DOOR",
+                new Vector3(-.55f, 1.75f, 0f), new Color(.48f, .91f, .92f), .30f);
+
             GameObject smoke = new GameObject("Exterior Smoking Area");
             smoke.transform.SetParent(root, false);
             smoke.transform.position = new Vector3(-10.05f, 0f, 3.15f);
@@ -318,6 +329,8 @@ namespace OpenPlan
             Light waterLight = AddPointLight("Water cooler cyan practical", new Vector3(-1.8f,1.9f,4.1f),
                 new Color(.44f,.84f,.91f), 3.4f, 2.25f);
             waterLight.shadows = LightShadows.Soft;
+            AddPointLight("Restroom entrance practical", new Vector3(-7.1f,2.0f,.10f),
+                new Color(.54f,.88f,.86f), 3.0f, 1.25f);
             Light smokeLight = AddPointLight("Smoking alcove practical", new Vector3(-10.1f,2.0f,3.8f),
                 new Color(1f,.48f,.25f), 3.8f, 2.1f);
             smokeLight.shadows = LightShadows.Soft;

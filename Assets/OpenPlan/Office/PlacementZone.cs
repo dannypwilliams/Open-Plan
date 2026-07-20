@@ -245,6 +245,7 @@ namespace OpenPlan
                 case PlacementActivity.GetWater: return "Get Water";
                 case PlacementActivity.BuySnack: return "Buy Snack";
                 case PlacementActivity.LeaveOffice: return "Leave Office";
+                case PlacementActivity.UseRestroom: return "Use Restroom";
                 default: return activity.ToString();
             }
         }

@@ -51,9 +51,10 @@ namespace OpenPlan.Tests
         {
             var state = new WorkerRuntimeState { energy = .40f, mood = .40f, stress = .60f };
             ActivityRules.ApplyRest(state);
-            Assert.That(state.energy, Is.EqualTo(.75f).Within(.0001f));
-            Assert.That(state.mood, Is.EqualTo(.52f).Within(.0001f));
-            Assert.That(state.stress, Is.EqualTo(.35f).Within(.0001f));
+            Assert.That(state.energy, Is.EqualTo(.72f).Within(.0001f));
+            Assert.That(state.mood, Is.EqualTo(.54f).Within(.0001f));
+            Assert.That(state.inspiration, Is.EqualTo(.84f).Within(.0001f));
+            Assert.That(state.stress, Is.EqualTo(.38f).Within(.0001f));
             ActivityRules.ChangeNeeds(state, 2f, 2f, -2f);
             Assert.That(state.energy, Is.EqualTo(1f));
             Assert.That(state.mood, Is.EqualTo(1f));
@@ -64,31 +65,33 @@ namespace OpenPlan.Tests
         {
             var water = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
             ActivityRules.ApplyWater(water);
-            Assert.That(water.energy, Is.EqualTo(.48f).Within(.0001f));
-            Assert.That(water.mood, Is.EqualTo(.45f).Within(.0001f));
-            Assert.That(water.stress, Is.EqualTo(.55f).Within(.0001f));
+            Assert.That(water.energy, Is.EqualTo(.46f).Within(.0001f));
+            Assert.That(water.mood, Is.EqualTo(.44f).Within(.0001f));
+            Assert.That(water.bathroom, Is.EqualTo(.23f).Within(.0001f));
+            Assert.That(water.stress, Is.EqualTo(.56f).Within(.0001f));
 
             var snack = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
             ActivityRules.ApplySnack(snack, false);
-            Assert.That(snack.energy, Is.EqualTo(.65f).Within(.0001f));
-            Assert.That(snack.mood, Is.EqualTo(.55f).Within(.0001f));
-            Assert.That(snack.stress, Is.EqualTo(.52f).Within(.0001f));
+            Assert.That(snack.energy, Is.EqualTo(.46f).Within(.0001f));
+            Assert.That(snack.mood, Is.EqualTo(.48f).Within(.0001f));
+            Assert.That(snack.hunger, Is.EqualTo(0f).Within(.0001f));
+            Assert.That(snack.stress, Is.EqualTo(.55f).Within(.0001f));
 
             var malfunction = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
             ActivityRules.ApplySnack(malfunction, true);
-            Assert.That(malfunction.energy, Is.EqualTo(.45f).Within(.0001f));
-            Assert.That(malfunction.mood, Is.EqualTo(.35f).Within(.0001f));
+            Assert.That(malfunction.energy, Is.EqualTo(.41f).Within(.0001f));
+            Assert.That(malfunction.mood, Is.EqualTo(.36f).Within(.0001f));
             Assert.That(malfunction.stress, Is.EqualTo(.6f).Within(.0001f));
 
             var smoke = new WorkerRuntimeState { energy = .4f, mood = .4f, stress = .6f };
             ActivityRules.ApplySmoke(smoke);
-            Assert.That(smoke.mood, Is.EqualTo(.45f).Within(.0001f));
+            Assert.That(smoke.mood, Is.EqualTo(.47f).Within(.0001f));
             Assert.That(smoke.stress, Is.EqualTo(.3f).Within(.0001f));
 
             var away = new WorkerRuntimeState { energy = .2f, mood = .3f, stress = .8f };
             ActivityRules.ApplyAwayStep(away, ActivityRules.AwayDuration);
-            Assert.That(away.energy, Is.EqualTo(.65f).Within(.0001f));
-            Assert.That(away.mood, Is.EqualTo(.42f).Within(.0001f));
+            Assert.That(away.energy, Is.EqualTo(.58f).Within(.0001f));
+            Assert.That(away.mood, Is.EqualTo(.45f).Within(.0001f));
             Assert.That(away.stress, Is.EqualTo(.45f).Within(.0001f));
         }
 
@@ -494,7 +497,7 @@ namespace OpenPlan.Tests
                 Assert.That(TutorialCopy.Body(sequence[i]), Is.Not.Empty);
             }
             Assert.That(TutorialCopy.Body(TutorialStep.PutThemToWork), Does.Contain("30 simulation seconds"));
-            Assert.That(TutorialCopy.Body(TutorialStep.ManageTheirNeeds), Does.Contain("Stress works best when low"));
+            Assert.That(TutorialCopy.Body(TutorialStep.ManageTheirNeeds), Does.Contain("five live needs"));
             Assert.That(TutorialCopy.Body(TutorialStep.RedirectADistraction), Does.Contain("deterministic tutorial distraction"));
             Assert.That(TutorialCopy.Body(TutorialStep.TryTheOffice), Does.Contain("VENDING costs $15"));
             Assert.That(TutorialCopy.Body(TutorialStep.Expand), Does.Contain("never spends automatically"));

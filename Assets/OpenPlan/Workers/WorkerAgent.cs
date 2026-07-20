@@ -93,13 +93,9 @@ namespace OpenPlan
             tasks = director.Tasks;
             random = director.Random;
             Definition = definition.Clone();
-            Runtime = new WorkerRuntimeState
-            {
-                energy = random.Range(.72f, .96f),
-                mood = random.Range(.68f, .92f),
-                stress = random.Range(.12f, .38f),
-                socialNeed = random.Range(.05f, .32f)
-            };
+            Runtime = new WorkerRuntimeState();
+            NeedCatalog.Initialize(Runtime, Definition.displayName, random.Seed);
+            Runtime.socialNeed = random.Range(.05f, .32f);
             transform.position = spawn;
             previousPosition = spawn;
             Visuals = gameObject.AddComponent<WorkerVisuals>();
@@ -156,6 +152,11 @@ namespace OpenPlan
                     PersonalityRules.For(Definition.trait).AvoidanceStressRecovery);
             }
 
+            float needDelta = Runtime.behavior == WorkerState.Away ? Mathf.Min(dt, Runtime.awaySecondsRemaining) : dt;
+            float workStressMultiplier = Runtime.behavior == WorkerState.Unassigned && Desk == null ? .75f :
+                Desk == null ? 1f : Mathf.Lerp(.75f, 1.45f, Desk.Noise) *
+                PersonalityRules.For(Definition.trait).NoiseStressMultiplier;
+            NeedSimulation.Tick(Runtime, Runtime.behavior, needDelta, workStressMultiplier);
             UpdateProductivity();
             TickState(dt);
             Visuals?.Tick(PresentationState(), IsMoving, Productivity);
@@ -204,8 +205,7 @@ namespace OpenPlan
                 case WorkerState.UseCoffeeMachine:
                     if (stateTime >= stateLimit)
                     {
-                        float energy = Definition.trait == WorkerTrait.Caffeinated ? .62f : .42f;
-                        ActivityRules.ChangeNeeds(Runtime, energy, .04f, -.12f);
+                        ActivityRules.ApplyCoffee(Runtime, Definition.trait == WorkerTrait.Caffeinated);
                         coffeeCooldown = Definition.trait == WorkerTrait.Caffeinated ? 34f : 52f;
                         ReturnToDesk();
                     }
@@ -222,8 +222,7 @@ namespace OpenPlan
                     break;
                 case WorkerState.Socialize:
                     Runtime.socialSeconds += dt;
-                    Runtime.mood = Mathf.Clamp01(Runtime.mood + dt * .018f);
-                    Runtime.stress = Mathf.Clamp01(Runtime.stress - dt * .009f);
+                    ActivityRules.ApplySocialStep(Runtime, dt);
                     if (stateTime >= stateLimit)
                     {
                         Runtime.socialNeed = .06f;
@@ -241,6 +240,9 @@ namespace OpenPlan
                     break;
                 case WorkerState.Smoke:
                     if (stateTime >= stateLimit) CompleteSmoking();
+                    break;
+                case WorkerState.UseRestroom:
+                    if (stateTime >= stateLimit) CompleteRestroom();
                     break;
                 case WorkerState.LookAtPhone:
                 case WorkerState.StandConfused:
@@ -286,16 +288,6 @@ namespace OpenPlan
         private void TickWork(float dt)
         {
             IsMoving = false;
-            float persistence = Definition.trait == WorkerTrait.Focused ? .72f :
-                Definition.trait == WorkerTrait.Hardworking ? .82f :
-                Definition.trait == WorkerTrait.Lazy ? 1.35f : 1f;
-            Runtime.energy = SimulationRules.DecayEnergy(Runtime.energy, dt,
-                ActivityRules.WorkEnergyDrainPerSecond * persistence);
-            Runtime.stress = Mathf.Clamp01(Runtime.stress + dt * ActivityRules.WorkStressGainPerSecond *
-                (Desk != null ? Mathf.Lerp(.75f, 1.45f, Desk.Noise) : 1f) *
-                PersonalityRules.For(Definition.trait).NoiseStressMultiplier);
-            if (Runtime.stress > ActivityRules.HighStressThreshold)
-                Runtime.mood = Mathf.Clamp01(Runtime.mood - dt * ActivityRules.HighStressMoodDrainPerSecond);
             Runtime.workSeconds += dt * Runtime.effectiveProductivity;
             office.Cash.AccrueDeskIncome(Runtime.effectiveProductivity, dt);
             tasks.Contribute(Runtime.effectiveProductivity * dt * .38f);
@@ -313,9 +305,6 @@ namespace OpenPlan
 
         private void TickPhoneWork(float dt)
         {
-            Runtime.energy = SimulationRules.DecayEnergy(Runtime.energy, dt,
-                ActivityRules.WorkEnergyDrainPerSecond * .82f);
-            Runtime.stress = Mathf.Clamp01(Runtime.stress + dt * ActivityRules.WorkStressGainPerSecond * .75f);
             float output = Runtime.effectiveProductivity;
             Runtime.workSeconds += dt * output;
             office.Cash.AccrueDeskIncome(output, dt);
@@ -559,13 +548,44 @@ namespace OpenPlan
             float trait = ProductivityModel.TraitModifier(Definition.trait, noise,
                 office.Workday.Progress01, Runtime.energy);
             float focused = ProductivityModel.FocusedWorkModifier(Runtime.focusedWorkSecondsRemaining);
-            Runtime.effectiveProductivity = ProductivityModel.Evaluate(Definition.skill, Runtime.energy,
-                Runtime.mood, Runtime.stress, workstation * nearby, trait, focused);
+            Runtime.effectiveProductivity = ProductivityModel.Evaluate(Definition.skill, Runtime,
+                workstation * nearby, trait, focused);
             Runtime.positiveInfluence = Runtime.focusedWorkSecondsRemaining > 0f ?
                 $"Focused Work {Runtime.focusedWorkSecondsRemaining:0}s" :
-                positive ?? (Desk != null ? Desk.ZoneLabel : "Steady pace");
-            Runtime.negativeInfluence = negative ?? (Runtime.energy < .40f ? "Low energy" :
-                Runtime.stress > .70f ? "High stress" : noise > .62f ? "Noisy workstation" : "No major blocker");
+                positive ?? StrongestPositiveInfluence();
+            Runtime.negativeInfluence = negative ?? StrongestNegativeInfluence(noise);
+        }
+
+        private string StrongestPositiveInfluence()
+        {
+            NeedKind best = NeedKind.Happiness;
+            float bestBenefit = -1f;
+            foreach (NeedDefinition definition in NeedCatalog.All)
+            {
+                float benefit = NeedCatalog.Benefit01(Runtime, definition.Kind);
+                if (benefit > bestBenefit) { bestBenefit = benefit; best = definition.Kind; }
+            }
+            NeedDefinition bestDefinition = NeedCatalog.Get(best);
+            return bestDefinition.DisplayName + ": " + bestDefinition.StatusText(Runtime.GetNeed(best));
+        }
+
+        private string StrongestNegativeInfluence(float noise)
+        {
+            NeedKind worst = NeedKind.Happiness;
+            float worstBenefit = 2f;
+            foreach (NeedDefinition definition in NeedCatalog.All)
+            {
+                float benefit = NeedCatalog.Benefit01(Runtime, definition.Kind);
+                if (benefit < worstBenefit) { worstBenefit = benefit; worst = definition.Kind; }
+            }
+            if (Runtime.stress > .70f) return "High stress";
+            if (worstBenefit < .55f)
+            {
+                NeedDefinition worstDefinition = NeedCatalog.Get(worst);
+                return worstDefinition.DisplayName + ": " + worstDefinition.StatusText(Runtime.GetNeed(worst));
+            }
+            if (Desk == null) return "Needs a desk";
+            return noise > .62f ? "Noisy workstation" : "No major blocker";
         }
 
         private void GoToDesk()
@@ -663,6 +683,7 @@ namespace OpenPlan
             if (activeActivity == activity && activity != PlacementActivity.Work &&
                 (Runtime.behavior == WorkerState.TakeBreak || Runtime.behavior == WorkerState.UseWaterCooler ||
                  Runtime.behavior == WorkerState.BuySnack || Runtime.behavior == WorkerState.Smoke ||
+                 Runtime.behavior == WorkerState.UseRestroom ||
                  Runtime.behavior == WorkerState.WalkOutForAway))
             {
                 reason = "Worker is already doing that activity.";
@@ -830,6 +851,10 @@ namespace OpenPlan
                     SetState(WorkerState.Smoke, HasPlayerCommandAuthority ? ActivityRules.SmokingDuration :
                         Mathf.Max(.25f, autonomousActivityDuration));
                     break;
+                case PlacementActivity.UseRestroom:
+                    Visuals?.ShowEmote(StatusEmote.Restroom, 2.2f);
+                    SetState(WorkerState.UseRestroom, ActivityRules.RestroomDuration);
+                    break;
                 case PlacementActivity.LeaveOffice:
                     Runtime.awayReason = (AwayReason)random.Range(0, 4);
                     SetTargetState(WorkerState.WalkOutForAway, office.ExitOutsidePoint, 20f);
@@ -956,6 +981,17 @@ namespace OpenPlan
             ReturnToDesk();
         }
 
+        private void CompleteRestroom()
+        {
+            if (!activityEffectApplied)
+            {
+                ActivityRules.ApplyRestroom(Runtime);
+                activityEffectApplied = true;
+                Visuals?.ShowEmote(StatusEmote.Happy, 1.6f);
+            }
+            ReturnToDesk();
+        }
+
         private void BeginAwayVisit()
         {
             office.ReleaseTransientPlacement(this);
@@ -969,7 +1005,6 @@ namespace OpenPlan
         private void TickAway(float dt)
         {
             float step = Mathf.Min(dt, Runtime.awaySecondsRemaining);
-            ActivityRules.ApplyAwayStep(Runtime, step);
             Runtime.awaySecondsRemaining = Mathf.Max(0f, Runtime.awaySecondsRemaining - step);
             if (Runtime.awaySecondsRemaining <= 0f)
             {
@@ -1126,6 +1161,7 @@ namespace OpenPlan
                 case WorkerState.WalkToPlacement: return "Following a placement command";
                 case WorkerState.BuySnack: return "Using the vending machine";
                 case WorkerState.Smoke: return "Smoking outside";
+                case WorkerState.UseRestroom: return "Using the restroom";
                 case WorkerState.WalkOutForAway: return "Walking through the exit";
                 case WorkerState.Away: return "Away from the office";
                 case WorkerState.ReturnFromAway: return "Returning to the office";
@@ -1166,6 +1202,7 @@ namespace OpenPlan
                 case WorkerState.Sleep: return "Falling asleep";
                 case WorkerState.UseWaterCooler: return "Getting water";
                 case WorkerState.BuySnack: return "Buying a snack";
+                case WorkerState.UseRestroom: return "Using the restroom";
             }
             string name = state.ToString();
             for (int i = 1; i < name.Length; i++)
@@ -1185,6 +1222,7 @@ namespace OpenPlan
 
         private void OnDestroy()
         {
+            office?.ReleaseTransientPlacement(this);
             RestoreVendingMachine();
             if (smokeParticles != null) Destroy(smokeParticles.gameObject);
             if (cigaretteProp != null) Destroy(cigaretteProp);

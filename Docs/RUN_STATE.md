@@ -1,30 +1,28 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Endless Office Alpha `00_Foundation`
-- Status: source, full tests, non-development Windows build, fresh ZIP, extracted-package smoke, screenshots, manifest, guide, and documentation PASS
+- Current checkpoint: Endless Office Alpha `01_FiveNeeds`
+- Status: source, 168 automated tests, deterministic matrix, non-development Windows build, fresh ZIP, preserved exact extraction, public gameplay smoke, captures, manifest, guide, and documentation PASS
 - Date: 2026-07-20
 - Branch: `codex/endless-office-alpha`
-- Source commit: recorded in `CHECKPOINT_MANIFEST.json` beside the player
-- Previous pivot release: preserved without modification
-- Base Established release: `a638304`
+- Source commit: recorded in `manifest.md` beside the player
 - Default path: Main Menu -> Starter Office
-- Roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
-- Economy: `$0` start; `$60` per effective-productivity minute; `$1,000` deliberate expansion; no forced end
-- Hiring: available before expansion whenever affordable; no arbitrary employee cap
-- Team/desk presentation: separate HUD values; three active starter desks
-- Deskless work: explicit phone-work copy and pose at a single `0.50` workstation factor; live income, pause, autonomy, and later desk assignment verified
-- Placement: valid ordinary ground creates `GroundPlacementCommand`; activity influence extends beyond footprints; overlaps resolve deterministically
-- Invalid placement: locked property, registered obstacles, void, unavailable activities, and occupied stations restore the carry snapshot with an explanation
-- Focused Work: +20% for 30 simulation seconds, non-stacking
-- Camera: normalized exponential zoom; about ten standard notches; fractional trackpad input; close/overview clamp and smoothing retained
-- Presentation: blue-gray carpet, aged partitions, warm off-white structure/CRT equipment, charcoal furniture, denser clutter, cool base light, amber/cyan landmarks, modeled smoking alcove, and cyan-white water highlight
-- Foundations only: five needs, 12 strengths, 12 liabilities, deterministic pairs, incidents, furniture, office units, contracts, and placement results compile but their later gameplay systems are not activated
-- Automated tests: 117/117 passing (58 EditMode, 59 PlayMode)
-- Exact extracted checkpoint smoke: public gameplay APIs, live earnings, no cash injection, menu return, and clean quit PASS
-- Evidence: ten required 1920×1080 screenshots plus one 1280×720 HUD regression capture
-- Package: `outputs/Playtests/EndlessOfficeAlpha/00_Foundation/`
-- ZIP hash, build bytes, timestamps, test counts, commit, and limitations: recorded in the generated manifest
-- Previous release evidence: preserved under existing `outputs/PreviousRelease`, `outputs/ReleaseEvidence`, and `outputs/Screenshots/FriendDemo` paths
+- Roster/economy: Morgan, Alex, Sam; three desks; `$0`; `$60` per effective-productivity minute; $1,000 deliberate expansion; no forced end
+- Live needs: Happiness high-good, Hunger high-urgent, Bathroom high-urgent, Inspiration high-good, Energy high-good; deterministic healthy offsets; all bounded 0-1
+- Stress: separate temporary influence, never a sixth need row
+- Inspector: five status rows, urgency wording, hover explanations, strongest helpful/harmful influences, verified at 1920x1080 and 1280x720
+- Restroom: visible single-capacity `starter.restroom.main` proximity activity; eight-second use; Bathroom -0.78; visible-worker and occupancy cleanup verified
+- Activities: Work, Rest, Water, Vending, Coffee, Smoking, Away, Social, and Restroom use centralized effects
+- Productivity: all five needs participate; Stress, skill, trait, workstation, and Focused Work retained; phone factor remains exactly 0.50 once
+- Time: scaled deterministic tick; pause freezes all five; 2x/4x proportional; selection/carry does not reset needs
+- Placement/hiring: Prompt 00 ordinary ground, influence, invalid restoration, pre-expansion hiring, physical expansion, and phone work remain green
+- Automated tests: 168/168 passing (98 EditMode, 70 PlayMode)
+- Deterministic matrix: 3/10/30 workers, 20 seeds, six contexts, 100 simulated minutes per row; zero invalid values, paused changes, unexpected identical workers, or repeat divergence
+- Package: `outputs/Playtests/EndlessOfficeAlpha/01_FiveNeeds/`
+- Exact verification: `VerifiedExtract/OpenPlan.exe`, visible public-gameplay smoke PASS, menu return and clean quit
+- Evidence: eight required 1920x1080 captures plus one 1280x720 inspector regression
+- ZIP hash, bytes, timestamp, tests, commit, limitations, and source documents: `manifest.md`
+- Historical evidence: prior Checkpoint 00, PreviousRelease, ReleaseEvidence, and FriendDemo paths remain untouched
 - Critical issues: none known
-- Future prompts: live five-need simulation/recovery, assigned qualifications, training, workdays/contracts, payroll/reputation, incidents, furniture build mode, campaign persistence, and final Alpha tuning/packaging
-- Next action: stop development and conduct the 15–20 minute Checkpoint 00 playtest; Prompt 01 has not started
+- Prompt 02 boundary: comprehensive autonomous critical-need routing/reservations/fallback are not started
+- Later systems: qualifications, training, workdays/contracts, payroll/reputation, incidents, furniture, persistence, and final Alpha tuning remain future prompts
+- Next action: stop development and conduct the 15-20 minute Checkpoint 01 playtest before Prompt 02

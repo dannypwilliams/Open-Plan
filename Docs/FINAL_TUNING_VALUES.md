@@ -1,51 +1,58 @@
 # Final Tuning Values
 
-These are the values shipped in Endless Office Alpha Checkpoint `00_Foundation`. Later prompts may retune the economy only when their own acceptance evidence requires it.
+These are the values shipped in Endless Office Alpha Checkpoint `01_FiveNeeds`. They are an initial playtest baseline, not the final Alpha balance.
 
-## Starter economy and expansion
+## Five needs
 
-| Value | Final |
-|---|---:|
-| Starting cash | $0 |
-| Desk income | $60 per effective-productivity minute |
-| Expansion purchase | $1,000 |
-| First hire / Riley | $380 |
-| Phone workstation efficiency | 50%, applied once |
-| Employee cap | none |
-| Starter active desks | 3 |
-| Expanded desk capacity | +3, six total |
-| Expected starting-team income | $149.124/min before modeled snack overhead |
-| Expected first-hire affordability | 2.55 minutes from the static starting-team estimate |
-| Expected expansion affordability | 6.96 minutes from the static starting-team estimate |
-| Measured affordability | Re-capture after the next balance/content pass; the prior `$100` measurements are superseded |
+| Need | Default | Direction | Passive / s | Caution | Urgent | Critical |
+|---|---:|---|---:|---:|---:|---:|
+| Happiness | 0.78 | high good | -0.00018 | <0.55 | <0.32 | <0.15 |
+| Hunger | 0.18 | high urgent | +0.00045 | >0.44 | >0.68 | >0.85 |
+| Bathroom | 0.15 | high urgent | +0.00035 | >0.44 | >0.68 | >0.85 |
+| Inspiration | 0.72 | high good | -0.00026 | <0.55 | <0.32 | <0.15 |
+| Energy | 0.86 | high good | -0.00025 | <0.55 | <0.32 | <0.15 |
+
+Starting identity/seed offsets are limited to +/-0.02. Stress starts at 0.22 with the same offset limit and remains a hidden/status influence. Work multipliers are Happiness 1.55, Hunger 1.10, Bathroom 1.10, Inspiration 1.85, and Energy 4.50. Work adds 0.0012 Stress/s.
 
 ## Player-directed activities
 
-| Activity | Duration | Effect / cost | Cooldown |
+| Activity | Duration | Completion effect | Cooldown / cost |
 |---|---:|---|---:|
 | Work | immediate | Focused Work +20%, non-stacking | 30 s focused duration |
-| Rest | 20 s | Energy +0.35, Mood +0.12, Stress -0.25 | none |
-| Water | 6 s | Energy +0.08, Mood +0.05, Stress -0.05 | 35 s |
-| Vending | 8 s | $15; normally Energy +0.25, Mood +0.15, Stress -0.08 | 45 s |
-| Vending malfunction | same | 10% chance; Energy +0.05, Mood -0.05, no stress change | 45 s |
-| Smoking | 12 s | Mood +0.05, Stress -0.30, no energy recovery | 45 s |
-| Leave Office | 30 s | Energy +0.45, Mood +0.12, Stress -0.35 over the away period | none |
+| Rest | 20 s | Energy +0.32; Happiness +0.14; Inspiration +0.12; Stress -0.22 | none |
+| Water | 6 s | Energy +0.06; Happiness +0.04; Inspiration +0.03; Bathroom +0.08; Stress -0.04 | 35 s |
+| Vending success | 8 s | Hunger -0.72; Happiness +0.08; Energy +0.06; Stress -0.05 | 45 s; $15 once |
+| Vending malfunction | 8 s | Hunger -0.08; Happiness -0.04; Energy +0.01 | 45 s; $15 once; 10% seeded chance |
+| Coffee | 2.8 s | Energy +0.34 (+0.50 Caffeinated); Inspiration +0.12; Happiness +0.04; Bathroom +0.06; Stress -0.08 | 52 s or 34 s Caffeinated |
+| Smoking | 12 s | Happiness +0.07; Inspiration +0.06; Stress -0.30 | 45 s |
+| Restroom | 8 s | Bathroom -0.78; Happiness +0.02; Stress -0.04 | single capacity |
+| Leave Office | 30 s | Energy +0.38; Happiness +0.15; Inspiration +0.16; Hunger -0.35; Bathroom -0.40; Stress -0.35 over time | none |
 
-Work drains 0.0018 Energy/s and adds 0.0012 Stress/s. Stress at or above 0.70 drains Mood by 0.0005/s. Productivity remains clamped to 0.10-2.50.
+Rest, Water, Vending, Coffee, Smoking, and Restroom also receive their ordinary passive in-state progression. Values clamp to 0-1 after every tick and discrete change.
 
-## Starting personalities
+## Productivity
 
-| Worker | Trait | Distraction chance / decision | Work preference | Decision interval |
-|---|---|---:|---:|---:|
-| Morgan | Hardworking | 7% | 78% | 7.0-10.0 s |
-| Alex | Social | 17% | 48% | 5.5-8.5 s |
-| Sam | Lazy | 30% | 28% | 4.8-7.5 s |
+| Factor | Range / behavior |
+|---|---|
+| Energy | 0.55-1.10 linear |
+| Happiness | 0.70-1.10 linear |
+| Inspiration | 0.78-1.08 linear |
+| Hunger or Bathroom | 1.00 while healthy; graduated to 0.55 at maximum urgency |
+| Inverse Stress | 1.15-0.55 linear |
+| Phone workstation | 0.50 exactly once |
+| Focused Work | 1.20 while timer remains, otherwise 1.00 |
+| Final clamp | 0.10-2.50 |
 
-Distractions last 6-18 seconds. The 20-minute live soak produced 5 Morgan, 11 Alex, and 41 Sam distractions, making the personality differences readable without permanently blocking progress.
+## Economy and presentation
 
-## Presentation
-
-- Simulation speeds: paused, 1x, 2x, 4x.
-- Camera: close size 4.8, overview profile 18.5, normalized exponential zoom sensitivity 0.13, pan sensitivity 0.018, smoothing 0.16 s; about ten standard notches overview-to-close with continuous fractional input.
-- Placement influence: each zone owns an explicit radius and integer priority; ties resolve by priority, distance, then stable identifier.
-- Evidence resolutions: 1280x720 and 1920x1080.
+| Value | Checkpoint 01 |
+|---|---:|
+| Starting cash | $0 |
+| Income | $60 per effective-productivity minute |
+| First expansion | $1,000 |
+| First candidate | $380 |
+| Employee cap | none |
+| Starter / expanded desks | 3 / 6 |
+| Speeds | pause, 1x, 2x, 4x |
+| Zoom sensitivity | normalized exponential 0.13; about ten wheel notches |
+| Evidence resolutions | 1920x1080 and 1280x720 |
