@@ -1,41 +1,35 @@
 # OPEN PLAN
 
-OPEN PLAN is an isometric office-management simulation about guiding a tiny team and growing a struggling business. The current pivot starts with Morgan, Alex, and Sam in a cramped office. The player will pick workers up, place them at clear activity areas, earn money without a countdown, and purchase the neighboring unit to physically expand.
+OPEN PLAN, also known as Silly Office Sim, is a small isometric office-management game about guiding individual workers through a cramped workplace. Pick up Morgan, Alex, and Sam, place them at desks or restorative activity areas, respond to their different personalities, and earn enough cash to buy the neighboring unit.
 
-Checkpoint 7 teaches and presents the complete first demo progression. A dismissible, event-driven first-run tutorial introduces the team, pickup and placement, Focused Work income, needs, a deterministic distraction, supporting activity labels, and the $1,000 expansion objective. Reading panels pause and restore the exact prior speed; Help can replay the tutorial, Escape owns the top modal, and skip is always available. The Starter Office remains open-ended: cash reaching $1,000 enables a deliberate purchase instead of ending the day. Confirming it spends exactly $1,000, lights the neighboring unit, opens the connecting wall, reveals doorway trim, enables its utility corner and three desk zones, and widens the live camera bounds without reloading the scene.
+The friend-demo build contains the complete worker-placement pivot. It starts with $100 and has no countdown or forced failure. Desk work earns `$60 per productivity-minute`; manually placing a worker at a desk grants a non-stacking +20% Focused Work bonus for 30 simulation seconds. Reaching $1,000 makes the neighboring unit purchasable. The confirmed purchase opens the connecting wall in-world, activates three new desk locations, unlocks hiring, and exposes the preserved Established Office preview.
 
-The Starter Office begins with $100. Desk work earns `$60/min × effective productivity`; pausing stops simulation income. Manual desk placement grants a non-stacking +20% Focused Work bonus for 30 simulation seconds.
+## Playable stages
 
-## Stages
+- `StarterOffice`: the normal entry path with three named workers, three desks, and Work, Rest, Water, Vending, Smoking, and Leave Office placement areas.
+- `StarterOfficeExpanded`: the same office after the physical expansion, with six desk locations and room for three new hires.
+- `EstablishedOffice`: the preserved larger-office simulation, available as an untimed future-stage preview.
 
-- `StarterOffice`: normal entry path; three workers at three occupied desks, one unavailable desk, and six supporting activity areas.
-- `StarterOfficeExpanded`: first expansion state; three workers and six available desk locations across both units, with capacity to hire and place three more.
-- `EstablishedOffice`: preserved released large office with six workers, twelve desks, hiring, firing, reassignment, amenities, and its complete legacy simulation; the milestone preview is untimed.
+## Controls
 
-Run a specific development stage with `-openplan-stage <stage name>`. Existing release automation defaults to Established Office so historical capture paths remain usable.
+- Click a worker to select and inspect them.
+- Hold and drag a worker to a labeled activity footprint.
+- Escape or right-click cancels a carry safely.
+- Mouse wheel zooms; middle-mouse drag pans; `F` follows a selected worker.
+- `N` toggles names; `H` opens hiring; `Tab` toggles productivity.
+- `Space` pauses; `1`, `2`, and `3` select 1x, 2x, and 4x speed.
+- `HELP` explains controls, needs, activities, cash, and can replay the tutorial.
 
-## Current controls
+## Release status
 
-- Mouse wheel: zoom.
-- Middle-mouse drag: pan.
-- Click: select a worker or choose a desk while reassigning.
-- Hold and drag a worker: lift and place them at Work, Rest, Water, Snack, Smoke, or Exit footprints.
-- Escape or right-click while carrying: cancel and return the worker safely.
-- `F`: follow the selected worker.
-- `H`: open hiring.
-- `N`: toggle worker name tags.
-- `Tab`: productivity overlay.
-- `Space`: pause/resume; `1`, `2`, `3`: normal, 2x, and 4x speed.
-- `HELP`: controls, needs, placement legend, economy explanation, and tutorial replay.
+- Unity 6000.5.1f1 Windows x64 build.
+- 104/104 automated tests passing: 49 EditMode and 55 PlayMode.
+- 100 deterministic balance scenarios across 20 fixed seeds passing.
+- Active-manager expansion average: 7.67 minutes at 1x; passive average: 10.95 minutes.
+- Twenty-minute accelerated standalone soak passing with no stuck worker, missing worker, stale carry, orphaned smoke, or capacity violation.
+- Exact extracted package passed the final 86-check menu-to-expansion-to-hire-to-preview flow with zero failures.
+- 1920x1080 performance: 119.88 fps average, 118.52 fps 1% low, zero measured peak per-frame GC allocation.
 
-## Source workflow
+The final executable is under `outputs/OpenPlan-Windows`; the fresh friend-demo ZIP is `outputs/OpenPlan-Friend-Demo-Windows.zip`. See [Build and Run](Docs/BUILD_AND_RUN.md), [Test Report](Docs/TEST_REPORT.md), and the [Friend Playtest Guide](Docs/FRIEND_PLAYTEST_GUIDE.md).
 
-- Unity 6000.5.1f1, URP 17.5, Input System 1.19, TextMesh Pro/U GUI 2.5.
-- Blender 5.2.0 LTS for the visible environment, prop, and worker meshes.
-- Open `C:\Users\danny\Documents\GitHub\OpenPlan` in Unity Hub.
-- Rebuild through **OPEN PLAN -> Build Windows Release**.
-- See [BUILD_AND_RUN.md](Docs/BUILD_AND_RUN.md) and [TEST_REPORT.md](Docs/TEST_REPORT.md) for commands and verification.
-
-The Blender catalog contains 54 validated assets. Placement, behavior-soak, physical-expansion, and tutorial evidence at 1280x720 and 1920x1080 are preserved under `outputs/Screenshots`.
-
-The previous Windows executable, screenshots, gameplay video, and package evidence remain preserved as the `a638304` Established Office release.
+Historical Established Office release evidence is preserved under `outputs/PreviousRelease/EstablishedOffice-a638304` rather than overwritten.

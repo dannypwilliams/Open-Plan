@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace OpenPlan
 {
-    /// <summary>Runs fifteen simulated minutes in the packaged starter office and records personality evidence.</summary>
+    /// <summary>Runs twenty simulated minutes in the packaged starter office and records personality evidence.</summary>
     public sealed class StandaloneBehaviorSoakDirector : MonoBehaviour
     {
         public static bool Requested => Array.Exists(Environment.GetCommandLineArgs(),
@@ -29,7 +29,7 @@ namespace OpenPlan
             yield return new WaitForSecondsRealtime(.8f);
             Time.timeScale = 20f;
             float start = Time.time;
-            float end = start + 15f * 60f;
+            float end = start + 20f * 60f;
             foreach (WorkerAgent worker in office.Workers)
                 observed[worker.Definition.displayName] = new HashSet<WorkerState>();
 
@@ -56,6 +56,9 @@ namespace OpenPlan
                     $"{worker.Definition.displayName} is not permanently stuck");
                 Check(worker.Runtime.behavior == WorkerState.Work || worker.Runtime.behavior == WorkerState.Away ||
                       worker.StateAge < 45f, $"{worker.Definition.displayName} has no permanent idle state");
+                Check(!worker.IsPlayerCarried, $"{worker.Definition.displayName} has no stale carried state");
+                Check(worker.Runtime.behavior == WorkerState.Smoke || (!worker.HasSmokingProp && !worker.HasSmokeParticles),
+                    $"{worker.Definition.displayName} has no orphaned cigarette or smoke effect");
                 observations.Add($"RATE  {worker.Definition.displayName} {runtime.distractionsStarted}/{runtime.autonomyDecisions} decisions = {rate:P1}; " +
                     $"{runtime.distractionSeconds / 60f:0.00} distraction minutes; states " +
                     string.Join(", ", observed[worker.Definition.displayName].OrderBy(value => value.ToString())));
@@ -64,6 +67,8 @@ namespace OpenPlan
                         .Select(pair => pair.Key + "=" + pair.Value)));
             }
             Check(totalDistractions >= 6, $"office produced management decisions ({totalDistractions} distractions)");
+            Check(office.Workers.Count >= 3 && office.Workers.All(worker => worker != null),
+                "the complete starting roster remains present");
             Check(office.PlacementZones.All(zone => zone.Occupancy <= zone.Capacity),
                 "all activity-zone capacity limits held");
 

@@ -138,6 +138,8 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneExpansionCaptureDirector>().Initialize(this);
             if (StandaloneTutorialPlaythroughDirector.Requested)
                 gameObject.AddComponent<StandaloneTutorialPlaythroughDirector>().Initialize(this);
+            if (StandaloneFriendDemoDirector.Requested)
+                gameObject.AddComponent<StandaloneFriendDemoDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)

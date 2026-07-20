@@ -1,17 +1,22 @@
 # Test Report
 
-Worker-placement pivot checkpoint 7 on Unity 6000.5.1f1:
+Worker-placement friend-demo release on Unity 6000.5.1f1:
 
 | Suite | Passed | Failed | Duration |
 |---|---:|---:|---:|
-| EditMode | 43 | 0 | 0.129 s |
-| PlayMode | 55 | 0 | 92.658 s |
-| Total | 98 | 0 | 92.787 s |
+| EditMode | 49 | 0 | 0.222 s |
+| PlayMode | 55 | 0 | 90.154 s |
+| Total | 104 | 0 | 90.376 s |
 
-The pre-edit baseline passed 24 EditMode and 13 PlayMode tests (37 total).
+EditMode coverage includes deterministic simulation speed, cash, productivity, exact activity effects, personalities, expansion affordability, tutorial contracts, the runtime camera-profile resource, and five release scenarios across 20 fixed seeds. PlayMode covers stage initialization, pickup/drag/cancel/reject, all activity lifecycles and cleanup, needs, personality status, cash, expansion and wall state, hiring after expansion, tutorial progression, modal ownership, restart behavior, UI at 1280x720 and 1920x1080, and the Established Office systems.
 
-EditMode coverage retains the full placement, needs, personality, activity, cash, and expansion model and adds the ordered seven-step tutorial copy plus complete mouse, keyboard, speed, and non-color help language.
+## Standalone and package gates
 
-PlayMode coverage retains all prior behavior and expansion checks and adds the complete observed-event tutorial path, exact speed restoration, skip/replay, early action credit, restart reset, highlighted-worker invalidation, top-modal ownership, input blocking, carry-only text legend, unavailable/occupied labels, high-contrast worker text, audio cues, and tutorial layout at 1280x720 and 1920x1080.
+- Input smoke: 12/12 at 1280x720 and 12/12 at 1920x1080.
+- Water lifecycle smoke: 9/9.
+- Twenty-minute simulated behavior soak at 20x: 27 observations passed; 57 distractions; no permanent stuck/idle worker, stale carry, orphaned smoking effect, missing roster member, or capacity violation.
+- Friend-demo extracted package: 86 checks, 0 failures, 21 real-game screenshots, no artificial purchase funds.
+- Package lifecycle checks passed for Starter, pre-expanded Starter, and Established stages, including restart, menu return, and clean quit. The Established run also passed hire, reassignment, fire, and finish-day behavior.
+- Build: non-development Windows x64 player succeeded at 103,051,945 reported bytes.
 
-The Windows player build also passed. The packaged tutorial-only run passed 31/31 checks at 1280x720. The complete 1920x1080 friend flow passed 35/35 checks, generated all seven major-state screenshots, awarded no purchase funds, earned affordability from live desk work, deducted exactly $1,000, and reached the physical expansion. Reports and images are preserved under `outputs/Screenshots`. Historical release evidence from `a638304` remains preserved.
+The exact extracted executable completed pickup, valid and invalid placement, all six player activities, a natural distraction and redirection, live income to $1,000, exact purchase deduction, wall opening, continued earnings, a new hire placement, Established preview launch, menu return, and clean quit.

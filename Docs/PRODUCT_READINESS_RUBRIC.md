@@ -2,15 +2,13 @@
 
 | Category | Score | Maximum | Assessment |
 |---|---:|---:|---|
-| Cozy office visual identity | 16 | 20 | Cohesive warm/cool miniature diorama and custom asset set; floor palette is deliberately restrained. |
-| Camera and zoom presentation | 13 | 15 | Smooth close-to-overview range, bounded pan, focus, follow, and strong full-floor composition. |
-| Worker charm and readability | 11 | 15 | Clear silhouettes, clothing variants, icons, gestures, and box gag; skeletal animation would add nuance. |
-| Simulation legibility | 12 | 15 | Inspector, state icons, task progress, report, and visible needs connect cause to result. |
-| Hiring and firing decisions | 8 | 10 | Candidates trade fee/salary/trait; firing has cost, reactions, payroll impact, and an exit sequence. |
-| Productivity interactions | 8 | 10 | Trait, desk, needs, and neighbor effects matter and are surfaced; deeper task specialization is future work. |
-| Office activity and ambience | 3 | 5 | Autonomous movement and practical lighting work; audio/Foley breadth is limited. |
-| UI integration | 4 | 5 | Strong period-office palette and readable 720p/1080p layouts; overlay legend could improve. |
-| Desire to observe another workday | 4 | 5 | The worker stories and management experiments invite replay within prototype scope. |
-| **Total** | **79** | **100** | **Target passed.** |
+| Worker-placement clarity | 14 | 15 | Tutorial, text labels, valid/invalid footprints, cancel paths, and dual-resolution smoke evidence are strong. |
+| Worker identity and charm | 12 | 15 | Morgan, Alex, and Sam are named, visually distinct, and statistically different; richer skeletal animation would add personality. |
+| Needs and decision legibility | 13 | 15 | Energy, Mood, Stress, influences, states, emotes, away timer, and focused timer explain most behavior. |
+| Balance and agency | 13 | 15 | Active, passive, poor, recovery, and expansion scenarios separate cleanly across 20 seeds with no stuck run. |
+| Expansion payoff | 13 | 15 | The deliberate purchase, animated wall, larger bounds, hiring unlock, new-hire placement, and preview form a satisfying demo climax. |
+| Visual presentation | 12 | 15 | The authored miniature office reads well at 720p and 1080p; animation and environmental variety remain prototype-grade. |
+| Stability and packaging | 9 | 10 | 104 automated tests, standalone soak, exact extracted-package flow, restart checks, and clean quit all pass. |
+| **Total** | **86** | **100** | **Ready for a small friend test, not commercial release.** |
 
-Visual identity is 80%, camera 87%, worker charm 73%, and simulation legibility 80%; no category is below 60% of its available points. The score is intentionally below polished-commercial territory because animation and audio variety remain visibly prototype-grade.
+The strongest release qualities are interaction clarity, deterministic stability, and a tangible first expansion. The clearest next investment is external playtest feedback followed by animation, sound, pathing, and persistence—not more systems.

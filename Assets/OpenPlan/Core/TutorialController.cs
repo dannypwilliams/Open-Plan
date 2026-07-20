@@ -113,7 +113,8 @@ namespace OpenPlan
                                                     AutomatedCaptureDirector.Requested ||
                                                     AutomatedVideoDirector.Requested ||
                                                     AutomatedPerformanceDirector.Requested ||
-                                                    PackageVerificationDirector.Requested;
+                                                    PackageVerificationDirector.Requested ||
+                                                    StandaloneFriendDemoDirector.Requested;
             bool shouldAutoStart = StandaloneTutorialPlaythroughDirector.Requested ||
                                    (!Application.isBatchMode && !anotherAutomationOwnsTheSession);
             if (office.Stage == OfficeStage.StarterOffice && shouldAutoStart)

@@ -22,6 +22,9 @@ crashlytics-build.properties
 outputs/OpenPlan-Windows/
 outputs/PackageVerification*/
 outputs/OpenPlan-Windows-pre-*.zip
+outputs/PreviousRelease/*/PackageVerification*/
+outputs/PreviousRelease/*/OpenPlan-Windows-pre-*.zip
+outputs/ReleaseEvidence/*.log
 outputs/TestResults/
 [Tt]est[Rr]esults/
 outputs/*-build.log

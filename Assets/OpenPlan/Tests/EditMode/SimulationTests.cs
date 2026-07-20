@@ -288,6 +288,14 @@ namespace OpenPlan.Tests
             Assert.That(SimulationRules.ClampZoom(30f, 4.8f, 18.5f), Is.EqualTo(18.5f));
         }
 
+        [Test] public void CameraZoomProfile_IsAValidRuntimeResource()
+        {
+            CameraZoomProfile profile = Resources.Load<CameraZoomProfile>("CameraZoomProfile");
+            Assert.NotNull(profile);
+            Assert.That(profile.closeSize, Is.EqualTo(4.8f));
+            Assert.That(profile.overviewSize, Is.EqualTo(18.5f));
+        }
+
         [Test] public void CandidateReplacement_SeededPoolCanProduceAllTraits()
         {
             var traits = new HashSet<WorkerTrait>();
@@ -384,6 +392,70 @@ namespace OpenPlan.Tests
             Assert.That(TutorialCopy.Controls, Does.Contain("WHEEL zoom"));
             Assert.That(TutorialCopy.Controls, Does.Contain("SPACE pause"));
             Assert.That(TutorialCopy.Controls, Does.Contain("1 / 2 / 3 simulation speed"));
+        }
+
+        [Test] public void ReleaseActiveScenario_ReachesExpansionWindowWithMeasuredFocusedWork()
+        {
+            foreach (int seed in ReleaseBalanceScenarios.FixedSeeds)
+            {
+                ReleaseScenarioResult result = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Active, seed);
+                Assert.That(result.timeToOneThousandSeconds / 60f, Is.InRange(6f, 10f), "seed " + seed);
+                Assert.That(result.commandsIssued, Is.GreaterThan(0), "seed " + seed);
+                Assert.That(result.focusedUptime, Is.GreaterThan(0f), "seed " + seed);
+                Assert.False(result.permanentlyStuck, "seed " + seed);
+            }
+        }
+
+        [Test] public void ReleasePassiveScenario_IsSlowerButAlwaysRecovers()
+        {
+            foreach (int seed in ReleaseBalanceScenarios.FixedSeeds)
+            {
+                ReleaseScenarioResult active = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Active, seed);
+                ReleaseScenarioResult passive = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Passive, seed);
+                Assert.That(passive.timeToOneThousandSeconds, Is.GreaterThan(active.timeToOneThousandSeconds), "seed " + seed);
+                Assert.That(passive.timeToOneThousandSeconds, Is.GreaterThan(0f), "seed " + seed);
+                Assert.That(passive.commandsIssued, Is.Zero, "seed " + seed);
+                Assert.False(passive.permanentlyStuck, "seed " + seed);
+            }
+        }
+
+        [Test] public void ReleasePoorScenario_LosesTimeAndMoneyWithoutForcedFailure()
+        {
+            foreach (int seed in ReleaseBalanceScenarios.FixedSeeds)
+            {
+                ReleaseScenarioResult active = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Active, seed);
+                ReleaseScenarioResult result = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Poor, seed);
+                Assert.That(result.timeToOneThousandSeconds,
+                    Is.GreaterThanOrEqualTo(active.timeToOneThousandSeconds + 30f), "seed " + seed);
+                Assert.That(result.vendingSpend, Is.GreaterThan(0f), "seed " + seed);
+                Assert.That(result.restorativeSeconds, Is.GreaterThan(0f), "seed " + seed);
+                Assert.That(result.timeToOneThousandSeconds, Is.GreaterThan(0f), "seed " + seed);
+                Assert.False(result.permanentlyStuck, "seed " + seed);
+            }
+        }
+
+        [Test] public void ReleaseRecoveryScenario_RestoresProductivityAfterIntervention()
+        {
+            foreach (int seed in ReleaseBalanceScenarios.FixedSeeds)
+            {
+                ReleaseScenarioResult result = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Recovery, seed);
+                Assert.That(result.recoveryProductivityAfter, Is.GreaterThan(result.recoveryProductivityBefore + .5f), "seed " + seed);
+                Assert.That(result.restorativeSeconds, Is.GreaterThan(0f), "seed " + seed);
+                Assert.That(result.recoveries, Is.GreaterThan(0), "seed " + seed);
+                Assert.False(result.permanentlyStuck, "seed " + seed);
+            }
+        }
+
+        [Test] public void ReleaseExpansionScenario_ExpandsHiresAndContinuesPlaying()
+        {
+            foreach (int seed in ReleaseBalanceScenarios.FixedSeeds)
+            {
+                ReleaseScenarioResult result = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Expansion, seed);
+                Assert.True(result.expansionComplete, "seed " + seed);
+                Assert.True(result.newHirePlaced, "seed " + seed);
+                Assert.That(result.elapsedSeconds, Is.GreaterThan(result.timeToOneThousandSeconds + 120f), "seed " + seed);
+                Assert.False(result.permanentlyStuck, "seed " + seed);
+            }
         }
     }
 }

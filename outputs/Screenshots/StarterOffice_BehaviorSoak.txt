@@ -1,25 +1,32 @@
 STATUS PASS
-SIMULATED MINUTES 15.02
+SIMULATED MINUTES 20.02
 ACCELERATION 20x
 STARTING ROSTER Morgan=Hardworking, Alex=Social, Sam=Lazy
-OBSERVATIONS 20
+OBSERVATIONS 27
 PASS  Morgan showed varied behavior (12 states)
-PASS  Morgan had readable distractions (2)
+PASS  Morgan had readable distractions (5)
 PASS  Morgan is not permanently stuck
 PASS  Morgan has no permanent idle state
-RATE  Morgan 2/105 decisions = 1.9 %; 0.23 distraction minutes; states BuySnack, EnterOffice, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Socialize, StandConfused, UseWaterCooler, WalkToDesk, WalkToPlacement, Work
-KINDS Morgan Confused=1, Phone=1
+PASS  Morgan has no stale carried state
+PASS  Morgan has no orphaned cigarette or smoke effect
+RATE  Morgan 5/134 decisions = 3.7 %; 0.60 distraction minutes; states BuySnack, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Socialize, StandConfused, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
+KINDS Morgan Confused=2, Phone=1, Wander=2
 PASS  Alex showed varied behavior (13 states)
-PASS  Alex had readable distractions (13)
+PASS  Alex had readable distractions (11)
 PASS  Alex is not permanently stuck
 PASS  Alex has no permanent idle state
-RATE  Alex 13/100 decisions = 13.0 %; 2.73 distraction minutes; states EnterOffice, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Socialize, StandConfused, TakeBreak, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
-KINDS Alex Confused=2, ExtendedBreak=1, ExtendedWater=5, Phone=3, Wander=2
-PASS  Sam showed varied behavior (15 states)
-PASS  Sam had readable distractions (33)
+PASS  Alex has no stale carried state
+PASS  Alex has no orphaned cigarette or smoke effect
+RATE  Alex 11/137 decisions = 8.0 %; 2.52 distraction minutes; states BuySnack, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Socialize, StandConfused, TakeBreak, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
+KINDS Alex Confused=1, ExtendedBreak=2, ExtendedWater=4, Phone=1, Wander=3
+PASS  Sam showed varied behavior (14 states)
+PASS  Sam had readable distractions (41)
 PASS  Sam is not permanently stuck
 PASS  Sam has no permanent idle state
-RATE  Sam 33/93 decisions = 35.5 %; 8.00 distraction minutes; states BuySnack, EnterOffice, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Sleep, Socialize, StandConfused, TakeBreak, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
-KINDS Sam Confused=3, ExtendedBreak=7, Phone=5, Sleep=9, VendingInterest=4, Wander=5
-PASS  office produced management decisions (48 distractions)
+PASS  Sam has no stale carried state
+PASS  Sam has no orphaned cigarette or smoke effect
+RATE  Sam 41/115 decisions = 35.7 %; 10.50 distraction minutes; states BuySnack, IdleAtDesk, LookAtPhone, ReturnToDesk, SeekCoworker, Sleep, Socialize, StandConfused, TakeBreak, UseWaterCooler, WalkToDesk, WalkToPlacement, Wander, Work
+KINDS Sam Confused=1, ExtendedBreak=5, Phone=6, Sleep=12, VendingInterest=3, Wander=14
+PASS  office produced management decisions (57 distractions)
+PASS  the complete starting roster remains present
 PASS  all activity-zone capacity limits held

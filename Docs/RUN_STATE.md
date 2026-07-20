@@ -1,32 +1,31 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 7 - Tutorial and Presentation
-- Status: implementation, visual review, and verification PASS
+- Current checkpoint: Worker-Placement Pivot 8 - Friend Demo Release
+- Status: source, tests, balance, build, screenshots, soak, performance, extracted package, and documentation PASS
 - Date: 2026-07-19
 - Branch: `codex/small-office-placement-pivot`
-- Previous checkpoint: `53c15d4` (`feat: add untimed physical office expansion`)
-- Base release: `a638304` (`release: pass phase 5 Windows prototype`)
-- Unity: 6000.5.1f1; Blender: 5.2.0 LTS
-- Default entry: Main Menu -> Starter Office
-- Starter roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
-- Stages: Starter Office, Starter Office Expanded, Established Office
-- Starter timing: unlimited; no automatic finish or failure
-- Expansion economy: $100 start, $1,000 deliberate purchase, about 6.26 expected minutes at the starting-team model after snack overhead
-- Expanded capacity: six desks total; three new hires arrive unassigned at the entrance
-- First-run tutorial: seven event-driven steps with skip, replay, early-action credit, safe invalidation, per-session reset, and exact speed restoration
-- UI/presentation: clean HUD, modal ownership, carry-only legend, text availability labels, away return time, four speed buttons, interaction/cash/wall audio, stronger activity poses, and high-contrast labels
-- Automated tests: 98/98 passed (43 EditMode, 55 PlayMode)
-- Previous checkpoint baseline: 88/88 passed (41 EditMode, 47 PlayMode)
-- Original large office: preserved as Established Office
-- Blender assets: 54/54 validated
-- Windows player: rebuilt successfully for checkpoint 7 (103,030,345-byte build report)
-- Standalone input smoke: 12/12 checks passed at both 1280x720 and 1920x1080
-- Standalone activity cycle: 9/9 observations passed for pickup -> Get Water -> autonomous return
-- Fifteen-minute behavior soak: PASS at 20x; 48 total distractions, varied states, no permanent idle/stuck worker, all capacities respected
-- Soak distraction rates: Morgan 2/105 (1.9%), Alex 13/100 (13.0%), Sam 33/93 (35.5%)
-- Expansion evidence: `outputs/Screenshots/StarterOffice_BeforeExpansion.png`, `StarterOffice_AfterExpansion.png`, and `StarterOffice_ExpansionCapture.txt`
-- Tutorial evidence: 31/31 packaged checks at 1280x720 and 35/35 at 1920x1080; the full pass earned $1,000 without artificial funds, deducted exactly $1,000, and completed the live expansion
-- Tutorial screenshots: `outputs/Screenshots/Tutorial_01_MeetTeam_*` through `Tutorial_06_Expand_*`, plus `Tutorial_07_ExpansionComplete_1920x1080.png`
-- Existing release/package/media: preserved as historical `a638304` evidence
+- Previous checkpoint: `d3267b6` (`polish: teach and present the worker placement loop`)
+- Base Established release: `a638304`
+- Default path: Main Menu -> Starter Office
+- Roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
+- Economy: $100 start; $60 per productivity-minute; $1,000 deliberate expansion; no forced end
+- Focused Work: +20% for 30 simulation seconds, non-stacking
+- Capacity: three workers before expansion, six after expansion
+- Automated tests: 104/104 passing (49 EditMode, 55 PlayMode)
+- Balance matrix: 100/100 scenarios passing across 20 fixed seeds
+- Active manager: 7.55-7.78 minutes to $1,000, 7.67 mean
+- Passive observer: 10.08-12.00 minutes, 10.95 mean, zero commands, zero stuck runs
+- Poor manager: 8.18-9.42 minutes, $79.50 mean vending spend, 6.69 restorative worker-minutes
+- Recovery: measured productivity rises from 0.00 before intervention to 1.41 after
+- Expansion: 20/20 purchases, 20/20 hires, two additional simulation minutes completed, zero stuck runs
+- Twenty-minute soak: PASS at 20x; 57 distractions; 27 observations; no stuck/idle, stale carry, orphan smoke, missing worker, or capacity failure
+- UI/input: 12/12 at 1280x720 and 12/12 at 1920x1080
+- Exact extracted friend flow: 86 checks, 0 failures, 21 screenshots, live earnings, exact $1,000 deduction, expansion, hire placement, preview, menu, clean quit
+- Package lifecycle: Starter, expanded Starter, and Established launch/restart/menu/quit PASS
+- Performance: 119.88 fps average, 118.52 fps 1% low, 8.54 ms worst frame, 0 measured peak GC bytes at 1920x1080
+- Windows build: PASS (103,051,945 reported bytes)
+- ZIP: `outputs/OpenPlan-Friend-Demo-Windows.zip`, 38,343,954 bytes
+- ZIP SHA-256: `651A3AE36EDE4D3C793D29D65A1DE429BDEBA73FCD82E83EDB6C25E1AC149372`
+- Previous release evidence: `outputs/PreviousRelease/EstablishedOffice-a638304`
 - Critical issues: none
-- Next checkpoint: Balance, validate, and package
+- Next action: conduct the friend playtest and triage feedback before expanding scope

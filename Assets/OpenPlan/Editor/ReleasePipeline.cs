@@ -54,6 +54,8 @@ namespace OpenPlan.Editor
             BuildReport report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
                 throw new BuildFailedException("OPEN PLAN Windows build failed: " + report.summary.result);
+            File.Copy(Path.GetFullPath("Docs/FRIEND_PLAYTEST_GUIDE.txt"),
+                Path.Combine(Path.GetDirectoryName(output), "FRIEND_PLAYTEST_GUIDE.txt"), true);
             Debug.Log($"OPEN PLAN WINDOWS BUILD: PASS ({report.summary.totalSize} bytes)");
         }
 

@@ -1,38 +1,40 @@
 # Simulation Rules
 
-## Deterministic stage selection
+## Stage and time model
 
-`OfficeStageSelection` resolves one of three stages: `StarterOffice`, `StarterOfficeExpanded`, or `EstablishedOffice`. A pending menu choice is consumed once by the Office scene. Otherwise, an explicit `-openplan-stage` argument is used. Without either, the deterministic default is `StarterOffice`.
+`OfficeStageSelection` resolves `StarterOffice`, `StarterOfficeExpanded`, or `EstablishedOffice`. The Main Menu deliberately starts `StarterOffice`. Starter stages are open-ended: there is no countdown, automatic purchase, forced success, or forced failure. The Established Office remains available as an untimed preview while preserving its legacy testable workday systems.
 
-Legacy automation arguments default to `EstablishedOffice` unless an explicit stage overrides them.
+## Worker placement
 
-## Starter Office
+The public placement activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office. A valid release creates a `WorkerCommand` containing worker, destination, activity, issue time, and player-placement origin. Invalid, occupied, locked, cancelled, or modal-blocked drops never create a command and restore the worker safely.
 
-- Starting roster: Morgan, Alex, and Sam.
-- Starting capacity: three desks; the expanded variant exposes six.
-- Time: open-ended. Elapsed time may be observed, but there is no countdown or automatic finish/failure.
-- Progress: revenue toward the financial objective, rather than elapsed time.
-- First milestone: earn enough cash to purchase the neighboring unit. The purchase interaction arrives in the physical-expansion checkpoint.
+Manual desk placement grants 30 simulation seconds of Focused Work. The productivity modifier is exactly 1.20 while time remains and 1.00 afterward; replacing a worker at a desk refreshes the timer but never stacks the multiplier.
 
-## Placement model
+## Productivity and income
 
-Placement activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office. Each destination is a `PlacementZone`. A `WorkerCommand` records the worker, destination, requested activity, issue time, and whether the command came from player placement.
+```text
+effective = clamp(skill x energy x mood x inverse-stress x workstation x trait x focused-work, 0.10, 2.50)
+cash earned = effective productivity x simulation seconds x $60 / 60
+```
 
-This checkpoint defines and builds the zones; later checkpoints connect click-and-drag input and activity-specific state transitions.
+- Energy maps linearly from 0.55 to 1.10.
+- Mood maps linearly from 0.70 to 1.10.
+- Inverse stress maps linearly from 1.15 at zero stress to 0.55 at full stress.
+- Trait modifiers are contextual and normally range from 0.82 to 1.16.
+- Pausing produces zero simulation delta and therefore zero income.
 
-## Established Office productivity
+## Needs and restorative tradeoffs
 
-`effective = clamp(skill x focus x energy x morale x workstation x nearby x trait, 0.1, 2.5)`
+Rest is the efficient early general recovery. Water is quick and modest. Vending costs $15, has a 10% malfunction chance, and is helpful rather than required. Smoking strongly reduces stress but restores no energy, so it is not universally best. Leaving gives the strongest combined recovery but removes a worker for 30 simulation seconds. All need values clamp to 0-1.
 
-- Focus modifier: `lerp(0.45, 1.15, focus)`
-- Energy modifier: `lerp(0.55, 1.10, energy)`
-- Morale modifier: `lerp(0.70, 1.10, morale)`
-- Workstation: 0.88-1.12 from noise, light, and location
-- Nearby influence: 0.82-1.18, aggregated and clamped
-- Trait: contextual, normally 0.90-1.16
+## Personality and autonomy
 
-The inspector continues to expose a positive and negative plain-language influence.
+Workers reevaluate decisions on bounded, seeded intervals. Morgan has the highest work preference and lowest distraction chance; Alex is more social and moderately distractible; Sam has the lowest work preference and highest distraction chance. Critical needs can trigger autonomous recovery, and all timed activities return to desk/autonomy. Distractions last at most 18 seconds, so passive observation remains slower but cannot create a permanent stuck state.
 
-## Established Office behavior and economy
+## Expansion and hiring
 
-Worker thinking remains seeded and occurs on bounded intervals. Critical needs override optional choices. Coffee, water, socializing, breaks, desk work, hiring, firing, reassignment, tasks, payroll, and the end-of-day report retain their released behavior. The legacy Established Office may still run its five-minute workday for preview and release-evidence compatibility.
+The Starter Office begins with $100. The neighboring unit becomes purchasable at $1,000 and never spends automatically. Confirmation deducts exactly $1,000, opens the connecting wall, removes its obstacle, reveals doorway trim, enables neighbor lighting and navigation, activates three desk locations and a restorative corner, expands camera bounds, and raises worker capacity from three to six. Hiring then becomes available; each new hire arrives unassigned at the entrance and must be placed at an open desk.
+
+## Release scenario contract
+
+The release matrix uses the public tuning tables above for five scenarios and the same 20 fixed seeds. ACTIVE must reach $1,000 in 6-10 minutes. PASSIVE issues zero commands and finishes more slowly. POOR spends and loses work time but does not fail. RECOVERY must improve productivity after intervention. EXPANSION must purchase, hire, place, and continue for at least two simulation minutes. No run may remain stuck for 180 seconds.

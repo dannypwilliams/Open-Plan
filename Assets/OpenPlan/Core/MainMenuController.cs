@@ -49,6 +49,8 @@ namespace OpenPlan
                 gameObject.AddComponent<AutomatedVideoMenuDriver>();
             if (PackageVerificationDirector.Requested)
                 gameObject.AddComponent<PackageVerificationMenuDriver>().Initialize(PackageVerificationDirector.Stage >= 2);
+            if (StandaloneFriendDemoDirector.Requested)
+                gameObject.AddComponent<StandaloneFriendDemoMenuDriver>().Initialize();
         }
 
         public void StartStarterOffice()
