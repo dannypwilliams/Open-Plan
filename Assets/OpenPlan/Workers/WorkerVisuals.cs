@@ -29,6 +29,17 @@ namespace OpenPlan
         private string transientEmote;
         private float transientEmoteUntil;
 
+        // Rigged-character path (e.g. the Stickman). When a valid humanoid Animator is
+        // present on the visual model we drive it by state instead of rotating named
+        // body-part transforms. The legacy code-generated worker (no Animator) keeps the
+        // procedural path in TickProcedural.
+        private Animator animator;
+        private int currentStateHash;
+        private static readonly int WalkHash = Animator.StringToHash("Walk");
+        private static readonly int IdleHash = Animator.StringToHash("Idle");
+        private static readonly int SittingHash = Animator.StringToHash("Sitting");
+        private bool AnimatorMode => animator != null;
+
         public string CurrentEmote => transientEmoteUntil > Time.time ? transientEmote : string.Empty;
         public Transform NameTagTransform => nameTag == null ? null : nameTag.transform;
         public Transform EmoteTransform => stateIcon == null ? null : stateIcon.transform;
@@ -41,6 +52,17 @@ namespace OpenPlan
         {
             visualRoot = FindDeep(transform, "Worker_Visual");
             if (visualRoot != null) visualRootBase = visualRoot.localPosition;
+
+            // Prefer a valid humanoid Animator on the visual model (rigged path).
+            animator = GetComponentInChildren<Animator>(true);
+            if (animator != null && (animator.avatar == null || !animator.avatar.isValid))
+                animator = null;
+            if (animator != null)
+            {
+                animator.applyRootMotion = false; // gameplay drives position/rotation
+                animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+            }
+
             body = FindDeep(transform, "Body");
             head = FindDeep(transform, "Head");
             armL = FindDeep(transform, "Arm_L");
@@ -51,17 +73,28 @@ namespace OpenPlan
             if (armR != null) armRBase = armR.localRotation;
             if (head != null) headBase = head.localRotation;
 
-            MaterialPropertyBlock block = new MaterialPropertyBlock();
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
-            {
-                if (!renderer.name.Contains("Body") && !renderer.name.Contains("Arm")) continue;
-                renderer.GetPropertyBlock(block);
-                block.SetColor("_BaseColor", clothing);
-                renderer.SetPropertyBlock(block);
-            }
+            ApplyClothing(clothing);
             BuildSelectionRing(ringMaterial);
             BuildNameTag(workerName);
             BuildStateIcon();
+        }
+
+        private void ApplyClothing(Color clothing)
+        {
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                if (renderer is LineRenderer) continue; // our own selection ring
+                // Rigged model: one skinned mesh -> tint the whole figure. Legacy model:
+                // tint only the named shirt/arm parts.
+                bool tint = AnimatorMode ? renderer is SkinnedMeshRenderer
+                                         : (renderer.name.Contains("Body") || renderer.name.Contains("Arm"));
+                if (!tint) continue;
+                renderer.GetPropertyBlock(block);
+                block.SetColor("_BaseColor", clothing);
+                block.SetColor("_Color", clothing);
+                renderer.SetPropertyBlock(block);
+            }
         }
 
         public static void SetGlobalNameTagsVisible(bool visible) => GlobalNameTagsVisible = visible;
@@ -195,6 +228,55 @@ namespace OpenPlan
 
         public void Tick(WorkerState state, bool moving, float productivity)
         {
+            if (AnimatorMode) TickAnimator(state, moving);
+            else TickProcedural(state, moving);
+
+            if (stateIcon != null)
+            {
+                bool showing = transientEmoteUntil > Time.time;
+                stateIcon.gameObject.SetActive(showing);
+                stateIcon.text = showing ? transientEmote : string.Empty;
+                stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
+                    productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
+            }
+            PositionLabels(Camera.main);
+        }
+
+        // Rigged-character animation: drive the Animator by state. Sitting reads well at
+        // desks; Walk while moving; Idle otherwise. The rigged model has no named
+        // body-part transforms, so the procedural pass is skipped for it.
+        private void TickAnimator(WorkerState state, bool moving)
+        {
+            int target;
+            if (moving)
+            {
+                target = WalkHash;
+            }
+            else
+            {
+                switch (state)
+                {
+                    case WorkerState.Work:
+                    case WorkerState.IdleAtDesk:
+                    case WorkerState.Meeting:
+                    case WorkerState.TakeBreak:
+                    case WorkerState.Sleep:
+                        target = SittingHash;
+                        break;
+                    default:
+                        target = IdleHash;
+                        break;
+                }
+            }
+            if (target != currentStateHash)
+            {
+                currentStateHash = target;
+                animator.CrossFadeInFixedTime(target, 0.18f, 0);
+            }
+        }
+
+        private void TickProcedural(WorkerState state, bool moving)
+        {
             phase += Time.deltaTime * (moving ? 8f : 4f);
             float bob = moving ? Mathf.Abs(Mathf.Sin(phase)) * 0.075f : Mathf.Sin(phase * 0.35f) * 0.015f;
             float activityOffset = state == WorkerState.TakeBreak || state == WorkerState.Sleep ? -.32f :
@@ -272,15 +354,6 @@ namespace OpenPlan
                 legL.localRotation = Quaternion.Slerp(legL.localRotation, Quaternion.identity, Time.deltaTime * 8f);
                 legR.localRotation = Quaternion.Slerp(legR.localRotation, Quaternion.identity, Time.deltaTime * 8f);
             }
-            if (stateIcon != null)
-            {
-                bool showing = transientEmoteUntil > Time.time;
-                stateIcon.gameObject.SetActive(showing);
-                stateIcon.text = showing ? transientEmote : string.Empty;
-                stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
-                    productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
-            }
-            PositionLabels(Camera.main);
         }
 
         public void ComputeNameTagPresentation(float orthographicSize)
