@@ -57,6 +57,41 @@ namespace OpenPlan
     }
 
     [Serializable]
+    public sealed class GroundPlacementCommand
+    {
+        public WorkerAgent worker;
+        public Vector3 groundPoint;
+        public float issueTime;
+        public bool fromPlayerPlacement;
+
+        public GroundPlacementCommand(WorkerAgent worker, Vector3 groundPoint, float issueTime, bool fromPlayerPlacement)
+        {
+            this.worker = worker;
+            this.groundPoint = groundPoint;
+            this.issueTime = issueTime;
+            this.fromPlayerPlacement = fromPlayerPlacement;
+        }
+    }
+
+    public readonly struct PlacementResult
+    {
+        public readonly Vector3 GroundPoint;
+        public readonly PlacementZone InfluencingZone;
+        public readonly bool IsWalkable;
+        public readonly string RejectionReason;
+
+        public bool IsValid => IsWalkable && string.IsNullOrEmpty(RejectionReason);
+
+        public PlacementResult(Vector3 groundPoint, PlacementZone influencingZone, bool isWalkable, string rejectionReason)
+        {
+            GroundPoint = groundPoint;
+            InfluencingZone = influencingZone;
+            IsWalkable = isWalkable;
+            RejectionReason = rejectionReason;
+        }
+    }
+
+    [Serializable]
     public sealed class WorkerDefinition
     {
         public string displayName;
@@ -74,6 +109,10 @@ namespace OpenPlan
     [Serializable]
     public sealed class WorkerRuntimeState
     {
+        [Range(0f, 1f)] public float happiness = 0.78f;
+        [Range(0f, 1f)] public float hunger = 0.18f;
+        [Range(0f, 1f)] public float bathroom = 0.15f;
+        [Range(0f, 1f)] public float inspiration = 0.72f;
         [Range(0f, 1f)] public float energy = 0.86f;
         [Range(0f, 1f)] public float mood = 0.78f;
         [Range(0f, 1f)] public float stress = 0.22f;
@@ -95,6 +134,144 @@ namespace OpenPlan
         public WorkerState behavior = WorkerState.EnterOffice;
         public string positiveInfluence = "Ready for the day";
         public string negativeInfluence = "Settling in";
+    }
+
+    public enum EmployeeTraitPolarity { Strength, Liability }
+    public enum NeedKind { Happiness, Hunger, Bathroom, Inspiration, Energy }
+    public enum IncidentKind
+    {
+        PrinterJam, InternetOutage, PowerFailure, CoffeeSpill, WaterLeak, CloggedRestroom,
+        BrokenChair, FireAlarm, ElevatorProblem, BlockedEntrance, CustomerComplaint, AnimalIntruder
+    }
+
+    [Serializable]
+    public sealed class EmployeeTraitDefinition
+    {
+        public string id;
+        public string displayName;
+        public string description;
+        public EmployeeTraitPolarity polarity;
+        public float productivityModifier = 1f;
+        public float needDecayModifier = 1f;
+        public float walkSpeedModifier = 1f;
+        public float incidentChanceModifier = 1f;
+
+        public EmployeeTraitDefinition(string id, string displayName, string description, EmployeeTraitPolarity polarity,
+            float productivityModifier = 1f, float needDecayModifier = 1f, float walkSpeedModifier = 1f,
+            float incidentChanceModifier = 1f)
+        {
+            this.id = id;
+            this.displayName = displayName;
+            this.description = description;
+            this.polarity = polarity;
+            this.productivityModifier = productivityModifier;
+            this.needDecayModifier = needDecayModifier;
+            this.walkSpeedModifier = walkSpeedModifier;
+            this.incidentChanceModifier = incidentChanceModifier;
+        }
+    }
+
+    [Serializable]
+    public sealed class NeedDefinition
+    {
+        public NeedKind kind;
+        public string displayName;
+        public float criticalThreshold;
+        public float decayPerSecond;
+    }
+
+    [Serializable]
+    public sealed class IncidentDefinition
+    {
+        public string id;
+        public IncidentKind kind;
+        public string title;
+        public float durationSeconds;
+        public float productivityMultiplier;
+        public float weight;
+        public string[] responseLabels;
+    }
+
+    [Serializable]
+    public sealed class FurnitureDefinition
+    {
+        public string id;
+        public string displayName;
+        public int purchaseCost;
+        public Vector2 footprint;
+        public PlacementActivity? providedActivity;
+    }
+
+    [Serializable]
+    public sealed class OfficeUnitDefinition
+    {
+        public string id;
+        public string displayName;
+        public int purchaseCost;
+        public string[] adjacentUnitIds;
+        public Bounds buildableBounds;
+    }
+
+    [Serializable]
+    public sealed class ContractDefinition
+    {
+        public string id;
+        public string displayName;
+        public float workRequired;
+        public int cashReward;
+        public int reputationReward;
+        public float durationSeconds;
+    }
+
+    public readonly struct EmployeeQualificationPair
+    {
+        public readonly EmployeeTraitDefinition Strength;
+        public readonly EmployeeTraitDefinition Liability;
+
+        public EmployeeQualificationPair(EmployeeTraitDefinition strength, EmployeeTraitDefinition liability)
+        {
+            Strength = strength;
+            Liability = liability;
+        }
+    }
+
+    public static class EmployeeQualificationCatalog
+    {
+        public static readonly EmployeeTraitDefinition[] Strengths =
+        {
+            Strength("hard-worker", "Extremely Hard Worker", 1.15f), Strength("elite-graduate", "Elite Graduate", 1.10f),
+            Strength("fast-learner", "Fast Learner", 1.06f), Strength("organized", "Organized", 1.08f),
+            Strength("motivated", "Motivated", 1.09f), Strength("team-player", "Team Player", 1.04f),
+            Strength("problem-solver", "Problem Solver", 1.08f), Strength("coffee-addict", "Coffee Addict", 1.05f),
+            Strength("workaholic", "Workaholic", 1.12f), Strength("tech-savvy", "Tech Savvy", 1.09f),
+            Strength("people-person", "People Person", 1.04f), Strength("quick-on-feet", "Quick on Their Feet", 1.03f, 1.12f)
+        };
+
+        public static readonly EmployeeTraitDefinition[] Liabilities =
+        {
+            Liability("dropout", "High School Dropout", .94f), Liability("lazy", "Lazy", .86f),
+            Liability("distracted", "Easily Distracted", .93f), Liability("frequently-hungry", "Frequently Hungry", .96f, 1.18f),
+            Liability("slow-walker", "Slow Walker", .98f, 1f, .78f), Liability("messy", "Messy", .95f),
+            Liability("procrastinator", "Procrastinator", .90f), Liability("heavy-smoker", "Heavy Smoker", .94f, 1.12f),
+            Liability("constant-breaks", "Needs Constant Breaks", .91f, 1.17f), Liability("clumsy", "Clumsy", .96f, 1f, 1f, 1.45f),
+            Liability("technophobe", "Technophobe", .92f), Liability("office-gossip", "Office Gossip", .94f)
+        };
+
+        public static EmployeeQualificationPair Roll(SeededRandomService random)
+        {
+            if (random == null) throw new ArgumentNullException(nameof(random));
+            return new EmployeeQualificationPair(Strengths[random.Range(0, Strengths.Length)],
+                Liabilities[random.Range(0, Liabilities.Length)]);
+        }
+
+        private static EmployeeTraitDefinition Strength(string id, string name, float productivity,
+            float walkSpeed = 1f) => new EmployeeTraitDefinition(id, name, name, EmployeeTraitPolarity.Strength,
+                productivity, 1f, walkSpeed, 1f);
+
+        private static EmployeeTraitDefinition Liability(string id, string name, float productivity,
+            float needDecay = 1f, float walkSpeed = 1f, float incidentChance = 1f) =>
+            new EmployeeTraitDefinition(id, name, name, EmployeeTraitPolarity.Liability,
+                productivity, needDecay, walkSpeed, incidentChance);
     }
 
     [Serializable]
@@ -144,6 +321,7 @@ namespace OpenPlan
     {
         public const float Minimum = 0.10f;
         public const float Maximum = 2.50f;
+        public const float PhoneWorkstationModifier = 0.50f;
 
         public static float EnergyModifier(float energy) => Mathf.Lerp(0.55f, 1.10f, Mathf.Clamp01(energy));
         public static float MoodModifier(float mood) => Mathf.Lerp(0.70f, 1.10f, Mathf.Clamp01(mood));

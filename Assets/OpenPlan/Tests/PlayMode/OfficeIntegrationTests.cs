@@ -108,6 +108,7 @@ namespace OpenPlan.Tests
             Assert.That(office.Workers.Count, Is.EqualTo(3));
             Assert.That(office.Workstations.Count, Is.EqualTo(7));
             Assert.That(office.WorkerCapacity, Is.EqualTo(3));
+            Assert.That(office.Cash.CurrentCash, Is.Zero);
             Assert.NotNull(GameObject.Find("2×"));
             Assert.False(office.Workday.IsTimed);
             var expectedActiveZones = new Dictionary<PlacementActivity, int>
@@ -139,6 +140,8 @@ namespace OpenPlan.Tests
             foreach (Workstation desk in office.Workstations)
                 if (desk.IsZoneEnabled && desk.Assigned != null) occupiedDesks++;
             Assert.That(occupiedDesks, Is.EqualTo(3));
+            Assert.That(office.HUD.HeaderText, Does.Contain("TEAM  3"));
+            Assert.That(office.HUD.HeaderText, Does.Contain("DESKS  3"));
             Assert.That(office.Workers[0].Definition.displayName, Is.EqualTo("Morgan"));
             Assert.That(office.Workers[1].Definition.displayName, Is.EqualTo("Alex"));
             Assert.That(office.Workers[2].Definition.displayName, Is.EqualTo("Sam"));
@@ -259,15 +262,22 @@ namespace OpenPlan.Tests
             WorkerAgent worker = office.Workers[1];
             yield return WaitForPickable(worker);
             Vector3 original = worker.transform.position;
+            Workstation assignedDesk = worker.Desk;
             int commandCount = 0;
             office.WorkerCommandIssued += _ => commandCount++;
 
             StartCarry(office.CarryController, worker);
-            office.CarryController.UpdateCarriedPosition(original + Vector3.right * 1.2f, null, new Vector2(500f,400f), true);
-            Assert.False(office.CarryController.HasValidTarget);
-            office.CarryController.ReleaseAtZone(null);
-            yield return new WaitForSeconds(.28f);
-            Assert.That(office.CarryController.LastRejectionReason, Does.Contain("marked activity area"));
+            Vector3 freeDrop = original + Vector3.right * 1.2f;
+            office.CarryController.UpdateCarriedPosition(freeDrop, null, new Vector2(500f,400f), true);
+            Assert.True(office.CarryController.HasValidTarget);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("AUTONOMY"));
+            office.CarryController.ReleaseAtGround(freeDrop);
+            yield return new WaitForSeconds(.18f);
+            Assert.NotNull(office.LastGroundPlacementCommand);
+            Assert.That(Vector3.Distance(worker.transform.position, freeDrop), Is.LessThan(.08f));
+            Assert.That(worker.Desk, Is.SameAs(assignedDesk));
+            Assert.That(assignedDesk.Assigned, Is.SameAs(worker));
+            Assert.That(WorkerSelection.Selected, Is.SameAs(worker));
 
             Workstation occupied = office.Workers[0].Desk;
             StartCarry(office.CarryController, worker);
@@ -295,6 +305,117 @@ namespace OpenPlan.Tests
             Assert.That(worker.LastRestoredCarryState, Is.EqualTo(lockedState));
             Assert.That(worker.Runtime.energy, Is.EqualTo(lockedEnergy).Within(.003f));
             Assert.That(locked.Occupancy, Is.Zero);
+        }
+
+        [UnityTest] public IEnumerator OrdinaryGroundPlacementPreservesStateAndResumesAssignedWork()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            yield return WaitForPickable(office.Workers[1]);
+            yield return WaitForPickable(office.Workers[2]);
+            Assert.True(office.Workers[1].BeginPlayerCarry(out _));
+            Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+
+            Workstation desk = worker.Desk;
+            StartCarry(office.CarryController, worker);
+            worker.Runtime.waterCooldown = 12f;
+            worker.Runtime.vendingCooldown = 23f;
+            worker.Runtime.smokingCooldown = 34f;
+            float energy = worker.Runtime.energy;
+            float mood = worker.Runtime.mood;
+            float stress = worker.Runtime.stress;
+            float cash = office.Cash.CurrentCash;
+            float committedWaterCooldown = -1f;
+            float committedVendingCooldown = -1f;
+            float committedSmokingCooldown = -1f;
+            office.GroundPlacementCommandIssued += _ =>
+            {
+                committedWaterCooldown = worker.Runtime.waterCooldown;
+                committedVendingCooldown = worker.Runtime.vendingCooldown;
+                committedSmokingCooldown = worker.Runtime.smokingCooldown;
+            };
+            Vector3 ground = new Vector3(-.6f, 0f, .2f);
+            office.CarryController.UpdateCarriedPosition(ground, null, new Vector2(610f, 410f), true);
+            Assert.True(office.CarryController.HasValidTarget, office.CarryController.FeedbackText);
+            office.CarryController.ReleaseAtGround(ground);
+            yield return new WaitForSeconds(.18f);
+
+            Assert.That(worker.Desk, Is.SameAs(desk));
+            Assert.That(desk.Assigned, Is.SameAs(worker));
+            Assert.That(worker.Runtime.behavior, Is.EqualTo(WorkerState.Unassigned));
+            Assert.That(committedWaterCooldown, Is.EqualTo(12f).Within(.001f));
+            Assert.That(committedVendingCooldown, Is.EqualTo(23f).Within(.001f));
+            Assert.That(committedSmokingCooldown, Is.EqualTo(34f).Within(.001f));
+            Assert.That(worker.Runtime.energy, Is.EqualTo(energy).Within(.001f));
+            Assert.That(worker.Runtime.mood, Is.EqualTo(mood).Within(.001f));
+            Assert.That(worker.Runtime.stress, Is.EqualTo(stress).Within(.001f));
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(cash).Within(.001f));
+            Assert.That(WorkerSelection.Selected, Is.SameAs(worker));
+
+            office.Workers[1].CancelPlayerCarryImmediate();
+            office.Workers[2].CancelPlayerCarryImmediate();
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            float deadline = Time.realtimeSinceStartup + 4f;
+            while (worker.Runtime.behavior != WorkerState.ReturnToDesk &&
+                   worker.Runtime.behavior != WorkerState.Work && Time.realtimeSinceStartup < deadline)
+                yield return null;
+            Assert.That(worker.Runtime.behavior,
+                Is.EqualTo(WorkerState.ReturnToDesk).Or.EqualTo(WorkerState.Work));
+        }
+
+        [UnityTest] public IEnumerator ProximityInfluenceSelectsActivityOutsideVisibleFootprint()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            PlacementZone water = FindZone(office, "starter.water.cooler");
+            Vector3 drop = water.PlacementPoint.position + Vector3.left * (water.FootprintBounds.extents.x + .25f);
+            Assert.False(water.FootprintBounds.Contains(new Vector3(drop.x, water.FootprintBounds.center.y, drop.z)));
+            PlacementZone influenced = WorkerCarryController.ResolveInfluencingZone(office.PlacementZones, drop);
+            Assert.That(influenced, Is.SameAs(water));
+
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(drop, influenced, new Vector2(720f, 420f), true);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("GET WATER"));
+            office.CarryController.ReleaseAtGround(drop, influenced);
+            yield return new WaitForSeconds(.18f);
+            Assert.That(office.LastIssuedCommand.destinationZone, Is.SameAs(water));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(worker, WorkerState.UseWaterCooler, 3f);
+        }
+
+        [UnityTest] public IEnumerator LockedObstacleAndVoidGroundDropsExplainAndRestore()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+
+            Vector3 original = worker.transform.position;
+            StartCarry(office.CarryController, worker);
+            Vector3 locked = new Vector3(10f, 0f, 0f);
+            office.CarryController.UpdateCarriedPosition(locked, null, new Vector2(1020f, 420f), true);
+            Assert.False(office.CarryController.HasValidTarget);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("LOCKED NEIGHBORING PROPERTY"));
+            office.CarryController.ReleaseAtGround(locked);
+            yield return new WaitForSeconds(.28f);
+            Assert.That(Vector3.Distance(worker.transform.position, original), Is.LessThan(.08f));
+
+            StartCarry(office.CarryController, worker);
+            Vector3 wall = new Vector3(-8f, 0f, .5f);
+            office.CarryController.UpdateCarriedPosition(wall, null, new Vector2(380f, 420f), true);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("BLOCKED BY WALL.STARTER.WEST.MIDDLE"));
+            office.CarryController.CancelCarry(true);
+
+            StartCarry(office.CarryController, worker);
+            Vector3 voidPoint = new Vector3(0f, 0f, 7f);
+            office.CarryController.UpdateCarriedPosition(voidPoint, null, new Vector2(680f, 180f), true);
+            Assert.That(office.CarryController.FeedbackText, Does.Contain("OUTSIDE THE UNLOCKED OFFICE"));
+            office.CarryController.CancelCarry(true);
+            Assert.False(worker.IsPlayerCarried);
         }
 
         [UnityTest] public IEnumerator ModalOpeningCancelsCarryAndReturnsWorkerToGround()
@@ -360,12 +481,20 @@ namespace OpenPlan.Tests
             OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
             yield return WaitForPickable(office.Workers[0]);
             StartCarry(office.CarryController, office.Workers[0]);
+            Vector3 ground = new Vector3(-.4f, 0f, .35f);
+            office.CarryController.UpdateCarriedPosition(ground, null, new Vector2(620f, 410f), true);
+            office.CarryController.ReleaseAtGround(ground);
+            yield return new WaitForSeconds(.18f);
+            Assert.NotNull(office.LastGroundPlacementCommand);
+            yield return WaitForPickable(office.Workers[0]);
+            StartCarry(office.CarryController, office.Workers[0]);
             office.Restart();
             yield return null;
             yield return null;
             OfficeDirector restarted = Object.FindFirstObjectByType<OfficeDirector>();
             Assert.NotNull(restarted);
             Assert.That(restarted.CarryController.Phase, Is.EqualTo(WorkerCarryPhase.Idle));
+            Assert.IsNull(restarted.LastGroundPlacementCommand);
             foreach (WorkerAgent worker in restarted.Workers)
                 Assert.That(worker.transform.position.y, Is.LessThan(.1f));
 
@@ -454,6 +583,7 @@ namespace OpenPlan.Tests
             yield return WaitForPickable(office.Workers[2]);
             Assert.True(office.Workers[1].BeginPlayerCarry(out _));
             Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+            office.Cash.AccrueDeskIncome(1f, 15f);
             worker.QueueVendingOutcome(false);
             float cashBefore = office.Cash.CurrentCash;
             yield return PlaceWorker(office, worker, FindZone(office, "starter.snack.vending"));
@@ -486,6 +616,7 @@ namespace OpenPlan.Tests
             yield return WaitForPickable(office.Workers[2]);
             Assert.True(office.Workers[1].BeginPlayerCarry(out _));
             Assert.True(office.Workers[2].BeginPlayerCarry(out _));
+            office.Cash.AccrueDeskIncome(1f, 15f);
             worker.QueueVendingOutcome(true);
             float cashBefore = office.Cash.CurrentCash;
             yield return PlaceWorker(office, worker, FindZone(office, "starter.snack.vending"));
@@ -516,9 +647,8 @@ namespace OpenPlan.Tests
             yield return WaitForPickable(office.Workers[2]);
             Assert.True(office.Workers[1].BeginPlayerCarry(out _));
             Assert.True(office.Workers[2].BeginPlayerCarry(out _));
-            float spend = office.Cash.CurrentCash - 14f;
-            Assert.True(office.Cash.TrySpend(spend));
             float cash = office.Cash.CurrentCash;
+            Assert.That(cash, Is.LessThan(15f));
             PlacementZone vending = FindZone(office, "starter.snack.vending");
             StartCarry(office.CarryController, worker);
             office.CarryController.UpdateCarriedPosition(vending.PlacementPoint.position, vending,
@@ -650,7 +780,7 @@ namespace OpenPlan.Tests
             SimulationSpeedController.Instance.SetSpeed(0f);
             Assert.False(office.CanPurchaseExpansion);
             Assert.False(office.TryPurchaseExpansion(out _));
-            office.Cash.AccrueDeskIncome(15f, 60f);
+            office.Cash.AccrueDeskIncome(16.666667f, 60f);
             Assert.True(office.CanPurchaseExpansion);
             yield return new WaitForSecondsRealtime(.2f);
             Assert.That(office.Audio.LastCue, Is.EqualTo("cash-earned"));
@@ -681,7 +811,7 @@ namespace OpenPlan.Tests
             OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
             SimulationSpeedController.Instance.SetSpeed(0f);
             float oldPanWidth = office.Layout.PanBounds.size.x;
-            office.Cash.AccrueDeskIncome(15f, 60f);
+            office.Cash.AccrueDeskIncome(16.666667f, 60f);
             float before = office.Cash.CurrentCash;
             yield return new WaitForSecondsRealtime(.2f);
             GameObject.Find("Purchase Next Door").GetComponent<Button>().onClick.Invoke();
@@ -706,6 +836,18 @@ namespace OpenPlan.Tests
             Assert.True(office.HUD.CloseTopModal());
             yield return null;
             Assert.True(office.HUD.PreviewButtonVisible);
+
+            Vector3 unlockedGround = new Vector3(10f, 0f, 0f);
+            Assert.True(office.Layout.CanPlaceWorkerAt(unlockedGround, out string groundReason), groundReason);
+            SimulationSpeedController.Instance.SetSpeed(1f);
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            StartCarry(office.CarryController, worker);
+            office.CarryController.UpdateCarriedPosition(unlockedGround, null, new Vector2(1060f, 430f), true);
+            Assert.True(office.CarryController.HasValidTarget, office.CarryController.FeedbackText);
+            office.CarryController.ReleaseAtGround(unlockedGround);
+            yield return new WaitForSeconds(.18f);
+            Assert.That(office.LastGroundPlacementCommand.groundPoint.x, Is.EqualTo(10f).Within(.01f));
         }
 
         [UnityTest] public IEnumerator ExpandedHiringCreatesUnassignedEntranceWorkerWhoCanBePlaced()
@@ -728,11 +870,55 @@ namespace OpenPlan.Tests
             Assert.That(hire.Desk, Is.EqualTo(neighborDesk));
             Assert.That(neighborDesk.Assigned, Is.EqualTo(hire));
             SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(hire, WorkerState.Work, 3f);
+            Assert.False(hire.IsPhoneWorking);
+            Assert.That(hire.CurrentActivityLabel, Is.EqualTo("Work"));
             float earnedAtPlacement = office.Cash.LifetimeEarned;
             yield return new WaitForSeconds(2f);
             Assert.False(office.Workday.IsEnded);
             Assert.That(office.ActiveWorkerCount, Is.EqualTo(4));
             Assert.That(office.Cash.LifetimeEarned, Is.GreaterThan(earnedAtPlacement));
+        }
+
+        [UnityTest] public IEnumerator StarterHiringAllowsDesklessPhoneWorkBeforeExpansion()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            office.Cash.AccrueDeskIncome(7f, 60f);
+            Assert.True(office.TryHire(0, out string reason), reason);
+            Assert.That(office.ActiveWorkerCount, Is.EqualTo(4));
+            Assert.That(office.ActiveWorkerCount, Is.GreaterThan(office.WorkerCapacity));
+            WorkerAgent hire = office.Workers[office.Workers.Count - 1];
+            Assert.IsNull(hire.Desk);
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return WaitForState(hire, WorkerState.Unassigned, 2f);
+            yield return null;
+            Assert.That(office.HUD.HeaderText, Does.Contain("TEAM  4"));
+            Assert.That(office.HUD.HeaderText, Does.Contain("DESKS  3"));
+            Assert.True(hire.IsPhoneWorking);
+            Assert.That(hire.CurrentActivityLabel, Is.EqualTo("Working from phone"));
+            Assert.That(hire.CurrentDestinationLabel, Is.EqualTo("Phone work"));
+            float before = office.Cash.CurrentCash;
+            yield return new WaitForSeconds(.5f);
+            Assert.That(hire.Productivity, Is.GreaterThan(0f));
+            Assert.That(hire.Runtime.positiveInfluence, Does.Contain("Phone work"));
+            Assert.That(office.Cash.CurrentCash, Is.GreaterThan(before));
+            float summedProductivity = 0f;
+            foreach (WorkerAgent worker in office.Workers) summedProductivity += worker.Productivity;
+            Assert.That(office.CombinedIncomePerMinute,
+                Is.EqualTo(summedProductivity * CashDirector.IncomePerProductivityMinute).Within(.01f));
+
+            SimulationSpeedController.Instance.SetSpeed(0f);
+            float pausedCash = office.Cash.CurrentCash;
+            yield return new WaitForSecondsRealtime(.4f);
+            Assert.That(office.Cash.CurrentCash, Is.EqualTo(pausedCash).Within(.0001f));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            yield return new WaitForSeconds(.25f);
+            Assert.That(office.Cash.CurrentCash, Is.GreaterThan(pausedCash));
+
+            hire.Runtime.energy = .1f;
+            yield return WaitForState(hire, WorkerState.TakeBreak, 4f);
+            Assert.That(hire.Runtime.autonomyDecisions, Is.GreaterThan(0));
         }
 
         [UnityTest] public IEnumerator EstablishedPreviewLoadsUntimedAndReturnsToStarterMenu()
@@ -766,7 +952,7 @@ namespace OpenPlan.Tests
             Assert.That(locked.WorkerCapacity, Is.EqualTo(3));
             Assert.False(locked.Expansion.ConnectingWallOpen);
 
-            locked.Cash.AccrueDeskIncome(15f, 60f);
+            locked.Cash.AccrueDeskIncome(16.666667f, 60f);
             Assert.True(locked.TryPurchaseExpansion(out string reason), reason);
             yield return new WaitForSecondsRealtime(1.5f);
             OfficeDirector expanded = locked;
@@ -1073,7 +1259,7 @@ namespace OpenPlan.Tests
             Assert.True(office.HUD.HiringPanelVisible);
             office.HUD.CloseTopModal();
 
-            office.Cash.AccrueDeskIncome(15f, 60f);
+            office.Cash.AccrueDeskIncome(16.666667f, 60f);
             GameObject.Find("Purchase Next Door").GetComponent<Button>().onClick.Invoke();
             Assert.True(office.HUD.PurchasePanelVisible);
             tutorial.OpenHelp();

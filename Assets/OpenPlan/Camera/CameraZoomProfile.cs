@@ -7,7 +7,7 @@ namespace OpenPlan
     {
         public float closeSize = 4.8f;
         public float overviewSize = 18.5f;
-        public float zoomSensitivity = 0.012f;
+        [Range(.05f, .25f)] public float zoomSensitivity = .13f;
         public float panSensitivity = 0.018f;
         public float smoothTime = 0.16f;
     }

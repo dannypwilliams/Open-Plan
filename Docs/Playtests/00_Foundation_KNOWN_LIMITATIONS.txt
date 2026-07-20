@@ -1,0 +1,7 @@
+Live five-need simulation and autonomous five-need recovery are not active yet.
+Qualification catalogs exist, but employees are not yet assigned one strength and one liability in live campaigns.
+Skill growth, training, workdays, contracts, payroll, reputation, incidents, and furniture build mode remain future checkpoints.
+Campaign save/load is not implemented; returning to the menu or quitting resets the session.
+The existing neighboring unit is the only physical expansion, and post-expansion endless objectives remain future work.
+Worker navigation is direct rather than obstacle-aware navmesh pathfinding.
+Controller support, remappable controls, localization, settings, and accessibility narration are not included.

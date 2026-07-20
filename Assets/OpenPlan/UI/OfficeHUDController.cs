@@ -359,7 +359,7 @@ namespace OpenPlan
             {
                 string away = AwaySummary();
                 hudText.text = $"CASH  ${office.Cash.CurrentCash:N2}    EARNED  ${office.Cash.LifetimeEarned:N2}    " +
-                    $"INCOME  ${office.CombinedIncomePerMinute:N2}/MIN    TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}    {speed}{away}";
+                    $"INCOME  ${office.CombinedIncomePerMinute:N2}/MIN    TEAM  {office.ActiveWorkerCount}    DESKS  {office.DeskCount}    {speed}{away}";
                 float progress = office.ExpansionComplete ? 1f : ExpansionRules.PurchaseProgress(office.Cash.CurrentCash);
                 string availability = office.ExpansionComplete ? "FIRST EXPANSION COMPLETE — continue growing at your pace." :
                     office.CanPurchaseExpansion ? "The neighboring unit is available." :
@@ -381,7 +381,7 @@ namespace OpenPlan
                 purchaseButton.gameObject.SetActive(office.Stage != OfficeStage.EstablishedOffice && !office.ExpansionComplete);
                 purchaseButton.interactable = office.CanPurchaseExpansion;
             }
-            if (hireButton != null) hireButton.interactable = office.CanHireWorkers;
+            if (hireButton != null) hireButton.interactable = true;
             if (previewButton != null) previewButton.gameObject.SetActive(office.ExpansionComplete);
             RefreshInspector();
             RefreshModalVisibility();
@@ -421,11 +421,6 @@ namespace OpenPlan
 
         private void ToggleHiring()
         {
-            if (!office.CanHireWorkers)
-            {
-                ShowNotice("Purchase the neighboring unit to unlock hiring.");
-                return;
-            }
             bool visible = !hiringPanel.gameObject.activeSelf;
             if (visible)
             {

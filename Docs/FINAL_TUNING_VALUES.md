@@ -1,20 +1,23 @@
 # Final Tuning Values
 
-These are the values shipped in the friend-demo package. Prompt 8 did not require changing the live economy or activity numbers; the seeded release matrix confirmed the checkpoint 7 tuning already meets the targets.
+These are the values shipped in Endless Office Alpha Checkpoint `00_Foundation`. Later prompts may retune the economy only when their own acceptance evidence requires it.
 
 ## Starter economy and expansion
 
 | Value | Final |
 |---|---:|
-| Starting cash | $100 |
+| Starting cash | $0 |
 | Desk income | $60 per effective-productivity minute |
 | Expansion purchase | $1,000 |
 | First hire / Riley | $380 |
+| Phone workstation efficiency | 50%, applied once |
+| Employee cap | none |
+| Starter active desks | 3 |
 | Expanded desk capacity | +3, six total |
 | Expected starting-team income | $149.124/min before modeled snack overhead |
-| Expected affordability | 6.26 minutes from the static starting-team estimate |
-| Measured active affordability | 7.55-7.78 minutes, 7.67 mean across 20 seeds |
-| Measured passive affordability | 10.08-12.00 minutes, 10.95 mean across 20 seeds |
+| Expected first-hire affordability | 2.55 minutes from the static starting-team estimate |
+| Expected expansion affordability | 6.96 minutes from the static starting-team estimate |
+| Measured affordability | Re-capture after the next balance/content pass; the prior `$100` measurements are superseded |
 
 ## Player-directed activities
 
@@ -43,5 +46,6 @@ Distractions last 6-18 seconds. The 20-minute live soak produced 5 Morgan, 11 Al
 ## Presentation
 
 - Simulation speeds: paused, 1x, 2x, 4x.
-- Camera: close size 4.8, overview profile 18.5, zoom sensitivity 0.012, pan sensitivity 0.018, smoothing 0.16 s.
+- Camera: close size 4.8, overview profile 18.5, normalized exponential zoom sensitivity 0.13, pan sensitivity 0.018, smoothing 0.16 s; about ten standard notches overview-to-close with continuous fractional input.
+- Placement influence: each zone owns an explicit radius and integer priority; ties resolve by priority, distance, then stable identifier.
 - Evidence resolutions: 1280x720 and 1920x1080.

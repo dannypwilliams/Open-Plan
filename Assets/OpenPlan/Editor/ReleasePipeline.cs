@@ -121,10 +121,10 @@ namespace OpenPlan.Editor
         {
             var colors = new Dictionary<string, Color>
             {
-                { "walnut", Hex("704735") }, { "light_wood", Hex("A66E43") }, { "cream", Hex("D7C7A8") },
-                { "burgundy", Hex("6A3440") }, { "carpet", Hex("4A464C") }, { "metal", Hex("716A62") },
-                { "dark", Hex("161A1B") }, { "cyan", Hex("42B8C4") }, { "blue", Hex("315C68") },
-                { "amber", Hex("FF7A2D") }, { "green", Hex("6FC38B") }, { "paper", Hex("E7D7B7") },
+                { "walnut", Hex("343638") }, { "light_wood", Hex("555755") }, { "cream", Hex("D8D2BF") },
+                { "burgundy", Hex("7E3F42") }, { "carpet", Hex("53616D") }, { "metal", Hex("B8B5AA") },
+                { "dark", Hex("171C20") }, { "cyan", Hex("6FD5E8") }, { "blue", Hex("3E7778") },
+                { "amber", Hex("FF9A55") }, { "green", Hex("6FC38B") }, { "paper", Hex("C79943") },
                 { "cardboard", Hex("A56E3C") }, { "leaf", Hex("397052") }, { "skin", Hex("C7825D") },
                 { "coral", Hex("E75B4D") }
             };
@@ -204,7 +204,7 @@ namespace OpenPlan.Editor
             }
             profile.closeSize = 4.8f;
             profile.overviewSize = 18.5f;
-            profile.zoomSensitivity = .012f;
+            profile.zoomSensitivity = .13f;
             profile.panSensitivity = .018f;
             profile.smoothTime = .16f;
             EditorUtility.SetDirty(profile);

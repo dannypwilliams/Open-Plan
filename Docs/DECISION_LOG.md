@@ -58,7 +58,7 @@ Workers snapshot their pre-carry position, rotation, autonomous state, target, t
 
 ## D015 - Runtime feedback uses authored geometry
 
-Placement footprints derive directly from each zone's tested collider bounds. During carry, all enabled destinations render green, disabled or full destinations render red, the nearest footprint intensifies, and a cursor-adjacent label explains the activity or rejection. This keeps presentation and validation on one geometry contract.
+Placement footprints derive directly from each zone's tested collider bounds. Each zone also owns a larger influence radius and priority. During carry, all destinations show availability, the deterministically resolved influence intensifies, and a cursor-adjacent label distinguishes influenced activity, ordinary-ground autonomy, and the exact invalid reason.
 
 ## D016 - Three explainable needs replace Focus and Morale
 
@@ -70,7 +70,7 @@ Every placement has one begin, completion, and interruption path. Costs occur on
 
 ## D018 - Placement work owns the open-ended cash ledger
 
-`CashDirector` starts at $100 and accrues fractional cash from desk work at $60 per productivity-minute. It tracks current cash, lifetime earned, and lifetime spent independently. The Established Office's prior `EconomyDirector` remains available for its preserved task, hiring, and payroll systems.
+`CashDirector` starts at `$0` and accrues fractional cash from desk or phone work at `$60` per effective-productivity minute. It tracks current cash, lifetime earned, and lifetime spent independently. The Established Office's prior `EconomyDirector` remains available for its preserved task, hiring, and payroll systems.
 
 ## D019 - Tutorial progress is observed, not scripted
 
@@ -79,3 +79,23 @@ The tutorial subscribes to selection, carry, placement-command, roster, and cash
 ## D020 - One modal owner and redundant feedback
 
 Tutorial, Help, inspector, hiring, confirmation, purchase, and expansion milestone surfaces share one input-blocking and visibility contract. Carry destinations communicate with footprint color, text labels, symbols, a bottom legend, cursor feedback, and restrained audio; name tags and emotes use dark outlines for both bright windows and dark floors.
+
+## D021 - Ground placement is a first-class transaction
+
+Unlocked walkable ground and activity influence are separate outcomes. Ordinary ground creates a `GroundPlacementCommand`, retains desk ownership, vacates only transient activity occupancy, pauses the employee briefly, and resumes autonomy. Rejection restores the complete carry snapshot. Registered obstacles, locked neighboring property, and void use distinct validation reasons.
+
+## D022 - Influence resolution is stable
+
+When activity radii overlap, the resolver chooses higher integer priority, then shorter squared distance, then ordinal stable identifier. Collection order never decides gameplay. The visible footprint remains a landmark rather than the full valid target.
+
+## D023 - Desks are resources, not an employee cap
+
+Hiring is available whenever the candidate is affordable. The HUD reports Team and Desks separately. A deskless employee uses `WorkerState.Unassigned` internally but is presented as `Working from phone`, uses the phone pose rather than the distraction label, contributes and accrues from the same effective productivity at one exact 0.50 workstation factor, pauses with simulation time, and continues existing autonomous restorative behavior.
+
+## D024 - Checkpoints package from immutable source
+
+`Tools/Packaging/Build-Checkpoint.ps1` accepts a checkpoint ID, requires a clean commit, refuses to overwrite a published checkpoint, runs both complete suites, makes a non-development Windows x64 player, creates a fresh ZIP, extracts and launches that exact ZIP in a separate directory, validates the public-API smoke and screenshot dimensions, records SHA-256 and limitations, then publishes atomically under `outputs/Playtests/EndlessOfficeAlpha/<checkpoint>/`. Generated package evidence is ignored; the workflow, guide source, and documentation are tracked.
+
+## D025 - Checkpoint 00 freezes foundations without activating later systems
+
+Five-need, qualification, incident, furniture, office-unit, contract, placement command, and placement result definitions compile at the baseline. Qualification catalogs contain exactly 12 strengths and 12 liabilities with deterministic one-of-each selection. Live five-need recovery, employee pair assignment, training, workdays/contracts, payroll/reputation, incidents, construction, and persistence remain explicitly deferred to later prompts.

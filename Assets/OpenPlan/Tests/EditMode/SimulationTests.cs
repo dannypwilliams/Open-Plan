@@ -112,21 +112,124 @@ namespace OpenPlan.Tests
             Assert.False(new SeededRandomService(0).Chance(ActivityRules.VendingMalfunctionChance));
         }
 
-        [Test] public void CashDirector_StartsAtOneHundredAndAccruesContinuousIncome()
+        [Test] public void CashDirector_StartsAtZeroAndAccruesContinuousIncome()
         {
             GameObject go = new GameObject("Cash test");
             CashDirector cash = go.AddComponent<CashDirector>();
             cash.Initialize();
-            Assert.That(cash.CurrentCash, Is.EqualTo(100f));
+            Assert.That(cash.CurrentCash, Is.EqualTo(0f));
             cash.AccrueDeskIncome(2f, 30f);
-            Assert.That(cash.CurrentCash, Is.EqualTo(160f).Within(.0001f));
+            Assert.That(cash.CurrentCash, Is.EqualTo(60f).Within(.0001f));
             Assert.That(cash.LifetimeEarned, Is.EqualTo(60f).Within(.0001f));
             cash.AccrueDeskIncome(2f, 0f);
-            Assert.That(cash.CurrentCash, Is.EqualTo(160f).Within(.0001f));
+            Assert.That(cash.CurrentCash, Is.EqualTo(60f).Within(.0001f));
             Assert.True(cash.TrySpend(15f));
-            Assert.That(cash.CurrentCash, Is.EqualTo(145f).Within(.0001f));
+            Assert.That(cash.CurrentCash, Is.EqualTo(45f).Within(.0001f));
             Assert.That(cash.LifetimeSpent, Is.EqualTo(15f).Within(.0001f));
             Object.DestroyImmediate(go);
+        }
+
+        [Test] public void NormalizedZoomTraversesOverviewToCloseInAboutTenNotches()
+        {
+            float size = 18.5f;
+            for (int i = 0; i < 10; i++)
+                size = OfficeCameraRig.ApplyZoomInput(size, 120f, 4.8f, 18.5f, .13f);
+            Assert.That(size, Is.InRange(4.8f, 5.1f));
+            Assert.That(OfficeCameraRig.ApplyZoomInput(size, -120f, 4.8f, 18.5f, .13f), Is.GreaterThan(size));
+        }
+
+        [Test] public void NormalizedZoomAcceptsContinuousTrackpadScaleInputAndClamps()
+        {
+            float overview = OfficeCameraRig.ApplyZoomInput(18.5f, 1f, 4.8f, 18.5f, .13f);
+            Assert.That(overview, Is.LessThan(18.5f));
+            Assert.That(overview, Is.GreaterThan(18.4f));
+            Assert.That(OfficeCameraRig.ApplyZoomInput(4.8f, 120f, 4.8f, 18.5f, .13f), Is.EqualTo(4.8f));
+            Assert.That(OfficeCameraRig.ApplyZoomInput(18.5f, -120f, 4.8f, 18.5f, .13f), Is.EqualTo(18.5f));
+        }
+
+        [Test] public void PlacementZoneInfluenceExtendsBeyondVisibleFootprint()
+        {
+            GameObject go = new GameObject("Influence test");
+            PlacementZone zone = go.AddComponent<ActivityPlacementZone>();
+            zone.Configure(PlacementActivity.Rest, Vector3.zero, footprint: new Vector2(1f, 1f), influenceRadius: 2f);
+            Assert.True(zone.ContainsInfluence(new Vector3(1.8f, 0f, 0f)));
+            Assert.False(zone.ContainsInfluence(new Vector3(2.1f, 0f, 0f)));
+            Object.DestroyImmediate(go);
+        }
+
+        [Test] public void PlacementZoneOverlapUsesPriorityDistanceAndStableIdentifierDeterministically()
+        {
+            GameObject root = new GameObject("Overlap influence test");
+            PlacementZone low = CreateZone(root.transform, "zone.low", new Vector3(.25f, 0f, 0f), 1);
+            PlacementZone highB = CreateZone(root.transform, "zone.high-b", new Vector3(1f, 0f, 0f), 4);
+            PlacementZone highA = CreateZone(root.transform, "zone.high-a", new Vector3(-1f, 0f, 0f), 4);
+
+            PlacementZone resolved = WorkerCarryController.ResolveInfluencingZone(
+                new[] { low, highB, highA }, Vector3.zero);
+            Assert.That(resolved, Is.SameAs(highA), "stable identifier must break an exact overlap tie");
+            Assert.That(WorkerCarryController.ResolveInfluencingZone(
+                new[] { highA, low, highB }, Vector3.zero), Is.SameAs(highA),
+                "enumeration order must not change the result");
+            Object.DestroyImmediate(root);
+        }
+
+        [Test] public void OfficeLayoutAcceptsUnlockedGroundAndRejectsVoidAndObstacles()
+        {
+            GameObject go = new GameObject("Layout test");
+            OfficeStageLayout layout = go.AddComponent<OfficeStageLayout>();
+            Bounds floor = new Bounds(Vector3.zero, new Vector3(10f, 1f, 8f));
+            layout.Configure(floor, floor, 10f, floor);
+            Assert.True(layout.CanPlaceWorkerAt(new Vector3(4f, 0f, 3f), out _));
+            Assert.False(layout.CanPlaceWorkerAt(new Vector3(6f, 0f, 0f), out string outside));
+            Assert.That(outside, Does.Contain("outside"));
+
+            GameObject wall = new GameObject("Wall");
+            wall.transform.SetParent(go.transform);
+            OfficeObstacleVolume obstacle = wall.AddComponent<OfficeObstacleVolume>();
+            obstacle.Configure("wall", Vector3.zero, new Vector3(2f, 2f, 2f));
+            layout.RegisterObstacle(obstacle);
+            Assert.False(layout.CanPlaceWorkerAt(Vector3.zero, out string blocked));
+            Assert.That(blocked, Does.Contain("blocked"));
+            Object.DestroyImmediate(go);
+        }
+
+        [Test] public void OfficeLayoutDistinguishesLockedPropertyAndAdditionalWalkableGround()
+        {
+            GameObject go = new GameObject("Locked layout test");
+            OfficeStageLayout layout = go.AddComponent<OfficeStageLayout>();
+            Bounds owned = new Bounds(Vector3.zero, new Vector3(10f, 1f, 8f));
+            Bounds locked = new Bounds(new Vector3(7f, 0f, 0f), new Vector3(4f, 1f, 8f));
+            layout.Configure(owned, owned, 10f, owned, locked);
+            layout.RegisterWalkableRegion(new Bounds(new Vector3(-7f, 0f, 2f), new Vector3(2f, 1f, 2f)));
+
+            Assert.False(layout.CanPlaceWorkerAt(new Vector3(7f, 0f, 0f), out string reason));
+            Assert.That(reason, Does.Contain("locked neighboring property"));
+            Assert.True(layout.CanPlaceWorkerAt(new Vector3(-7f, 0f, 2f), out _));
+            Object.DestroyImmediate(go);
+        }
+
+        [Test] public void PhoneWorkAppliesTheFiftyPercentWorkstationModifierExactlyOnce()
+        {
+            float workstation = ProductivityModel.Evaluate(1f, 1f, 1f, 0f, 1f, 1f, 1f);
+            float phone = ProductivityModel.Evaluate(1f, 1f, 1f, 0f,
+                ProductivityModel.PhoneWorkstationModifier, 1f, 1f);
+            Assert.That(ProductivityModel.PhoneWorkstationModifier, Is.EqualTo(.5f));
+            Assert.That(phone, Is.EqualTo(workstation * .5f).Within(.0001f));
+        }
+
+        [Test] public void FoundationDefinesExactlyFiveEmployeeNeeds()
+            => Assert.That(System.Enum.GetValues(typeof(NeedKind)).Length, Is.EqualTo(5));
+
+        [Test] public void QualificationRollAlwaysReturnsOneOfEachPolarityDeterministically()
+        {
+            Assert.That(EmployeeQualificationCatalog.Strengths, Has.Length.EqualTo(12));
+            Assert.That(EmployeeQualificationCatalog.Liabilities, Has.Length.EqualTo(12));
+            EmployeeQualificationPair first = EmployeeQualificationCatalog.Roll(new SeededRandomService(144));
+            EmployeeQualificationPair second = EmployeeQualificationCatalog.Roll(new SeededRandomService(144));
+            Assert.That(first.Strength.polarity, Is.EqualTo(EmployeeTraitPolarity.Strength));
+            Assert.That(first.Liability.polarity, Is.EqualTo(EmployeeTraitPolarity.Liability));
+            Assert.That(first.Strength.id, Is.EqualTo(second.Strength.id));
+            Assert.That(first.Liability.id, Is.EqualTo(second.Liability.id));
         }
 
         [Test] public void SocialCooldown_BlocksUntilZero()
@@ -294,6 +397,18 @@ namespace OpenPlan.Tests
             Assert.NotNull(profile);
             Assert.That(profile.closeSize, Is.EqualTo(4.8f));
             Assert.That(profile.overviewSize, Is.EqualTo(18.5f));
+            Assert.That(profile.zoomSensitivity, Is.EqualTo(.13f));
+        }
+
+        private static PlacementZone CreateZone(Transform parent, string id, Vector3 position, int priority)
+        {
+            GameObject owner = new GameObject(id);
+            owner.transform.SetParent(parent, false);
+            owner.transform.position = position;
+            PlacementZone zone = owner.AddComponent<ActivityPlacementZone>();
+            zone.Configure(PlacementActivity.Rest, Vector3.zero, stableIdentifier: id,
+                footprint: new Vector2(.5f, .5f), influenceRadius: 3f, influencePriority: priority);
+            return zone;
         }
 
         [Test] public void CandidateReplacement_SeededPoolCanProduceAllTraits()
@@ -362,7 +477,7 @@ namespace OpenPlan.Tests
         [Test] public void ExpansionExpectedAffordabilityUsesStartingTeamAndSnackOverhead()
         {
             Assert.That(ExpansionRules.ExpectedStartingIncomePerMinute(), Is.EqualTo(149.124f).Within(.001f));
-            Assert.That(ExpansionRules.ExpectedMinutesToAfford(), Is.InRange(6.2f, 6.3f));
+            Assert.That(ExpansionRules.ExpectedMinutesToAfford(), Is.InRange(6.9f, 7.0f));
         }
 
         [Test] public void TutorialCopyCoversTheCompletePlacementLoopInOrder()
@@ -426,7 +541,7 @@ namespace OpenPlan.Tests
                 ReleaseScenarioResult active = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Active, seed);
                 ReleaseScenarioResult result = ReleaseBalanceScenarios.Run(ReleaseScenarioMode.Poor, seed);
                 Assert.That(result.timeToOneThousandSeconds,
-                    Is.GreaterThanOrEqualTo(active.timeToOneThousandSeconds + 30f), "seed " + seed);
+                    Is.GreaterThanOrEqualTo(active.timeToOneThousandSeconds + 25f), "seed " + seed);
                 Assert.That(result.vendingSpend, Is.GreaterThan(0f), "seed " + seed);
                 Assert.That(result.restorativeSeconds, Is.GreaterThan(0f), "seed " + seed);
                 Assert.That(result.timeToOneThousandSeconds, Is.GreaterThan(0f), "seed " + seed);

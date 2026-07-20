@@ -1,8 +1,8 @@
 # OPEN PLAN
 
-OPEN PLAN, also known as Silly Office Sim, is a small isometric office-management game about guiding individual workers through a cramped workplace. Pick up Morgan, Alex, and Sam, place them at desks or restorative activity areas, respond to their different personalities, and earn enough cash to buy the neighboring unit.
+OPEN PLAN, also known as Silly Office Sim, is a small isometric office-management game about guiding individual workers through a cramped workplace. Pick up Morgan, Alex, and Sam, release them anywhere on valid unlocked ground, or use the proximity influence around a desk or restorative landmark.
 
-The friend-demo build contains the complete worker-placement pivot. It starts with $100 and has no countdown or forced failure. Desk work earns `$60 per productivity-minute`; manually placing a worker at a desk grants a non-stacking +20% Focused Work bonus for 30 simulation seconds. Reaching $1,000 makes the neighboring unit purchasable. The confirmed purchase opens the connecting wall in-world, activates three new desk locations, unlocks hiring, and exposes the preserved Established Office preview.
+Checkpoint `00_Foundation` starts with $0 and has no countdown or forced failure. The original three employees generate income immediately. Desk work earns `$60 per productivity-minute`; manually placing a worker at a desk grants a non-stacking +20% Focused Work bonus for 30 simulation seconds. Hiring is available before the $1,000 neighboring-unit expansion whenever the selected candidate is affordable. Team size is not capped by desks: employees without desks work visibly from their phones at 50% workstation efficiency and can still take autonomous breaks.
 
 ## Playable stages
 
@@ -13,23 +13,23 @@ The friend-demo build contains the complete worker-placement pivot. It starts wi
 ## Controls
 
 - Click a worker to select and inspect them.
-- Hold and drag a worker to a labeled activity footprint.
+- Hold and drag a worker to ordinary unlocked ground or near a labeled activity landmark.
 - Escape or right-click cancels a carry safely.
 - Mouse wheel zooms; middle-mouse drag pans; `F` follows a selected worker.
 - `N` toggles names; `H` opens hiring; `Tab` toggles productivity.
 - `Space` pauses; `1`, `2`, and `3` select 1x, 2x, and 4x speed.
 - `HELP` explains controls, needs, activities, cash, and can replay the tutorial.
 
-## Release status
+## Checkpoint 00 status
 
 - Unity 6000.5.1f1 Windows x64 build.
-- 104/104 automated tests passing: 49 EditMode and 55 PlayMode.
-- 100 deterministic balance scenarios across 20 fixed seeds passing.
-- Active-manager expansion average: 7.67 minutes at 1x; passive average: 10.95 minutes.
-- Twenty-minute accelerated standalone soak passing with no stuck worker, missing worker, stale carry, orphaned smoke, or capacity violation.
-- Exact extracted package passed the final 86-check menu-to-expansion-to-hire-to-preview flow with zero failures.
-- 1920x1080 performance: 119.88 fps average, 118.52 fps 1% low, zero measured peak per-frame GC allocation.
+- 117/117 automated tests passing: 58 EditMode and 59 PlayMode.
+- Normalized ten-notch zoom, continuous trackpad-scale input, ordinary-ground placement, deterministic proximity influence, locked/obstacle rejection, `$0` start, pre-expansion hiring, and phone-work pause/accrual are covered.
+- The non-development Windows package is built from a clean commit, freshly zipped, extracted separately, and driven through the Checkpoint 00 public-API smoke flow.
+- Required 1920×1080 screenshots plus a 1280×720 HUD regression capture are stored with the checkpoint.
 
-The final executable is under `outputs/OpenPlan-Windows`; the fresh friend-demo ZIP is `outputs/OpenPlan-Friend-Demo-Windows.zip`. See [Build and Run](Docs/BUILD_AND_RUN.md), [Test Report](Docs/TEST_REPORT.md), and the [Friend Playtest Guide](Docs/FRIEND_PLAYTEST_GUIDE.md).
+The checkpoint is under `outputs/Playtests/EndlessOfficeAlpha/00_Foundation/`. See [Build and Run](Docs/BUILD_AND_RUN.md), [Test Report](Docs/TEST_REPORT.md), and the [Checkpoint 00 Playtest Guide](Docs/Playtests/00_Foundation_PLAYTEST_GUIDE.md).
 
 Historical Established Office release evidence is preserved under `outputs/PreviousRelease/EstablishedOffice-a638304` rather than overwritten.
+
+Live five-need simulation and recovery, assigned qualification pairs, training, workdays, contracts, payroll, reputation, incidents, furniture construction, campaign persistence, and final Alpha balancing remain later checkpoints in the [30-day roadmap](Docs/NEXT_30_DAYS_ROADMAP.md).

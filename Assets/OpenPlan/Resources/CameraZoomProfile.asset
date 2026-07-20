@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: OpenPlan.Runtime:OpenPlan:CameraZoomProfile
   closeSize: 4.8
   overviewSize: 18.5
-  zoomSensitivity: 0.012
+  zoomSensitivity: 0.13
   panSensitivity: 0.018
   smoothTime: 0.16

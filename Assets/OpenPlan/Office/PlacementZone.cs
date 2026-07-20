@@ -15,6 +15,8 @@ namespace OpenPlan
         public Transform PlacementPoint { get; private set; }
         public BoxCollider FootprintCollider { get; private set; }
         public bool IsZoneEnabled { get; private set; }
+        public float InfluenceRadius { get; private set; }
+        public int InfluencePriority { get; private set; }
         public bool IsHighlighted { get; private set; }
         public PlacementZoneVisualState CarryVisualState { get; private set; }
         public int Capacity { get; private set; }
@@ -33,7 +35,8 @@ namespace OpenPlan
         private string unavailableReason;
 
         public virtual void Configure(PlacementActivity activity, Vector3 localPlacementPoint, string label = null,
-            string stableIdentifier = null, bool zoneEnabled = true, Vector2 footprint = default, int capacity = 1)
+            string stableIdentifier = null, bool zoneEnabled = true, Vector2 footprint = default, int capacity = 1,
+            float influenceRadius = 0f, int influencePriority = 0)
         {
             Activity = activity;
             ActivityLabel = string.IsNullOrWhiteSpace(label) ? Pretty(activity) : label;
@@ -54,10 +57,19 @@ namespace OpenPlan
             FootprintCollider.isTrigger = true;
             FootprintCollider.center = new Vector3(0f, .06f, 0f);
             Vector2 size = footprint == default ? new Vector2(1.2f, 1.2f) : footprint;
+            InfluenceRadius = influenceRadius > 0f ? influenceRadius : Mathf.Max(size.x, size.y) * .5f + .75f;
+            InfluencePriority = influencePriority;
             FootprintCollider.size = new Vector3(Mathf.Max(.2f, size.x), .12f, Mathf.Max(.2f, size.y));
             renderers = GetComponentsInChildren<Renderer>(true);
             BuildFootprintVisual(footprintObject.transform, size);
             BuildCarryStateLabel(localPlacementPoint);
+        }
+
+        public bool ContainsInfluence(Vector3 worldPoint)
+        {
+            if (PlacementPoint == null) return false;
+            Vector2 delta = new Vector2(worldPoint.x - PlacementPoint.position.x, worldPoint.z - PlacementPoint.position.z);
+            return delta.sqrMagnitude <= InfluenceRadius * InfluenceRadius;
         }
 
         public virtual bool CanAcceptWorker(WorkerAgent worker, out string reason)

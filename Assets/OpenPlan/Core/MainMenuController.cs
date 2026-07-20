@@ -35,7 +35,7 @@ namespace OpenPlan
                 new Vector2(.08f,.64f), new Vector2(.92f,.90f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
             OfficeUIFactory.Text(card, "Subtitle", "A TINY OFFICE WITH VERY LARGE OPINIONS", 24f, OfficeUIFactory.Orange,
                 new Vector2(.10f,.58f), new Vector2(.90f,.68f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
-            OfficeUIFactory.Text(card, "Pitch", "Start small. Guide three workers. Earn the neighboring unit.\nThere is no countdown â€” expand when the business is ready.", 27f, OfficeUIFactory.Paper,
+            OfficeUIFactory.Text(card, "Pitch", "Start small. Guide three workers. Earn the neighboring unit.\nThere is no countdown \u2014 expand when the business is ready.", 27f, OfficeUIFactory.Paper,
                 new Vector2(.12f,.38f), new Vector2(.88f,.56f), Vector2.zero, Vector2.zero, TMPro.TextAlignmentOptions.Center);
             Button start = OfficeUIFactory.Button(card, "Start", "START WORKDAY", OfficeUIFactory.Orange, Color.white,
                 new Vector2(.28f,.22f), new Vector2(.72f,.33f), Vector2.zero, Vector2.zero);
@@ -51,6 +51,8 @@ namespace OpenPlan
                 gameObject.AddComponent<PackageVerificationMenuDriver>().Initialize(PackageVerificationDirector.Stage >= 2);
             if (StandaloneFriendDemoDirector.Requested)
                 gameObject.AddComponent<StandaloneFriendDemoMenuDriver>().Initialize();
+            if (StandaloneFoundationCheckpointDirector.Requested)
+                gameObject.AddComponent<StandaloneFoundationCheckpointMenuDriver>().Initialize();
         }
 
         public void StartStarterOffice()

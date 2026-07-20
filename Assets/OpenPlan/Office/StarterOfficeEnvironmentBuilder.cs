@@ -8,8 +8,11 @@ namespace OpenPlan
     /// <summary>Authored 14 m x 11 m Level One office and its visible locked neighboring unit.</summary>
     public sealed class StarterOfficeEnvironmentBuilder : IOfficeEnvironmentBuilder
     {
-        private static readonly Color StarterTint = new Color(.78f, .68f, .52f, 1f);
-        private static readonly Color NeighborTint = new Color(.28f, .32f, .34f, 1f);
+        private static readonly Color PartitionTint = new Color(.72f, .71f, .67f, 1f);
+        private static readonly Color WallTint = new Color(.85f, .82f, .75f, 1f);
+        private static readonly Color CharcoalTint = new Color(.20f, .21f, .22f, 1f);
+        private static readonly Color NeighborTint = new Color(.19f, .23f, .26f, 1f);
+        private static readonly Color CarpetTint = new Color(.325f, .38f, .43f, 1f);
 
         private readonly OfficeAssetCatalog catalog;
         private readonly Transform root;
@@ -56,7 +59,13 @@ namespace OpenPlan
             Layout.Configure(new Bounds(new Vector3(2f, 0f, 0f), new Vector3(25f, 4f, 15.5f)),
                 expanded ? new Bounds(new Vector3(2f, 0f, 0f), new Vector3(26f, 1f, 10f)) :
                     new Bounds(new Vector3(-1f, 0f, 0f), new Vector3(16f, 1f, 9f)),
-                expanded ? 13.2f : 11.8f);
+                expanded ? 13.2f : 11.8f,
+                expanded ? new Bounds(new Vector3(3f, 0f, 0f), new Vector3(22f, 1f, 10.6f)) :
+                    new Bounds(new Vector3(-1f, 0f, 0f), new Vector3(14f, 1f, 10.6f)),
+                expanded ? (Bounds?)null :
+                    new Bounds(new Vector3(10f, 0f, 0f), new Vector3(8f, 1f, 10.6f)));
+            Layout.RegisterWalkableRegion(new Bounds(new Vector3(-10.05f, 0f, 3.35f),
+                new Vector3(3f, 1f, 3.2f)));
             Layout.AddOverviewPoint("starter-southwest", new Vector3(-8f, 0f, -5.5f));
             Layout.AddOverviewPoint("starter-northeast", new Vector3(6f, 0f, 5.5f));
             Layout.AddOverviewPoint("neighbor-southeast", new Vector3(14f, 0f, -5.5f));
@@ -70,7 +79,8 @@ namespace OpenPlan
 
         private void BuildFloorsAndWalls()
         {
-            catalog.Spawn("FloorSlab", root, new Vector3(-1f, 0f, 0f), Quaternion.identity, new Vector3(.467f, 1f, .50f));
+            GameObject starterFloor = catalog.Spawn("FloorSlab", root, new Vector3(-1f, 0f, 0f), Quaternion.identity, new Vector3(.467f, 1f, .50f));
+            Tint(starterFloor, CarpetTint);
             GameObject neighborFloor = catalog.Spawn("FloorSlab", root, new Vector3(10f, -.02f, 0f), Quaternion.identity, new Vector3(.267f, 1f, .50f));
             AddNeighborRenderers(neighborFloor);
             Tint(neighborFloor, expanded ? new Color(.55f,.48f,.38f,1f) : new Color(.20f,.24f,.25f,1f));
@@ -169,6 +179,17 @@ namespace OpenPlan
             catalog.Spawn("Ashtray", root, smoke.transform.position + new Vector3(.75f,0f,.1f), Quaternion.identity, Vector3.one);
             catalog.Spawn("Cigarette", root, smoke.transform.position + new Vector3(.75f,.92f,.1f), Quaternion.Euler(0f,20f,90f), Vector3.one);
             catalog.Spawn("WaitingBench", root, smoke.transform.position + new Vector3(-.55f,0f,.55f), Quaternion.Euler(0f,135f,0f), Vector3.one * .68f);
+            GameObject smokeFloor = catalog.Spawn("FloorSlab", root, smoke.transform.position + new Vector3(0f,-.03f,.2f),
+                Quaternion.identity, new Vector3(.12f,1f,.16f));
+            Tint(smokeFloor, new Color(.18f,.22f,.25f));
+            GameObject smokeBack = catalog.Spawn("PartialWall", root, smoke.transform.position + new Vector3(0f,0f,1.45f),
+                Quaternion.identity, new Vector3(.72f,.82f,1f));
+            GameObject smokeSide = catalog.Spawn("PartialWall", root, smoke.transform.position + new Vector3(-1.45f,0f,.2f),
+                Quaternion.Euler(0f,90f,0f), new Vector3(.62f,.82f,1f));
+            Tint(smokeBack, new Color(.31f,.32f,.32f));
+            Tint(smokeSide, new Color(.31f,.32f,.32f));
+            AddObstacle(smokeBack, "wall.smoking.back", new Vector3(0f,.75f,0f), new Vector3(4f,1.55f,.24f));
+            AddObstacle(smokeSide, "wall.smoking.side", new Vector3(0f,.75f,0f), new Vector3(4f,1.55f,.24f));
             AddWorldLabel(smoke.transform, "Smoking label", "SMOKING AREA", new Vector3(0f, 1.7f, .2f),
                 new Color(.96f,.68f,.34f), .32f);
         }
@@ -250,15 +271,33 @@ namespace OpenPlan
             catalog.Spawn("Clock", root, new Vector3(-4.0f,1.45f,5.28f), Quaternion.identity, Vector3.one * .72f);
             catalog.Spawn("NoticeBoard", root, new Vector3(3.0f,1.0f,5.30f), Quaternion.identity, new Vector3(.72f,.72f,.72f));
             catalog.Spawn("PottedPlant", root, new Vector3(-7.0f,0f,1.8f), Quaternion.identity, Vector3.one * .68f);
+
+            Vector3[] dividerPositions =
+            {
+                new Vector3(-6.0f,0f,-1.7f), new Vector3(-3.2f,0f,-1.7f),
+                new Vector3(-.6f,0f,-1.7f), new Vector3(2.8f,0f,-1.7f)
+            };
+            foreach (Vector3 position in dividerPositions)
+            {
+                GameObject divider = catalog.Spawn("CubicleDivider", root, position, Quaternion.identity, new Vector3(.72f,.82f,.82f));
+                Tint(divider, PartitionTint);
+            }
+            catalog.Spawn("DeskLamp", root, new Vector3(-4.55f,.79f,-2.55f), Quaternion.Euler(0f,20f,0f), Vector3.one * .62f);
+            catalog.Spawn("DeskLamp", root, new Vector3(2.2f,.79f,-2.55f), Quaternion.Euler(0f,-18f,0f), Vector3.one * .62f);
+            catalog.Spawn("Mug", root, new Vector3(-1.05f,.81f,-2.48f), Quaternion.identity, Vector3.one * .58f);
+            catalog.Spawn("Mouse", root, new Vector3(-1.75f,.81f,-2.78f), Quaternion.identity, Vector3.one * .62f);
+            catalog.Spawn("Mouse", root, new Vector3(1.62f,.81f,-2.78f), Quaternion.identity, Vector3.one * .62f);
+            catalog.Spawn("FileTray", root, new Vector3(-6.35f,.02f,1.1f), Quaternion.Euler(0f,90f,0f), Vector3.one * .75f);
+            catalog.Spawn("RecyclingBin", root, new Vector3(-2.7f,0f,-3.5f), Quaternion.identity, Vector3.one * .72f);
         }
 
         private void BuildLighting()
         {
             RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(.20f, .20f, .17f);
-            RenderSettings.ambientEquatorColor = new Color(.12f, .105f, .085f);
-            RenderSettings.ambientGroundColor = new Color(.038f, .028f, .022f);
-            RenderSettings.ambientIntensity = .50f;
+            RenderSettings.ambientSkyColor = new Color(.30f, .34f, .36f);
+            RenderSettings.ambientEquatorColor = new Color(.17f, .19f, .20f);
+            RenderSettings.ambientGroundColor = new Color(.035f, .045f, .055f);
+            RenderSettings.ambientIntensity = .62f;
             RenderSettings.fog = true;
             RenderSettings.fogColor = new Color(.035f,.026f,.022f);
             RenderSettings.fogMode = FogMode.ExponentialSquared;
@@ -269,13 +308,21 @@ namespace OpenPlan
             keyObject.transform.rotation = Quaternion.Euler(52f,-38f,0f);
             Light key = keyObject.AddComponent<Light>();
             key.type = LightType.Directional;
-            key.color = new Color(1f,.66f,.40f);
-            key.intensity = expanded ? 1.55f : 1.28f;
+            key.color = new Color(1f,.72f,.52f);
+            key.intensity = expanded ? 1.48f : 1.24f;
             key.shadows = LightShadows.Soft;
             key.shadowStrength = .55f;
 
             AddPointLight("Break nook lamp", new Vector3(-4.2f,2.4f,3.5f), new Color(1f,.48f,.22f), 4.2f, 1.9f);
             AddPointLight("Starter utility lamp", new Vector3(.2f,2.3f,4.0f), new Color(.95f,.54f,.28f), 4.4f, 1.7f);
+            Light waterLight = AddPointLight("Water cooler cyan practical", new Vector3(-1.8f,1.9f,4.1f),
+                new Color(.44f,.84f,.91f), 3.4f, 2.25f);
+            waterLight.shadows = LightShadows.Soft;
+            Light smokeLight = AddPointLight("Smoking alcove practical", new Vector3(-10.1f,2.0f,3.8f),
+                new Color(1f,.48f,.25f), 3.8f, 2.1f);
+            smokeLight.shadows = LightShadows.Soft;
+            AddPointLight("Smoking alcove office spill", new Vector3(-8.55f,1.8f,3.15f),
+                new Color(.42f,.72f,.82f), 3.2f, .85f);
             neighborLight = AddPointLight("Neighbor dim practical", new Vector3(10.2f,2.4f,.2f), new Color(.24f,.42f,.46f), 5.2f, expanded ? 1.8f : .48f);
         }
 
@@ -283,6 +330,7 @@ namespace OpenPlan
             bool zoneEnabled, bool expansion, string chairAsset, string monitorAsset, Color chairTint)
         {
             GameObject desk = catalog.Spawn(deskAsset, root, position, facing, Vector3.one);
+            Tint(desk, stableIdentifier.Contains("neighbor") && !expanded ? NeighborTint : CharcoalTint);
             Workstation station = desk.AddComponent<Workstation>();
             int index = Workstations.Count;
             float noise = stableIdentifier.Contains("neighbor") ? .38f : index == 0 ? .22f : index == 1 ? .60f : .42f;
@@ -311,7 +359,7 @@ namespace OpenPlan
         private void AddWall(string identifier, Vector3 position, Quaternion rotation, Vector3 scale)
         {
             GameObject wall = catalog.Spawn("PartialWall", root, position, rotation, scale);
-            Tint(wall, StarterTint);
+            Tint(wall, WallTint);
             AddObstacle(wall, identifier, new Vector3(0f,.75f,0f), new Vector3(4f * scale.x,1.55f,.24f));
         }
 

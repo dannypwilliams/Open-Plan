@@ -160,7 +160,8 @@ namespace OpenPlan
 
             if (office != null && office.Layout != null)
                 office.Layout.Configure(new Bounds(new Vector3(2f, 0f, 0f), new Vector3(25f, 4f, 15.5f)),
-                    new Bounds(new Vector3(2f, 0f, 0f), new Vector3(26f, 1f, 10f)), 13.2f);
+                    new Bounds(new Vector3(2f, 0f, 0f), new Vector3(26f, 1f, 10f)), 13.2f,
+                    new Bounds(new Vector3(3f, 0f, 0f), new Vector3(22f, 1f, 10.6f)));
             office?.MarkExpansionComplete(animateCamera);
             Camera.main?.GetComponent<OfficeCameraRig>()?.ApplyLayoutChange(animateCamera);
         }

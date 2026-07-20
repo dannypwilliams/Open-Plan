@@ -28,4 +28,6 @@ outputs/ReleaseEvidence/*.log
 outputs/TestResults/
 [Tt]est[Rr]esults/
 outputs/*-build.log
+outputs/Checkpoint00-*.log
+outputs/Playtests/EndlessOfficeAlpha/
 Tools/Blender/Logs/*.log

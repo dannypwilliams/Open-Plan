@@ -30,10 +30,15 @@ namespace OpenPlan
         public Vector3 PreCarryPosition => carrySnapshotValid ? preCarryPosition : transform.position;
         public PlacementZone ActivePlacementZone { get; private set; }
         public WorkerCommand LastPlayerCommand { get; private set; }
+        public GroundPlacementCommand LastGroundPlacementCommand { get; private set; }
         public WorkerState LastRestoredCarryState { get; private set; }
         public float Productivity => Runtime.effectiveProductivity;
         public string PersonalityLabel => Definition == null ? string.Empty : PersonalityRules.For(Definition.trait).Label;
-        public string CurrentActivityLabel => Runtime == null ? string.Empty : PrettyState(Runtime.behavior);
+        public bool IsPhoneWorking => Runtime != null && Runtime.behavior == WorkerState.Unassigned && Desk == null &&
+                                      !IsPlayerCarried && !IsFired && !IsAway;
+        public string CurrentActivityLabel => Runtime == null ? string.Empty :
+            IsPhoneWorking ? "Working from phone" :
+            Runtime.behavior == WorkerState.Unassigned && Desk != null ? "Choosing next task" : PrettyState(Runtime.behavior);
         public string CurrentDestinationLabel => DestinationLabel();
         public DistractionKind CurrentDistraction { get; private set; }
         public bool HasPlayerCommandAuthority { get; private set; }
@@ -108,7 +113,12 @@ namespace OpenPlan
             SetState(WorkerState.EnterOffice, .75f);
         }
 
-        public void SetDesk(Workstation desk) => Desk = desk;
+        public void SetDesk(Workstation desk)
+        {
+            Desk = desk;
+            if (desk != null && Runtime != null && Runtime.behavior == WorkerState.Unassigned && !IsPlayerCarried)
+                ReturnToDesk();
+        }
 
         private void Update()
         {
@@ -116,14 +126,14 @@ namespace OpenPlan
             if (IsPlayerCarried)
             {
                 IsMoving = false;
-                Visuals?.Tick(Runtime.behavior, false, Productivity);
+                Visuals?.Tick(PresentationState(), false, Productivity);
                 return;
             }
 
             float dt = Time.deltaTime;
             if (dt <= 0f)
             {
-                Visuals?.Tick(Runtime.behavior, IsMoving, Productivity);
+                Visuals?.Tick(PresentationState(), IsMoving, Productivity);
                 return;
             }
 
@@ -148,8 +158,11 @@ namespace OpenPlan
 
             UpdateProductivity();
             TickState(dt);
-            Visuals?.Tick(Runtime.behavior, IsMoving, Productivity);
+            Visuals?.Tick(PresentationState(), IsMoving, Productivity);
         }
+
+        private WorkerState PresentationState()
+            => IsPhoneWorking ? WorkerState.LookAtPhone : Runtime.behavior;
 
         private void TickState(float dt)
         {
@@ -160,6 +173,15 @@ namespace OpenPlan
                     break;
                 case WorkerState.Unassigned:
                     IsMoving = false;
+                    if (Desk == null)
+                    {
+                        TickPhoneWork(dt);
+                        if (stateTime >= stateLimit) DecidePhoneWork();
+                    }
+                    if (stateTime >= stateLimit)
+                    {
+                        if (Desk != null) ReturnToDesk();
+                    }
                     break;
                 case WorkerState.WalkToDesk:
                 case WorkerState.ReturnToDesk:
@@ -287,6 +309,59 @@ namespace OpenPlan
             if (HasPlayerCommandAuthority && Runtime.focusedWorkSecondsRemaining <= 0f)
                 HasPlayerCommandAuthority = false;
             if (decisionTime <= 0f || stateTime >= stateLimit) Decide();
+        }
+
+        private void TickPhoneWork(float dt)
+        {
+            Runtime.energy = SimulationRules.DecayEnergy(Runtime.energy, dt,
+                ActivityRules.WorkEnergyDrainPerSecond * .82f);
+            Runtime.stress = Mathf.Clamp01(Runtime.stress + dt * ActivityRules.WorkStressGainPerSecond * .75f);
+            float output = Runtime.effectiveProductivity;
+            Runtime.workSeconds += dt * output;
+            office.Cash.AccrueDeskIncome(output, dt);
+            tasks.Contribute(output * dt * .38f);
+            Runtime.positiveInfluence = "Phone work - 50% workstation efficiency";
+            Runtime.negativeInfluence = "Needs a desk";
+        }
+
+        private void DecidePhoneWork()
+        {
+            PersonalityProfile profile = PersonalityRules.For(Definition.trait);
+            decisionTime = random.Range(profile.DecisionMin, profile.DecisionMax);
+            Runtime.autonomyDecisions++;
+
+            if ((Runtime.energy < .25f || Runtime.stress > .84f) &&
+                TryStartAutonomousActivity(PlacementActivity.Rest, ActivityRules.RestDuration,
+                    Definition.trait == WorkerTrait.Lazy ? DistractionKind.ExtendedBreak : DistractionKind.None)) return;
+            if (Runtime.energy < .39f && coffeeCooldown <= 0f && random.Chance(.72f))
+            {
+                SetTargetState(WorkerState.SeekCoffee, office.Coffee.UsePoint.position, 12f);
+                Visuals?.ShowEmote(StatusEmote.Tired, 1.8f);
+                return;
+            }
+            if ((Runtime.energy < .62f || Runtime.mood < .55f) && Runtime.vendingCooldown <= 0f &&
+                office.Cash.CanAfford(ActivityRules.SnackCost) && random.Chance(.20f) &&
+                TryStartAutonomousActivity(PlacementActivity.BuySnack, ActivityRules.VendingDuration,
+                    DistractionKind.None)) return;
+            if (Runtime.waterCooldown <= 0f && random.Chance(.10f + (1f - Runtime.mood) * .12f) &&
+                TryStartAutonomousActivity(PlacementActivity.GetWater, ActivityRules.WaterDuration,
+                    DistractionKind.None)) return;
+            if (Runtime.stress > .58f && Runtime.smokingCooldown <= 0f && random.Chance(.16f) &&
+                TryStartAutonomousActivity(PlacementActivity.Smoke,
+                    PersonalityRules.DistractionDuration(Definition.trait, DistractionKind.ExtendedSmoke),
+                    DistractionKind.ExtendedSmoke)) return;
+            if (random.Chance(profile.DistractionChance))
+            {
+                StartDistraction(PersonalityRules.ChooseDistraction(Definition.trait, random));
+                return;
+            }
+            BeginPhoneWorkInterval();
+        }
+
+        private void BeginPhoneWorkInterval()
+        {
+            PersonalityProfile profile = PersonalityRules.For(Definition.trait);
+            SetState(WorkerState.Unassigned, random.Range(profile.DecisionMin, profile.DecisionMax));
         }
 
         private void Decide()
@@ -469,15 +544,18 @@ namespace OpenPlan
         private void UpdateProductivity()
         {
             float nearby = office.ComputeNearbyModifier(this, out string positive, out string negative);
-            if (IsFired || IsAway || Runtime.behavior != WorkerState.Work)
+            bool phoneWorking = Runtime.behavior == WorkerState.Unassigned && Desk == null;
+            if (IsFired || IsAway || (Runtime.behavior != WorkerState.Work && !phoneWorking))
             {
                 Runtime.effectiveProductivity = 0f;
-                Runtime.negativeInfluence = StateReason(Runtime.behavior);
+                Runtime.negativeInfluence = Runtime.behavior == WorkerState.Unassigned && Desk != null
+                    ? "Resuming autonomy after ground placement"
+                    : StateReason(Runtime.behavior);
                 return;
             }
 
             float noise = Desk != null ? Desk.Noise : .5f;
-            float workstation = Desk != null ? Desk.Modifier : 1f;
+            float workstation = Desk != null ? Desk.Modifier : ProductivityModel.PhoneWorkstationModifier;
             float trait = ProductivityModel.TraitModifier(Definition.trait, noise,
                 office.Workday.Progress01, Runtime.energy);
             float focused = ProductivityModel.FocusedWorkModifier(Runtime.focusedWorkSecondsRemaining);
@@ -492,7 +570,7 @@ namespace OpenPlan
 
         private void GoToDesk()
         {
-            if (Desk == null) { SetState(WorkerState.Unassigned, 9999f); return; }
+            if (Desk == null) { BeginPhoneWorkInterval(); return; }
             SetTargetState(WorkerState.WalkToDesk, Desk.WorkPoint.position, 16f);
         }
 
@@ -506,7 +584,7 @@ namespace OpenPlan
             pendingPlacementActivity = null;
             autonomousActivityDuration = 0f;
             HasPlayerCommandAuthority = false;
-            if (Desk == null) { SetState(WorkerState.Unassigned, 9999f); return; }
+            if (Desk == null) { BeginPhoneWorkInterval(); return; }
             SetTargetState(WorkerState.ReturnToDesk, Desk.WorkPoint.position, 16f);
         }
 
@@ -689,6 +767,23 @@ namespace OpenPlan
             carrySnapshotValid = false;
             Visuals?.SetCarried(false);
             SetTargetState(WorkerState.WalkToPlacement, commandedZone.PositionFor(this), 20f);
+            return true;
+        }
+
+        public bool CommitGroundPlacement(GroundPlacementCommand command)
+        {
+            if (!IsPlayerCarried || !carrySnapshotValid || command == null) return false;
+            InterruptCurrentActivity(false);
+            LastGroundPlacementCommand = command;
+            commandedZone = null;
+            pendingPlacementActivity = null;
+            HasPlayerCommandAuthority = false;
+            activeActivity = null;
+            IsPlayerCarried = false;
+            carrySnapshotValid = false;
+            Visuals?.SetCarried(false);
+            transform.position = new Vector3(command.groundPoint.x, transform.position.y, command.groundPoint.z);
+            SetState(WorkerState.Unassigned, random.Range(2.5f, 4.5f));
             return true;
         }
 
@@ -891,11 +986,11 @@ namespace OpenPlan
             ReturnToDesk();
         }
 
-        private void InterruptCurrentActivity()
+        private void InterruptCurrentActivity(bool applyInterruptionCooldowns = true)
         {
             if (HasPlayerCommandAuthority && Runtime != null)
                 Runtime.focusedWorkSecondsRemaining = 0f;
-            if (Runtime != null && !activityEffectApplied)
+            if (applyInterruptionCooldowns && Runtime != null && !activityEffectApplied)
             {
                 if (Runtime.behavior == WorkerState.UseWaterCooler)
                     Runtime.waterCooldown = ActivityRules.WaterCooldown;
@@ -1048,7 +1143,7 @@ namespace OpenPlan
             if (IsPlayerCarried) return "Player is choosing";
             if (Runtime == null) return "None";
             if (Runtime.behavior == WorkerState.Wander) return "Around the office";
-            if (Runtime.behavior == WorkerState.Unassigned) return "Open desk";
+            if (Runtime.behavior == WorkerState.Unassigned) return Desk == null ? "Phone work" : "Current position";
             if (Runtime.behavior == WorkerState.SeekCoworker && socialPartner != null)
                 return socialPartner.Definition.displayName;
             if (Runtime.behavior == WorkerState.SeekCoffee || Runtime.behavior == WorkerState.UseCoffeeMachine)

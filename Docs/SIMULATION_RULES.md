@@ -6,7 +6,9 @@
 
 ## Worker placement
 
-The public placement activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office. A valid release creates a `WorkerCommand` containing worker, destination, activity, issue time, and player-placement origin. Invalid, occupied, locked, cancelled, or modal-blocked drops never create a command and restore the worker safely.
+The public placement activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office. Activity zones expose an influence radius and priority. Overlap resolution is deterministic: higher priority, then shorter distance, then stable identifier. A release inside influence creates a `WorkerCommand` containing worker, destination, activity, issue time, and player-placement origin.
+
+A release on ordinary unlocked walkable ground creates a first-class `GroundPlacementCommand`. It retains any desk assignment, lowers the worker to the requested point, pauses there briefly, then resumes autonomy and returns to useful behavior. It does not spend money, reserve station capacity, or apply an activity cooldown. Walls, registered obstacles, voids, locked property, unavailable activities, and occupied single-capacity stations reject with a specific reason and restore the complete carry snapshot.
 
 Manual desk placement grants 30 simulation seconds of Focused Work. The productivity modifier is exactly 1.20 while time remains and 1.00 afterward; replacing a worker at a desk refreshes the timer but never stacks the multiplier.
 
@@ -22,6 +24,7 @@ cash earned = effective productivity x simulation seconds x $60 / 60
 - Inverse stress maps linearly from 1.15 at zero stress to 0.55 at full stress.
 - Trait modifiers are contextual and normally range from 0.82 to 1.16.
 - Pausing produces zero simulation delta and therefore zero income.
+- Deskless employees use the same effective-productivity ledger with the workstation factor set exactly once to `0.50`. Their displayed income and accrued cash therefore use the same value. `Unassigned` is presented to the player as `Working from phone`, not as the legacy phone-distraction state.
 
 ## Needs and restorative tradeoffs
 
@@ -33,7 +36,7 @@ Workers reevaluate decisions on bounded, seeded intervals. Morgan has the highes
 
 ## Expansion and hiring
 
-The Starter Office begins with $100. The neighboring unit becomes purchasable at $1,000 and never spends automatically. Confirmation deducts exactly $1,000, opens the connecting wall, removes its obstacle, reveals doorway trim, enables neighbor lighting and navigation, activates three desk locations and a restorative corner, expands camera bounds, and raises worker capacity from three to six. Hiring then becomes available; each new hire arrives unassigned at the entrance and must be placed at an open desk.
+The Starter Office begins with $0. The neighboring unit becomes purchasable at $1,000 and never spends automatically. Confirmation deducts exactly $1,000, opens the connecting wall, removes its obstacle, reveals doorway trim, enables neighbor lighting and navigation, activates three desk locations and a restorative corner, and expands camera and walkable bounds. Hiring is available before or after expansion whenever the selected candidate is affordable. There is no employee cap derived from desk count; the HUD reports Team and Desks separately. A hire without an open desk works from a phone at 50% workstation efficiency and can take autonomous restorative breaks.
 
 ## Release scenario contract
 

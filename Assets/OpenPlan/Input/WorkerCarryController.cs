@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +23,9 @@ namespace OpenPlan
         public WorkerAgent HoveredWorker { get; private set; }
         public PlacementZone TargetZone { get; private set; }
         public bool HasValidTarget { get; private set; }
+        public bool HasValidGround { get; private set; }
+        public Vector3 CurrentGroundPoint { get; private set; }
+        public string CurrentGroundRejectionReason { get; private set; }
         public string FeedbackText { get; private set; }
         public string LastRejectionReason { get; private set; }
         public bool BlocksWorldInput => Phase != WorkerCarryPhase.Idle || uiGesture;
@@ -48,6 +52,8 @@ namespace OpenPlan
         private Vector3 animationEnd;
         private float animationElapsed;
         private PlacementZone pendingDestination;
+        private bool pendingGroundPlacement;
+        private Vector3 pendingGroundPoint;
         private string pendingFailureReason;
         private RectTransform feedbackRoot;
         private Image feedbackBackground;
@@ -134,7 +140,7 @@ namespace OpenPlan
                     uiGesture = false;
                     return;
                 }
-                if (Phase == WorkerCarryPhase.Carrying) ReleaseAtZone(TargetZone);
+                if (Phase == WorkerCarryPhase.Carrying) ReleaseAtGround(CurrentGroundPoint, TargetZone);
                 else if (Phase == WorkerCarryPhase.Pressed)
                 {
                     Phase = WorkerCarryPhase.Idle;
@@ -205,6 +211,11 @@ namespace OpenPlan
             Vector3 position = immediate ? desired : Vector3.Lerp(CarriedWorker.transform.position, desired,
                 1f - Mathf.Exp(-18f * Time.unscaledDeltaTime));
             CarriedWorker.SetPlayerCarryPosition(position);
+            CurrentGroundPoint = new Vector3(groundPoint.x, groundY, groundPoint.z);
+            string groundReason = null;
+            HasValidGround = office != null && office.Layout != null &&
+                office.Layout.CanPlaceWorkerAt(CurrentGroundPoint, out groundReason);
+            CurrentGroundRejectionReason = HasValidGround ? null : groundReason;
             SetTargetZone(zoneUnderPointer);
             PositionFeedback(screenPosition);
         }
@@ -237,6 +248,37 @@ namespace OpenPlan
             Phase = WorkerCarryPhase.Placing;
             ClearZoneStates();
             ShowFeedback("PLACE  " + destination.ActivityLabel.ToUpperInvariant(), true, pointerScreenPosition);
+        }
+
+        public void ReleaseAtGround(Vector3 groundPoint, PlacementZone destination = null)
+        {
+            if (destination != null)
+            {
+                ReleaseAtZone(destination);
+                return;
+            }
+            if (Phase != WorkerCarryPhase.Carrying || CarriedWorker == null) return;
+            string reason;
+            if (office == null || office.Layout == null)
+            {
+                BeginReturn("The office floor is unavailable.", true);
+                return;
+            }
+            if (!office.Layout.CanPlaceWorkerAt(groundPoint, out reason))
+            {
+                BeginReturn(reason ?? "That point is not walkable.", true);
+                return;
+            }
+
+            pendingDestination = null;
+            pendingGroundPlacement = true;
+            pendingGroundPoint = groundPoint;
+            animationStart = CarriedWorker.transform.position;
+            animationEnd = new Vector3(groundPoint.x, CarriedWorker.PreCarryPosition.y, groundPoint.z);
+            animationElapsed = 0f;
+            Phase = WorkerCarryPhase.Placing;
+            ClearZoneStates();
+            ShowFeedback("PLACE HERE  AUTONOMY", true, pointerScreenPosition);
         }
 
         public void CancelCarry(bool immediate, string reason = null)
@@ -298,7 +340,10 @@ namespace OpenPlan
             {
                 WorkerAgent worker = CarriedWorker;
                 PlacementZone destination = pendingDestination;
-                if (office.TryIssueWorkerCommand(worker, destination, out _, out string reason))
+                bool issued = pendingGroundPlacement
+                    ? office.TryIssueGroundPlacementCommand(worker, pendingGroundPoint, out _, out string reason)
+                    : office.TryIssueWorkerCommand(worker, destination, out _, out reason);
+                if (issued)
                 {
                     audioDirector?.PlayPlacementSuccess();
                     ResetController(false);
@@ -345,8 +390,11 @@ namespace OpenPlan
             if (CarriedWorker == null) return;
             if (TargetZone == null)
             {
-                HasValidTarget = false;
-                ShowFeedback("INVALID  DROP ON A MARKED AREA", false, pointerScreenPosition);
+                HasValidTarget = HasValidGround;
+                string feedback = HasValidGround ? "PLACE HERE  AUTONOMY" :
+                    "INVALID  " + (CurrentGroundRejectionReason ?? "NOT WALKABLE").ToUpperInvariant();
+                ShowFeedback(feedback,
+                    HasValidGround, pointerScreenPosition);
                 return;
             }
             HasValidTarget = TargetZone.CanAcceptWorker(CarriedWorker, out string reason);
@@ -393,19 +441,30 @@ namespace OpenPlan
         }
 
         private PlacementZone ZoneAtGroundPoint(Vector3 point)
+            => ResolveInfluencingZone(office == null ? null : office.PlacementZones, point);
+
+        public static PlacementZone ResolveInfluencingZone(IEnumerable<PlacementZone> zones, Vector3 point)
         {
-            PlacementZone nearest = null;
-            float best = float.MaxValue;
-            foreach (PlacementZone zone in office.PlacementZones)
+            if (zones == null) return null;
+            PlacementZone best = null;
+            int bestPriority = int.MinValue;
+            float bestDistance = float.MaxValue;
+            foreach (PlacementZone zone in zones)
             {
-                if (zone == null || zone.FootprintCollider == null) continue;
-                Bounds bounds = zone.FootprintBounds;
-                Vector3 probe = new Vector3(point.x, bounds.center.y, point.z);
-                if (!bounds.Contains(probe)) continue;
+                if (zone == null || !zone.ContainsInfluence(point)) continue;
                 float distance = (zone.PlacementPoint.position - point).sqrMagnitude;
-                if (distance < best) { best = distance; nearest = zone; }
+                bool higherPriority = zone.InfluencePriority > bestPriority;
+                bool nearerAtSamePriority = zone.InfluencePriority == bestPriority && distance < bestDistance - .0001f;
+                bool stableTieBreak = zone.InfluencePriority == bestPriority &&
+                    Mathf.Abs(distance - bestDistance) <= .0001f &&
+                    string.CompareOrdinal(zone.StableIdentifier ?? string.Empty,
+                        best == null ? string.Empty : best.StableIdentifier ?? string.Empty) < 0;
+                if (best != null && !higherPriority && !nearerAtSamePriority && !stableTieBreak) continue;
+                best = zone;
+                bestPriority = zone.InfluencePriority;
+                bestDistance = distance;
             }
-            return nearest;
+            return best;
         }
 
         private Vector3 GroundPoint(Vector2 screenPosition, Vector3 fallback)
@@ -486,7 +545,11 @@ namespace OpenPlan
             CarriedWorker = null;
             pressedWorker = null;
             pendingDestination = null;
+            pendingGroundPlacement = false;
+            pendingGroundPoint = Vector3.zero;
             pendingFailureReason = null;
+            HasValidGround = false;
+            CurrentGroundRejectionReason = null;
             uiGesture = false;
             ClearFeedback();
         }

@@ -1,22 +1,24 @@
-# Test Report
+# Test Report — Endless Office Alpha Checkpoint 00
 
-Worker-placement friend-demo release on Unity 6000.5.1f1:
+Foundation checkpoint on Unity 6000.5.1f1:
 
 | Suite | Passed | Failed | Duration |
 |---|---:|---:|---:|
-| EditMode | 49 | 0 | 0.222 s |
-| PlayMode | 55 | 0 | 90.154 s |
-| Total | 104 | 0 | 90.376 s |
+| EditMode | 58 | 0 | 0.255 s |
+| PlayMode | 59 | 0 | 101.333 s |
+| Total | 117 | 0 | 101.588 s |
 
-EditMode coverage includes deterministic simulation speed, cash, productivity, exact activity effects, personalities, expansion affordability, tutorial contracts, the runtime camera-profile resource, and five release scenarios across 20 fixed seeds. PlayMode covers stage initialization, pickup/drag/cancel/reject, all activity lifecycles and cleanup, needs, personality status, cash, expansion and wall state, hiring after expansion, tutorial progression, modal ownership, restart behavior, UI at 1280x720 and 1920x1080, and the Established Office systems.
+EditMode coverage includes normalized ten-notch zoom, close/overview clamping, continuous trackpad-scale input, runtime camera sensitivity, walkable/void/obstacle/locked-property validation, influence beyond visible footprints, deterministic overlap priority and tie-breaking, exact `$0` cash behavior, the exact-once 50% phone modifier, five foundational needs, deterministic 12-strength/12-liability pairing, existing activity/economy rules, tutorial contracts, and release balance scenarios.
 
-## Standalone and package gates
+PlayMode coverage includes the three-worker/three-desk/`$0` start, ordinary-ground placement, desk preservation, autonomous resumption, cooldown/cash/need preservation at command commit, activity influence beyond the footprint, locked/obstacle/void and occupied rejection, phone-work labeling/accrual/pause/autonomous breaks, pre-expansion fourth-worker hiring, later desk assignment, expansion, newly unlocked ground placement, restart cleanup, menu return, all existing activity lifecycles, tutorial behavior, both UI resolutions, and the preserved Established Office systems.
 
-- Input smoke: 12/12 at 1280x720 and 12/12 at 1920x1080.
-- Water lifecycle smoke: 9/9.
-- Twenty-minute simulated behavior soak at 20x: 27 observations passed; 57 distractions; no permanent stuck/idle worker, stale carry, orphaned smoking effect, missing roster member, or capacity violation.
-- Friend-demo extracted package: 86 checks, 0 failures, 21 real-game screenshots, no artificial purchase funds.
-- Package lifecycle checks passed for Starter, pre-expanded Starter, and Established stages, including restart, menu return, and clean quit. The Established run also passed hire, reassignment, fire, and finish-day behavior.
-- Build: non-development Windows x64 player succeeded at 103,051,945 reported bytes.
+## Checkpoint package gate
 
-The exact extracted executable completed pickup, valid and invalid placement, all six player activities, a natural distraction and redirection, live income to $1,000, exact purchase deduction, wall opening, continued earnings, a new hire placement, Established preview launch, menu return, and clean quit.
+- Windows x64 player is built with Development mode disabled from the committed source.
+- The ZIP is created fresh, SHA-256 hashed, extracted to a separate temporary directory, and never tested in place.
+- The exact extracted `OpenPlan.exe` starts at the main menu, creates a new Starter Office campaign, verifies `$0`, zoom, ground placement/resumption, proximity influence, locked restoration, real earnings, hiring before expansion, a four-person/three-desk team, phone-work accrual and pause, menu return, and clean quit.
+- Standalone cash is earned through normal work; artificial cash injection and private capture-state mutation are not used.
+- Eleven checkpoint screenshots are dimension-checked: ten required 1920×1080 views plus a 1280×720 HUD regression view.
+- Exact final durations, build bytes, commit, ZIP hash, and smoke result are recorded in the generated `TEST_SUMMARY.md` and `CHECKPOINT_MANIFEST.json` beside the player.
+
+Historical friend-demo, balance, soak, package, and performance evidence remains preserved and is not presented as newly recaptured Checkpoint 00 evidence.
