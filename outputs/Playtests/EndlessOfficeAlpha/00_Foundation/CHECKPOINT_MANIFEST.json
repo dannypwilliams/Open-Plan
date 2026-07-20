@@ -1,0 +1,36 @@
+{
+    "productName":  "OPEN PLAN",
+    "checkpointId":  "00_Foundation",
+    "branch":  "codex/endless-office-alpha",
+    "sourceCommit":  "317343616df6fd9456e6102aceed3d9b1ae612b6",
+    "unityVersion":  "6000.5.1f1",
+    "buildConfiguration":  "Windows x64; non-development; Mono scripting backend",
+    "buildTimestampUtc":  "2026-07-20T12:48:24.293Z",
+    "buildSizeBytes":  103917474,
+    "editMode":  {
+                     "passed":  58,
+                     "failed":  0,
+                     "skipped":  0,
+                     "total":  58,
+                     "durationSeconds":  0.1808146
+                 },
+    "playMode":  {
+                     "passed":  59,
+                     "failed":  0,
+                     "skipped":  0,
+                     "total":  59,
+                     "durationSeconds":  97.6505575
+                 },
+    "zipFilename":  "EndlessOfficeAlpha-00-Foundation.zip",
+    "zipSha256":  "923AA2389FD1FD91BDD5D85BEC6C3B072405D8DAB69893BEDE2EFB2BEB66CC5D",
+    "knownLimitations":  [
+                             "Live five-need simulation and autonomous five-need recovery are not active yet.",
+                             "Qualification catalogs exist, but employees are not yet assigned one strength and one liability in live campaigns.",
+                             "Skill growth, training, workdays, contracts, payroll, reputation, incidents, and furniture build mode remain future checkpoints.",
+                             "Campaign save/load is not implemented; returning to the menu or quitting resets the session.",
+                             "The existing neighboring unit is the only physical expansion, and post-expansion endless objectives remain future work.",
+                             "Worker navigation is direct rather than obstacle-aware navmesh pathfinding.",
+                             "Controller support, remappable controls, localization, settings, and accessibility narration are not included."
+                         ],
+    "extractedPackageSmokeTestPassed":  true
+}

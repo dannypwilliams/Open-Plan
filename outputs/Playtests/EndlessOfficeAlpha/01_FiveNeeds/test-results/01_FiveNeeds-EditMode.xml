@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="98" result="Passed" total="98" passed="98" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.462003">
+  <test-suite type="TestSuite" id="1000" name="OPEN PLAN" fullname="OPEN PLAN" runstate="Runnable" testcasecount="98" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.462003" total="98" passed="98" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1103" name="OpenPlan.EditModeTests.dll" fullname="C:/Users/danny/Documents/GitHub/Silly Office Sim/Library/ScriptAssemblies/OpenPlan.EditModeTests.dll" runstate="Runnable" testcasecount="98" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.452856" total="98" passed="98" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="31244" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1104" name="OpenPlan" fullname="OpenPlan" runstate="Runnable" testcasecount="98" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.452398" total="98" passed="98" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1105" name="Tests" fullname="OpenPlan.Tests" runstate="Runnable" testcasecount="98" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.452143" total="98" passed="98" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="FiveNeedsSimulationTests" fullname="OpenPlan.Tests.FiveNeedsSimulationTests" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.161041" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1022" name="AwayRecoversAllFiveNeedsAndStress" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.AwayRecoversAllFiveNeedsAndStress" methodname="AwayRecoversAllFiveNeedsAndStress" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="167510870" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.021701" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="BoundaryStatusRulesAreDeterministic" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.BoundaryStatusRulesAreDeterministic" methodname="BoundaryStatusRulesAreDeterministic" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1883818102" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002226" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1028" name="CaffeinatedCoffeeHasStrongerEnergyEffect" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.CaffeinatedCoffeeHasStrongerEnergyEffect" methodname="CaffeinatedCoffeeHasStrongerEnergyEffect" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1515949852" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.003634" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="CatalogContainsExactlyFiveUniqueDefinitions" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.CatalogContainsExactlyFiveUniqueDefinitions" methodname="CatalogContainsExactlyFiveUniqueDefinitions" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="966441916" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.004460" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="CatalogDefaultsMatchFiveNeedsContract" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.CatalogDefaultsMatchFiveNeedsContract" methodname="CatalogDefaultsMatchFiveNeedsContract" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="434773764" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000676" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1038" name="ChangeCopyReflectsNeedDirection" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.ChangeCopyReflectsNeedDirection" methodname="ChangeCopyReflectsNeedDirection" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="142057225" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002115" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="CoffeeRecoversEnergyAndInspirationButRaisesBathroomUrgency" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.CoffeeRecoversEnergyAndInspirationButRaisesBathroomUrgency" methodname="CoffeeRecoversEnergyAndInspirationButRaisesBathroomUrgency" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1022587160" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000452" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1041" name="DeterministicMatrixRepeatsWithoutDivergence" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.DeterministicMatrixRepeatsWithoutDivergence" methodname="DeterministicMatrixRepeatsWithoutDivergence" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="431493710" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.006980" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="DifferentTimePartitionsProduceEquivalentResults" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.DifferentTimePartitionsProduceEquivalentResults" methodname="DifferentTimePartitionsProduceEquivalentResults" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1714822953" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000813" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1032" name="EveryNeedInfluencesProductivityMonotonically" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.EveryNeedInfluencesProductivityMonotonically" methodname="EveryNeedInfluencesProductivityMonotonically" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1544293947" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000852" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1036" name="FutureSystemHooksAreNeutral" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.FutureSystemHooksAreNeutral" methodname="FutureSystemHooksAreNeutral" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="151049143" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000530" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1010" name="GetSetAndChangeCoverEveryNeed" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.GetSetAndChangeCoverEveryNeed" methodname="GetSetAndChangeCoverEveryNeed" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1513435448" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000566" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="HighGoodThresholdsAreCentralized" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.HighGoodThresholdsAreCentralized" methodname="HighGoodThresholdsAreCentralized" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="386554461" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000458" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1012" name="InvalidNumbersRecoverToDefaults" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.InvalidNumbersRecoverToDefaults" methodname="InvalidNumbersRecoverToDefaults" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="896244038" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000367" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="MoodIsAnAliasForHappiness" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.MoodIsAnAliasForHappiness" methodname="MoodIsAnAliasForHappiness" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="390937012" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001041" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1033" name="NeedProductivityPenaltyIsGraduatedNotImmediateCollapse" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.NeedProductivityPenaltyIsGraduatedNotImmediateCollapse" methodname="NeedProductivityPenaltyIsGraduatedNotImmediateCollapse" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1126076965" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000804" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1040" name="OneHundredMinuteThirtyWorkerMixedSoakHasNoInvalidOrPauseValues" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.OneHundredMinuteThirtyWorkerMixedSoakHasNoInvalidOrPauseValues" methodname="OneHundredMinuteThirtyWorkerMixedSoakHasNoInvalidOrPauseValues" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1413730655" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.070449" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1016" name="PassiveTickMovesAllNeedsInTheirContractDirection" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.PassiveTickMovesAllNeedsInTheirContractDirection" methodname="PassiveTickMovesAllNeedsInTheirContractDirection" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="498492852" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000483" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1034" name="PhoneModifierAppliesExactlyOnceWithFiveNeeds" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.PhoneModifierAppliesExactlyOnceWithFiveNeeds" methodname="PhoneModifierAppliesExactlyOnceWithFiveNeeds" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1212348861" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000336" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="PhoneWorkUsesTheSameContinuousNeedPathAsDeskWork" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.PhoneWorkUsesTheSameContinuousNeedPathAsDeskWork" methodname="PhoneWorkUsesTheSameContinuousNeedPathAsDeskWork" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="411613692" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000359" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="PositiveNeedsAreHighGood" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.PositiveNeedsAreHighGood" methodname="PositiveNeedsAreHighGood" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="314443697" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000230" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1023" name="RestRecoversPositiveNeedsWithoutResettingUrgencies" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.RestRecoversPositiveNeedsWithoutResettingUrgencies" methodname="RestRecoversPositiveNeedsWithoutResettingUrgencies" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="908655617" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001812" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1030" name="RestroomLowersBathroomUrgencyOnce" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.RestroomLowersBathroomUrgencyOnce" methodname="RestroomLowersBathroomUrgencyOnce" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="337389599" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000593" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1013" name="SeededInitializationRepeats" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SeededInitializationRepeats" methodname="SeededInitializationRepeats" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1129322675" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000727" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1014" name="SeededInitializationVariesByWorkerIdentity" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SeededInitializationVariesByWorkerIdentity" methodname="SeededInitializationVariesByWorkerIdentity" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="260986215" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002477" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1015" name="SeededOffsetsRemainSmallAndHealthy" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SeededOffsetsRemainSmallAndHealthy" methodname="SeededOffsetsRemainSmallAndHealthy" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="324941099" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000683" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="SetAndChangeClampEveryNeed" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SetAndChangeClampEveryNeed" methodname="SetAndChangeClampEveryNeed" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="628209420" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000718" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1020" name="SimulationSpeedIsProportionalThroughScaledDelta" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SimulationSpeedIsProportionalThroughScaledDelta" methodname="SimulationSpeedIsProportionalThroughScaledDelta" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1561179842" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000533" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="SmokingRelievesStressWithoutChangingHunger" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SmokingRelievesStressWithoutChangingHunger" methodname="SmokingRelievesStressWithoutChangingHunger" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1097510167" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000891" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1025" name="SnackLowersHungerExactlyOnce" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SnackLowersHungerExactlyOnce" methodname="SnackLowersHungerExactlyOnce" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="550414690" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000690" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1031" name="SocialTimeImprovesHappinessAndInspiration" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.SocialTimeImprovesHappinessAndInspiration" methodname="SocialTimeImprovesHappinessAndInspiration" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1147452175" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000522" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1037" name="StatusAndRecoveryCopyExistsForEveryNeed" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.StatusAndRecoveryCopyExistsForEveryNeed" methodname="StatusAndRecoveryCopyExistsForEveryNeed" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="63733847" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001157" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="StressRemainsOutsideFiveNeedCatalog" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.StressRemainsOutsideFiveNeedCatalog" methodname="StressRemainsOutsideFiveNeedCatalog" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1256369701" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001692" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="UrgencyNeedsAreLowGood" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.UrgencyNeedsAreLowGood" methodname="UrgencyNeedsAreLowGood" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1021732904" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000259" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1007" name="UrgencyThresholdsAreCentralized" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.UrgencyThresholdsAreCentralized" methodname="UrgencyThresholdsAreCentralized" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1509191928" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000375" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1026" name="VendingMalfunctionDoesNotGrantFullRecovery" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.VendingMalfunctionDoesNotGrantFullRecovery" methodname="VendingMalfunctionDoesNotGrantFullRecovery" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1558733961" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000252" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="VeryLargeDeltaRemainsFiniteAndBounded" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.VeryLargeDeltaRemainsFiniteAndBounded" methodname="VeryLargeDeltaRemainsFiniteAndBounded" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="765153579" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000712" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1024" name="WaterHydratesButRaisesBathroomUrgency" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.WaterHydratesButRaisesBathroomUrgency" methodname="WaterHydratesButRaisesBathroomUrgency" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="907664219" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000367" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="WorkDrainsEnergyFasterThanIdle" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.WorkDrainsEnergyFasterThanIdle" methodname="WorkDrainsEnergyFasterThanIdle" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="1296863327" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000427" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1019" name="ZeroDeltaFreezesNeedsAndStress" fullname="OpenPlan.Tests.FiveNeedsSimulationTests.ZeroDeltaFreezesNeedsAndStress" methodname="ZeroDeltaFreezesNeedsAndStress" classname="OpenPlan.Tests.FiveNeedsSimulationTests" runstate="Runnable" seed="251553278" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000277" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1042" name="SimulationTests" fullname="OpenPlan.Tests.SimulationTests" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" testcasecount="58" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.288085" total="58" passed="58" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1055" name="ActivityDurationsCostsAndCooldowns_AreContractValues" fullname="OpenPlan.Tests.SimulationTests.ActivityDurationsCostsAndCooldowns_AreContractValues" methodname="ActivityDurationsCostsAndCooldowns_AreContractValues" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2127834500" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001589" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1053" name="ActivityEffects_AreExactAndNeedsClamp" fullname="OpenPlan.Tests.SimulationTests.ActivityEffects_AreExactAndNeedsClamp" methodname="ActivityEffects_AreExactAndNeedsClamp" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1571911889" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000813" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1087" name="CameraZoomBounds_AreClamped" fullname="OpenPlan.Tests.SimulationTests.CameraZoomBounds_AreClamped" methodname="CameraZoomBounds_AreClamped" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1341471459" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000442" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1088" name="CameraZoomProfile_IsAValidRuntimeResource" fullname="OpenPlan.Tests.SimulationTests.CameraZoomProfile_IsAValidRuntimeResource" methodname="CameraZoomProfile_IsAValidRuntimeResource" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="801711463" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.009059" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1089" name="CandidateReplacement_SeededPoolCanProduceAllTraits" fullname="OpenPlan.Tests.SimulationTests.CandidateReplacement_SeededPoolCanProduceAllTraits" methodname="CandidateReplacement_SeededPoolCanProduceAllTraits" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="426023395" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001431" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1079" name="CarryGesture_EscapeAndRightMouseAreBothCancellationInputs" fullname="OpenPlan.Tests.SimulationTests.CarryGesture_EscapeAndRightMouseAreBothCancellationInputs" methodname="CarryGesture_EscapeAndRightMouseAreBothCancellationInputs" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1378048169" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000417" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1078" name="CarryGesture_UsesStrictPixelOrHoldThreshold" fullname="OpenPlan.Tests.SimulationTests.CarryGesture_UsesStrictPixelOrHoldThreshold" methodname="CarryGesture_UsesStrictPixelOrHoldThreshold" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="60669113" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000358" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1057" name="CashDirector_StartsAtZeroAndAccruesContinuousIncome" fullname="OpenPlan.Tests.SimulationTests.CashDirector_StartsAtZeroAndAccruesContinuousIncome" methodname="CashDirector_StartsAtZeroAndAccruesContinuousIncome" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="720246309" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.003112" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1051" name="CoffeeRestore_CaffeinatedGetsLargerBoost" fullname="OpenPlan.Tests.SimulationTests.CoffeeRestore_CaffeinatedGetsLargerBoost" methodname="CoffeeRestore_CaffeinatedGetsLargerBoost" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="34732571" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000518" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1093" name="EmoteFallbacksAreAsciiAndRejectMissingGlyphSymbols" fullname="OpenPlan.Tests.SimulationTests.EmoteFallbacksAreAsciiAndRejectMissingGlyphSymbols" methodname="EmoteFallbacksAreAsciiAndRejectMissingGlyphSymbols" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1616007894" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001972" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1081" name="EndOfDayCalculation_UsesAllCosts" fullname="OpenPlan.Tests.SimulationTests.EndOfDayCalculation_UsesAllCosts" methodname="EndOfDayCalculation_UsesAllCosts" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="758742972" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000236" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1050" name="EnergyDecay_IsBounded" fullname="OpenPlan.Tests.SimulationTests.EnergyDecay_IsBounded" methodname="EnergyDecay_IsBounded" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1851391208" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000256" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1092" name="EverySeededDistractionDurationStaysInsideReadableContract" fullname="OpenPlan.Tests.SimulationTests.EverySeededDistractionDurationStaysInsideReadableContract" methodname="EverySeededDistractionDurationStaysInsideReadableContract" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="747891837" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000549" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1094" name="ExpansionAffordabilityRequiresFullPriceAndNeverAutoSpends" fullname="OpenPlan.Tests.SimulationTests.ExpansionAffordabilityRequiresFullPriceAndNeverAutoSpends" methodname="ExpansionAffordabilityRequiresFullPriceAndNeverAutoSpends" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="224011335" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000277" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1095" name="ExpansionExpectedAffordabilityUsesStartingTeamAndSnackOverhead" fullname="OpenPlan.Tests.SimulationTests.ExpansionExpectedAffordabilityUsesStartingTeamAndSnackOverhead" methodname="ExpansionExpectedAffordabilityUsesStartingTeamAndSnackOverhead" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1270047381" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000224" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1073" name="FiringCost_IsTracked" fullname="OpenPlan.Tests.SimulationTests.FiringCost_IsTracked" methodname="FiringCost_IsTracked" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2073620355" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002127" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="FocusedWorkModifier_IsTwentyPercentAndDoesNotStack" fullname="OpenPlan.Tests.SimulationTests.FocusedWorkModifier_IsTwentyPercentAndDoesNotStack" methodname="FocusedWorkModifier_IsTwentyPercentAndDoesNotStack" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="430549883" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000455" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1065" name="FoundationDefinesExactlyFiveEmployeeNeeds" fullname="OpenPlan.Tests.SimulationTests.FoundationDefinesExactlyFiveEmployeeNeeds" methodname="FoundationDefinesExactlyFiveEmployeeNeeds" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="841151296" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000569" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1097" name="HelpCopyDocumentsMouseKeyboardAndNonColorPlacementCues" fullname="OpenPlan.Tests.SimulationTests.HelpCopyDocumentsMouseKeyboardAndNonColorPlacementCues" methodname="HelpCopyDocumentsMouseKeyboardAndNonColorPlacementCues" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="166199065" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002066" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1072" name="HiringCapacity_IsTwelve" fullname="OpenPlan.Tests.SimulationTests.HiringCapacity_IsTwelve" methodname="HiringCapacity_IsTwelve" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1865188581" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000234" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1071" name="HiringCost_DeductsCashAndTracksCost" fullname="OpenPlan.Tests.SimulationTests.HiringCost_DeductsCashAndTracksCost" methodname="HiringCost_DeductsCashAndTracksCost" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="902625899" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000553" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1049" name="InverseStressModifier_RewardLowStress" fullname="OpenPlan.Tests.SimulationTests.InverseStressModifier_RewardLowStress" methodname="InverseStressModifier_RewardLowStress" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1872489715" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000201" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1076" name="LegacyCaptureSelection_IsEstablishedUnlessExplicitlyOverridden" fullname="OpenPlan.Tests.SimulationTests.LegacyCaptureSelection_IsEstablishedUnlessExplicitlyOverridden" methodname="LegacyCaptureSelection_IsEstablishedUnlessExplicitlyOverridden" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="702421515" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001014" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1052" name="MoodChanges_ClampToValidRange" fullname="OpenPlan.Tests.SimulationTests.MoodChanges_ClampToValidRange" methodname="MoodChanges_ClampToValidRange" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2087393296" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000359" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1059" name="NormalizedZoomAcceptsContinuousTrackpadScaleInputAndClamps" fullname="OpenPlan.Tests.SimulationTests.NormalizedZoomAcceptsContinuousTrackpadScaleInputAndClamps" methodname="NormalizedZoomAcceptsContinuousTrackpadScaleInputAndClamps" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="452683010" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000651" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1058" name="NormalizedZoomTraversesOverviewToCloseInAboutTenNotches" fullname="OpenPlan.Tests.SimulationTests.NormalizedZoomTraversesOverviewToCloseInAboutTenNotches" methodname="NormalizedZoomTraversesOverviewToCloseInAboutTenNotches" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1299281352" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000296" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1062" name="OfficeLayoutAcceptsUnlockedGroundAndRejectsVoidAndObstacles" fullname="OpenPlan.Tests.SimulationTests.OfficeLayoutAcceptsUnlockedGroundAndRejectsVoidAndObstacles" methodname="OfficeLayoutAcceptsUnlockedGroundAndRejectsVoidAndObstacles" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="593604715" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.006949" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1063" name="OfficeLayoutDistinguishesLockedPropertyAndAdditionalWalkableGround" fullname="OpenPlan.Tests.SimulationTests.OfficeLayoutDistinguishesLockedPropertyAndAdditionalWalkableGround" methodname="OfficeLayoutDistinguishesLockedPropertyAndAdditionalWalkableGround" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="656591700" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.001456" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1091" name="PersonalityProfiles_EncodeTheStartingWorkerDifferences" fullname="OpenPlan.Tests.SimulationTests.PersonalityProfiles_EncodeTheStartingWorkerDifferences" methodname="PersonalityProfiles_EncodeTheStartingWorkerDifferences" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2026856330" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000845" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1064" name="PhoneWorkAppliesTheFiftyPercentWorkstationModifierExactlyOnce" fullname="OpenPlan.Tests.SimulationTests.PhoneWorkAppliesTheFiftyPercentWorkstationModifierExactlyOnce" methodname="PhoneWorkAppliesTheFiftyPercentWorkstationModifierExactlyOnce" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2079903207" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000701" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1060" name="PlacementZoneInfluenceExtendsBeyondVisibleFootprint" fullname="OpenPlan.Tests.SimulationTests.PlacementZoneInfluenceExtendsBeyondVisibleFootprint" methodname="PlacementZoneInfluenceExtendsBeyondVisibleFootprint" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="831573784" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.094898" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1061" name="PlacementZoneOverlapUsesPriorityDistanceAndStableIdentifierDeterministically" fullname="OpenPlan.Tests.SimulationTests.PlacementZoneOverlapUsesPriorityDistanceAndStableIdentifierDeterministically" methodname="PlacementZoneOverlapUsesPriorityDistanceAndStableIdentifierDeterministically" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1790677468" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.004151" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1046" name="ProductivityFormula_Clamps" fullname="OpenPlan.Tests.SimulationTests.ProductivityFormula_Clamps" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002307" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1044" name="ProductivityFormula_Clamps(0.0f,0.0f,0.0f,1.0f,0.1f)" fullname="OpenPlan.Tests.SimulationTests.ProductivityFormula_Clamps(0.0f,0.0f,0.0f,1.0f,0.1f)" methodname="ProductivityFormula_Clamps" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="101824787" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000484" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="ProductivityFormula_Clamps(9.0f,1.0f,1.0f,0.0f,2.5f)" fullname="OpenPlan.Tests.SimulationTests.ProductivityFormula_Clamps(9.0f,1.0f,1.0f,0.0f,2.5f)" methodname="ProductivityFormula_Clamps" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1721301918" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000126" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1043" name="ProductivityFormula_UsesReadableFactors" fullname="OpenPlan.Tests.SimulationTests.ProductivityFormula_UsesReadableFactors" methodname="ProductivityFormula_UsesReadableFactors" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1148377809" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.000200" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1066" name="QualificationRollAlwaysReturnsOneOfEachPolarityDeterministically" fullname="OpenPlan.Tests.SimulationTests.QualificationRollAlwaysReturnsOneOfEachPolarityDeterministically" methodname="QualificationRollAlwaysReturnsOneOfEachPolarityDeterministically" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1170029654" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.002662" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1098" name="ReleaseActiveScenario_ReachesExpansionWindowWithMeasuredFocusedWork" fullname="OpenPlan.Tests.SimulationTests.ReleaseActiveScenario_ReachesExpansionWindowWithMeasuredFocusedWork" methodname="ReleaseActiveScenario_ReachesExpansionWindowWithMeasuredFocusedWork" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1495224262" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.015716" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1102" name="ReleaseExpansionScenario_ExpandsHiresAndContinuesPlaying" fullname="OpenPlan.Tests.SimulationTests.ReleaseExpansionScenario_ExpandsHiresAndContinuesPlaying" methodname="ReleaseExpansionScenario_ExpandsHiresAndContinuesPlaying" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="680278549" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.026824" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1099" name="ReleasePassiveScenario_IsSlowerButAlwaysRecovers" fullname="OpenPlan.Tests.SimulationTests.ReleasePassiveScenario_IsSlowerButAlwaysRecovers" methodname="ReleasePassiveScenario_IsSlowerButAlwaysRecovers" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1446353890" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.028724" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1100" name="ReleasePoorScenario_LosesTimeAndMoneyWithoutForcedFailure" fullname="OpenPlan.Tests.SimulationTests.ReleasePoorScenario_LosesTimeAndMoneyWithoutForcedFailure" methodname="ReleasePoorScenario_LosesTimeAndMoneyWithoutForcedFailure" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2078026225" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:11Z" duration="0.023950" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1101" name="ReleaseRecoveryScenario_RestoresProductivityAfterIntervention" fullname="OpenPlan.Tests.SimulationTests.ReleaseRecoveryScenario_RestoresProductivityAfterIntervention" methodname="ReleaseRecoveryScenario_RestoresProductivityAfterIntervention" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2022908330" result="Passed" start-time="2026-07-20 16:47:11Z" end-time="2026-07-20 16:47:12Z" duration="0.016584" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1070" name="Revenue_IncreasesWhenTaskCompletes" fullname="OpenPlan.Tests.SimulationTests.Revenue_IncreasesWhenTaskCompletes" methodname="Revenue_IncreasesWhenTaskCompletes" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1543206279" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.001235" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1082" name="SeededRandomness_RepeatsSequence" fullname="OpenPlan.Tests.SimulationTests.SeededRandomness_RepeatsSequence" methodname="SeededRandomness_RepeatsSequence" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="769893241" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000390" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1056" name="SeededVendingMalfunction_IsRepeatableAtTenPercentRule" fullname="OpenPlan.Tests.SimulationTests.SeededVendingMalfunction_IsRepeatableAtTenPercentRule" methodname="SeededVendingMalfunction_IsRepeatableAtTenPercentRule" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1155712171" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000361" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1086" name="SimulationSpeedScaling" fullname="OpenPlan.Tests.SimulationTests.SimulationSpeedScaling" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.005426" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1083" name="SimulationSpeedScaling(0.016f,0.0f,0.0f)" fullname="OpenPlan.Tests.SimulationTests.SimulationSpeedScaling(0.016f,0.0f,0.0f)" methodname="SimulationSpeedScaling" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="906023500" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000808" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1084" name="SimulationSpeedScaling(0.016f,2.0f,0.032f)" fullname="OpenPlan.Tests.SimulationTests.SimulationSpeedScaling(0.016f,2.0f,0.032f)" methodname="SimulationSpeedScaling" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="109190848" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000339" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="SimulationSpeedScaling(0.016f,4.0f,0.064f)" fullname="OpenPlan.Tests.SimulationTests.SimulationSpeedScaling(0.016f,4.0f,0.064f)" methodname="SimulationSpeedScaling" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1097668630" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000249" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1067" name="SocialCooldown_BlocksUntilZero" fullname="OpenPlan.Tests.SimulationTests.SocialCooldown_BlocksUntilZero" methodname="SocialCooldown_BlocksUntilZero" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1057160904" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000479" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1075" name="StageSelection_DefaultsToStarterAndParsesExplicitStages" fullname="OpenPlan.Tests.SimulationTests.StageSelection_DefaultsToStarterAndParsesExplicitStages" methodname="StageSelection_DefaultsToStarterAndParsesExplicitStages" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="925878157" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000476" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1080" name="StarterArtManifest_ContainsValidatedGeneratedAssets" fullname="OpenPlan.Tests.SimulationTests.StarterArtManifest_ContainsValidatedGeneratedAssets" methodname="StarterArtManifest_ContainsValidatedGeneratedAssets" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1665637982" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.004762" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1090" name="StartingPersonalities_HaveStatisticallyDistinctSeededDistractionRates" fullname="OpenPlan.Tests.SimulationTests.StartingPersonalities_HaveStatisticallyDistinctSeededDistractionRates" methodname="StartingPersonalities_HaveStatisticallyDistinctSeededDistractionRates" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="2059346676" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.001766" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1068" name="StateDecisionWeighting_LowEnergyHasCoffeePriorityContract" fullname="OpenPlan.Tests.SimulationTests.StateDecisionWeighting_LowEnergyHasCoffeePriorityContract" methodname="StateDecisionWeighting_LowEnergyHasCoffeePriorityContract" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1531320631" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000471" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1069" name="TaskProgress_CompletesAndAdvances" fullname="OpenPlan.Tests.SimulationTests.TaskProgress_CompletesAndAdvances" methodname="TaskProgress_CompletesAndAdvances" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1679275811" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000731" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1047" name="TraitModifiers_AreContextual" fullname="OpenPlan.Tests.SimulationTests.TraitModifiers_AreContextual" methodname="TraitModifiers_AreContextual" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="811003919" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000306" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1096" name="TutorialCopyCoversTheCompletePlacementLoopInOrder" fullname="OpenPlan.Tests.SimulationTests.TutorialCopyCoversTheCompletePlacementLoopInOrder" methodname="TutorialCopyCoversTheCompletePlacementLoopInOrder" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="885284266" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000806" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1054" name="WaterSnackSmokeAndAwayEffects_AreExact" fullname="OpenPlan.Tests.SimulationTests.WaterSnackSmokeAndAwayEffects_AreExact" methodname="WaterSnackSmokeAndAwayEffects_AreExact" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="1500347538" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000627" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1074" name="WorkdayTimer_IsFiveMinutes" fullname="OpenPlan.Tests.SimulationTests.WorkdayTimer_IsFiveMinutes" methodname="WorkdayTimer_IsFiveMinutes" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="996317362" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.000219" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1077" name="WorkerCommand_RecordsPlacementIntent" fullname="OpenPlan.Tests.SimulationTests.WorkerCommand_RecordsPlacementIntent" methodname="WorkerCommand_RecordsPlacementIntent" classname="OpenPlan.Tests.SimulationTests" runstate="Runnable" seed="9726892" result="Passed" start-time="2026-07-20 16:47:12Z" end-time="2026-07-20 16:47:12Z" duration="0.003155" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/danny/AppData/LocalLow/Liminal Ledger/OPEN PLAN\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

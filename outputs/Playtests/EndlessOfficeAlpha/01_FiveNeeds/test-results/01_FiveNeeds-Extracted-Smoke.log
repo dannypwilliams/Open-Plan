@@ -1,0 +1,97 @@
+Mono path[0] = 'C:/Users/danny/Documents/GitHub/Silly Office Sim/outputs/Playtests/EndlessOfficeAlpha/.staging-01_FiveNeeds-1750c3ba8f4f497c9a06071383fb8ccf/VerifiedExtract/OpenPlan_Data/Managed'
+Mono config path = 'C:/Users/danny/Documents/GitHub/Silly Office Sim/outputs/Playtests/EndlessOfficeAlpha/.staging-01_FiveNeeds-1750c3ba8f4f497c9a06071383fb8ccf/VerifiedExtract/MonoBleedingEdge/etc'
+CodeReloadManager initialized
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Initialize engine version: 6000.5.1f1 (0d9463e84828)
+[Subsystems] Discovering subsystems at path C:/Users/danny/Documents/GitHub/Silly Office Sim/outputs/Playtests/EndlessOfficeAlpha/.staging-01_FiveNeeds-1750c3ba8f4f497c9a06071383fb8ccf/VerifiedExtract/OpenPlan_Data/UnitySubsystems
+[D3D12 Device Filter] Vendor Name: ATI
+[D3D12 Device Filter] Device Name: AMD Radeon RX 7600
+[D3D12 Device Filter] Driver Version: 32.0.31021.5001
+[D3D12 Device Filter] Feature Level: 12.2
+[D3D12 Device Filter] Graphics Memory: 8133 MB
+[D3D12 Device Filter] Processor Count: 12
+[D3D12 Device Filter] Device Type: Discrete
+GfxDevice: creating device client; kGfxThreadingModeSplitJobs
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.2]
+    Renderer:        AMD Radeon RX 7600 (ID=0x7480)
+    Vendor:          ATI
+    VRAM:            8133 MB
+    App VRAM Budget: 7365 MB
+    Driver:          32.0.31021.5001
+Begin MonoManager ReloadAssembly
+- Finished resetting the current domain, in  0.054 seconds
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+D3D11 device created for Microsoft Media Foundation video decoding.
+<RI> Initializing input.
+Using Windows.Gaming.Input
+UnloadTime: 0.999000 ms
+FIVE NEEDS CHECKPOINT: PASS main menu launched
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.081800 ms
+Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 3230.
+Total: 2.019300 ms (FindLiveObjects: 0.098700 ms CreateObjectMapping: 0.312000 ms MarkObjects: 1.585200 ms  DeleteObjects: 0.023000 ms)
+
+FIVE NEEDS CHECKPOINT: PASS new campaign selected Starter Office
+FIVE NEEDS CHECKPOINT: PASS campaign created Morgan, Alex, Sam and three active desks
+FIVE NEEDS CHECKPOINT: PASS campaign started with exactly $0
+FIVE NEEDS CHECKPOINT: PASS exactly five player-facing need definitions are active
+FIVE NEEDS CHECKPOINT: PASS captured 01_Starter_Office_Overview_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS selected employee inspector displayed five need rows
+FIVE NEEDS CHECKPOINT: PASS Stress was not presented as a sixth need row
+FIVE NEEDS CHECKPOINT: PASS captured 02_Five_Need_Inspector_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS all five needs changed during active simulation
+FIVE NEEDS CHECKPOINT: PASS placement target accepted: Get Water
+FIVE NEEDS CHECKPOINT: PASS entered UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS captured 06_Employee_Recovery_At_Water_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS completed UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS placement target accepted: Get Water
+FIVE NEEDS CHECKPOINT: PASS entered UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS completed UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS placement target accepted: Get Water
+FIVE NEEDS CHECKPOINT: PASS entered UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS completed UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS placement target accepted: Get Water
+FIVE NEEDS CHECKPOINT: PASS entered UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS completed UseWaterCooler
+FIVE NEEDS CHECKPOINT: PASS normal Water use produced a readable Bathroom warning without direct need mutation
+FIVE NEEDS CHECKPOINT: PASS captured 03_Bathroom_Warning_State_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS restroom proximity influence extended beyond its footprint
+FIVE NEEDS CHECKPOINT: PASS placement target accepted: Use Restroom
+FIVE NEEDS CHECKPOINT: PASS captured 04_Restroom_Proximity_Influence_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS entered UseRestroom
+FIVE NEEDS CHECKPOINT: PASS restroom use began visibly with one reservation
+FIVE NEEDS CHECKPOINT: PASS captured 05_Employee_Using_Restroom_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS completed UseRestroom
+FIVE NEEDS CHECKPOINT: PASS restroom completion substantially lowered Bathroom urgency
+FIVE NEEDS CHECKPOINT: PASS restroom completion released capacity and left the employee visible
+FIVE NEEDS CHECKPOINT: PASS pause froze every need
+FIVE NEEDS CHECKPOINT: PASS captured 07_Paused_Stable_Needs_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS real work earned the cheapest candidate cost
+FIVE NEEDS CHECKPOINT: PASS pre-expansion deskless hire succeeded: 
+FIVE NEEDS CHECKPOINT: PASS entered Unassigned
+FIVE NEEDS CHECKPOINT: PASS deskless hire entered explicit phone work
+FIVE NEEDS CHECKPOINT: PASS phone work changed all five needs and accrued cash
+FIVE NEEDS CHECKPOINT: PASS captured 08_Deskless_Phone_Work_Five_Needs_1920x1080.png
+FIVE NEEDS CHECKPOINT: PASS five-need inspector remained present at 1280x720
+FIVE NEEDS CHECKPOINT: PASS captured 09_Inspector_Regression_1280x720.png
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.669900 ms
+Unloading 1816 unused Assets to reduce memory usage. Loaded Objects now: 1499.
+Total: 23.258200 ms (FindLiveObjects: 0.106100 ms CreateObjectMapping: 0.274500 ms MarkObjects: 1.570700 ms  DeleteObjects: 21.306700 ms)
+
+FIVE NEEDS CHECKPOINT: PASS returned to main menu and quit cleanly
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+CodeReloadManager destroyed

@@ -1,0 +1,446 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.5/staging' branch; Version is '6000.5.1f1 (0d9463e84828) revision 889955'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'en' Physical Memory: 16193 MB
+[Licensing::IpcConnector] Channel LicenseClient-danny doesn't exist
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-07-20T12:27:19Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 36576)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe
+-batchmode
+-nographics
+-projectPath
+C:\Users\danny\Documents\GitHub\Silly Office Sim
+-executeMethod
+OpenPlan.Editor.EmployeeStickmanSetup.SetupBatch
+-logFile
+C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\Checkpoint00-stickman-setup.log
+Successfully changed project path to: C:\Users\danny\Documents\GitHub\Silly Office Sim
+C:/Users/danny/Documents/GitHub/Silly Office Sim
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=0"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.Player connection [34596]  Target information:
+
+Player connection [34596]  * "[IP] 192.168.1.109 [Port] 55504 [Flags] 2 [Guid] 871920802 [EditorId] 871920802 [Version] 1048832 [Id] WindowsEditor(7,MoneyMaker) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [34596] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [34596] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-danny" at "2026-07-20T12:27:19.5961523Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 36576, path: "C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              1be82c64da854a439c661f96a7b901e6
+  Correlation Id:          a95f5f2bad524bbbdb8146e58a143183
+  External correlation Id: 5774395623848759045
+  Machine Id:              /RsQ7CGoxRnJ/XfrMJclpE+dBOo=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-danny" (connect: 0.57s, validation: 0.28s, handshake: 0.05s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-danny-notifications" at "2026-07-20T12:27:19.9239228Z"
+[Licensing::Module] Connected to LicensingClient (PId: 36576, launch time: 0.01, total connection time: 0.90s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 20067617806284-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.02
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.01s
+[Package Manager] Connected to IPC stream "Upm-35520" after 0.6 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Artifact Garbage Collection - Removed 2 unused hashed content files
+Initialize engine version: 6000.5.1f1 (0d9463e84828)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/danny/Documents/GitHub/Silly Office Sim/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56520
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.004132 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.628 seconds
+Domain Reload Profiling: 1722ms
+	BeginReloadAssembly (317ms)
+		CreateAndSetChildDomain (21ms)
+	RebuildCommonClasses (7ms)
+	RebuildNativeTypeToScriptingClass (29ms)
+	initialDomainReloadingComplete (129ms)
+	LoadAllAssembliesAndSetupDomain (609ms)
+		LoadAssemblies (289ms)
+		AnalyzeDomain (438ms)
+			TypeCache.Refresh (435ms)
+				TypeCache.ScanAssembly (405ms)
+	FinalizeReload (631ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			BeforeProcessingInitializeOnLoad (169ms)
+			ProcessInitializeOnLoadAttributes (152ms)
+			ProcessInitializeOnLoadMethodAttributes (159ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 50 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.inputsystem@1.19.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.inputsystem@21a28c3a6c83)
+    com.unity.searcher@4.9.4 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.searcher@d45a78918735)
+    com.unity.burst@1.8.29 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.burst@6bb9aca3ef38)
+    com.unity.nuget.mono-cecil@1.11.6 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.test-framework.performance@3.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.test-framework.performance@8b56083ec0f0)
+  Built-in packages:
+    com.unity.render-pipelines.universal@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.universal@be00b5bbd9a1)
+    com.unity.test-framework@1.7.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.test-framework@f3e6c9a02477)
+    com.unity.ugui@2.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.ugui@4f9b15fd1386)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.physicscore2d@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physicscore2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.wind@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.1.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.ext.nunit@44f7d31723bd)
+    com.unity.render-pipelines.core@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.core@d7ce3ed2cd80)
+    com.unity.shadergraph@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.shadergraph@2df19e8719bc)
+    com.unity.render-pipelines.universal-config@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.universal-config@fdda01c80fe3)
+    com.unity.collections@6.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.collections@a43cabe808ca)
+    com.unity.mathematics@1.4.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.mathematics@981956d94fb6)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.02 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/danny/Documents/GitHub/Silly Office Sim
+DisplayProgressbar: Compiling Scripts
+ExitCode: 0 Duration: 2s886ms
+[544/684    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[680/684    2s] Csc Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Editor.dll (+2 others)
+[681/684    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/OpenPlan.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Editor.dll, with 139 defines and 298 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[682/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.Editor.pdb
+[683/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.Editor.dll
+*** Tundra build success (2.81 seconds), 5 items updated, 684 evaluated
+AssetDatabase: script compilation time: 3.627566s
+Begin MonoManager ReloadAssembly
+Total cache size 267957416
+Total cache size after purge 267957416, took 00:00:00.3787892
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.481 seconds
+Domain Reload Profiling: 4610ms
+	BeginReloadAssembly (391ms)
+		DisableScriptedObjects (38ms)
+		CreateAndSetChildDomain (82ms)
+	RebuildCommonClasses (29ms)
+	RebuildNativeTypeToScriptingClass (31ms)
+	initialDomainReloadingComplete (130ms)
+	LoadAllAssembliesAndSetupDomain (547ms)
+		LoadAssemblies (451ms)
+		AnalyzeDomain (145ms)
+			TypeCache.Refresh (95ms)
+				TypeCache.ScanAssembly (86ms)
+			BuildScriptInfoCaches (39ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (3482ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			BeforeProcessingInitializeOnLoad (123ms)
+			ProcessInitializeOnLoadAttributes (2390ms)
+			ProcessInitializeOnLoadMethodAttributes (666ms)
+			AfterProcessingInitializeOnLoad (18ms)
+		AwakeInstancesAfterBackupRestoration (34ms)
+Starting new worker id: 0 with log in C:/Users/danny/Documents/GitHub/Silly Office Sim/Logs/AssetImportWorkerHW0.log
+
+Asset Pipeline Refresh (id=5982e7caa27d97f4b8add55123c8245f): Total: 9.210 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=3970 ms
+		Asset DB Callback time: managed=295 ms, native=26 ms
+		Scripting: domain reloads=1, domain reload time=1222 ms, compile time=3630 ms, other=65 ms
+		Project Asset Count: scripts=885, non-scripts=1707
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 22.849ms
+	ApplyChangesToAssetFolders: 0.704ms
+	Scan: 121.795ms
+	Collect global state as custom dependencies: 8.233ms
+	OnSourceAssetsModified: 1.109ms
+	CategorizeScriptCompilationAssets: 25.148ms
+	ProcessAssetsWithTransientArtifactChanges: 50.221ms
+	CategorizeAssets: 60.609ms
+	CompileScripts: 3630.182ms
+	ImportOutOfDateAssets: 3566.603ms (3499.379ms without children)
+		ReloadNativeAssets: 0.066ms
+		UnloadImportedAssets: 2.462ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.734ms
+		ImportSchedulerStart: 63.953ms
+	PostProcessAllAssets: 297.706ms
+		VCAutoAddAssetPostprocess 2.062ms
+		XRBuildSystem.XRAssetImported 0.225ms
+		PostProcessCallbackCreateDeferredMaterials 0.075ms
+		MonoPostProcessAllAssets: 294.369ms
+			AssetPostprocessor.OnPostprocessAllAssets 181.796ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 24.191ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 19.094ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 14.564ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 4.101ms
+			AssetChangedListener.OnPostprocessAllAssets 3.506ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 3.353ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 3.315ms
+			SyncVS.PostprocessSyncProject 3.016ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 2.977ms
+			MaterialPostprocessor.OnPostprocessAllAssets 1.629ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.184ms
+			SampleDependencyImporterPostProcessor.OnPostprocessAllAssets 1.112ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.993ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.993ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.710ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.705ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.694ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.657ms
+			PostProcessor.OnPostprocessAllAssets 0.623ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.587ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.451ms
+			AssetEvents.OnPostprocessAllAssets 0.410ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.399ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.375ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.354ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.315ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.251ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.240ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.171ms
+	PostAssetChangesProfiler: 2.666ms
+	UnloadStreamsBegin: 1.610ms
+	PersistCurrentRevisions: 0.152ms
+	GenerateScriptTypeHashes: 2.551ms
+	GenerateScriptTypeSerializationHashes: 4.711ms
+	Untracked: 1411.599ms
+
+Application.AssetDatabase Initial Refresh End
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Scanning for USB devices : 3.092ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-OPEN PLAN
+Unloading 79 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 3651 unused Assets / (9.7 MB). Loaded Objects now: 4466.
+Memory consumption went from 333.6 MB to 323.9 MB.
+Total: 21.501200 ms (FindLiveObjects: 0.647500 ms CreateObjectMapping: 2.299100 ms MarkObjects: 9.582200 ms  DeleteObjects: 8.965500 ms)
+
+Importing 'GUID: 4156215c5e6d2734283fdb349e5032df - Path: Assets/PolyOne/Free Stickman/Model/Free Pack - Stick Man.fbx' with importer (FBXImporter)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+Imported 'GUID: 4156215c5e6d2734283fdb349e5032df' -> (Import Result ID: '4dc345c278615392ef4eed0771b17c9b') in 0.189 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7839e47b9a5b59c8943613ccf05d2a57 DependenciesID=c5aed4254a662c908d08c96879f2f28c StaticDependenciesID=758151b22580e41be67230849b3650a7 
+
+Asset Pipeline Refresh (id=4aba733c10388b84489c15661f99e391): Total: 0.339 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=2 (actual=1, local cache=1, cache server=0)
+		Asset DB Process Time: managed=49 ms, native=282 ms
+		Asset DB Callback time: managed=5 ms, native=1 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=885, non-scripts=1707
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 5
+	ApplyChangesToAssetFolders: 0.228ms
+	Scan: 34.931ms
+	Collect global state as custom dependencies: 0.159ms
+	ProcessAssetsWithTransientArtifactChanges: 0.149ms
+	CategorizeAssets: 43.405ms
+	ImportOutOfDateAssets: 239.009ms (8.902ms without children)
+		ImportManagerImport: 191.691ms (2.018ms without children)
+		UnloadImportedAssets: 0.257ms
+		ReloadImportedAssets: 0.548ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.409ms
+		ImportSchedulerStart: 37.705ms
+	PostProcessAllAssets: 7.082ms
+		XRBuildSystem.XRAssetImported 0.736ms
+		MonoPostProcessAllAssets: 5.967ms
+			AssetPostprocessor.OnPostprocessAllAssets 4.700ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.219ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 0.172ms
+			SyncVS.PostprocessSyncProject 0.058ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.052ms
+			AssetChangedListener.OnPostprocessAllAssets 0.050ms
+	PostAssetChangesProfiler: 0.560ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.188ms
+	UnloadStreamsBegin: 0.159ms
+	PersistCurrentRevisions: 0.097ms
+	Untracked: 7.312ms
+
+STICKMAN_SETUP rig avatarValid=True isHuman=True
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OpenPlan.Editor.EmployeeStickmanSetup:FixRig () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:62)
+OpenPlan.Editor.EmployeeStickmanSetup:Setup () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:23)
+OpenPlan.Editor.EmployeeStickmanSetup:SetupBatch () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:34)
+
+(Filename: Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs Line: 62)
+
+Asset Pipeline Refresh (id=6f4272e6ca3c42f44b4f27b9fb932cac): Total: 0.018 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+STICKMAN_SETUP prefab saved=True controllerSet=True avatarSet=True
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OpenPlan.Editor.EmployeeStickmanSetup:BuildPrefab () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:86)
+OpenPlan.Editor.EmployeeStickmanSetup:Setup () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:24)
+OpenPlan.Editor.EmployeeStickmanSetup:SetupBatch () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:34)
+
+(Filename: Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs Line: 86)
+
+STICKMAN_SETUP catalog wired Worker -> EmployeeStickman; legacyPreserved=True
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OpenPlan.Editor.EmployeeStickmanSetup:WireCatalog (UnityEngine.GameObject) (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:109)
+OpenPlan.Editor.EmployeeStickmanSetup:Setup () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:25)
+OpenPlan.Editor.EmployeeStickmanSetup:SetupBatch () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:34)
+
+(Filename: Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs Line: 109)
+
+Importing 'GUID: 03ed3ea673b1ae443b1982bac632edaa - Path: Assets/OpenPlan/Resources/OpenPlanAssetCatalog.asset' with importer (NativeFormatImporter)
+Imported 'GUID: 03ed3ea673b1ae443b1982bac632edaa' -> (Import Result ID: '921df07d41c531b7f0358c2c478d2f0e') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=571a071e2c94f88c72a4a9b07e64718b DependenciesID=4292cc7093c42ee3dfbd748e5b90c9dc StaticDependenciesID=d90dc29b0f8df7d049116ebcfa6a673b 
+Asset Pipeline Refresh (id=a4bc50de6ab1ab34fb7a31308c062d9f): Total: 0.078 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=bb3374831629bec4481be0962de4be49): Total: 0.015 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+STICKMAN_SETUP DONE
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OpenPlan.Editor.EmployeeStickmanSetup:Setup () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:28)
+OpenPlan.Editor.EmployeeStickmanSetup:SetupBatch () (at Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs:34)
+
+(Filename: Assets/OpenPlan/Editor/EmployeeStickmanSetup.cs Line: 28)
+
+MonoPathRemapper: Attempts to remap: 15840; Successful remaps: 0
+Serialized file version minimum: 23, current 23
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-danny-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-danny channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1784550453954,"processId":35520,"allocatedMemory":14647233,"memoryLabels":[{"Default":207455},{"Permanent":15516},{"NewDelete":67011},{"Thread":4197600},{"Manager":32773},{"VertexData":8},{"Geometry":816},{"Texture":24},{"Shader":848766},{"Material":24},{"GfxDevice":55328},{"Animation":5816},{"Audio":1544},{"FreeType":8},{"FontEngine":736},{"Physics":2146},{"Physics2D":16},{"Serialization":952},{"Input":42840},{"JobScheduler":256},{"TextLib":216},{"Mono":48},{"MonoCode":64},{"ScriptingNativeRuntime":1574452},{"BaseObject":1621960},{"Resource":1208},{"Renderer":3080},{"Transform":4685},{"File":1032},{"WebCam":616},{"Culling":32},{"Terrain":11442},{"Wind":24},{"STL":40},{"String":19393},{"StaticString":3808},{"Utility":2673238},{"Curl":2579},{"PoolAlloc":2264},{"AI":80},{"TypeTree":17165},{"CodeReload":448},{"RuntimeInitializeOnLoadManager":64},{"Sprites":102},{"SpriteAtlas":120},{"GI":7816},{"Director":3432},{"CloudService":9112},{"WebRequest":845},{"VR":47114},{"SceneManager":608},{"Video":64},{"LazyScriptCache":32},{"Camera":17},{"Secure":2377},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":552},{"Hierarchy":1176},{"UIElements":72},{"CoreStats":13688},{"Identifiers":13536},{"Gui":128},{"EditorUtility":111938},{"VersionControl":8},{"Undo":931},{"AssetDatabase":2611508},{"AssetImporter":40},{"EditorGi":328},{"UnityConnect":38905},{"Upm":1912},{"UpmDiagnostics":8},{"AssetCompliance":64},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2902},{"Windowing":456},{"Licensing":1232},{"AssetReference":32},{"IPCStream":32}]}

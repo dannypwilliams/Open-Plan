@@ -1,0 +1,51 @@
+STATUS PASS
+CHECKPOINT 01_FiveNeeds
+CAPTURE POLICY public gameplay APIs; seeded runtime; no direct need mutation or artificial cash
+FLOW main menu -> new $0 campaign -> five rows -> live changes -> four Water uses -> natural warning -> restroom influence/use/recovery -> pause -> live earnings -> deskless hire/phone work -> 1280 check -> menu -> quit
+CHECKS 45
+FAILURES 0
+PASS  main menu launched
+PASS  new campaign selected Starter Office
+PASS  campaign created Morgan, Alex, Sam and three active desks
+PASS  campaign started with exactly $0
+PASS  exactly five player-facing need definitions are active
+PASS  captured 01_Starter_Office_Overview_1920x1080.png
+PASS  selected employee inspector displayed five need rows
+PASS  Stress was not presented as a sixth need row
+PASS  captured 02_Five_Need_Inspector_1920x1080.png
+PASS  all five needs changed during active simulation
+PASS  placement target accepted: Get Water
+PASS  entered UseWaterCooler
+PASS  captured 06_Employee_Recovery_At_Water_1920x1080.png
+PASS  completed UseWaterCooler
+PASS  placement target accepted: Get Water
+PASS  entered UseWaterCooler
+PASS  completed UseWaterCooler
+PASS  placement target accepted: Get Water
+PASS  entered UseWaterCooler
+PASS  completed UseWaterCooler
+PASS  placement target accepted: Get Water
+PASS  entered UseWaterCooler
+PASS  completed UseWaterCooler
+PASS  normal Water use produced a readable Bathroom warning without direct need mutation
+PASS  captured 03_Bathroom_Warning_State_1920x1080.png
+PASS  restroom proximity influence extended beyond its footprint
+PASS  placement target accepted: Use Restroom
+PASS  captured 04_Restroom_Proximity_Influence_1920x1080.png
+PASS  entered UseRestroom
+PASS  restroom use began visibly with one reservation
+PASS  captured 05_Employee_Using_Restroom_1920x1080.png
+PASS  completed UseRestroom
+PASS  restroom completion substantially lowered Bathroom urgency
+PASS  restroom completion released capacity and left the employee visible
+PASS  pause froze every need
+PASS  captured 07_Paused_Stable_Needs_1920x1080.png
+PASS  real work earned the cheapest candidate cost
+PASS  pre-expansion deskless hire succeeded: 
+PASS  entered Unassigned
+PASS  deskless hire entered explicit phone work
+PASS  phone work changed all five needs and accrued cash
+PASS  captured 08_Deskless_Phone_Work_Five_Needs_1920x1080.png
+PASS  five-need inspector remained present at 1280x720
+PASS  captured 09_Inspector_Regression_1280x720.png
+PASS  returned to main menu and quit cleanly

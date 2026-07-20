@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="70" result="Passed" total="70" passed="70" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:49:27Z" duration="110.2612097">
+  <test-suite type="TestSuite" id="1078" name="OPEN PLAN" fullname="OPEN PLAN" runstate="Runnable" testcasecount="70" result="Passed" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:49:27Z" duration="110.261210" total="70" passed="70" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1072" name="OpenPlan.PlayModeTests.dll" fullname="C:/Users/danny/Documents/GitHub/Silly Office Sim/Library/ScriptAssemblies/OpenPlan.PlayModeTests.dll" runstate="Runnable" testcasecount="70" result="Passed" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:49:27Z" duration="110.250853" total="70" passed="70" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="14192" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1073" name="OpenPlan" fullname="OpenPlan" runstate="Runnable" testcasecount="70" result="Passed" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:49:27Z" duration="110.250033" total="70" passed="70" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1074" name="Tests" fullname="OpenPlan.Tests" runstate="Runnable" testcasecount="70" result="Passed" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:49:27Z" duration="110.249690" total="70" passed="70" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="OfficeIntegrationTests" fullname="OpenPlan.Tests.OfficeIntegrationTests" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" testcasecount="70" result="Passed" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:49:27Z" duration="110.247796" total="70" passed="70" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1060" name="ActivityZoneCapacityRejectsWorkerBeyondCapacity" fullname="OpenPlan.Tests.OfficeIntegrationTests.ActivityZoneCapacityRejectsWorkerBeyondCapacity" methodname="ActivityZoneCapacityRejectsWorkerBeyondCapacity" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1627357368" result="Passed" start-time="2026-07-20 16:47:36Z" end-time="2026-07-20 16:47:39Z" duration="2.444539" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1016" name="AwayAndFiredWorkersCannotBePickedUp" fullname="OpenPlan.Tests.OfficeIntegrationTests.AwayAndFiredWorkersCannotBePickedUp" methodname="AwayAndFiredWorkersCannotBePickedUp" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="655032233" result="Passed" start-time="2026-07-20 16:47:39Z" end-time="2026-07-20 16:47:40Z" duration="0.944777" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1050" name="CarryModeShowsTextLegendAndAvailabilityLabelsThenClearsThem" fullname="OpenPlan.Tests.OfficeIntegrationTests.CarryModeShowsTextLegendAndAvailabilityLabelsThenClearsThem" methodname="CarryModeShowsTextLegendAndAvailabilityLabelsThenClearsThem" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1164565269" result="Passed" start-time="2026-07-20 16:47:40Z" end-time="2026-07-20 16:47:41Z" duration="0.954034" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="CarryStartsOnlyPastThresholdAndImmediateCancelRestoresState" fullname="OpenPlan.Tests.OfficeIntegrationTests.CarryStartsOnlyPastThresholdAndImmediateCancelRestoresState" methodname="CarryStartsOnlyPastThresholdAndImmediateCancelRestoresState" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="403576498" result="Passed" start-time="2026-07-20 16:47:41Z" end-time="2026-07-20 16:47:42Z" duration="0.924872" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1069" name="DesklessPhoneWorkerUsesFiveNeedsAndStillEarns" fullname="OpenPlan.Tests.OfficeIntegrationTests.DesklessPhoneWorkerUsesFiveNeedsAndStillEarns" methodname="DesklessPhoneWorkerUsesFiveNeedsAndStillEarns" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="489846274" result="Passed" start-time="2026-07-20 16:47:42Z" end-time="2026-07-20 16:47:43Z" duration="1.167416" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1057" name="EmotesExpireCleanlyAndUseSafeText" fullname="OpenPlan.Tests.OfficeIntegrationTests.EmotesExpireCleanlyAndUseSafeText" methodname="EmotesExpireCleanlyAndUseSafeText" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="237969304" result="Passed" start-time="2026-07-20 16:47:43Z" end-time="2026-07-20 16:47:44Z" duration="1.088866" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1063" name="EquivalentSimulatedPartitionsProduceEquivalentNeedsInPlayMode" fullname="OpenPlan.Tests.OfficeIntegrationTests.EquivalentSimulatedPartitionsProduceEquivalentNeedsInPlayMode" methodname="EquivalentSimulatedPartitionsProduceEquivalentNeedsInPlayMode" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1461058976" result="Passed" start-time="2026-07-20 16:47:44Z" end-time="2026-07-20 16:47:44Z" duration="0.002048" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1043" name="EstablishedOfficeIsUntimedAndHasNoDailyResultSurface" fullname="OpenPlan.Tests.OfficeIntegrationTests.EstablishedOfficeIsUntimedAndHasNoDailyResultSurface" methodname="EstablishedOfficeIsUntimedAndHasNoDailyResultSurface" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="567365202" result="Passed" start-time="2026-07-20 16:47:44Z" end-time="2026-07-20 16:47:44Z" duration="0.215449" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1033" name="EstablishedPreviewLoadsUntimedAndReturnsToStarterMenu" fullname="OpenPlan.Tests.OfficeIntegrationTests.EstablishedPreviewLoadsUntimedAndReturnsToStarterMenu" methodname="EstablishedPreviewLoadsUntimedAndReturnsToStarterMenu" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1423640924" result="Passed" start-time="2026-07-20 16:47:44Z" end-time="2026-07-20 16:47:45Z" duration="0.590347" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1031" name="ExpandedHiringCreatesUnassignedEntranceWorkerWhoCanBePlaced" fullname="OpenPlan.Tests.OfficeIntegrationTests.ExpandedHiringCreatesUnassignedEntranceWorkerWhoCanBePlaced" methodname="ExpandedHiringCreatesUnassignedEntranceWorkerWhoCanBePlaced" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="65682121" result="Passed" start-time="2026-07-20 16:47:45Z" end-time="2026-07-20 16:47:47Z" duration="1.759813" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1028" name="ExpandedStarterInitializesWithAdditionalSpace" fullname="OpenPlan.Tests.OfficeIntegrationTests.ExpandedStarterInitializesWithAdditionalSpace" methodname="ExpandedStarterInitializesWithAdditionalSpace" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1898815412" result="Passed" start-time="2026-07-20 16:47:47Z" end-time="2026-07-20 16:47:47Z" duration="0.259069" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="ExpansionAffordabilityTracksCashAndVendingSpendCanDisableIt" fullname="OpenPlan.Tests.OfficeIntegrationTests.ExpansionAffordabilityTracksCashAndVendingSpendCanDisableIt" methodname="ExpansionAffordabilityTracksCashAndVendingSpendCanDisableIt" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1314174961" result="Passed" start-time="2026-07-20 16:47:47Z" end-time="2026-07-20 16:47:47Z" duration="0.667024" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1040" name="FireWorkerStartsBoxExitAndReducesPayroll" fullname="OpenPlan.Tests.OfficeIntegrationTests.FireWorkerStartsBoxExitAndReducesPayroll" methodname="FireWorkerStartsBoxExitAndReducesPayroll" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="989761884" result="Passed" start-time="2026-07-20 16:47:47Z" end-time="2026-07-20 16:47:54Z" duration="6.758203" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="FiringDuringAwaySafelyResolvesHiddenState" fullname="OpenPlan.Tests.OfficeIntegrationTests.FiringDuringAwaySafelyResolvesHiddenState" methodname="FiringDuringAwaySafelyResolvesHiddenState" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1720232791" result="Passed" start-time="2026-07-20 16:47:54Z" end-time="2026-07-20 16:47:55Z" duration="1.132538" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1061" name="FiveNeedsInitializeHealthyAndAllChangeDuringSimulation" fullname="OpenPlan.Tests.OfficeIntegrationTests.FiveNeedsInitializeHealthyAndAllChangeDuringSimulation" methodname="FiveNeedsInitializeHealthyAndAllChangeDuringSimulation" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="344193339" result="Passed" start-time="2026-07-20 16:47:55Z" end-time="2026-07-20 16:47:56Z" duration="0.927234" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1010" name="FloorOccupiedAndLockedDropsRejectAndRestoreWorker" fullname="OpenPlan.Tests.OfficeIntegrationTests.FloorOccupiedAndLockedDropsRejectAndRestoreWorker" methodname="FloorOccupiedAndLockedDropsRejectAndRestoreWorker" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="113075003" result="Passed" start-time="2026-07-20 16:47:56Z" end-time="2026-07-20 16:47:58Z" duration="1.678488" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="FocusedWorkRefreshesWithoutStackingAndCashPauses" fullname="OpenPlan.Tests.OfficeIntegrationTests.FocusedWorkRefreshesWithoutStackingAndCashPauses" methodname="FocusedWorkRefreshesWithoutStackingAndCashPauses" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="2098604213" result="Passed" start-time="2026-07-20 16:47:58Z" end-time="2026-07-20 16:48:00Z" duration="2.043238" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="HireCandidateChangesRosterAndCandidate" fullname="OpenPlan.Tests.OfficeIntegrationTests.HireCandidateChangesRosterAndCandidate" methodname="HireCandidateChangesRosterAndCandidate" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="595858788" result="Passed" start-time="2026-07-20 16:48:00Z" end-time="2026-07-20 16:48:00Z" duration="0.221190" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1067" name="InspectorShowsFiveRowsUrgencyCopyAndNoStressGauge" fullname="OpenPlan.Tests.OfficeIntegrationTests.InspectorShowsFiveRowsUrgencyCopyAndNoStressGauge" methodname="InspectorShowsFiveRowsUrgencyCopyAndNoStressGauge" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="219873921" result="Passed" start-time="2026-07-20 16:48:00Z" end-time="2026-07-20 16:48:01Z" duration="0.451245" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1023" name="InsufficientCashRejectsVendingBeforeCharge" fullname="OpenPlan.Tests.OfficeIntegrationTests.InsufficientCashRejectsVendingBeforeCharge" methodname="InsufficientCashRejectsVendingBeforeCharge" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1818430618" result="Passed" start-time="2026-07-20 16:48:01Z" end-time="2026-07-20 16:48:02Z" duration="1.201186" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1025" name="InterruptedSmokeCleansEffectsAndLeavesWorkerValid" fullname="OpenPlan.Tests.OfficeIntegrationTests.InterruptedSmokeCleansEffectsAndLeavesWorkerValid" methodname="InterruptedSmokeCleansEffectsAndLeavesWorkerValid" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1366385874" result="Passed" start-time="2026-07-20 16:48:02Z" end-time="2026-07-20 16:48:03Z" duration="1.328390" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1026" name="LeaveOfficeCompletesAwayRecoveryAndReturnLifecycle" fullname="OpenPlan.Tests.OfficeIntegrationTests.LeaveOfficeCompletesAwayRecoveryAndReturnLifecycle" methodname="LeaveOfficeCompletesAwayRecoveryAndReturnLifecycle" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="906947683" result="Passed" start-time="2026-07-20 16:48:03Z" end-time="2026-07-20 16:48:12Z" duration="8.653813" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="LockedNeighborZonesRejectWorkersAndRoutesStayClear" fullname="OpenPlan.Tests.OfficeIntegrationTests.LockedNeighborZonesRejectWorkersAndRoutesStayClear" methodname="LockedNeighborZonesRejectWorkersAndRoutesStayClear" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1656495809" result="Passed" start-time="2026-07-20 16:48:12Z" end-time="2026-07-20 16:48:12Z" duration="0.188798" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1013" name="LockedObstacleAndVoidGroundDropsExplainAndRestore" fullname="OpenPlan.Tests.OfficeIntegrationTests.LockedObstacleAndVoidGroundDropsExplainAndRestore" methodname="LockedObstacleAndVoidGroundDropsExplainAndRestore" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1626730519" result="Passed" start-time="2026-07-20 16:48:12Z" end-time="2026-07-20 16:48:13Z" duration="1.202095" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1037" name="LowEnergyWorkerSeeksCoffee" fullname="OpenPlan.Tests.OfficeIntegrationTests.LowEnergyWorkerSeeksCoffee" methodname="LowEnergyWorkerSeeksCoffee" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="382932623" result="Passed" start-time="2026-07-20 16:48:13Z" end-time="2026-07-20 16:48:15Z" duration="1.806598" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="MainMenuLoads" fullname="OpenPlan.Tests.OfficeIntegrationTests.MainMenuLoads" methodname="MainMenuLoads" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1996146160" result="Passed" start-time="2026-07-20 16:48:15Z" end-time="2026-07-20 16:48:15Z" duration="0.152981" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="MainMenuStartEntersStarterOffice" fullname="OpenPlan.Tests.OfficeIntegrationTests.MainMenuStartEntersStarterOffice" methodname="MainMenuStartEntersStarterOffice" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1957895374" result="Passed" start-time="2026-07-20 16:48:15Z" end-time="2026-07-20 16:48:16Z" duration="0.472891" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1059" name="ManualFocusedWorkOverridesAutonomyForThirtySecondWindow" fullname="OpenPlan.Tests.OfficeIntegrationTests.ManualFocusedWorkOverridesAutonomyForThirtySecondWindow" methodname="ManualFocusedWorkOverridesAutonomyForThirtySecondWindow" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1540923329" result="Passed" start-time="2026-07-20 16:48:16Z" end-time="2026-07-20 16:48:20Z" duration="4.119701" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1014" name="ModalOpeningCancelsCarryAndReturnsWorkerToGround" fullname="OpenPlan.Tests.OfficeIntegrationTests.ModalOpeningCancelsCarryAndReturnsWorkerToGround" methodname="ModalOpeningCancelsCarryAndReturnsWorkerToGround" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1575654773" result="Passed" start-time="2026-07-20 16:48:20Z" end-time="2026-07-20 16:48:21Z" duration="1.203584" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1056" name="NameTagsTrackFaceScaleFadeAndToggle" fullname="OpenPlan.Tests.OfficeIntegrationTests.NameTagsTrackFaceScaleFadeAndToggle" methodname="NameTagsTrackFaceScaleFadeAndToggle" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="547132965" result="Passed" start-time="2026-07-20 16:48:21Z" end-time="2026-07-20 16:48:21Z" duration="0.193626" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1054" name="NoWorkerStaysInRecoveryDuringScriptedSession" fullname="OpenPlan.Tests.OfficeIntegrationTests.NoWorkerStaysInRecoveryDuringScriptedSession" methodname="NoWorkerStaysInRecoveryDuringScriptedSession" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="506531080" result="Passed" start-time="2026-07-20 16:48:21Z" end-time="2026-07-20 16:48:29Z" duration="8.179105" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="OfficeSceneLoadsAndWorkersSpawn" fullname="OpenPlan.Tests.OfficeIntegrationTests.OfficeSceneLoadsAndWorkersSpawn" methodname="OfficeSceneLoadsAndWorkersSpawn" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1098127631" result="Passed" start-time="2026-07-20 16:48:29Z" end-time="2026-07-20 16:48:30Z" duration="0.195282" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1058" name="OptionalDistractionCanBeRedirectedByManualCommand" fullname="OpenPlan.Tests.OfficeIntegrationTests.OptionalDistractionCanBeRedirectedByManualCommand" methodname="OptionalDistractionCanBeRedirectedByManualCommand" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="885390621" result="Passed" start-time="2026-07-20 16:48:30Z" end-time="2026-07-20 16:48:31Z" duration="1.123803" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="OrdinaryGroundPlacementPreservesStateAndResumesAssignedWork" fullname="OpenPlan.Tests.OfficeIntegrationTests.OrdinaryGroundPlacementPreservesStateAndResumesAssignedWork" methodname="OrdinaryGroundPlacementPreservesStateAndResumesAssignedWork" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1783925907" result="Passed" start-time="2026-07-20 16:48:31Z" end-time="2026-07-20 16:48:33Z" duration="2.182442" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1062" name="PauseAndTutorialModalFreezeEveryNeedExactly" fullname="OpenPlan.Tests.OfficeIntegrationTests.PauseAndTutorialModalFreezeEveryNeedExactly" methodname="PauseAndTutorialModalFreezeEveryNeedExactly" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="238582078" result="Passed" start-time="2026-07-20 16:48:33Z" end-time="2026-07-20 16:48:34Z" duration="0.798874" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1015" name="PauseFreezesPlacementAnimationThenPlacementCompletes" fullname="OpenPlan.Tests.OfficeIntegrationTests.PauseFreezesPlacementAnimationThenPlacementCompletes" methodname="PauseFreezesPlacementAnimationThenPlacementCompletes" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="824881735" result="Passed" start-time="2026-07-20 16:48:34Z" end-time="2026-07-20 16:48:35Z" duration="1.317252" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1012" name="ProximityInfluenceSelectsActivityOutsideVisibleFootprint" fullname="OpenPlan.Tests.OfficeIntegrationTests.ProximityInfluenceSelectsActivityOutsideVisibleFootprint" methodname="ProximityInfluenceSelectsActivityOutsideVisibleFootprint" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="58333058" result="Passed" start-time="2026-07-20 16:48:35Z" end-time="2026-07-20 16:48:36Z" duration="1.152673" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1030" name="PurchaseDeductsExactlyOnceAndPhysicallyUnlocksNeighbor" fullname="OpenPlan.Tests.OfficeIntegrationTests.PurchaseDeductsExactlyOnceAndPhysicallyUnlocksNeighbor" methodname="PurchaseDeductsExactlyOnceAndPhysicallyUnlocksNeighbor" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="948234876" result="Passed" start-time="2026-07-20 16:48:36Z" end-time="2026-07-20 16:48:39Z" duration="2.551896" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1041" name="ReassignDeskChangesWorkerDesk" fullname="OpenPlan.Tests.OfficeIntegrationTests.ReassignDeskChangesWorkerDesk" methodname="ReassignDeskChangesWorkerDesk" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="845104149" result="Passed" start-time="2026-07-20 16:48:39Z" end-time="2026-07-20 16:48:39Z" duration="0.192714" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1047" name="ReloadingStarterOfficeResetsFirstRunTutorialState" fullname="OpenPlan.Tests.OfficeIntegrationTests.ReloadingStarterOfficeResetsFirstRunTutorialState" methodname="ReloadingStarterOfficeResetsFirstRunTutorialState" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1101155430" result="Passed" start-time="2026-07-20 16:48:39Z" end-time="2026-07-20 16:48:39Z" duration="0.383722" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1019" name="RestAppliesExactNeedsAfterTwentySeconds" fullname="OpenPlan.Tests.OfficeIntegrationTests.RestAppliesExactNeedsAfterTwentySeconds" methodname="RestAppliesExactNeedsAfterTwentySeconds" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1271654902" result="Passed" start-time="2026-07-20 16:48:39Z" end-time="2026-07-20 16:48:45Z" duration="6.108124" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="RestartAndSceneChangeClearCarryWithoutElevatedWorkers" fullname="OpenPlan.Tests.OfficeIntegrationTests.RestartAndSceneChangeClearCarryWithoutElevatedWorkers" methodname="RestartAndSceneChangeClearCarryWithoutElevatedWorkers" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1548048447" result="Passed" start-time="2026-07-20 16:48:45Z" end-time="2026-07-20 16:48:48Z" duration="2.178911" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1066" name="RestartDuringRestroomUseLeavesNoReservationOrHiddenWorker" fullname="OpenPlan.Tests.OfficeIntegrationTests.RestartDuringRestroomUseLeavesNoReservationOrHiddenWorker" methodname="RestartDuringRestroomUseLeavesNoReservationOrHiddenWorker" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="351053842" result="Passed" start-time="2026-07-20 16:48:48Z" end-time="2026-07-20 16:48:49Z" duration="1.305243" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1034" name="RestartReconstructsLockedAndExpandedStarterStates" fullname="OpenPlan.Tests.OfficeIntegrationTests.RestartReconstructsLockedAndExpandedStarterStates" methodname="RestartReconstructsLockedAndExpandedStarterStates" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="2047693842" result="Passed" start-time="2026-07-20 16:48:49Z" end-time="2026-07-20 16:48:51Z" duration="2.076702" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1065" name="RestroomInfluenceStartsUseRecoversBathroomAndReleasesCapacity" fullname="OpenPlan.Tests.OfficeIntegrationTests.RestroomInfluenceStartsUseRecoversBathroomAndReleasesCapacity" methodname="RestroomInfluenceStartsUseRecoversBathroomAndReleasesCapacity" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="723424194" result="Passed" start-time="2026-07-20 16:48:51Z" end-time="2026-07-20 16:48:54Z" duration="3.108337" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1022" name="SeededVendingMalfunctionRetainsChargeAndShowsFrustration" fullname="OpenPlan.Tests.OfficeIntegrationTests.SeededVendingMalfunctionRetainsChargeAndShowsFrustration" methodname="SeededVendingMalfunctionRetainsChargeAndShowsFrustration" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="721064559" result="Passed" start-time="2026-07-20 16:48:54Z" end-time="2026-07-20 16:48:57Z" duration="3.115731" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1064" name="SelectingEmployeeDoesNotResetOrMutateNeedsWhilePaused" fullname="OpenPlan.Tests.OfficeIntegrationTests.SelectingEmployeeDoesNotResetOrMutateNeedsWhilePaused" methodname="SelectingEmployeeDoesNotResetOrMutateNeedsWhilePaused" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1617678869" result="Passed" start-time="2026-07-20 16:48:57Z" end-time="2026-07-20 16:48:58Z" duration="0.432120" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1024" name="SmokeCreatesAndCleansPropsWithExactEffects" fullname="OpenPlan.Tests.OfficeIntegrationTests.SmokeCreatesAndCleansPropsWithExactEffects" methodname="SmokeCreatesAndCleansPropsWithExactEffects" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="868576187" result="Passed" start-time="2026-07-20 16:48:58Z" end-time="2026-07-20 16:49:02Z" duration="4.115292" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1038" name="SocialWorkersEventuallySocializeAndReturn" fullname="OpenPlan.Tests.OfficeIntegrationTests.SocialWorkersEventuallySocializeAndReturn" methodname="SocialWorkersEventuallySocializeAndReturn" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="737483324" result="Passed" start-time="2026-07-20 16:49:02Z" end-time="2026-07-20 16:49:07Z" duration="4.928783" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="StarterCameraOverviewContainsEveryRequiredSpace" fullname="OpenPlan.Tests.OfficeIntegrationTests.StarterCameraOverviewContainsEveryRequiredSpace" methodname="StarterCameraOverviewContainsEveryRequiredSpace" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1810080991" result="Passed" start-time="2026-07-20 16:49:07Z" end-time="2026-07-20 16:49:07Z" duration="0.593362" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1032" name="StarterHiringAllowsDesklessPhoneWorkBeforeExpansion" fullname="OpenPlan.Tests.OfficeIntegrationTests.StarterHiringAllowsDesklessPhoneWorkBeforeExpansion" methodname="StarterHiringAllowsDesklessPhoneWorkBeforeExpansion" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1533378718" result="Passed" start-time="2026-07-20 16:49:07Z" end-time="2026-07-20 16:49:10Z" duration="3.091928" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="StarterOfficeInitializesIndependentlyWithThreeWorkers" fullname="OpenPlan.Tests.OfficeIntegrationTests.StarterOfficeInitializesIndependentlyWithThreeWorkers" methodname="StarterOfficeInitializesIndependentlyWithThreeWorkers" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1813257883" result="Passed" start-time="2026-07-20 16:49:10Z" end-time="2026-07-20 16:49:10Z" duration="0.194057" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1055" name="StarterWorkersExposeNamedPersonalityAndReadableNameTags" fullname="OpenPlan.Tests.OfficeIntegrationTests.StarterWorkersExposeNamedPersonalityAndReadableNameTags" methodname="StarterWorkersExposeNamedPersonalityAndReadableNameTags" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="658515410" result="Passed" start-time="2026-07-20 16:49:10Z" end-time="2026-07-20 16:49:11Z" duration="0.193151" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1070" name="StartingWorkersHaveRepeatableNonidenticalHealthyNeedOffsets" fullname="OpenPlan.Tests.OfficeIntegrationTests.StartingWorkersHaveRepeatableNonidenticalHealthyNeedOffsets" methodname="StartingWorkersHaveRepeatableNonidenticalHealthyNeedOffsets" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="2006782328" result="Passed" start-time="2026-07-20 16:49:11Z" end-time="2026-07-20 16:49:11Z" duration="0.195436" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1042" name="TaskCompletionIncreasesRevenue" fullname="OpenPlan.Tests.OfficeIntegrationTests.TaskCompletionIncreasesRevenue" methodname="TaskCompletionIncreasesRevenue" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1552758135" result="Passed" start-time="2026-07-20 16:49:11Z" end-time="2026-07-20 16:49:11Z" duration="0.196915" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1049" name="TutorialAndHelpOwnTheTopModalWithoutOverlaps" fullname="OpenPlan.Tests.OfficeIntegrationTests.TutorialAndHelpOwnTheTopModalWithoutOverlaps" methodname="TutorialAndHelpOwnTheTopModalWithoutOverlaps" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1845678471" result="Passed" start-time="2026-07-20 16:49:11Z" end-time="2026-07-20 16:49:11Z" duration="0.206311" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="TutorialCompletesFromObservedSelectionCarryPlacementIncomeNeedsAndRedirect" fullname="OpenPlan.Tests.OfficeIntegrationTests.TutorialCompletesFromObservedSelectionCarryPlacementIncomeNeedsAndRedirect" methodname="TutorialCompletesFromObservedSelectionCarryPlacementIncomeNeedsAndRedirect" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="684392247" result="Passed" start-time="2026-07-20 16:49:11Z" end-time="2026-07-20 16:49:12Z" duration="0.814670" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1071" name="TutorialCopyNamesFiveNeedsUrgenciesStressAndFutureAutonomy" fullname="OpenPlan.Tests.OfficeIntegrationTests.TutorialCopyNamesFiveNeedsUrgenciesStressAndFutureAutonomy" methodname="TutorialCopyNamesFiveNeedsUrgenciesStressAndFutureAutonomy" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="658913352" result="Passed" start-time="2026-07-20 16:49:12Z" end-time="2026-07-20 16:49:12Z" duration="0.195350" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="TutorialCreditsUsefulActionsTakenBeforeItStarts" fullname="OpenPlan.Tests.OfficeIntegrationTests.TutorialCreditsUsefulActionsTakenBeforeItStarts" methodname="TutorialCreditsUsefulActionsTakenBeforeItStarts" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="596333860" result="Passed" start-time="2026-07-20 16:49:12Z" end-time="2026-07-20 16:49:13Z" duration="0.762030" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="TutorialReplacesAHighlightedWorkerWhoBecomesInvalid" fullname="OpenPlan.Tests.OfficeIntegrationTests.TutorialReplacesAHighlightedWorkerWhoBecomesInvalid" methodname="TutorialReplacesAHighlightedWorkerWhoBecomesInvalid" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1808537716" result="Passed" start-time="2026-07-20 16:49:13Z" end-time="2026-07-20 16:49:13Z" duration="0.198494" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1045" name="TutorialSkipHelpAndReplayRestoreTheExactPriorSpeed" fullname="OpenPlan.Tests.OfficeIntegrationTests.TutorialSkipHelpAndReplayRestoreTheExactPriorSpeed" methodname="TutorialSkipHelpAndReplayRestoreTheExactPriorSpeed" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1442403022" result="Passed" start-time="2026-07-20 16:49:13Z" end-time="2026-07-20 16:49:13Z" duration="0.188414" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1052" name="UiSmokeAt1280x720" fullname="OpenPlan.Tests.OfficeIntegrationTests.UiSmokeAt1280x720" methodname="UiSmokeAt1280x720" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1275887758" result="Passed" start-time="2026-07-20 16:49:13Z" end-time="2026-07-20 16:49:14Z" duration="0.919354" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1053" name="UiSmokeAt1920x1080" fullname="OpenPlan.Tests.OfficeIntegrationTests.UiSmokeAt1920x1080" methodname="UiSmokeAt1920x1080" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1752750939" result="Passed" start-time="2026-07-20 16:49:14Z" end-time="2026-07-20 16:49:15Z" duration="0.941701" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1068" name="UrgentNeedStateRemainsTextReadableAt1280x720" fullname="OpenPlan.Tests.OfficeIntegrationTests.UrgentNeedStateRemainsTextReadableAt1280x720" methodname="UrgentNeedStateRemainsTextReadableAt1280x720" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="9036717" result="Passed" start-time="2026-07-20 16:49:15Z" end-time="2026-07-20 16:49:16Z" duration="0.456297" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="ValidDropIssuesCommandAndWorkerWalksFinalSegment" fullname="OpenPlan.Tests.OfficeIntegrationTests.ValidDropIssuesCommandAndWorkerWalksFinalSegment" methodname="ValidDropIssuesCommandAndWorkerWalksFinalSegment" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="619345949" result="Passed" start-time="2026-07-20 16:49:16Z" end-time="2026-07-20 16:49:18Z" duration="1.799081" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="VendingChargesOnceAndAppliesNormalResult" fullname="OpenPlan.Tests.OfficeIntegrationTests.VendingChargesOnceAndAppliesNormalResult" methodname="VendingChargesOnceAndAppliesNormalResult" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1359424483" result="Passed" start-time="2026-07-20 16:49:18Z" end-time="2026-07-20 16:49:21Z" duration="3.131193" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1020" name="WaterAppliesExactEffectsCooldownAndSocialOpportunity" fullname="OpenPlan.Tests.OfficeIntegrationTests.WaterAppliesExactEffectsCooldownAndSocialOpportunity" methodname="WaterAppliesExactEffectsCooldownAndSocialOpportunity" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="1331239172" result="Passed" start-time="2026-07-20 16:49:21Z" end-time="2026-07-20 16:49:23Z" duration="2.629119" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1007" name="WorkerClickSelectsWithoutStartingCarryAndUiPressIsIgnored" fullname="OpenPlan.Tests.OfficeIntegrationTests.WorkerClickSelectsWithoutStartingCarryAndUiPressIsIgnored" methodname="WorkerClickSelectsWithoutStartingCarryAndUiPressIsIgnored" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="148786086" result="Passed" start-time="2026-07-20 16:49:23Z" end-time="2026-07-20 16:49:24Z" duration="0.929910" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1051" name="WorkerLabelsAndEmotesUseHighContrastOutlines" fullname="OpenPlan.Tests.OfficeIntegrationTests.WorkerLabelsAndEmotesUseHighContrastOutlines" methodname="WorkerLabelsAndEmotesUseHighContrastOutlines" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="861040876" result="Passed" start-time="2026-07-20 16:49:24Z" end-time="2026-07-20 16:49:24Z" duration="0.203648" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1036" name="WorkersReachDesksAndWork" fullname="OpenPlan.Tests.OfficeIntegrationTests.WorkersReachDesksAndWork" methodname="WorkersReachDesksAndWork" classname="OpenPlan.Tests.OfficeIntegrationTests" runstate="Runnable" seed="868231811" result="Passed" start-time="2026-07-20 16:49:24Z" end-time="2026-07-20 16:49:27Z" duration="2.181331" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/danny/AppData/LocalLow/Liminal Ledger/OPEN PLAN\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

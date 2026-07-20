@@ -1,0 +1,856 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Channel LicenseClient-danny doesn't exist
+Built from '6000.5/staging' branch; Version is '6000.5.1f1 (0d9463e84828) revision 889955'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'en' Physical Memory: 16193 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-07-20T12:26:09Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 33580)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe
+-batchmode
+-nographics
+-quit
+-projectPath
+C:\Users\danny\Documents\GitHub\Silly Office Sim
+-executeMethod
+OpenPlan.Editor.ReleasePipeline.GenerateProject
+-logFile
+C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\Checkpoint00-generator.log
+Successfully changed project path to: C:\Users\danny\Documents\GitHub\Silly Office Sim
+C:/Users/danny/Documents/GitHub/Silly Office Sim
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=0"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.Player connection [12364]  Target information:
+
+Player connection [12364]  * "[IP] 192.168.1.109 [Port] 55504 [Flags] 2 [Guid] 1840907889 [EditorId] 1840907889 [Version] 1048832 [Id] WindowsEditor(7,MoneyMaker) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [12364] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [12364] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-danny" at "2026-07-20T12:26:09.9880446Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 33580, path: "C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              dda0939bd7324444af9f3de476dc2c41
+  Correlation Id:          760db458e3943214a8e17c4cb7b27206
+  External correlation Id: 2202201143764116424
+  Machine Id:              /RsQ7CGoxRnJ/XfrMJclpE+dBOo=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-danny" (connect: 0.57s, validation: 0.07s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-danny-notifications" at "2026-07-20T12:26:10.1154336Z"
+[Licensing::Module] Connected to LicensingClient (PId: 33580, launch time: 0.02, total connection time: 0.70s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 20067617806284-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.77s
+[Package Manager] Connected to IPC stream "Upm-19572" after 0.3 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.5.1f1 (0d9463e84828)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/danny/Documents/GitHub/Silly Office Sim/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56572
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003414 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.377 seconds
+Domain Reload Profiling: 1006ms
+	BeginReloadAssembly (212ms)
+		CreateAndSetChildDomain (3ms)
+	RebuildCommonClasses (5ms)
+	RebuildNativeTypeToScriptingClass (18ms)
+	initialDomainReloadingComplete (85ms)
+	LoadAllAssembliesAndSetupDomain (306ms)
+		LoadAssemblies (203ms)
+		AnalyzeDomain (216ms)
+			TypeCache.Refresh (215ms)
+				TypeCache.ScanAssembly (201ms)
+	FinalizeReload (380ms)
+		SetupLoadedEditorAssemblies (0ms)
+			BeforeProcessingInitializeOnLoad (90ms)
+			ProcessInitializeOnLoadAttributes (92ms)
+			ProcessInitializeOnLoadMethodAttributes (118ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 50 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.inputsystem@1.19.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.inputsystem@21a28c3a6c83)
+    com.unity.searcher@4.9.4 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.searcher@d45a78918735)
+    com.unity.burst@1.8.29 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.burst@6bb9aca3ef38)
+    com.unity.nuget.mono-cecil@1.11.6 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.test-framework.performance@3.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.test-framework.performance@8b56083ec0f0)
+  Built-in packages:
+    com.unity.render-pipelines.universal@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.universal@be00b5bbd9a1)
+    com.unity.test-framework@1.7.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.test-framework@f3e6c9a02477)
+    com.unity.ugui@2.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.ugui@4f9b15fd1386)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.physicscore2d@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physicscore2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.wind@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.1.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.ext.nunit@44f7d31723bd)
+    com.unity.render-pipelines.core@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.core@d7ce3ed2cd80)
+    com.unity.shadergraph@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.shadergraph@2df19e8719bc)
+    com.unity.render-pipelines.universal-config@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.universal-config@fdda01c80fe3)
+    com.unity.collections@6.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.collections@a43cabe808ca)
+    com.unity.mathematics@1.4.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.mathematics@981956d94fb6)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.02 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/danny/Documents/GitHub/Silly Office Sim
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Data\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/danny/Documents/GitHub/Silly Office Sim
+ExitCode: 4 Duration: 3s177ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[541/684    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (3.12 seconds), 2 items updated, 540 evaluated
+ExitCode: 0 Duration: 1s758ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/danny/Documents/GitHub/Silly Office Sim
+ExitCode: 0 Duration: 2s969ms
+Finished compiling graph: 687 nodes, 11964 flattened edges (10112 ToBuild, 100 ToUse), maximum node priority 719
+[388/684    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Runtime.rsp
+[396/684    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Editor.rsp
+[541/684    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[668/684    1s] Csc Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Runtime.dll (+2 others)
+Assets\OpenPlan\Camera\OfficeCameraRig.cs(64,42): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Core\AutomatedVideoDirector.cs(33,39): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Core\AutomatedCaptureDirector.cs(138,39): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\UI\OfficeUIFactory.cs(48,17): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\UI\OfficeUIFactory.cs(86,13): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+
+Assets\OpenPlan\Office\StarterOfficeEnvironmentBuilder.cs(410,13): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+
+Assets\OpenPlan\Core\OpenPlanTypes.cs(202,35): warning UAC1001: Field 'providedActivity' type 'OpenPlan.PlacementActivity?' is skipped by serialization (missing the [Serializable] attribute). Refer to the Serialization rules analyzer reference. (https://docs.unity3d.com/6000.5/Documentation/Manual/script-serialization-analyzer.html#uac1001)
+[669/684    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/OpenPlan.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Runtime.dll, with 141 defines and 289 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[670/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.Runtime.pdb
+[671/684    0s] Csc Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Editor.dll (+2 others)
+[672/684    0s] Csc Library/Bee/artifacts/1900b0aE.dag/OpenPlan.EditModeTests.dll (+2 others)
+[673/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.Runtime.dll
+[674/684    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/OpenPlan.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/OpenPlan.Editor.dll, with 139 defines and 298 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[675/684    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/OpenPlan.EditModeTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/OpenPlan.EditModeTests.dll, with 139 defines and 292 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[676/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.Editor.pdb
+[677/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.EditModeTests.pdb
+[678/684    0s] Csc Library/Bee/artifacts/1900b0aE.dag/OpenPlan.PlayModeTests.dll (+2 others)
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(21,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(85,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(98,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(106,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(153,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(171,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(183,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(205,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(228,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(261,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(313,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(371,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(393,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(424,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(442,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(463,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(481,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(494,40): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(505,27): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(512,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(537,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(555,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(580,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(613,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(643,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(670,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(693,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(710,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(746,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(765,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(779,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(811,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(856,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(886,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(927,38): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(932,38): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(940,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(946,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(950,22): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(962,24): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(971,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(984,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(992,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1008,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1025,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1035,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1049,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1061,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1070,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1083,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1141,43): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1169,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1195,40): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1198,36): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1204,44): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1214,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1233,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1283,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1316,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1332,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1337,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1353,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1358,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1373,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1383,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1400,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1427,34): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1444,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1459,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1473,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+[679/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.EditModeTests.dll
+[680/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.Editor.dll
+[681/684    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/OpenPlan.PlayModeTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/OpenPlan.PlayModeTests.dll, with 141 defines and 284 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[682/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.PlayModeTests.pdb
+[683/684    0s] CopyFiles Library/ScriptAssemblies/OpenPlan.PlayModeTests.dll
+*** Tundra build success (2.92 seconds), 19 items updated, 684 evaluated
+Assets\OpenPlan\Camera\OfficeCameraRig.cs(64,42): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Core\AutomatedVideoDirector.cs(33,39): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Core\AutomatedCaptureDirector.cs(138,39): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\UI\OfficeUIFactory.cs(48,17): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\UI\OfficeUIFactory.cs(86,13): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+Assets\OpenPlan\Office\StarterOfficeEnvironmentBuilder.cs(410,13): warning CS0618: 'TMP_Text.enableWordWrapping' is obsolete: 'The enabledWordWrapping property is now obsolete. Please use the textWrappingMode property instead.'
+Assets\OpenPlan\Core\OpenPlanTypes.cs(202,35): warning UAC1001: Field 'providedActivity' type 'OpenPlan.PlacementActivity?' is skipped by serialization (missing the [Serializable] attribute). Refer to the Serialization rules analyzer reference. (https://docs.unity3d.com/6000.5/Documentation/Manual/script-serialization-analyzer.html#uac1001)
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(21,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(85,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(98,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(106,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(153,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(171,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(183,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(205,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(228,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(261,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(313,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(371,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(393,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(424,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(442,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(463,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(481,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(494,40): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(505,27): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(512,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(537,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(555,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(580,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(613,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(643,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(670,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(693,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(710,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(746,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(765,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(779,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(811,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(856,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(886,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(927,38): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(932,38): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(940,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(946,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(950,22): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(962,24): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(971,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(984,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(992,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1008,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1025,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1035,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1049,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1061,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1070,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1083,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1141,43): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1169,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1195,40): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1198,36): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1204,44): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1214,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1233,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1283,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1316,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1332,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1337,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1353,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1358,28): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1373,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1383,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1400,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1427,34): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1444,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1459,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\OpenPlan\Tests\PlayMode\OfficeIntegrationTests.cs(1473,37): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Total cache size 267957416
+Total cache size after purge 267957416, took 00:00:00.4787556
+AssetDatabase: script compilation time: 8.983571s
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  4.582 seconds
+Domain Reload Profiling: 5842ms
+	BeginReloadAssembly (522ms)
+		DisableScriptedObjects (44ms)
+		CreateAndSetChildDomain (86ms)
+	RebuildCommonClasses (24ms)
+	RebuildNativeTypeToScriptingClass (33ms)
+	initialDomainReloadingComplete (94ms)
+	LoadAllAssembliesAndSetupDomain (585ms)
+		LoadAssemblies (531ms)
+		AnalyzeDomain (185ms)
+			TypeCache.Refresh (126ms)
+				TypeCache.ScanAssembly (114ms)
+			BuildScriptInfoCaches (45ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (4584ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			BeforeProcessingInitializeOnLoad (197ms)
+			ProcessInitializeOnLoadAttributes (3367ms)
+			ProcessInitializeOnLoadMethodAttributes (639ms)
+			AfterProcessingInitializeOnLoad (15ms)
+		AwakeInstancesAfterBackupRestoration (31ms)
+Starting new worker id: 0 with log in C:/Users/danny/Documents/GitHub/Silly Office Sim/Logs/AssetImportWorkerHW0.log
+
+Asset Pipeline Refresh (id=a73db1ea3339e494481d3dbc5c2d1dcc): Total: 15.747 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=5008 ms
+		Asset DB Callback time: managed=316 ms, native=23 ms
+		Scripting: domain reloads=1, domain reload time=1359 ms, compile time=8987 ms, other=52 ms
+		Project Asset Count: scripts=885, non-scripts=1707
+		Asset File Changes: new=2, changed=4, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 20.558ms
+	ApplyChangesToAssetFolders: 0.693ms
+	Scan: 93.462ms
+	Collect global state as custom dependencies: 5.282ms
+	OnSourceAssetsModified: 0.723ms
+	CategorizeScriptCompilationAssets: 16.598ms
+	ProcessAssetsWithTransientArtifactChanges: 64.252ms
+	CategorizeAssets: 54.556ms
+	CompileScripts: 8986.544ms
+	ImportOutOfDateAssets: 4659.644ms (4597.530ms without children)
+		UnloadImportedAssets: 1.603ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.518ms
+		ImportSchedulerStart: 59.942ms
+	PostProcessAllAssets: 316.016ms
+		VCAutoAddAssetPostprocess 1.786ms
+		XRBuildSystem.XRAssetImported 0.174ms
+		VersionControlSettings.HiddenFilePostprocess 0.167ms
+		PostProcessCallbackCreateDeferredMaterials 0.077ms
+		MonoPostProcessAllAssets: 312.900ms
+			AssetPostprocessor.OnPostprocessAllAssets 202.129ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 26.963ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 21.073ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 11.064ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 3.775ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 3.611ms
+			SyncVS.PostprocessSyncProject 3.250ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 3.172ms
+			AssetChangedListener.OnPostprocessAllAssets 3.018ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 2.361ms
+			MaterialPostprocessor.OnPostprocessAllAssets 1.214ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 1.115ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.053ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.958ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.904ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.880ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.809ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.786ms
+			SampleDependencyImporterPostProcessor.OnPostprocessAllAssets 0.726ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.628ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.527ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.502ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.490ms
+			PostProcessor.OnPostprocessAllAssets 0.468ms
+			AssetEvents.OnPostprocessAllAssets 0.417ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.348ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.280ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.212ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.196ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.140ms
+	PostAssetChangesProfiler: 5.893ms
+	UnloadStreamsBegin: 1.638ms
+	PersistCurrentRevisions: 0.093ms
+	GenerateScriptTypeHashes: 2.681ms
+	GenerateScriptTypeSerializationHashes: 4.899ms
+	Untracked: 1512.871ms
+
+Application.AssetDatabase Initial Refresh End
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Scanning for USB devices : 6.418ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-OPEN PLAN
+Unloading 79 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 3651 unused Assets / (6.0 MB). Loaded Objects now: 4466.
+Memory consumption went from 334.9 MB to 328.8 MB.
+Total: 22.685300 ms (FindLiveObjects: 0.661700 ms CreateObjectMapping: 2.092700 ms MarkObjects: 12.750900 ms  DeleteObjects: 7.173500 ms)
+
+Asset Pipeline Refresh (id=593d1961c08cd6b48953406a5845888a): Total: 0.141 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Importing 'GUID: 55f1a7922f6c7864a8913a8184cec68e - Path: Assets/OpenPlan/Art/Models/OP_Ashtray.fbx' with importer (FBXImporter)
+Imported 'GUID: 55f1a7922f6c7864a8913a8184cec68e' -> (Import Result ID: 'db1a35171daca6ed83b4a80d9201e730') in 0.046 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=cb5dcbaaea61916e558c8243e7e09759 DependenciesID=997cd4eff504f31e49f20208df43ab5c StaticDependenciesID=80589a3aaa3b3f287ed7b9c363f67089 
+Asset Pipeline Refresh (id=ed0dde57f72472242a6b75d1e4d5857f): Total: 0.104 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 6797c7fdb32c80e4e8da7123a8a8a0d8 - Path: Assets/OpenPlan/Art/Models/OP_Bookshelf.fbx' with importer (FBXImporter)
+Imported 'GUID: 6797c7fdb32c80e4e8da7123a8a8a0d8' -> (Import Result ID: '03969c9ab0a0203668eafef9406bd02c') in 0.034 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c9ce8983ead0759d64b213c6c349a2b5 DependenciesID=e52220af33181cf2566a3cac89b0c0b6 StaticDependenciesID=df5fc9327f679313298a47c197c37cea 
+Asset Pipeline Refresh (id=55d964fb5b09ce248805c5f0818e8fc0): Total: 0.088 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: c17105ac6f7c77c41b339083f1ef3521 - Path: Assets/OpenPlan/Art/Models/OP_Cabinet.fbx' with importer (FBXImporter)
+Imported 'GUID: c17105ac6f7c77c41b339083f1ef3521' -> (Import Result ID: 'b300b7eab7b9ab0440de4bfc02378eec') in 0.040 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ac6543973c9e8bb30234b42df20150f3 DependenciesID=1a824e31bb6df41d0e77344d9a97b6b8 StaticDependenciesID=af06a251656d6ba1c70c360168a87687 
+Asset Pipeline Refresh (id=fe99cdb2f20504d41bb53693bc0c703b): Total: 0.103 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 3d336c6fa5de5804d991c2476558c707 - Path: Assets/OpenPlan/Art/Models/OP_CardboardBox.fbx' with importer (FBXImporter)
+Imported 'GUID: 3d336c6fa5de5804d991c2476558c707' -> (Import Result ID: '01d601ed719fca3e588d7295c3439ca2') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9c55327a49098d0de81cc9475869102b DependenciesID=ad9ebf8e8c90a585ee4472fd544f4eeb StaticDependenciesID=b3b5ca27a33ab2422847b2c054ebb9e8 
+Asset Pipeline Refresh (id=52cd6f6ef68b1314d812b1de2ae0fdfa): Total: 0.085 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: f545a160b6b55684b8aedb17cb533a11 - Path: Assets/OpenPlan/Art/Models/OP_CheapCRTMonitor.fbx' with importer (FBXImporter)
+Imported 'GUID: f545a160b6b55684b8aedb17cb533a11' -> (Import Result ID: 'a84111c0fb76f7b1bda0c55fff8320f7') in 0.025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=026e52a8d173dffec7456b7d8aa47695 DependenciesID=8552df84492baef255de3bbbed3f05e3 StaticDependenciesID=e6cd00f703a303f588fa71936ba0a351 
+Asset Pipeline Refresh (id=35a2aa8550c0a4f439069cd49fcfb49c): Total: 0.090 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: f1af0c07e2964e34da94c9075c65ea79 - Path: Assets/OpenPlan/Art/Models/OP_CheapVendingMachine.fbx' with importer (FBXImporter)
+Imported 'GUID: f1af0c07e2964e34da94c9075c65ea79' -> (Import Result ID: '33cc7d2f950bebca6fab53429b7b6c24') in 0.029 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=42c11d2494017bf741a1865edca1d198 DependenciesID=56b4d88d585518f826bd20f9b6821c4d StaticDependenciesID=c1d17df6934e7dcb99fcf85fe88c7b6b 
+Asset Pipeline Refresh (id=457ab233db97b2649b5155eb64d3bc27): Total: 0.092 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: a62a52d1b5425e041a2c800d0c0fd51e - Path: Assets/OpenPlan/Art/Models/OP_Cigarette.fbx' with importer (FBXImporter)
+Imported 'GUID: a62a52d1b5425e041a2c800d0c0fd51e' -> (Import Result ID: '9131e3fa33cbd57cf53736586641e915') in 0.030 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b7e3c8c8fafe6683737ad4a9df2d005f DependenciesID=6d94c96db438b0242a0587b1954031a8 StaticDependenciesID=6b645ffff61ec96e7387a4ff8b01759c 
+Asset Pipeline Refresh (id=81763b318a8142a4aaecfc926d4f81aa): Total: 0.102 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 7da8f5bf76b650f4099824332efd79e3 - Path: Assets/OpenPlan/Art/Models/OP_Clock.fbx' with importer (FBXImporter)
+Imported 'GUID: 7da8f5bf76b650f4099824332efd79e3' -> (Import Result ID: '0b2f3c37ea26963f96f07d9eb8565a1e') in 0.096 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ade6cd3c75b2c6a37964571c5e8d7613 DependenciesID=0f113f389b3174dda27c703dfa1ba4b6 StaticDependenciesID=88b3a1c7aadd4a714705ea8f21f5ea63 
+Asset Pipeline Refresh (id=93fdb3646420fda409252f64f8eb9e23): Total: 0.164 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: e1bc34fabc4c13c4d9a84b287f00f1bb - Path: Assets/OpenPlan/Art/Models/OP_CoffeeMachine.fbx' with importer (FBXImporter)
+Imported 'GUID: e1bc34fabc4c13c4d9a84b287f00f1bb' -> (Import Result ID: 'e06281607e6321b64b05c24092d79ded') in 0.033 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dad65f4ab742ae8c7412935ee7f25cb7 DependenciesID=0025c1297d66478fafcc7fdaa040aa4d StaticDependenciesID=986bc9f759af9ad6ffccf88febe6b214 
+Asset Pipeline Refresh (id=024d40b6f2e5c8749958d679e9b3896a): Total: 0.128 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: e7b4a895caca6b249bc444e358ec075c - Path: Assets/OpenPlan/Art/Models/OP_CompanySign.fbx' with importer (FBXImporter)
+Imported 'GUID: e7b4a895caca6b249bc444e358ec075c' -> (Import Result ID: 'eed573b22fb5ec7eb69f15d402f1c453') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7afe502c1caffb9f0c01eee454646c62 DependenciesID=12e5b14e93e76163eab239e7e29af901 StaticDependenciesID=7692afb274d28ea36992272277f44a4d 
+Asset Pipeline Refresh (id=0a171c10bae56a346bbd5619a17ea43b): Total: 0.105 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: e8334744cf5275f4f9c0c3fc6048640a - Path: Assets/OpenPlan/Art/Models/OP_ConferenceTable.fbx' with importer (FBXImporter)
+Imported 'GUID: e8334744cf5275f4f9c0c3fc6048640a' -> (Import Result ID: '49bb9afc1d00b19411b77e6c70178567') in 0.027 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=da2d51e01b68c4725a51849b238271bf DependenciesID=704ff6a5f76f7bafc4f649c6901c390e StaticDependenciesID=c50b53a5c8c3079eb00325b4b8be8b7d 
+Asset Pipeline Refresh (id=bbec2f9b784364f4fbb289b9244132d8): Total: 0.098 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 837bb600570397641ba9d90fb5fde0f4 - Path: Assets/OpenPlan/Art/Models/OP_ConnectingWallTrim.fbx' with importer (FBXImporter)
+Imported 'GUID: 837bb600570397641ba9d90fb5fde0f4' -> (Import Result ID: '46f1ebe6233d72c280dbb7f497683ad1') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7c4c187838b4ba19a01b34da55e9ff54 DependenciesID=e599f2b6ccf8a5f321d2c3b807941288 StaticDependenciesID=6e89712a8fe04620e4310795c3c41436 
+Asset Pipeline Refresh (id=59eb77576eb491c4aa9621bb63f1764d): Total: 0.087 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 4ce11708557cf5e46b12414256c40752 - Path: Assets/OpenPlan/Art/Models/OP_Copier.fbx' with importer (FBXImporter)
+Imported 'GUID: 4ce11708557cf5e46b12414256c40752' -> (Import Result ID: '71b58b011fbc3f647c4a92c8fa8a5a19') in 0.020 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2394680cc24ae0996f7c996906e97106 DependenciesID=5fdd6adfff14c1cb3cd7f2cddff70bba StaticDependenciesID=5735026db4d2797556e87cd5d65b20e4 
+Asset Pipeline Refresh (id=fdeecd9d4bf10994dabf17e3694ec04a): Total: 0.083 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: aee2e1a6acc5c0c4f883cbc722f3b968 - Path: Assets/OpenPlan/Art/Models/OP_Counter.fbx' with importer (FBXImporter)
+Imported 'GUID: aee2e1a6acc5c0c4f883cbc722f3b968' -> (Import Result ID: '9b0620163f9e93ad19f76475df30277b') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=656ab7b651b293be42612396e86f3f02 DependenciesID=1283bf34b4dec37df927e44ab7c68b77 StaticDependenciesID=9d8a07f6a81d53a21dc021cbf8ad9f6b 
+Asset Pipeline Refresh (id=6fc134a50039eb54587796b4347f4020): Total: 0.083 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 80fb19ffe94c7324dbd4e2d9c138d1ba - Path: Assets/OpenPlan/Art/Models/OP_CubicleDivider.fbx' with importer (FBXImporter)
+Imported 'GUID: 80fb19ffe94c7324dbd4e2d9c138d1ba' -> (Import Result ID: 'e24b920ae1f20d2f42f9e28b4f1234eb') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1b003f6d813f029c7756d8b9a5e28893 DependenciesID=d5567d0ce8b4e8f0d9d401b8b271c709 StaticDependenciesID=218b9ec3ad4c3fbe185efb2de5fb7330 
+Asset Pipeline Refresh (id=1dcad3645008c5246a4511a398c8aa71): Total: 0.074 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: cb63ca34db09a9e42bd154806d4321b3 - Path: Assets/OpenPlan/Art/Models/OP_DamagedDesk.fbx' with importer (FBXImporter)
+Imported 'GUID: cb63ca34db09a9e42bd154806d4321b3' -> (Import Result ID: '181954a219563bf2efb8454924c71b59') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=45946ec5f6358be2ce4d15a610a3d0c6 DependenciesID=81d28b520b5830570537dfb8231e3776 StaticDependenciesID=093c76f2f93bbd2ba90d8022908fac9a 
+Asset Pipeline Refresh (id=0e0be5bef1838644ba06c40bc020709f): Total: 0.082 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: aabf028a40ad4354bbd363276a8d0b75 - Path: Assets/OpenPlan/Art/Models/OP_Desk_A.fbx' with importer (FBXImporter)
+Imported 'GUID: aabf028a40ad4354bbd363276a8d0b75' -> (Import Result ID: '91de35b0853d20afd321102e3bb391a5') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=57baccc04af9dc7b17bc530269a4f0cf DependenciesID=ed5f05fe6493fa06d64d945c9dd710f7 StaticDependenciesID=480fc9315763d670bcfdf428fe8fe009 
+Asset Pipeline Refresh (id=87c5c001ecbd6254d88db74fac26f8fe): Total: 0.079 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: cce0cd08e89693b4ca511c27640a444d - Path: Assets/OpenPlan/Art/Models/OP_Desk_B.fbx' with importer (FBXImporter)
+Imported 'GUID: cce0cd08e89693b4ca511c27640a444d' -> (Import Result ID: '806714b4168cabe9783f93343b859d6b') in 0.020 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b804409000f9f8c9fbff3d975a3b206c DependenciesID=62c6ab217e3d4e218720b74a8ca55ed6 StaticDependenciesID=91211e8ad5d0940b661049683f9d0111 
+Asset Pipeline Refresh (id=161e2929956b4d24ead8231706dad775): Total: 0.079 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 38c6a0e75ecf333428f179659fdb9f60 - Path: Assets/OpenPlan/Art/Models/OP_DeskLamp.fbx' with importer (FBXImporter)
+Imported 'GUID: 38c6a0e75ecf333428f179659fdb9f60' -> (Import Result ID: '19526167a1828e2c2773c3d56338e2b1') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d9433566ad3a576300bab441921d846b DependenciesID=ca7f0aea2db82d209b5e318e4138948b StaticDependenciesID=45d5327ab36eae387efa1555b3fc0629 
+Asset Pipeline Refresh (id=48509c43b0846e440899fed2cc23f8b1): Total: 0.078 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: eb6c99234384f7c44966fc4a0ca2fa65 - Path: Assets/OpenPlan/Art/Models/OP_DeskPlant.fbx' with importer (FBXImporter)
+Imported 'GUID: eb6c99234384f7c44966fc4a0ca2fa65' -> (Import Result ID: '26df57c7c7fa3e579c3fba8a1a34b9c3') in 0.034 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=18aa148e058480954d6f5f1778ce2f3f DependenciesID=3e0add542644c053be7a3c605d82e3e1 StaticDependenciesID=a8b8eb16d404b9984b35c9242e35687a 
+Asset Pipeline Refresh (id=82abd773f29447e4f89df9b6dd54c346): Total: 0.122 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 8aec8b80454342548ad06465d9a85338 - Path: Assets/OpenPlan/Art/Models/OP_DisplayScreen.fbx' with importer (FBXImporter)
+Imported 'GUID: 8aec8b80454342548ad06465d9a85338' -> (Import Result ID: '529134161a528c8a8c9de87ffb9799f1') in 0.028 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=42364e2d847afd5a2e90fa1d2bdbed29 DependenciesID=f8b666f75b9ba42605e380fb55480898 StaticDependenciesID=f0c5040d143da3ad3229bbcf10abd4f7 
+Asset Pipeline Refresh (id=421f42ee49651a444bd8d8540697376c): Total: 0.098 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: fb9deaf99686dd1409fdad8f31a64308 - Path: Assets/OpenPlan/Art/Models/OP_Door.fbx' with importer (FBXImporter)
+Imported 'GUID: fb9deaf99686dd1409fdad8f31a64308' -> (Import Result ID: '11ac81f74d2b6ade11a52d93f3cce821') in 0.027 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9feb7cc351ac8e5442f101cc709d6f7c DependenciesID=0e42e6ca49467d8c44ca8ec37391307c StaticDependenciesID=2cdf859da80ef441b36241b8724a0965 
+Asset Pipeline Refresh (id=4f3835e534ebfbf4e9d012c7a39707cf): Total: 0.117 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 1ca2aea376e3f2a4f8a0a5d8171b651f - Path: Assets/OpenPlan/Art/Models/OP_Elevator.fbx' with importer (FBXImporter)
+Imported 'GUID: 1ca2aea376e3f2a4f8a0a5d8171b651f' -> (Import Result ID: 'eb41ffb02bc5bd99e80cd5250e0dfede') in 0.026 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=12569c339f30c033f2bb479cf3e49b81 DependenciesID=b44c94e25d9de5dc904a0e41c685ebb6 StaticDependenciesID=c93c1da9890e376c0d26b9584efb9db8 
+Asset Pipeline Refresh (id=d108eafc56615ea4794d4e0100fbd835): Total: 0.108 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 61233337bbb235f41a3a6cff0e74cee7 - Path: Assets/OpenPlan/Art/Models/OP_ElevatorIndicator.fbx' with importer (FBXImporter)
+Imported 'GUID: 61233337bbb235f41a3a6cff0e74cee7' -> (Import Result ID: 'ec07e490576af46339fed30b174563ba') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c3257784270882b2e76be98043d46962 DependenciesID=622f98cdbee3b61497f861e381df6d5b StaticDependenciesID=e5347a2981786ef315f6a2bd346f9669 
+Asset Pipeline Refresh (id=e6f5d3e484e0f47479580c1cbb72c46f): Total: 0.094 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 0222584f3f7300c4f8bda263ccfdb1ca - Path: Assets/OpenPlan/Art/Models/OP_ExitSign.fbx' with importer (FBXImporter)
+Imported 'GUID: 0222584f3f7300c4f8bda263ccfdb1ca' -> (Import Result ID: '8d1cdc38ce22ce644e3cfbfa93696722') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d60e4a1326bfe210e3549701325e0bda DependenciesID=7110e8c9c87e2e79cbba793185689e4e StaticDependenciesID=cac3280539889aa0420a884cf9c97d55 
+Asset Pipeline Refresh (id=88c9deb980360324cac37ee6ce9a681e): Total: 0.105 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: c3c8231c277e12f4cbbc36c91bd288d5 - Path: Assets/OpenPlan/Art/Models/OP_FileTray.fbx' with importer (FBXImporter)
+Imported 'GUID: c3c8231c277e12f4cbbc36c91bd288d5' -> (Import Result ID: '3359ea21354806f50e6231b6f4aee110') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=658ff98e09088b99632b8ec0289ea646 DependenciesID=3fcef8e2404583957759aeb57a723b8e StaticDependenciesID=2b7c7f4d366dc405c815b283dcf89318 
+Asset Pipeline Refresh (id=431bd4377afcb5d46b5628a3e0e75ce1): Total: 0.096 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 5936b4cd3dc139641919715d3012a52e - Path: Assets/OpenPlan/Art/Models/OP_FilingCabinet.fbx' with importer (FBXImporter)
+Imported 'GUID: 5936b4cd3dc139641919715d3012a52e' -> (Import Result ID: 'cf2a4d3e2054a3a6f748ecdb4703e702') in 0.029 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7dd46c69e47f0f03bd16b79a5d0249d8 DependenciesID=e6fedecee31e65f5a100eed6b3641ae5 StaticDependenciesID=ccd063250635770a5b965c4f61c56ddd 
+Asset Pipeline Refresh (id=0bac6036121a3fc4987c9310438104d5): Total: 0.105 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 88c57e240d5fcc24db9c4196f16111be - Path: Assets/OpenPlan/Art/Models/OP_FloorSlab.fbx' with importer (FBXImporter)
+Imported 'GUID: 88c57e240d5fcc24db9c4196f16111be' -> (Import Result ID: '0d266d15900156dbfaaa45ab741ab12e') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=64c2122cf61f89c76992365e68043161 DependenciesID=516327c8b8bf4399d336a6f5fc7b57c4 StaticDependenciesID=e6494cf8c9ed03e1f3b248f5fa205da1 
+Asset Pipeline Refresh (id=63634d9bd24267b4db3f68a0a728f088): Total: 0.095 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 8d0f9853424e26546852c91b4a28c017 - Path: Assets/OpenPlan/Art/Models/OP_GlassWall.fbx' with importer (FBXImporter)
+Imported 'GUID: 8d0f9853424e26546852c91b4a28c017' -> (Import Result ID: 'd0fbf3589baf4dae50596e8a35686409') in 0.027 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=990a6545087433cbc5618f7d47923945 DependenciesID=6bd30731cbc779674f65614c1f19735d StaticDependenciesID=b0632c88007424573b8c26e28bfaab68 
+Asset Pipeline Refresh (id=95398b00ba7a6c145a2b7a493f8e678f): Total: 0.111 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 59d86fe8e7ad7ff4cb3d26a61ce0d9df - Path: Assets/OpenPlan/Art/Models/OP_Keyboard.fbx' with importer (FBXImporter)
+Imported 'GUID: 59d86fe8e7ad7ff4cb3d26a61ce0d9df' -> (Import Result ID: '7822a8494cc756a28b18764b406a773f') in 0.043 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e31e970de30e827d7377bb3fdb3291db DependenciesID=af78fcbb77bc3b2fbbb10c476156356c StaticDependenciesID=83e48e66c6ca7b75b1c8f19b3128ac2d 
+Asset Pipeline Refresh (id=f80319181e02d6441a1bae015b389253): Total: 0.117 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 2fbc8a8d85278de4b8ed79e728e27155 - Path: Assets/OpenPlan/Art/Models/OP_MeetingChair.fbx' with importer (FBXImporter)
+Imported 'GUID: 2fbc8a8d85278de4b8ed79e728e27155' -> (Import Result ID: 'ceb6c8fe6db8c4e3ea3fa6f6fb1e03dd') in 0.032 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dae062bd94c7422a7eff9f19f8d247fe DependenciesID=6f8eb2f211c494b4585d0153d1a7fe93 StaticDependenciesID=ca0fa17d03178d1fae4d5e92ad608827 
+Asset Pipeline Refresh (id=beae2885791f0b8498b542c1314b5fee): Total: 0.106 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: f1a5c50d0408fea4bbe5c96180694189 - Path: Assets/OpenPlan/Art/Models/OP_Monitor.fbx' with importer (FBXImporter)
+Imported 'GUID: f1a5c50d0408fea4bbe5c96180694189' -> (Import Result ID: 'e4fadf4a4f1f5ac58528b7ce0f0f7f4f') in 0.026 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bbe502caf5c47f597cbb82ee867bba1f DependenciesID=b78ab091991615327b1b853f4db24533 StaticDependenciesID=2fcf7b3f2224c0dbf66df64e44d9dc90 
+Asset Pipeline Refresh (id=27017c9ebc7282248ae51fd85af96bbe): Total: 0.105 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Worker ready: AssetImportWorkerHW0 0
+Importing 'GUID: c96d6d47f05a2b147b44f78ced99a18b - Path: Assets/OpenPlan/Art/Models/OP_Mouse.fbx' with importer (FBXImporter)
+Imported 'GUID: c96d6d47f05a2b147b44f78ced99a18b' -> (Import Result ID: 'e7fd532157fe840caec5605c0876ed84') in 0.028 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=71981010eed5f17341a0ab93ff79abf3 DependenciesID=25b220bba6c69514f606b19f594be5f5 StaticDependenciesID=27154d2e6e86d18e8bb254d07e4d04b0 
+Asset Pipeline Refresh (id=184621820a66e0e45880673b9c730504): Total: 0.111 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 85aa3febc820e314594f67bce8e19bb3 - Path: Assets/OpenPlan/Art/Models/OP_Mug.fbx' with importer (FBXImporter)
+Imported 'GUID: 85aa3febc820e314594f67bce8e19bb3' -> (Import Result ID: '76050ce4ad17411e1a24e94489dd5379') in 0.028 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ce895c786410f50640f61ebf0aac3918 DependenciesID=9a4376291a34a021a2ac7fe50f2de03e StaticDependenciesID=196832a498ea6b3c4f9b9d9ae54273d1 
+Asset Pipeline Refresh (id=3b04ed58f3b3f6447a6ecfc8d27c5046): Total: 0.112 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: c0596249f500e3d49ba4826abab1e6d2 - Path: Assets/OpenPlan/Art/Models/OP_Nameplate.fbx' with importer (FBXImporter)
+Imported 'GUID: c0596249f500e3d49ba4826abab1e6d2' -> (Import Result ID: 'ec614523e93804555f88ec719cdf823a') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1ccb91f06f9a92643a773e0705f3cc73 DependenciesID=d92db90355d190f48fb60697f3a8b675 StaticDependenciesID=d7fd296a46535dd9bc037ed13a66baf7 
+Asset Pipeline Refresh (id=6eab82ec561dddb47aa36686c9bd3e65): Total: 0.112 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 9340a5e7540db464f8981e57ad0ffc7c - Path: Assets/OpenPlan/Art/Models/OP_NeighborSign.fbx' with importer (FBXImporter)
+Imported 'GUID: 9340a5e7540db464f8981e57ad0ffc7c' -> (Import Result ID: 'a3507cc1cfed7be7515adaccaee88227') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3d4fb67f06fa9e73b3b760485039297c DependenciesID=5f2d6cbfa0d5da78fff45bfc79ad64df StaticDependenciesID=216a9212c54768ff3886e2b7e8212319 
+Asset Pipeline Refresh (id=5ac86134aa8214b4a86c37f9899f9ba3): Total: 0.107 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 1b74a06f36d244247871189df21b7b84 - Path: Assets/OpenPlan/Art/Models/OP_NoticeBoard.fbx' with importer (FBXImporter)
+Imported 'GUID: 1b74a06f36d244247871189df21b7b84' -> (Import Result ID: '9c0c74699a00781cb32ab6c1cdc47d85') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=47c3103e415f5f184e8dd3324427b7fc DependenciesID=9ec2dbb9c39c017eeacf48376b772d68 StaticDependenciesID=298f547b29fe894c8ab380532efa182d 
+Asset Pipeline Refresh (id=f85d4b147e1a6ec4d98c36f3f74caddd): Total: 0.086 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 2cd02dbe28473ac4ea534762aec7fd04 - Path: Assets/OpenPlan/Art/Models/OP_OfficeChair.fbx' with importer (FBXImporter)
+Imported 'GUID: 2cd02dbe28473ac4ea534762aec7fd04' -> (Import Result ID: 'fa90f5a4150a76ddc11e005959ca63a9') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=78a487493078196ba3f237220e89874b DependenciesID=38df48b74d6b17f9529c002a6034430a StaticDependenciesID=02e4317b7ab9e31ed4e6f0e9713d68e6 
+Asset Pipeline Refresh (id=f1b8fd233ea11b047940dae18c000d06): Total: 0.077 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: e872e61898fa5144ea936abe03f1b468 - Path: Assets/OpenPlan/Art/Models/OP_PaperStack.fbx' with importer (FBXImporter)
+Imported 'GUID: e872e61898fa5144ea936abe03f1b468' -> (Import Result ID: '872a67d17225c7d5d08967f6b8146b63') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4dcd6eba57bd4cc7311d514f78da06c4 DependenciesID=5705e2a1eddd96df6527a8e27af1c0c4 StaticDependenciesID=09461d9886246ab834772ab2b7cc50fc 
+Asset Pipeline Refresh (id=8d83a84002d7ba64da3690b9b406ce98): Total: 0.082 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 2224c257f16b94e4a986b51f93fd99d9 - Path: Assets/OpenPlan/Art/Models/OP_PartialWall.fbx' with importer (FBXImporter)
+Imported 'GUID: 2224c257f16b94e4a986b51f93fd99d9' -> (Import Result ID: '801d37e5f65dd174d94ffe3199b33834') in 0.018 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=97d4796caf5b0557beffc22f0a0e488e DependenciesID=5cc0479530dfc82364a567a1d93dcf3a StaticDependenciesID=7f55430dfa3783cd41125b1769796204 
+Asset Pipeline Refresh (id=b70ad1af55506c941a1e1e8ee8386f1e): Total: 0.075 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 39d234c9bbad44a46a13bc64176bcdb3 - Path: Assets/OpenPlan/Art/Models/OP_PottedPlant.fbx' with importer (FBXImporter)
+Imported 'GUID: 39d234c9bbad44a46a13bc64176bcdb3' -> (Import Result ID: 'd88489e82f17026b569dabaf28ff7ffa') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1569c4f245a1d8c68206dc0022c37ba7 DependenciesID=849e1e296d0d29d93ff756e8bf6d5d4a StaticDependenciesID=83e2c90fad39597125ebfac3968ecffd 
+Asset Pipeline Refresh (id=d7e575f03e63bec49a067c071a85db46): Total: 0.077 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: f9176760ce969ee46a1e8ca0d68fe1fe - Path: Assets/OpenPlan/Art/Models/OP_Printer.fbx' with importer (FBXImporter)
+Imported 'GUID: f9176760ce969ee46a1e8ca0d68fe1fe' -> (Import Result ID: 'b9315dc290b1df02cb4f193c40639f0b') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=65434cb7081d56876ee54479af9be29c DependenciesID=525946c771382702d1d74eef0b8b674a StaticDependenciesID=1a0b57a59d1a614ebd7f61a1c57843ce 
+Asset Pipeline Refresh (id=63f81956a3e629043b9f30f37817f3af): Total: 0.085 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: fcedc29662e20b54eae1930f6a13643a - Path: Assets/OpenPlan/Art/Models/OP_ReceptionDesk.fbx' with importer (FBXImporter)
+Imported 'GUID: fcedc29662e20b54eae1930f6a13643a' -> (Import Result ID: 'a3aa17d4afff8e0e2e45bc90b0440f1c') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6fb4012b64927e7121b64971846d6132 DependenciesID=8adb0c90136b628d1c8781a225a3480d StaticDependenciesID=83421e313203c405a18f350fc5a121a7 
+Asset Pipeline Refresh (id=e561cfdd1f3720540b5ec65f4cb80255): Total: 0.097 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 52445db1e6f585d489f5b96d1ce1f79e - Path: Assets/OpenPlan/Art/Models/OP_RecyclingBin.fbx' with importer (FBXImporter)
+Imported 'GUID: 52445db1e6f585d489f5b96d1ce1f79e' -> (Import Result ID: '407e0be224160ef094bccdf4d55b3b0a') in 0.029 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7cd2403cbda6d6f9b706d9160c9eafa2 DependenciesID=d58381fb304d379a14eb68a2042ff444 StaticDependenciesID=c2dbf19ecf0b6ce1d572dde52c1194fe 
+Asset Pipeline Refresh (id=00fa543d7d12fb6489351ea3a0cb0208): Total: 0.136 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 14761e8bc519d324da3262a2dd1e0462 - Path: Assets/OpenPlan/Art/Models/OP_StructuralColumn.fbx' with importer (FBXImporter)
+Imported 'GUID: 14761e8bc519d324da3262a2dd1e0462' -> (Import Result ID: 'f776f032571bc79fd233cfdfddffb920') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6e0a0503955c8c20877f6321fa8582f7 DependenciesID=605cc068a3b4fcfd6cdaaba584f4d8d8 StaticDependenciesID=c0fba13a675c40779382123e2666088f 
+Asset Pipeline Refresh (id=4a2acf3964c582c45ba6f2e5d993cf44): Total: 0.094 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 8bc44b75cf1d5ab4c9b5dd1304f2ba07 - Path: Assets/OpenPlan/Art/Models/OP_TallPlant.fbx' with importer (FBXImporter)
+Imported 'GUID: 8bc44b75cf1d5ab4c9b5dd1304f2ba07' -> (Import Result ID: '433d807e69732b3bc6f0f1e2a6dcf567') in 0.032 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=063f4487f1354da2fcbcebdea9444b66 DependenciesID=4f9a41528f6df8e3e666547734837e55 StaticDependenciesID=d4a960d696afebb7dbd562827a1c8a47 
+Asset Pipeline Refresh (id=6124616e4569070409e5c3b1e5c20830): Total: 0.125 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: b52fb0640336b0143a5f6a98f92c4b08 - Path: Assets/OpenPlan/Art/Models/OP_TrashBin.fbx' with importer (FBXImporter)
+Imported 'GUID: b52fb0640336b0143a5f6a98f92c4b08' -> (Import Result ID: '823ecf22f616563a921c58786c6558a3') in 0.036 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=be577a75929214bff8e0fe2fab971be6 DependenciesID=6feb0a024e352f98969e8252595efb5b StaticDependenciesID=2a151b53f7cd96e4ff23c168a995cffe 
+Asset Pipeline Refresh (id=b10c13ae4efebcf47aa14fc2494843cd): Total: 0.140 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 7854bf4e45ea6034ea9530999824bb2f - Path: Assets/OpenPlan/Art/Models/OP_VendingMachine.fbx' with importer (FBXImporter)
+Imported 'GUID: 7854bf4e45ea6034ea9530999824bb2f' -> (Import Result ID: '8c1d6f1ab06683f164f28bc8b59ca8de') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7d19d9052695f9b6efd703a4d0bcf6f4 DependenciesID=257e0bf61b4d5a55e772c6f7c2a81fc5 StaticDependenciesID=31d629a115f846adca6846cb076b5e3a 
+Asset Pipeline Refresh (id=e2eb595c0f1d0e542801707fee168e0a): Total: 0.091 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 5ab7434c3b36f194d97ba71e5ac92611 - Path: Assets/OpenPlan/Art/Models/OP_VisitorChair.fbx' with importer (FBXImporter)
+Imported 'GUID: 5ab7434c3b36f194d97ba71e5ac92611' -> (Import Result ID: 'a25a6ed6ed47ed8a56ea79700d8e2992') in 0.028 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=754eece66431ab2d4cf8d98aed1424fe DependenciesID=0257cc03d0ab9ad2e718eeef78d78e90 StaticDependenciesID=3221210335a8b35fdd20a8039daabd5b 
+Asset Pipeline Refresh (id=ba70ee73a03ff7d45a23250e5292fb08): Total: 0.108 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: f06419e205cd97b45a9cf9f4eef95f7f - Path: Assets/OpenPlan/Art/Models/OP_WaitingBench.fbx' with importer (FBXImporter)
+Imported 'GUID: f06419e205cd97b45a9cf9f4eef95f7f' -> (Import Result ID: '50a7c98708b1efa657b76606f6ffcb6f') in 0.025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b34ad2c65400f6a9379527c9bdcb1bf6 DependenciesID=d3d413d0e627f63f4ce661eb9bfb845e StaticDependenciesID=65a45719d41558f85a312bd08b49df92 
+Asset Pipeline Refresh (id=c1e782a1e3532f94fba42d6b1b4d86aa): Total: 0.106 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: c186f373f14874a48bd5eb5d83fecfa5 - Path: Assets/OpenPlan/Art/Models/OP_WaterCooler.fbx' with importer (FBXImporter)
+Imported 'GUID: c186f373f14874a48bd5eb5d83fecfa5' -> (Import Result ID: '9b89a68f7db17b15cc7c192173bdbbcc') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2f72723c0cd99fb7ba917e183b1e6463 DependenciesID=6c4dc5cd0504655868cc44bb25d7dc63 StaticDependenciesID=d8da4dfc7e3264f34b92b7b0e1aa14b2 
+Asset Pipeline Refresh (id=366df83529cff5649b541599e9e1c006): Total: 0.097 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: d6b0477b39c0f2d43bf544d2c5ba2aa4 - Path: Assets/OpenPlan/Art/Models/OP_Whiteboard.fbx' with importer (FBXImporter)
+Imported 'GUID: d6b0477b39c0f2d43bf544d2c5ba2aa4' -> (Import Result ID: 'ee0932cd11a6d352c5eeced0644644d5') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=44a7ec9510f6158ed82fd00983f23938 DependenciesID=aa27baffd2d2ac1ca7b20187b4ee0366 StaticDependenciesID=3b813bcedf64177386172607f161df6f 
+Asset Pipeline Refresh (id=0422ac925d178ec4197a478363555ed5): Total: 0.095 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 7f2df5f580b6407458e73bc9dc8ee8d1 - Path: Assets/OpenPlan/Art/Models/OP_WindowModule.fbx' with importer (FBXImporter)
+Imported 'GUID: 7f2df5f580b6407458e73bc9dc8ee8d1' -> (Import Result ID: '7cc4919895c5e93d34c8d51373dfdb2c') in 0.027 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f6f5c3e8908df32a4845c5b749d2d9bc DependenciesID=0549dd31cb23b40a3eda806055c85182 StaticDependenciesID=8c472207d9b16e7f413a7bc0b005a5f8 
+Asset Pipeline Refresh (id=1f1cd80ff0f4e754d840fa6d5ddb1aa1): Total: 0.103 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 59bca0102e563224aa52fb4e16c029d5 - Path: Assets/OpenPlan/Art/Models/OP_Worker.fbx' with importer (FBXImporter)
+Imported 'GUID: 59bca0102e563224aa52fb4e16c029d5' -> (Import Result ID: 'a6fb28e42446402bf92d182b7d9cae99') in 0.029 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d839457677e036f88f126c52c91228f1 DependenciesID=bc639d51bd4df1e8723f05db554daa48 StaticDependenciesID=a60fc2751ffc8327163b2a5d3ef445d3 
+Asset Pipeline Refresh (id=3898a2157c853134b9260408110b2ddc): Total: 0.122 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Unloading 82 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 110 unused Assets / (36.5 KB). Loaded Objects now: 6067.
+Memory consumption went from 341.4 MB to 341.3 MB.
+Total: 12.359200 ms (FindLiveObjects: 0.493000 ms CreateObjectMapping: 1.334800 ms MarkObjects: 10.246700 ms  DeleteObjects: 0.282900 ms)
+
+Importing 'GUID: 00000000000000006100000000000000 - Path: ProjectSettings/GraphicsSettings.asset' with importer (LibraryAssetImporter)
+Imported 'GUID: 00000000000000006100000000000000' -> (Import Result ID: 'e54ee51eb1c25ba4415524ab2edca478') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=f9600466f06a676b7a4f639f6629ea48 DependenciesID=bad09f3b2a297290e06593ec94ca937a StaticDependenciesID=fa51ff72320ae77dd408903dd2179861 
+Importing 'GUID: 11a9071bfff5d194fa08b93c6f930cce - Path: Assets/OpenPlan/Art/Materials/OP_burgundy.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 11a9071bfff5d194fa08b93c6f930cce' -> (Import Result ID: '44c78ff68046efcaeb3483de047cc614') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=87a5bdb2bb9a2d6a7dc574d880b1be5f DependenciesID=accb3031cc94a1bfdb6a3df1a89bedcd StaticDependenciesID=ba1b7dffb237f82f3f6724515c2a5d72 
+Importing 'GUID: 413472a4b32376448951fc8ad000246f - Path: Assets/OpenPlan/Art/Materials/OP_cyan.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 413472a4b32376448951fc8ad000246f' -> (Import Result ID: '76a9ddf9ceabacf2d80ead96019eec8b') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=74892cd0dcbeaab7b2331c644927865e DependenciesID=4856b86906cea8c9e87b70030eaf599c StaticDependenciesID=8152b1a93dc0a90b8731c75b56bcf21d 
+Importing 'GUID: a14747fda1a244c478e42bc8573d749e - Path: Assets/OpenPlan/Art/Materials/OP_cardboard.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a14747fda1a244c478e42bc8573d749e' -> (Import Result ID: '7cbb292ff437439a8d123c46591d16a2') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=cc041ae35863bba4b3cc8aead0c0fbab DependenciesID=ea24e94913ddc5602cd90b69b5be5c76 StaticDependenciesID=91205714b57ee393c883923484fc4ef8 
+Importing 'GUID: 4257e4ba154379f40b0aea2b5e7e495a - Path: Assets/OpenPlan/Art/Materials/OP_coral.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 4257e4ba154379f40b0aea2b5e7e495a' -> (Import Result ID: '9ea625033477b249266f3e2ff64fd6fc') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=7206fe94cc989dde437235fba2093d41 DependenciesID=0696674c5b76c207749edeb4dd2ab0d4 StaticDependenciesID=8ea55fd73fe2fc6e294cdd11b4a4e282 
+Importing 'GUID: 72dcc77c7b02b76419c4ff9d0af5a8a5 - Path: Assets/OpenPlan/Art/Materials/OP_skin.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 72dcc77c7b02b76419c4ff9d0af5a8a5' -> (Import Result ID: 'f647e6131164eb97b527efbbbe48bc30') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=ac851d8b2dc293462ed0bfec368ac43e DependenciesID=a7273c65ca1f998462747da4278b482c StaticDependenciesID=5f6e3639583271e9dc509f73730b85c6 
+Importing 'GUID: a34f69f1e4112e145806ca79ea9b1ce8 - Path: Assets/OpenPlan/Art/Materials/OP_light_wood.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a34f69f1e4112e145806ca79ea9b1ce8' -> (Import Result ID: '67aab8eb038ad0debd0bd8fb929b0e49') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=cdeb17d50cde38d96edc3f7ea78064b0 DependenciesID=3d15f62a2b037a4c4db47fc08e7884d6 StaticDependenciesID=ce1b4eede5c18add4e98c1f3232165f5 
+Importing 'GUID: 34c9eebc05f30ea4d80b6d383cc19534 - Path: Assets/OpenPlan/Art/Materials/OP_metal.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 34c9eebc05f30ea4d80b6d383cc19534' -> (Import Result ID: '57be1148a45e76ce07ca492cefa6b6df') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=b506d978cb3712e705c4efcff8e15995 DependenciesID=d57826cf2e828b9ec973d37a5f1239de StaticDependenciesID=6c1abf39ca609c7b842c0436a3a6289b 
+Importing 'GUID: b446bd707ed024a4b88906ac94fb8174 - Path: Assets/OpenPlan/Art/Materials/OP_carpet.mat' with importer (NativeFormatImporter)
+Imported 'GUID: b446bd707ed024a4b88906ac94fb8174' -> (Import Result ID: '5f4a8dc04910c4405d6b7d2d9595d41c') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=ff49358d5d00b8149e58c04914c63f9a DependenciesID=30ffc843ed535e9c1c3b09106beded3a StaticDependenciesID=0a3dc398b4b9b0cde35da552381da5aa 
+Importing 'GUID: 65ce0e2eb4c87cb4597c20e277f7979e - Path: Assets/OpenPlan/Art/Materials/OP_leaf.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 65ce0e2eb4c87cb4597c20e277f7979e' -> (Import Result ID: 'd57fde25e7b1cf6f5e55df61a0fdf53c') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=5c188eee357b2e6211598319e8458748 DependenciesID=7c6e2a09cdc809715ede5fcb00469e6b StaticDependenciesID=d16189898b21997040453296f4588c26 
+Importing 'GUID: 95c5ee06b53efce44bbab779c24d1350 - Path: Assets/OpenPlan/Art/Materials/OP_amber.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 95c5ee06b53efce44bbab779c24d1350' -> (Import Result ID: '1a3f2d7cf2f9dee8e57d88dcf1b23570') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=5f8f029027c18c03c9d864f65b571018 DependenciesID=1b00b7c5815726ce08c82240fd429b85 StaticDependenciesID=dd48a489446e9ca5631d34ddf129eaef 
+Importing 'GUID: a599fc85d4c737a4b91edd95af2f3218 - Path: Assets/OpenPlan/Art/Materials/OP_cream.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a599fc85d4c737a4b91edd95af2f3218' -> (Import Result ID: 'd6be56fcf002db79fc3155b0f7cdecc2') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=1fb0505c3743a214ea2975a132aa78ac DependenciesID=3d425e6d07cc2e4f4e9a76a5253d661f StaticDependenciesID=5210ec18fb1d0000acdf2f50771fb8c9 
+Importing 'GUID: 38231b1c934cc6a4fbda46e1329acb34 - Path: Assets/OpenPlan/Art/Materials/OP_paper.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 38231b1c934cc6a4fbda46e1329acb34' -> (Import Result ID: '677e04ca02964aabed50078443f7f498') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=fe1e7102d01fb8908f6a7b5e1779b2cb DependenciesID=d56d9621095c7b3d15d1445030fcf105 StaticDependenciesID=afaaec3d924921f09115a69783af8aa9 
+Importing 'GUID: 59f36c19e34b5e74a85ce7971c944657 - Path: Assets/OpenPlan/Art/Materials/OP_dark.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 59f36c19e34b5e74a85ce7971c944657' -> (Import Result ID: 'eb1416e6bcfa8812536a7ed0829d6c80') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=e163e84ca7b4940038fa9dad29d07fda DependenciesID=ea0186eb61eb0d2bde03cc6614558dfe StaticDependenciesID=c2299624e0b179f0736d3ee6591146c8 
+Importing 'GUID: 3aee42ba63c1d4e4cb3da32481f1fc41 - Path: Assets/OpenPlan/Art/Materials/OP_walnut.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 3aee42ba63c1d4e4cb3da32481f1fc41' -> (Import Result ID: '3c010125462335600f50ec19e969aa25') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=4a3e002ec7b9988f936fe8843ba9c53f DependenciesID=cbae82107766374dca6ef5e8abcde57b StaticDependenciesID=8c4e343fb861f3f632767b508613a673 
+Importing 'GUID: dcf25649262eaaf428d2b87b9a6aaeb6 - Path: Assets/OpenPlan/Art/Materials/OP_green.mat' with importer (NativeFormatImporter)
+Imported 'GUID: dcf25649262eaaf428d2b87b9a6aaeb6' -> (Import Result ID: '469b8c05a08e12020e85a6dad88c9adf') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=381db8d63cea5ea7d44b2d97dc69eb2e DependenciesID=06ef0feb90b4c83ca23de77e6124d0d8 StaticDependenciesID=74070bd903689e9854e64c453de990e0 
+Importing 'GUID: efba5513d0b76e74f99cc6f0d4a1ea50 - Path: Assets/OpenPlan/Art/Materials/OP_blue.mat' with importer (NativeFormatImporter)
+Imported 'GUID: efba5513d0b76e74f99cc6f0d4a1ea50' -> (Import Result ID: '5f1783fddb82ab61a4e03304cdb9182e') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=3056cee11108a0c047d2dfc564f93b27 DependenciesID=5866d42f21db654af7e1cb2dfc31ca3f StaticDependenciesID=1175d019f9e2f18076c69cd591b7bb37 
+Importing 'GUID: 03ed3ea673b1ae443b1982bac632edaa - Path: Assets/OpenPlan/Resources/OpenPlanAssetCatalog.asset' with importer (NativeFormatImporter)
+Imported 'GUID: 03ed3ea673b1ae443b1982bac632edaa' -> (Import Result ID: 'c6527ae8e11fed83edc19e544df86113') in 0.015 seconds [static dependencies only]. Details - ImportResultOutputID=571a071e2c94f88c72a4a9b07e64718b DependenciesID=66fdde8526852e2b5b688e48af5497b3 StaticDependenciesID=d100e218412f4a6b8ddc8bdc14a1a65e 
+Importing 'GUID: d9fa0805855e39c4fa2cb9b558d8053f - Path: Assets/OpenPlan/Resources/CameraZoomProfile.asset' with importer (NativeFormatImporter)
+Imported 'GUID: d9fa0805855e39c4fa2cb9b558d8053f' -> (Import Result ID: 'b95234dfa43b425989e7c0a1d4144024') in 0.012 seconds [static dependencies only]. Details - ImportResultOutputID=8ec002bbe1f1beeb3c7343f0b42d895e DependenciesID=fe84958698b823921d00f45dcb2b8549 StaticDependenciesID=40eea558914e48d805c67977f210281a 
+Importing 'GUID: eef6528c82f5ced4aa6528c93ebbf4c5 - Path: Assets/OpenPlan/Resources/OpenPlanURP.asset' with importer (NativeFormatImporter)
+Imported 'GUID: eef6528c82f5ced4aa6528c93ebbf4c5' -> (Import Result ID: 'cfc81f20b2543d90669f85499ebfdae1') in 0.013 seconds [static dependencies only]. Details - ImportResultOutputID=9c62eb92ceec51810617baa56af95790 DependenciesID=21a46ce303361f4135814be84b67df9b StaticDependenciesID=55f4ef4d9b07813239e07e2b34fff2bd 
+Asset Pipeline Refresh (id=4a54811d045825547b728cdf2daed761): Total: 0.219 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 5f30eca911cd48b428fbc5f547665677 - Path: Assets/OpenPlan/Scenes/MainMenu.unity' with importer (DefaultImporter)
+Imported 'GUID: 5f30eca911cd48b428fbc5f547665677' -> (Import Result ID: '955a216ef01aad6bfffb79c0ad5fb4ef') in 0.013 seconds [static dependencies only]. Details - ImportResultOutputID=a412a4c056238cbddaeae1fcfba31350 DependenciesID=d9eeeb542668d9e4af55eea1d69ad099 StaticDependenciesID=d55666cc2de5b6aa6f98ff0e7e261d7a 
+Asset Pipeline Refresh (id=065d8ad014b31ee49aeaa1b2f8303ee9): Total: 0.130 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1770 unused Assets / (4.3 MB). Loaded Objects now: 4486.
+Memory consumption went from 351.8 MB to 347.5 MB.
+Total: 22.372700 ms (FindLiveObjects: 0.494700 ms CreateObjectMapping: 1.297600 ms MarkObjects: 15.984600 ms  DeleteObjects: 4.594100 ms)
+
+Importing 'GUID: 247632671c0de8245b4755bac60b0bd3 - Path: Assets/OpenPlan/Scenes/Office.unity' with importer (DefaultImporter)
+Imported 'GUID: 247632671c0de8245b4755bac60b0bd3' -> (Import Result ID: '0f4543e137763b46fb2e7f55ee2b85a2') in 0.010 seconds [static dependencies only]. Details - ImportResultOutputID=c42335796da79b31dab6119fd64a0302 DependenciesID=2db9dabba037aea00224eab504da545e StaticDependenciesID=31caddc0eef9968bb86942d295ef8e0c 
+Asset Pipeline Refresh (id=12c8d07cfa2e29a4f94e6accd984d81e): Total: 0.097 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 00000000000000004000000000000000 - Path: ProjectSettings/ProjectSettings.asset' with importer (LibraryAssetImporter)
+Imported 'GUID: 00000000000000004000000000000000' -> (Import Result ID: '9d769253f0ab11bd0184bb49b2c86199') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=276a810dac73e1f29404d5e5f692e214 DependenciesID=a459e4b929d30ec6e2cc3c210d06c845 StaticDependenciesID=e997eb51da4925112bed1815c8b80833 
+Asset Pipeline Refresh (id=ee2c2d496d2388f4f8e314df47f97242): Total: 0.045 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=409a80bbf6d287d489187aa7d9e21255): Total: 0.012 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+OPEN PLAN PROJECT GENERATION: PASS
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+OpenPlan.Editor.ReleasePipeline:GenerateProject () (at Assets/OpenPlan/Editor/ReleasePipeline.cs:38)
+
+(Filename: Assets/OpenPlan/Editor/ReleasePipeline.cs Line: 38)
+
+Batchmode quit successfully invoked - shutting down!
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-danny-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-danny channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

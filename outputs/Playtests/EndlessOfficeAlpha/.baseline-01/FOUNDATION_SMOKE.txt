@@ -1,0 +1,49 @@
+STATUS PASS
+CHECKPOINT 00_Foundation
+CAPTURE POLICY public gameplay APIs only
+ARTIFICIAL FUNDS FALSE
+FLOW main menu -> new campaign -> $0/three workers -> zoom -> ground -> influence -> locked rejection -> live earnings -> pre-expansion hire -> phone work -> pause/resume -> menu -> quit
+CHECKS 42
+FAILURES 0
+PASS  captured 01_Main_Menu_1920x1080.png
+PASS  main menu launched at 1920x1080
+PASS  new campaign selected Starter Office
+PASS  new campaign created three original workers
+PASS  new campaign started with exactly $0
+PASS  starter office exposed three active desks
+PASS  captured 02_Starter_Overview_1920x1080.png
+PASS  one standard wheel notch produced a noticeable zoom change
+PASS  ten standard wheel notches reached close view
+PASS  Morgan became pickable
+PASS  ordinary floor point is walkable and outside activity influence
+PASS  public carry gesture picked up Morgan
+PASS  captured 03_Ordinary_Ground_Valid_1920x1080.png
+PASS  ordinary-floor release created a ground-placement command
+PASS  ordinary-floor placement retained the assigned desk
+PASS  selection remained on the ground-placed worker
+PASS  assigned worker resumed autonomous desk behavior after ground placement
+PASS  Morgan became pickable
+PASS  Water influence resolved beyond the visible footprint
+PASS  public carry gesture picked up Morgan
+PASS  captured 04_Activity_Influence_1920x1080.png
+PASS  proximity-influenced release entered Water activity
+PASS  Morgan became pickable
+PASS  public carry gesture picked up Morgan
+PASS  locked neighboring ground showed a useful invalid reason
+PASS  captured 05_Locked_Ground_Invalid_1920x1080.png
+PASS  locked-ground rejection restored the worker without elevation
+PASS  captured 06_Water_Cooler_Lighting_1920x1080.png
+PASS  captured 07_Smoking_Alcove_1920x1080.png
+PASS  real work earned the cheapest candidate cost without artificial funds
+PASS  pre-expansion hiring succeeded: 
+PASS  four-person team exceeded the three-desk count before expansion
+PASS  captured 08_Four_Person_Three_Desks_1920x1080.png
+PASS  deskless hire entered the explicit phone-work state
+PASS  phone work accrued cash at effective productivity
+PASS  captured 09_Deskless_Phone_Work_1920x1080.png
+PASS  pause stopped phone and workstation income
+PASS  resume continued phone income
+PASS  HUD displayed Team and Desks as separate values
+PASS  captured 10_HUD_Team_And_Desks_1920x1080.png
+PASS  captured 11_HUD_Team_And_Desks_1280x720.png
+PASS  returned to the main menu

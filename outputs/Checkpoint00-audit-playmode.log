@@ -1,0 +1,1722 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.5/staging' branch; Version is '6000.5.1f1 (0d9463e84828) revision 889955'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'en' Physical Memory: 16193 MB
+[Licensing::IpcConnector] Channel LicenseClient-danny doesn't exist
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-07-20T12:15:56Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 3972)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe
+-batchmode
+-nographics
+-projectPath
+C:\Users\danny\Documents\GitHub\Silly Office Sim
+-runTests
+-testPlatform
+PlayMode
+-testResults
+C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\TestResults\Checkpoint00-Audit-PlayMode.xml
+-logFile
+C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\Checkpoint00-audit-playmode.log
+Successfully changed project path to: C:\Users\danny\Documents\GitHub\Silly Office Sim
+C:/Users/danny/Documents/GitHub/Silly Office Sim
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=0"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.Player connection [35400]  Target information:
+
+Player connection [35400]  * "[IP] 192.168.1.109 [Port] 55504 [Flags] 2 [Guid] 961788705 [EditorId] 961788705 [Version] 1048832 [Id] WindowsEditor(7,MoneyMaker) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [35400] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [35400] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-danny" at "2026-07-20T12:15:57.1717209Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 3972, path: "C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              e0ff8833769b41dc93560ed6c62ad8f9
+  Correlation Id:          03f245d87898b925de44b5cf262a623c
+  External correlation Id: 8446344658608271270
+  Machine Id:              /RsQ7CGoxRnJ/XfrMJclpE+dBOo=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-danny" (connect: 0.25s, validation: 0.07s, handshake: 0.03s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-danny-notifications" at "2026-07-20T12:15:57.2764797Z"
+[Licensing::Module] Connected to LicensingClient (PId: 3972, launch time: 0.01, total connection time: 0.35s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 20067617806284-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Module] Licensing Background thread has ended after 0.41s
+[Package Manager] Connected to IPC stream "Upm-12260" after 0.3 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.5.1f1 (0d9463e84828)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/danny/Documents/GitHub/Silly Office Sim/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56260
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.5.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.005411 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.413 seconds
+Domain Reload Profiling: 1112ms
+	BeginReloadAssembly (148ms)
+		CreateAndSetChildDomain (14ms)
+	RebuildCommonClasses (5ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (111ms)
+	LoadAllAssembliesAndSetupDomain (416ms)
+		LoadAssemblies (132ms)
+		AnalyzeDomain (324ms)
+			TypeCache.Refresh (322ms)
+				TypeCache.ScanAssembly (306ms)
+	FinalizeReload (415ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			BeforeProcessingInitializeOnLoad (89ms)
+			ProcessInitializeOnLoadAttributes (92ms)
+			ProcessInitializeOnLoadMethodAttributes (141ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 50 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.inputsystem@1.19.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.inputsystem@21a28c3a6c83)
+    com.unity.searcher@4.9.4 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.searcher@d45a78918735)
+    com.unity.burst@1.8.29 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.burst@6bb9aca3ef38)
+    com.unity.nuget.mono-cecil@1.11.6 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.test-framework.performance@3.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.test-framework.performance@8b56083ec0f0)
+  Built-in packages:
+    com.unity.render-pipelines.universal@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.universal@be00b5bbd9a1)
+    com.unity.test-framework@1.7.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.test-framework@f3e6c9a02477)
+    com.unity.ugui@2.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.ugui@4f9b15fd1386)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.physicscore2d@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.physicscore2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.wind@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.1.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.ext.nunit@44f7d31723bd)
+    com.unity.render-pipelines.core@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.core@d7ce3ed2cd80)
+    com.unity.shadergraph@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.shadergraph@2df19e8719bc)
+    com.unity.render-pipelines.universal-config@17.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.render-pipelines.universal-config@fdda01c80fe3)
+    com.unity.collections@6.5.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.collections@a43cabe808ca)
+    com.unity.mathematics@1.4.0 (location: C:\Users\danny\Documents\GitHub\Silly Office Sim\Library\PackageCache\com.unity.mathematics@981956d94fb6)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.01 seconds
+Starting: C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/danny/Documents/GitHub/Silly Office Sim
+DisplayProgressbar: Compiling Scripts
+ExitCode: 0 Duration: 0s376ms
+[545/684    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.32 seconds), 1 items updated, 684 evaluated
+AssetDatabase: script compilation time: 0.839701s
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:False
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.746 seconds
+Domain Reload Profiling: 4938ms
+	BeginReloadAssembly (497ms)
+		DisableScriptedObjects (43ms)
+		CreateAndSetChildDomain (201ms)
+	RebuildCommonClasses (20ms)
+	RebuildNativeTypeToScriptingClass (32ms)
+	initialDomainReloadingComplete (101ms)
+	LoadAllAssembliesAndSetupDomain (540ms)
+		LoadAssemblies (429ms)
+		AnalyzeDomain (168ms)
+			TypeCache.Refresh (112ms)
+				TypeCache.ScanAssembly (101ms)
+			BuildScriptInfoCaches (48ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (3747ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			BeforeProcessingInitializeOnLoad (137ms)
+			ProcessInitializeOnLoadAttributes (2748ms)
+			ProcessInitializeOnLoadMethodAttributes (551ms)
+			AfterProcessingInitializeOnLoad (10ms)
+		AwakeInstancesAfterBackupRestoration (27ms)
+Starting new worker id: 0 with log in C:/Users/danny/Documents/GitHub/Silly Office Sim/Logs/AssetImportWorkerHW0.log
+
+Asset Pipeline Refresh (id=5a8100fb151939141a8a2973fb5fd27c): Total: 6.438 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=4179 ms
+		Asset DB Callback time: managed=84 ms, native=17 ms
+		Scripting: domain reloads=1, domain reload time=1262 ms, compile time=845 ms, other=47 ms
+		Project Asset Count: scripts=885, non-scripts=1707
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 20.194ms
+	ApplyChangesToAssetFolders: 0.594ms
+	Scan: 94.962ms
+	Collect global state as custom dependencies: 4.707ms
+	CategorizeScriptCompilationAssets: 20.839ms
+	ProcessAssetsWithTransientArtifactChanges: 49.895ms
+	CategorizeAssets: 49.252ms
+	CompileScripts: 845.378ms
+	ImportOutOfDateAssets: 3824.515ms (3758.675ms without children)
+		UnloadImportedAssets: 1.109ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.574ms
+		ImportSchedulerStart: 64.120ms
+	PostProcessAllAssets: 84.936ms
+		MonoPostProcessAllAssets: 84.801ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 40.231ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 4.341ms
+			SyncVS.PostprocessSyncProject 4.197ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 3.913ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.106ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.739ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.620ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.544ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.366ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.303ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.242ms
+	UnloadStreamsBegin: 1.535ms
+	PersistCurrentRevisions: 0.147ms
+	GenerateScriptTypeHashes: 2.130ms
+	GenerateScriptTypeSerializationHashes: 4.047ms
+	Untracked: 1434.771ms
+
+Application.AssetDatabase Initial Refresh End
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
+Scanning for USB devices : 3.765ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-OPEN PLAN
+Unloading 79 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 3649 unused Assets / (9.8 MB). Loaded Objects now: 4464.
+Memory consumption went from 328.8 MB to 318.9 MB.
+Total: 22.742600 ms (FindLiveObjects: 0.657100 ms CreateObjectMapping: 2.008900 ms MarkObjects: 10.200800 ms  DeleteObjects: 9.869500 ms)
+
+Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
+[Project] Loading completed in 9.197 seconds
+	Project init time: 				8.698 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.253 seconds
+		Asset Database init time: 		0.227 seconds
+		Global illumination init time: 	0.003 seconds
+		Assemblies load time: 			1.207 seconds
+		Unity extensions init time: 	0.029 seconds
+		Asset Database refresh time: 	6.438 seconds
+	Scene opening time: 			0.325 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1784549766102,"processId":12260,"projectLoad":9.196562,"projectInit":8.6980786,"templateInit":0.0,"packageManagerInit":0.252608,"assetDatabaseInit":0.2269544,"globalIlluminationInit":0.0032532,"assembliesLoad":1.2074503,"unityExtensionsInit":0.0285978,"assetDatabaseRefresh":6.438158,"sceneOpening":0.3247246}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1784549766103,"processId":12260,"editorVersion":"6000.5.1f1 (0d9463e84828)","branch":"6000.5/staging","buildType":"Release","platform":"Windows"}
+[Licensing::Client] Successfully resolved entitlement details
+Running tests for ExecutionSettings with details:
+targetPlatform = 
+playerHeartbeatTimeout = 600
+filters[0] = 
+   Filter with settings:
+   testMode = PlayMode
+   targetPlatform = 
+   testNames = null
+   groupNames = null
+   categoryNames = null
+   assemblyNames = null
+ignoreTests = {}
+featureFlags = null
+
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun (string[]) (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/CommandLineTest/Executer.cs:53)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:InitializeAndExecuteRun () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/CommandLineTest/TestStarter.cs:64)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/CommandLineTest/Executer.cs Line: 53)
+
+DisplayProgressbar: Material Upgrader re-import
+Importing 'GUID: 11a9071bfff5d194fa08b93c6f930cce - Path: Assets/OpenPlan/Art/Materials/OP_burgundy.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 11a9071bfff5d194fa08b93c6f930cce' -> (Import Result ID: 'e7b9bb434dba3018736d4676207b2163') in 0.008 seconds [static dependencies only]. Details - ImportResultOutputID=87a5bdb2bb9a2d6a7dc574d880b1be5f DependenciesID=7c1fe0d5045568b7224b28e17a1aa6de StaticDependenciesID=5466aea5078e72803b4cbf08d85da0da 
+Importing 'GUID: 31d0dcc6f2dd4e4408d18036a2c93862 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Decal.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 31d0dcc6f2dd4e4408d18036a2c93862' -> (Import Result ID: '2ad125e9cc1d8d14da842796faebb195') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=27f50545369d9b2b39b980276ea7c8ce DependenciesID=e2cc3d4cbba164af6626c1cb26ffd1f0 StaticDependenciesID=14f9f9a81783aa59ba0bd870c7e7a83f 
+Importing 'GUID: 31321ba15b8f8eb4c954353edc038b1d - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Lit.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 31321ba15b8f8eb4c954353edc038b1d' -> (Import Result ID: 'bf871e01ff7bfed54e26e7d0bef1f4c0') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=a48f7e6bcfa276d974788b68dcece99b DependenciesID=c66c11e1a19e1f870404738082030982 StaticDependenciesID=cbb3425f612a3c0af3ad0d7cdc4ebf46 
+Importing 'GUID: 413472a4b32376448951fc8ad000246f - Path: Assets/OpenPlan/Art/Materials/OP_cyan.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 413472a4b32376448951fc8ad000246f' -> (Import Result ID: '30eb3352ae84aad89634714d69a9bf93') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=74892cd0dcbeaab7b2331c644927865e DependenciesID=5b6f19ff43fe435bea639c1c6c5b6557 StaticDependenciesID=487f6625db41bdede17acdca5463e678 
+Importing 'GUID: 71942363c5608a64bb62421349d39c9c - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Mesh2D-Unlit-Default.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 71942363c5608a64bb62421349d39c9c' -> (Import Result ID: 'b7c119b30fffca489efe1747d46ac394') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=60d5319d12ec6601090f4dc3bc877827 DependenciesID=5a7e1ebe82d01e3d3486118ae47e4323 StaticDependenciesID=0a3a1d502145d7e607aa097b235db463 
+Importing 'GUID: a14747fda1a244c478e42bc8573d749e - Path: Assets/OpenPlan/Art/Materials/OP_cardboard.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a14747fda1a244c478e42bc8573d749e' -> (Import Result ID: '7cbb292ff437439a8d123c46591d16a2') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=cc041ae35863bba4b3cc8aead0c0fbab DependenciesID=ea24e94913ddc5602cd90b69b5be5c76 StaticDependenciesID=91205714b57ee393c883923484fc4ef8 
+Importing 'GUID: 4257e4ba154379f40b0aea2b5e7e495a - Path: Assets/OpenPlan/Art/Materials/OP_coral.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 4257e4ba154379f40b0aea2b5e7e495a' -> (Import Result ID: '9ea625033477b249266f3e2ff64fd6fc') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=7206fe94cc989dde437235fba2093d41 DependenciesID=0696674c5b76c207749edeb4dd2ab0d4 StaticDependenciesID=8ea55fd73fe2fc6e294cdd11b4a4e282 
+Importing 'GUID: 72dcc77c7b02b76419c4ff9d0af5a8a5 - Path: Assets/OpenPlan/Art/Materials/OP_skin.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 72dcc77c7b02b76419c4ff9d0af5a8a5' -> (Import Result ID: 'f647e6131164eb97b527efbbbe48bc30') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=ac851d8b2dc293462ed0bfec368ac43e DependenciesID=a7273c65ca1f998462747da4278b482c StaticDependenciesID=5f6e3639583271e9dc509f73730b85c6 
+Importing 'GUID: 92f845725428c954b878da352f657fe5 - Path: Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Materials/Emissive.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 92f845725428c954b878da352f657fe5' -> (Import Result ID: 'f27b7499b7557a8c1ff873cbbc943fbd') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=9f409e454e8569eeb8775e57f716ca56 DependenciesID=462d706fabcb526e3c1b0f242a4e0a08 StaticDependenciesID=23f7a089334b772d417411d48f9bf4d6 
+Importing 'GUID: c2e40fa84d53ccd428f640eac126b1fb - Path: Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Materials/Gold.mat' with importer (NativeFormatImporter)
+Imported 'GUID: c2e40fa84d53ccd428f640eac126b1fb' -> (Import Result ID: 'feb64de0c338f2e7dc3803c07dc66641') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=f0de5be625a902497e1b3968ff56fe81 DependenciesID=3761da8ea19d6184c7b1fa9623a7c335 StaticDependenciesID=c6c3f10b7b48216f3f5c47bf5717d424 
+Importing 'GUID: a34f69f1e4112e145806ca79ea9b1ce8 - Path: Assets/OpenPlan/Art/Materials/OP_light_wood.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a34f69f1e4112e145806ca79ea9b1ce8' -> (Import Result ID: '77b4e509385c2604367a115fe8a5ab01') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=cdeb17d50cde38d96edc3f7ea78064b0 DependenciesID=86fe862e0eb853b2501e7b565f8095cb StaticDependenciesID=da766265244d3bc372c84c33be29b4fc 
+Importing 'GUID: b34b07a45ba63ce47896c9e674f3a7a7 - Path: Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Materials/Metal_Black.mat' with importer (NativeFormatImporter)
+Imported 'GUID: b34b07a45ba63ce47896c9e674f3a7a7' -> (Import Result ID: 'f11bdd2aa3011dbcd8273637a2197ce3') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=50434342d94f9f0e26d3f9360da27599 DependenciesID=e71fd6e7185ab70ca59da368cdcfb007 StaticDependenciesID=2278717714d4f68067ca3f2880a96634 
+Importing 'GUID: 34c9eebc05f30ea4d80b6d383cc19534 - Path: Assets/OpenPlan/Art/Materials/OP_metal.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 34c9eebc05f30ea4d80b6d383cc19534' -> (Import Result ID: '45de1323bcf68388ea554546fecb2e8f') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=b506d978cb3712e705c4efcff8e15995 DependenciesID=95aa4dfb1588cef303c4209a8d3ea091 StaticDependenciesID=48ff055338516ee4c78113652990f50d 
+Importing 'GUID: 9452ae1262a74094f8a68013fbcd1834 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Mesh2D-Lit-Default.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 9452ae1262a74094f8a68013fbcd1834' -> (Import Result ID: '9725853416b65fc4ede6dceaba593b2b') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=ef05c03ce5b163471a66828c6e89459a DependenciesID=8fd9adb8db5d7894f80eb288eed9ae00 StaticDependenciesID=483f30d7c75426473a3802af17f3b64c 
+Importing 'GUID: b446bd707ed024a4b88906ac94fb8174 - Path: Assets/OpenPlan/Art/Materials/OP_carpet.mat' with importer (NativeFormatImporter)
+Imported 'GUID: b446bd707ed024a4b88906ac94fb8174' -> (Import Result ID: '74f72a4e2f0e2654aa9a16c2bae2ce99') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=ff49358d5d00b8149e58c04914c63f9a DependenciesID=0d6b09c690826e109138c51cd6c594b3 StaticDependenciesID=dbca3a042c21f2f0c64b902b5b701700 
+Importing 'GUID: 15d0c3709176029428a0da2f8cecf0b5 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/SpriteMask-Default.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 15d0c3709176029428a0da2f8cecf0b5' -> (Import Result ID: '42b73a5616d99db9946794b9e70d95aa') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=23653bbd3de46b3d7d8a484de3efe886 DependenciesID=7bb440f77d2e008013d89e14ecea4188 StaticDependenciesID=95b0e5378f4c0944280cce65559303ec 
+Importing 'GUID: 65ce0e2eb4c87cb4597c20e277f7979e - Path: Assets/OpenPlan/Art/Materials/OP_leaf.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 65ce0e2eb4c87cb4597c20e277f7979e' -> (Import Result ID: 'd57fde25e7b1cf6f5e55df61a0fdf53c') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=5c188eee357b2e6211598319e8458748 DependenciesID=7c6e2a09cdc809715ede5fcb00469e6b StaticDependenciesID=d16189898b21997040453296f4588c26 
+Importing 'GUID: 95c5ee06b53efce44bbab779c24d1350 - Path: Assets/OpenPlan/Art/Materials/OP_amber.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 95c5ee06b53efce44bbab779c24d1350' -> (Import Result ID: 'd9e7a6ea5a77894c41028897031ac188') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=5f8f029027c18c03c9d864f65b571018 DependenciesID=aed9fe2d5871e1a7fa1d0230db414e97 StaticDependenciesID=44f199637451cbb81e59beba70162e0e 
+Importing 'GUID: a599fc85d4c737a4b91edd95af2f3218 - Path: Assets/OpenPlan/Art/Materials/OP_cream.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a599fc85d4c737a4b91edd95af2f3218' -> (Import Result ID: '05ed88e7b74998b507647b6f903e1cfe') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=1fb0505c3743a214ea2975a132aa78ac DependenciesID=5f21ed355f0ecf3fb9241b1430e1d693 StaticDependenciesID=985d06cda418377728f5fc5d01b8d0d1 
+Importing 'GUID: b51db210fe78df745a372851b3db949e - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/SpatialMappingOcclusion.mat' with importer (NativeFormatImporter)
+Imported 'GUID: b51db210fe78df745a372851b3db949e' -> (Import Result ID: 'a4b8657a4b695a566d9f46ab7991db68') in 0.004 seconds [static dependencies only]. Details - ImportResultOutputID=0ebc1c10df452e339ca0fb57c86cd699 DependenciesID=9fe9c654d8c857620099d251f38dbe32 StaticDependenciesID=0427accb04219ecb84338e1c9a2d4afd 
+Importing 'GUID: 761d8e1f988ed2345a28312145c79c6e - Path: Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Materials/Ground.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 761d8e1f988ed2345a28312145c79c6e' -> (Import Result ID: 'dd0fee92c8029d6580237a2ea3b692b9') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=bc7d8bc4bd721d9fa1ab598e3e037457 DependenciesID=504955e344b87d571052c14c37fb68fb StaticDependenciesID=6cb93e9d2b2d80b27a6831021d4be6d9 
+Importing 'GUID: b697f6a938056384e968ccf6527dac83 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/RenderAs2D-Flattening.mat' with importer (NativeFormatImporter)
+Imported 'GUID: b697f6a938056384e968ccf6527dac83' -> (Import Result ID: '93594e04d38b141a0e8f8c75dd840621') in 0.004 seconds [static dependencies only]. Details - ImportResultOutputID=91100c5c48438b67a79acaafe285f293 DependenciesID=3c2669ef72d82e7ef551c89d9ab15e73 StaticDependenciesID=6e98fc56d38cb084618640cd3f5eef6b 
+Importing 'GUID: e73a58f6e2794ae7b1b7e50b7fb811b0 - Path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat' with importer (NativeFormatImporter)
+Imported 'GUID: e73a58f6e2794ae7b1b7e50b7fb811b0' -> (Import Result ID: '7a3f1f05de6ae894fe04e3fbc1dc3a8d') in 0.004 seconds [static dependencies only]. Details - ImportResultOutputID=88f815c0edef55493545dd7260b6379b DependenciesID=9b68c155c860efd2bd2bd7a5d138332a StaticDependenciesID=2c70f428f5d8a9d0e59b14cf9522aaee 
+Importing 'GUID: 38231b1c934cc6a4fbda46e1329acb34 - Path: Assets/OpenPlan/Art/Materials/OP_paper.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 38231b1c934cc6a4fbda46e1329acb34' -> (Import Result ID: '51a40478e54d079809f6b5b8014281f6') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=fe1e7102d01fb8908f6a7b5e1779b2cb DependenciesID=fb2fdb3494b3e64a9ab718cd2fbb6f3d StaticDependenciesID=299ea61cb2cca555f880104c3cb52dcd 
+Importing 'GUID: 78a08787ca30045abb69f6f7dd878e09 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/FullscreenInvertColors.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 78a08787ca30045abb69f6f7dd878e09' -> (Import Result ID: 'b9a5c3635637f6793ed59e3e760fe64a') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=b2c6610fc71d2fc4d6c15ca7aa1b5385 DependenciesID=c41e9e948a9e385049c27ce5260dada8 StaticDependenciesID=96a99d390f9fa33fd3de179a2defcc2d 
+Importing 'GUID: 9875a245ac49007498213638a307faa1 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/SpatialMappingWireframe.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 9875a245ac49007498213638a307faa1' -> (Import Result ID: '4d9adef59de97bb7c9befec800af2192') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=858fea1279c5a7a55bc08ada24f3e970 DependenciesID=4d140c3ffe1d8e7986b520e90d03182a StaticDependenciesID=43be16c54ffd1c8d176e4c48efbb9996 
+Importing 'GUID: e823cd5b5d27c0f4b8256e7c12ee3e6d - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/ParticlesUnlit.mat' with importer (NativeFormatImporter)
+Imported 'GUID: e823cd5b5d27c0f4b8256e7c12ee3e6d' -> (Import Result ID: '82a70813918c3c093e74e5182023631c') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=ba6e0d748306b504634caabe20076a4b DependenciesID=dc213c202a1b3536899fd5b242d54ce7 StaticDependenciesID=61236392d5a44fa8dafe3ad4bfcaef81 
+Importing 'GUID: e89e844ec1f170945952097b22e0f656 - Path: Assets/PolyOne/Free Stickman/Materials/Plane_M.mat' with importer (NativeFormatImporter)
+Imported 'GUID: e89e844ec1f170945952097b22e0f656' -> (Import Result ID: '94563e2d2b3c4a9f03a884dfec62d546') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=753dddf335204a0fde72b5142c4d4415 DependenciesID=1c2963516b8aa399021d91c7285b9258 StaticDependenciesID=2434a8065fc4787760a0975a4bb46697 
+Importing 'GUID: 59f36c19e34b5e74a85ce7971c944657 - Path: Assets/OpenPlan/Art/Materials/OP_dark.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 59f36c19e34b5e74a85ce7971c944657' -> (Import Result ID: '2245a77bda789972004333a6b6dcb980') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=e163e84ca7b4940038fa9dad29d07fda DependenciesID=8498fd2fc182efe454315ee0d7db921e StaticDependenciesID=769b38ecbd5118feebce0c7930e77bec 
+Importing 'GUID: 59fcc24db00037d4992507efebc4a60c - Path: Assets/PolyOne/Free Stickman/Materials/Stickman_M.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 59fcc24db00037d4992507efebc4a60c' -> (Import Result ID: 'cbddecf9e54352504852ff42c7148028') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=a3051f47ac1a2d236f9ce0b437501b22 DependenciesID=a9ca47ee325707aea8c0e67a35925391 StaticDependenciesID=009b778c62acce13003bc21eb7f97a1d 
+Importing 'GUID: 594ea882c5a793440b60ff72d896021e - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/TerrainLit.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 594ea882c5a793440b60ff72d896021e' -> (Import Result ID: 'adf87c4707222adcc0885a65ac0492ce') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=d0f80e2004b33ab7c19f361d4943c903 DependenciesID=b5e34f917d9eb632922bba27012110bd StaticDependenciesID=6901ad4181ac260a296dccb693d1e540 
+Importing 'GUID: 79459efec17a4d00a321bdcc27bbc385 - Path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 79459efec17a4d00a321bdcc27bbc385' -> (Import Result ID: 'dbd51e9af9d561abcd481289f7ceb675') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=f742fd837be57d5b294f4214e1f60ced DependenciesID=f83383c0c8b8187af0d43a0d31cf2cd6 StaticDependenciesID=983484032344b40f7260cac14d64dd2e 
+Importing 'GUID: a97c105638bdf8b4a8650670310a4cd3 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat' with importer (NativeFormatImporter)
+Imported 'GUID: a97c105638bdf8b4a8650670310a4cd3' -> (Import Result ID: '70f5dffde8393d818494e782c18220a6') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=4d25d846adbda412447e5ab6cdc46016 DependenciesID=7e5fd8dd46e67724bdc0120e0d904074 StaticDependenciesID=c6a28a1f1edd92fb1fc655baf498e31b 
+Importing 'GUID: f96821bbefeea864b9b418af4b8615ac - Path: Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Materials/White.mat' with importer (NativeFormatImporter)
+Imported 'GUID: f96821bbefeea864b9b418af4b8615ac' -> (Import Result ID: 'b5ace735b8353d3fd8febe740af5529c') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=c3497ff8a188e644dd017e2b3c28b28f DependenciesID=cd8557ee93f79f61ce78cb0ab9a2b5f6 StaticDependenciesID=3088406c85a42ba9e956e7e08b3df8b7 
+Importing 'GUID: 3aee42ba63c1d4e4cb3da32481f1fc41 - Path: Assets/OpenPlan/Art/Materials/OP_walnut.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 3aee42ba63c1d4e4cb3da32481f1fc41' -> (Import Result ID: '6817714ba2ac39de009093c235dc24ee') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=4a3e002ec7b9988f936fe8843ba9c53f DependenciesID=b234bce0afe6c53f1fb829392fe3fb26 StaticDependenciesID=c034bd729a56ccdd89474fef7001e5b5 
+Importing 'GUID: 6a1143ee683302f4aa628c052723efc1 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/SimpleLit.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 6a1143ee683302f4aa628c052723efc1' -> (Import Result ID: 'f907a175c5cc8e3894c1b5ec720ae0c9') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=dd0f57319beaa6a3770e71c477821489 DependenciesID=51f6fdc9138b2788512809a6295dc7f1 StaticDependenciesID=17fb42e5760c46eb8fc0bf96a4f79af1 
+Importing 'GUID: 8a239b3da89050c4e89ac06b168fc684 - Path: Packages/com.unity.render-pipelines.universal/Runtime/RendererFeatures/SurfaceCacheGIRendererFeature/FallbackMaterial.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 8a239b3da89050c4e89ac06b168fc684' -> (Import Result ID: '41fde79a103066f55cb960e400f436e9') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=deb64a155508ec0e0658913af6b4152f DependenciesID=45a61f68250c82704a83c0e8daf38242 StaticDependenciesID=52ac37508a9d6820bf9d7eef27ff30f9 
+Importing 'GUID: dcf25649262eaaf428d2b87b9a6aaeb6 - Path: Assets/OpenPlan/Art/Materials/OP_green.mat' with importer (NativeFormatImporter)
+Imported 'GUID: dcf25649262eaaf428d2b87b9a6aaeb6' -> (Import Result ID: '469b8c05a08e12020e85a6dad88c9adf') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=381db8d63cea5ea7d44b2d97dc69eb2e DependenciesID=06ef0feb90b4c83ca23de77e6124d0d8 StaticDependenciesID=74070bd903689e9854e64c453de990e0 
+Importing 'GUID: 9dfc825aed78fcd4ba02077103263b40 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 9dfc825aed78fcd4ba02077103263b40' -> (Import Result ID: '1fb8179e77abe19546dd6a85f9b177fd') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=78fe86e761db70fc4ac9d72d540b3396 DependenciesID=4fbdf9833dd6699c6cbed5637a245a2b StaticDependenciesID=cf8e7d42534fc1678d11632b120a54e9 
+Importing 'GUID: 4f1ef37ae953c484bbc5d5e4049147e5 - Path: Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Materials/Black.mat' with importer (NativeFormatImporter)
+Imported 'GUID: 4f1ef37ae953c484bbc5d5e4049147e5' -> (Import Result ID: '31ec06b51af13077baf4db9151d56e0e') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=873834b8009aeb2bcc73b52132c17d33 DependenciesID=5319001035ec3d59bd4ed4a82c714831 StaticDependenciesID=559cc8bd45012454e1b891ce9af3032e 
+Importing 'GUID: efba5513d0b76e74f99cc6f0d4a1ea50 - Path: Assets/OpenPlan/Art/Materials/OP_blue.mat' with importer (NativeFormatImporter)
+Imported 'GUID: efba5513d0b76e74f99cc6f0d4a1ea50' -> (Import Result ID: '508c56162abc16891b473ec90b065b97') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=3056cee11108a0c047d2dfc564f93b27 DependenciesID=54635c27bd57b0a8554d30f1238ea9cf StaticDependenciesID=dd3f4cdd2d4db53c6fa32eb3746629c0 
+Importing 'GUID: 1062c701058745940ae5dca6219c64c8 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Black.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 1062c701058745940ae5dca6219c64c8' -> (Import Result ID: '1283c4b32ce106cd04b2f3176b17925c') in 0.007 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5961e31a1b319c542eb56c0624152c94 DependenciesID=465e81610371b50c130e126885ac5848 StaticDependenciesID=a571fb85363ca4096ccb19f98ea1e9f0 
+Importing 'GUID: 30dc370b164eefc43b95744fc796dad0 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Regular.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 30dc370b164eefc43b95744fc796dad0' -> (Import Result ID: 'efec666082c7cff7cbc77cac7086a1a9') in 0.004 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=8d8f34dd95727bffee1287d25710bff3 DependenciesID=651d829341fd5ae950f35da8f3d16e12 StaticDependenciesID=b3c9a477d1b8bf1881f044ca5d67d5b7 
+Importing 'GUID: b2ea3b3f1765e544b9eb5bd1a93a91ce - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-ThinItalic.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: b2ea3b3f1765e544b9eb5bd1a93a91ce' -> (Import Result ID: '38e03f208b0207182c5cb9d7988ff330') in 0.005 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=24f5b549e35397d00211e614ecea2c49 DependenciesID=8d8cb0fd042e6bf7ddddf6b97bfdc48a StaticDependenciesID=55dd1e5d8dc72b3a1e29ef499a06a7c7 
+Importing 'GUID: 23c676deca051d14aa557434affd401c - Path: Assets/OpenPlan/Resources/Fonts/Inter-Regular.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 23c676deca051d14aa557434affd401c' -> (Import Result ID: '5e3b70fc487d72298e1525650658ff60') in 0.006 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3dae3c393bffb03a87e629dfb7c5ad50 DependenciesID=45005e87da271435dae27d16798c96e3 StaticDependenciesID=68ad567cb612836e53bba58a8b71460d 
+Importing 'GUID: e3265ab4bf004d28a9537516768c1c75 - Path: Assets/TextMesh Pro/Fonts/LiberationSans.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: e3265ab4bf004d28a9537516768c1c75' -> (Import Result ID: '8549f705aea077aca5189e9c1a42321f') in 0.401 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7c7543333369427b3c7ecb54b7a8ba68 DependenciesID=5b11b41e74c0b8776d89691def1a7dee StaticDependenciesID=a52300c23b5ce3f9302cee57c0af6ee3 
+Importing 'GUID: a51a3aebb43ac044989270407476b208 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Medium.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: a51a3aebb43ac044989270407476b208' -> (Import Result ID: '3968b61633305fac3a714363b76e1f40') in 0.003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=503d1c9d83d0fb78adc7ed17a7fdf3a3 DependenciesID=956d6b04ec41662b21eee646b14b58e1 StaticDependenciesID=6282ef5639fc506c23557680a571453f 
+Importing 'GUID: 3750c318f40cab44a97d3a81beaefeb3 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Bold.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 3750c318f40cab44a97d3a81beaefeb3' -> (Import Result ID: 'b7e055e7325b6bd9f0a2b27ad7dfe80a') in 0.004 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e253522a261d1ed613f4cc50d8e2c6d5 DependenciesID=f95dc6b8fe7005e029325574eba9ce6b StaticDependenciesID=790b88d849f0938fa801c446d2cd4f98 
+Importing 'GUID: c839255fc8f6b4b4d90bf8c1af9f9bd1 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Italic.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: c839255fc8f6b4b4d90bf8c1af9f9bd1' -> (Import Result ID: 'b410826d1d7b376c32ae920fa91ada63') in 0.004 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=63a86786897a319a77c3aea41c91bca1 DependenciesID=31cfbed4835665856f3baadf8d7c9a71 StaticDependenciesID=ec097f70128c009160033c8096c2a646 
+Importing 'GUID: 19a9abb883540be48b75b951a927ae03 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Thin.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 19a9abb883540be48b75b951a927ae03' -> (Import Result ID: 'c32c2e0cb9b6650011549337efeafb9d') in 0.003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5bb158eaa602e58503f96cf788f7b6e1 DependenciesID=acbcdcf8d6aa6af90b43f17b104d9326 StaticDependenciesID=7d0745f30e7073f3d0d0f58c9853233d 
+Importing 'GUID: d93c1bc57fdf1ac4dad1bf04fac05464 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-MediumItalic.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: d93c1bc57fdf1ac4dad1bf04fac05464' -> (Import Result ID: 'b5343bc1793447817115731eb4af7a93') in 0.003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f3fbcfe514f75a35163162b59ae60b2b DependenciesID=30a6e3abb68048e562e1d8f0771bc5f7 StaticDependenciesID=9f1e49741689642f065136debb7b8f17 
+Importing 'GUID: f95147a9bab9fe649b8070170fa7ebd2 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-BlackItalic.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: f95147a9bab9fe649b8070170fa7ebd2' -> (Import Result ID: 'b2ae78bf88ae6b6ec1a00bef0ac4e846') in 0.003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1aa3ebaf1588587543263942cd98d075 DependenciesID=14f7403fdc789637d171f746617a6b84 StaticDependenciesID=b1668a2a384d30847a3de75f74877f34 
+Importing 'GUID: 2a29e27936eb547458f646f71125b264 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Light.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 2a29e27936eb547458f646f71125b264' -> (Import Result ID: 'a2cdf32393c8d168081428b0c6655915') in 0.003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6e0afb04052330627b58c76104eb455b DependenciesID=b63b9d7139fda3862029ab513dad724f StaticDependenciesID=7ed96c366e74b8c12fab494a7596b5d6 
+Importing 'GUID: 5e63515167650a541b309ba3bfd4db3d - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-LightItalic.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: 5e63515167650a541b309ba3bfd4db3d' -> (Import Result ID: '7dcc85b7f2259761ad1b7eb0f181fe83') in 0.003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=db7687a1763e2d04ac560f70aa87cf7c DependenciesID=3875704c4b5194f881366b1dde075f67 StaticDependenciesID=7f7e5ad0a3b920bb06211e675fad874b 
+Importing 'GUID: dfb97a9307a577a41bcacba34b9a7e32 - Path: Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-BoldItalic.ttf' with importer (TrueTypeFontImporter)
+Imported 'GUID: dfb97a9307a577a41bcacba34b9a7e32' -> (Import Result ID: '15e49a8d9149913a51c773faf810b5c4') in 0.002 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e8b422a01d57ea413c535bab298d404b DependenciesID=a0cfa28490f10fb3a619bfee7b6991e7 StaticDependenciesID=8a89dc338e5722f5a0deb512e2fa9f01 
+Importing 'GUID: 2019d78ad3d1c5c4a8d309a857ca449f - Path: Packages/com.unity.shadergraph/GraphTemplates/BuiltIn/BuiltIn Lit Basic.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Imported 'GUID: 2019d78ad3d1c5c4a8d309a857ca449f' -> (Import Result ID: '0fbe3be00fd92602f99b76f66e90e06c') in 0.726 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=8c2ca97f8eccefd5e60390f8d31931bd DependenciesID=037ff7e324bd2df1ec3f0947aa9845e7 StaticDependenciesID=6609684225951d2098a5de2692d62d38 
+Importing 'GUID: 30fa68ce467463643a86b839ca0eb195 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/ArnoldStandardSurface/ArnoldStandardSurfaceTransparent.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 30fa68ce467463643a86b839ca0eb195' -> (Import Result ID: 'ced372464705ced17b4aced0fcafe939') in 0.217 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ebd4cba99338097f2a467fe5444a0b3a DependenciesID=f1de1887253b5aa53ccd8216b88dca7b StaticDependenciesID=d2f2f9d6cda6f2110e2f66b5fbf95287 
+Importing 'GUID: 80aa867ac363ac043847b06ad71604cd - Path: Packages/com.unity.render-pipelines.universal/Shaders/AutodeskInteractive/AutodeskInteractiveMasked.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 80aa867ac363ac043847b06ad71604cd' -> (Import Result ID: '0c8032b04af380996e257d9b26140c78') in 0.299 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=24602a3778d14a375da0397317742817 DependenciesID=020bae7b20d3c693b7d083ac53a6d77e StaticDependenciesID=93790a3d961df78f4f38d928b6bfa3cb 
+Importing 'GUID: 124c112a6e8f1a54e8b0870e881b56d8 - Path: Assets/TextMesh Pro/Shaders/TMP_SDF-URP Unlit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Worker ready: AssetImportWorkerHW0 0
+Imported 'GUID: 124c112a6e8f1a54e8b0870e881b56d8' -> (Import Result ID: 'd53cc71f3788f9db7b803e399b74b325') in 0.258 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=48c3c6b84e23ec6b24e8daf2ff32c9b0 DependenciesID=631e208fbcf60c2d8c77aab0f7660c78 StaticDependenciesID=344e3f28055b6d621edae50623a70e7c 
+Importing 'GUID: a2407126e3372f64cacb75ed466a5621 - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/0_Lit Basic.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: a2407126e3372f64cacb75ed466a5621' -> (Import Result ID: '0378b7692ea5323b1e5f4aad623fe9b8') in 0.199 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a970f27956876d82b099f41a7f12bb9f DependenciesID=52184de72b89227c4829173d0b238747 StaticDependenciesID=ff316c34c08b38d6780834d3180c887f 
+Importing 'GUID: a3d800b099a06e0478fb790c5e79057a - Path: Assets/TextMesh Pro/Shaders/TMP_SDF-URP Lit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: a3d800b099a06e0478fb790c5e79057a' -> (Import Result ID: 'a6678e471c3200fb84db67985a2595ea') in 0.269 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=eabc171cd57764e9436707e151f2af72 DependenciesID=39fec073c3b5737b695ae1cb725864df StaticDependenciesID=8e945a35059d3b660a501bbafb3b9dd7 
+Importing 'GUID: 2476a2d151e824143af40dce1fc93a12 - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/Unlit Simple.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 2476a2d151e824143af40dce1fc93a12' -> (Import Result ID: 'f0bd1b35140e0f302cc148496c269d2a') in 0.136 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=69c612806c3595a2fa4716d32dca90fe DependenciesID=5b9492034429cbcace035d9c1153c84f StaticDependenciesID=8ec6cb843e1dca772d3670b8fc95db22 
+Importing 'GUID: 24a73dccd7b6fad4798be282f96a21f4 - Path: Packages/com.unity.render-pipelines.universal/Shaders/2D/VFXSpriteLit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 24a73dccd7b6fad4798be282f96a21f4' -> (Import Result ID: 'da39e707bc5d3c4201f7e51a00fda59b') in 0.110 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=534cde89a8855f15fca383e53c30103a DependenciesID=28601d90f2f237d51470b244bfabf1e4 StaticDependenciesID=837e113fc2020c03afd5e6e8ce597978 
+Importing 'GUID: 44245ab89240f51459a5077d7145c452 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/PhysicalMaterial3DsMax/PhysicalMaterial3DsMax.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 44245ab89240f51459a5077d7145c452' -> (Import Result ID: 'ded73466ea6ffb7d2dde6e4ebfbca104') in 0.168 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=87fdcc8e2b7e76064e245f554d3188d1 DependenciesID=dd8e1411dc09f39dcb05650895e439aa StaticDependenciesID=28b04c3d6c8d8270a9804fb530aa899f 
+Importing 'GUID: 25a0ebb4827f3cc47a1af2c79005f65b - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/2D/1_2D Sprite Unlit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 25a0ebb4827f3cc47a1af2c79005f65b' -> (Import Result ID: 'd87d9e75b2fee17af9c451cf3a3b0296') in 0.119 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ac5facbfe9afee1316e9a442b6c82422 DependenciesID=7249111ec729362d4001a5372aee2198 StaticDependenciesID=f72b3a1b59864b450c9133cb4a39db30 
+Importing 'GUID: 9618d41bb71f74048bb6cace8785b93d - Path: Packages/com.unity.shadergraph/GraphTemplates/BuiltIn/BuiltIn Unlit Basic.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 9618d41bb71f74048bb6cace8785b93d' -> (Import Result ID: '49c7d9e4d191597187a14a312d9e0b74') in 0.099 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9be8e97387522eafa43fd4be5c998f65 DependenciesID=1249f03649c40c0b43689ac8f90e4a66 StaticDependenciesID=4cbf9013c356e4c46f852d2e2e797376 
+Importing 'GUID: a680d9a9f8b66514abbfd3ae1c8f77f7 - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/2_Particle Lit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: a680d9a9f8b66514abbfd3ae1c8f77f7' -> (Import Result ID: '89bbdd4f2110763167600022d167832f') in 0.173 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=daf8406941846f604d3104a8a356ad0e DependenciesID=97fdae4aaea086319a45e04c67961529 StaticDependenciesID=377151df3c59b7e6f4a369859e74398e 
+Importing 'GUID: f63d574838ccfb44f84acc05fed0af48 - Path: Assets/TextMesh Pro/Shaders/TMP_SDF-HDRP UNLIT.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: f63d574838ccfb44f84acc05fed0af48' -> (Import Result ID: 'ef9638005799a5e673856db4aa2401a6') in 0.067 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5dd2cf96c497c1c69a76771e6277bb44 DependenciesID=eeca3e7358a8e61df83df0599edce417 StaticDependenciesID=5e807a284547de1fdf1a46645235f2a4 
+Importing 'GUID: 0738648e2f2f84b489a2f0076b69e30a - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/UITKBasicTemplate.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 0738648e2f2f84b489a2f0076b69e30a' -> (Import Result ID: '42f0db6cf73652a8aa2fe09c93c8898f') in 0.104 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e8d33653df1c1572f9de80ac5fd353b8 DependenciesID=a6e91bb1ca3e678ed22e4febed88a3a3 StaticDependenciesID=71f98d325e24a9f028092ff5b00e0615 
+Importing 'GUID: 1716ff8c1e51af14280cc97fbcba3b11 - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/1_Decal Material Volume.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 1716ff8c1e51af14280cc97fbcba3b11' -> (Import Result ID: '940bc04e05f7216b70e8dfdd1949e725') in 0.257 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a42d336ac3ecf91c82c563fd19b33e18 DependenciesID=15c4027ff7508398c9a0346c01924271 StaticDependenciesID=e7f5633d194a1e9d8d2900a8e1fcd869 
+Importing 'GUID: 3739e562a03fc0b4982d8aa66cc50865 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/ArnoldStandardSurface/ArnoldStandardSurface.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 3739e562a03fc0b4982d8aa66cc50865' -> (Import Result ID: 'f919729f403c16a76d4990a997d22fbc') in 0.151 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9a3db78073d39e5395720e5e0d5985e0 DependenciesID=1d57b60b50ccde699e8f095d48aa7e5e StaticDependenciesID=0787d5241ccd905e33d16d07e7d915ae 
+Importing 'GUID: d7288f66e4fb0634c9afef98c31b722a - Path: Packages/com.unity.render-pipelines.universal/Shaders/2D/VFXSpriteUnlit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: d7288f66e4fb0634c9afef98c31b722a' -> (Import Result ID: 'af726a8a7183b61635118e183edf468d') in 0.077 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c46af4e641fe2f5af178dcfe47bcccc9 DependenciesID=03e4ca5f2d444c0fd523aa725f9e0f4b StaticDependenciesID=85e6ee7f61bfc1ab7339effc670680e8 
+Importing 'GUID: 39144937a5efe954dac51acbbe54157e - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/0_Decal Simple.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 39144937a5efe954dac51acbbe54157e' -> (Import Result ID: '10e464711f1325f005ecd930004aa6db') in 0.121 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=09e5f60c01cb2509944a75e6e24aee4c DependenciesID=1bd97b0900c16c1f7dbe5c10c4408bfc StaticDependenciesID=4fe069cb0b504273533a475c28e37ced 
+Importing 'GUID: 9920c1f1781549a46ba081a2a15a16ec - Path: Packages/com.unity.render-pipelines.universal/Shaders/Nature/SpeedTree8_PBRLit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 9920c1f1781549a46ba081a2a15a16ec' -> (Import Result ID: '8b896f2c3151b418f32c3b24ba9a62b8') in 0.320 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c245f0d47a81da8e590ef5653849beb9 DependenciesID=69f13486e3e37269849e2974fb429960 StaticDependenciesID=0e74ffbcd5dfc71ca21c1f15c84be5c7 
+Importing 'GUID: 1a207e3bee00db44b940e6f362a8e148 - Path: Packages/com.unity.render-pipelines.universal/Runtime/Materials/PhysicalMaterial3DsMax/PhysicalMaterial3DsMaxTransparent.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 1a207e3bee00db44b940e6f362a8e148' -> (Import Result ID: 'bdca4a8046ad41460d60c366f9c103f1') in 0.177 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d68da347aebb406f5923f02b69ef4ba7 DependenciesID=6ee9016ebcd845668949a5075405cb59 StaticDependenciesID=f03d200bb45632c381e1063226fd6f5b 
+Importing 'GUID: 5a4a765e921b8554eb959f7cf697b3be - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/UGUI Canvas Basic.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 5a4a765e921b8554eb959f7cf697b3be' -> (Import Result ID: '78166eb95fe4dc7847367abcd4b9af8b') in 0.167 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b7c32e36061dbcdf41ccf05b135dba71 DependenciesID=84679964ac3e13463dd8bba948a39c90 StaticDependenciesID=e99a020de990b2e0ebca5467c4960558 
+Importing 'GUID: ca2ed216f98028c4dae6c5224a952b3c - Path: Assets/TextMesh Pro/Shaders/TMP_SDF-HDRP LIT.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: ca2ed216f98028c4dae6c5224a952b3c' -> (Import Result ID: '90693d655f44ae62f83ea47a28e41cc9') in 0.053 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ab920cd45a097a01fb82e22b9160db61 DependenciesID=2be7b9ef8eed77190a020647d5999c97 StaticDependenciesID=b9d2c302577dacfa6aaa1cfae6289e8e 
+Importing 'GUID: 9b4e681081e2b4c469111bb649e2f7ee - Path: Packages/com.unity.render-pipelines.universal/Shaders/Decal.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 9b4e681081e2b4c469111bb649e2f7ee' -> (Import Result ID: 'f0157641b507f3a75a2411fe030a982e') in 0.196 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a57a6b13b0cfa24cea818023c3f9f381 DependenciesID=36d8e5a860bab3de5f8dc1dcd03a8c64 StaticDependenciesID=2b32fe64cd510068915d2bf1db9f308f 
+Importing 'GUID: cbd3e1cc4ae141c42a30e33b4d666a61 - Path: Packages/com.unity.render-pipelines.universal/Shaders/Nature/SpeedTree9_URP.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: cbd3e1cc4ae141c42a30e33b4d666a61' -> (Import Result ID: 'b367d5b233422e0a6e1ca7901abe3963') in 0.260 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b4595b6524985bc907417e8dec30bc54 DependenciesID=8b5d6040f6b02ba8db86c5204d4cc512 StaticDependenciesID=42a5cc007af632c28a80d8fbbd477c97 
+Importing 'GUID: fb6390f650ca44a5ba3246d8dda47927 - Path: Packages/com.unity.render-pipelines.universal/Shaders/FullscreenInvertColors.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: fb6390f650ca44a5ba3246d8dda47927' -> (Import Result ID: '0f043bdb0017389e1b42e337fc97b870') in 0.072 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e5b576511c9f2fdab16b47f3ca357697 DependenciesID=447697f58d30691c95b6c401e016d40b StaticDependenciesID=40cee0bd2e2cb39549a1603e4d57b0eb 
+Importing 'GUID: 5c81372d981403744adbdda4433c9c11 - Path: Packages/com.unity.render-pipelines.universal/Shaders/AutodeskInteractive/AutodeskInteractiveTransparent.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 5c81372d981403744adbdda4433c9c11' -> (Import Result ID: '3a2f10131a687561cc0a971ce9086d7d') in 0.142 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b58e199a75e86ad69cea70fc77a6ea34 DependenciesID=d3cef7dec9a9c7ad46d78ddd6a11dc5b StaticDependenciesID=9d235a941ea991b65dbde50f7ec5b125 
+Importing 'GUID: bc3def193b270c649b041063a70a1a1f - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/Terrain Standard 4 Layers URP.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Shader 'Hidden/Terrain/Terrain Standard 4 Layers URP': dependency 'AddPassShader' shader 'Hidden/Hidden/Terrain/Terrain Standard 4 Layers URP_AddPass' not found
+Shader 'Hidden/Terrain/Terrain Standard 4 Layers URP': dependency 'BaseMapGenShader' shader 'Hidden/Hidden/Terrain/Terrain Standard 4 Layers URP_BaseMapGen' not found
+Shader 'Hidden/Terrain/Terrain Standard 4 Layers URP': dependency 'AddPassShader' shader 'Hidden/Hidden/Terrain/Terrain Standard 4 Layers URP_AddPass' not found
+Shader 'Hidden/Terrain/Terrain Standard 4 Layers URP': dependency 'BaseMapGenShader' shader 'Hidden/Hidden/Terrain/Terrain Standard 4 Layers URP_BaseMapGen' not found
+Imported 'GUID: bc3def193b270c649b041063a70a1a1f' -> (Import Result ID: 'b9ec38febc231e5f4a275d492ba5e2bb') in 0.455 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=299b0307d7dd8a12be05a8fb74dd4dce DependenciesID=f20324c72590eceaaa80a51e6675c095 StaticDependenciesID=7de8e9f54303281de49c831d9be40b94 
+Importing 'GUID: 9d4e8ca8c5046914c87ca6ccef140dac - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/UGUI Canvas Meter.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 9d4e8ca8c5046914c87ca6ccef140dac' -> (Import Result ID: '333c68d3c12e2ba9f282f5f87f013a92') in 0.116 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=57f376a57d2f97f057fbddb124e35514 DependenciesID=818beca5d59378e1c0030047926a5238 StaticDependenciesID=014b8a547fb1364b04f2c4e3585ba132 
+Importing 'GUID: bde135b320597544b9ac325092409f8b - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/2D/0_2D Sprite Lit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: bde135b320597544b9ac325092409f8b' -> (Import Result ID: 'b3cdfe5a297ceb13cb9ecba6dd7b45fb') in 0.159 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3293c9eab26642eb5712529d263bf7a9 DependenciesID=7886c93529a6edf73295a0c7449555fa StaticDependenciesID=1b2284e79e6a8a4483874282776667c2 
+Importing 'GUID: 0e9d5a909a1f7e84882a534d0d11e49f - Path: Packages/com.unity.render-pipelines.universal/Shaders/AutodeskInteractive/AutodeskInteractive.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 0e9d5a909a1f7e84882a534d0d11e49f' -> (Import Result ID: '4b082af07f12db2d3ce92db12d09cf9c') in 0.250 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3532a763e94ff756667e25d1c70f0564 DependenciesID=e6c78ddea28f7f819906e4d1459ab123 StaticDependenciesID=8b58243ecf8583850cbf76baa5a3627b 
+Importing 'GUID: 3e01bbae25716b24ea9da11102b44902 - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/UITKFullTemplate.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 3e01bbae25716b24ea9da11102b44902' -> (Import Result ID: '0534c0475ad665ac138e84f35481cc50') in 0.074 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=85c00fb745a7816776725b31741ce543 DependenciesID=ea38d2f6b1aca7aaa9dfbc6260751cd0 StaticDependenciesID=2ad59c7d480b2de45ccee08f41989efa 
+Importing 'GUID: 7ef2cf71ad164fe479662ae612dff99e - Path: Packages/com.unity.shadergraph/GraphTemplates/Custom Render Texture.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: 7ef2cf71ad164fe479662ae612dff99e' -> (Import Result ID: 'e648ae01b420f187aa1d5ccb01b0447d') in 0.018 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=506c9619fc5a776343ea7dd3cfcd9d79 DependenciesID=f3b8ecc6c8734694c6ae6c30bf63054b StaticDependenciesID=828a71add6ae7f82a0fd6e5bf5b1d702 
+Importing 'GUID: aee84ce0dab81b049bb88017d78a63cd - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/1_Lit Full.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: aee84ce0dab81b049bb88017d78a63cd' -> (Import Result ID: '62ae450d7d4399d5e675f126cb1bff50') in 0.186 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=896cab79ff4ae3f992cd1bed0bd0adeb DependenciesID=aa7354aa6098919ddff5f53af5714ead StaticDependenciesID=49a22272d689818ab71d2cf0ed63d08f 
+Importing 'GUID: def488a52add6574d9f295a507032cb8 - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/Terrain Simple.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Shader 'Hidden/Terrain/Terrain Simple': dependency 'AddPassShader' shader 'Hidden/Hidden/Terrain/Terrain Simple_AddPass' not found
+Shader 'Hidden/Terrain/Terrain Simple': dependency 'BaseMapGenShader' shader 'Hidden/Hidden/Terrain/Terrain Simple_BaseMapGen' not found
+Shader 'Hidden/Terrain/Terrain Simple': dependency 'AddPassShader' shader 'Hidden/Hidden/Terrain/Terrain Simple_AddPass' not found
+Shader 'Hidden/Terrain/Terrain Simple': dependency 'BaseMapGenShader' shader 'Hidden/Hidden/Terrain/Terrain Simple_BaseMapGen' not found
+Imported 'GUID: def488a52add6574d9f295a507032cb8' -> (Import Result ID: 'ad19bf907ae39857391dd8c1b3d4541e') in 0.299 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=627ca7c3285e9c7dd18ec36db1653294 DependenciesID=00ff4debbe8ba1b36359a44c686c7afb StaticDependenciesID=2a2a3cd210036ba76c45c0739e8729cd 
+Importing 'GUID: af66091e0eca0c04a9c3584ae867418a - Path: Packages/com.unity.shadergraph/GraphTemplates/Cross Pipeline/0_Particle Unlit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: af66091e0eca0c04a9c3584ae867418a' -> (Import Result ID: '0ab86146b6d7d1121ef9ef22a516ef5e') in 0.112 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fab92c1eeda905dd015dc191f62d05b6 DependenciesID=ab034fa3ee3a24f138c9f8d623449ef4 StaticDependenciesID=655b8f780947992f7c55781b0b5b6ab9 
+Importing 'GUID: bfad0aba0faa90547b68abd10bb6be86 - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/2D/2_2D Sprite Custom Lit.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: bfad0aba0faa90547b68abd10bb6be86' -> (Import Result ID: '83dc8897a65fd4301e054bfd2294b0d3') in 0.121 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4c01a56f59fcee9d1718b2971c5a7824 DependenciesID=f0721aabd596cd91330e90a539c41a63 StaticDependenciesID=8146ce6e147d26b8ac7e514074a9228f 
+Importing 'GUID: df41eefe8c13d444ca890dddbbc61f8d - Path: Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/GraphTemplates/Fullscreen Basic URP.shadergraph' with importer (ScriptedImporter : Unity.ShaderGraph.Editor:UnityEditor.ShaderGraph:ShaderGraphImporter)
+Imported 'GUID: df41eefe8c13d444ca890dddbbc61f8d' -> (Import Result ID: '8d4416fea2b7a6745121f84725b82cb0') in 0.086 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=668200aa946fe748965a3cfa8c2a2cdb DependenciesID=04588bdfd5f1554a8dbcbd195fa351f9 StaticDependenciesID=a87968d202e813322b248548730fcf34 
+Importing 'GUID: 80fb19ffe94c7324dbd4e2d9c138d1ba - Path: Assets/OpenPlan/Art/Models/OP_CubicleDivider.fbx' with importer (FBXImporter)
+Imported 'GUID: 80fb19ffe94c7324dbd4e2d9c138d1ba' -> (Import Result ID: 'e24b920ae1f20d2f42f9e28b4f1234eb') in 0.047 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1b003f6d813f029c7756d8b9a5e28893 DependenciesID=d5567d0ce8b4e8f0d9d401b8b271c709 StaticDependenciesID=218b9ec3ad4c3fbe185efb2de5fb7330 
+Importing 'GUID: c0596249f500e3d49ba4826abab1e6d2 - Path: Assets/OpenPlan/Art/Models/OP_Nameplate.fbx' with importer (FBXImporter)
+Imported 'GUID: c0596249f500e3d49ba4826abab1e6d2' -> (Import Result ID: 'ec614523e93804555f88ec719cdf823a') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1ccb91f06f9a92643a773e0705f3cc73 DependenciesID=d92db90355d190f48fb60697f3a8b675 StaticDependenciesID=d7fd296a46535dd9bc037ed13a66baf7 
+Importing 'GUID: f06419e205cd97b45a9cf9f4eef95f7f - Path: Assets/OpenPlan/Art/Models/OP_WaitingBench.fbx' with importer (FBXImporter)
+Imported 'GUID: f06419e205cd97b45a9cf9f4eef95f7f' -> (Import Result ID: '50a7c98708b1efa657b76606f6ffcb6f') in 0.027 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b34ad2c65400f6a9379527c9bdcb1bf6 DependenciesID=d3d413d0e627f63f4ce661eb9bfb845e StaticDependenciesID=65a45719d41558f85a312bd08b49df92 
+Importing 'GUID: 4156215c5e6d2734283fdb349e5032df - Path: Assets/PolyOne/Free Stickman/Model/Free Pack - Stick Man.fbx' with importer (FBXImporter)
+Imported 'GUID: 4156215c5e6d2734283fdb349e5032df' -> (Import Result ID: '4dc345c278615392ef4eed0771b17c9b') in 0.065 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7839e47b9a5b59c8943613ccf05d2a57 DependenciesID=c5aed4254a662c908d08c96879f2f28c StaticDependenciesID=758151b22580e41be67230849b3650a7 
+Importing 'GUID: 61233337bbb235f41a3a6cff0e74cee7 - Path: Assets/OpenPlan/Art/Models/OP_ElevatorIndicator.fbx' with importer (FBXImporter)
+Imported 'GUID: 61233337bbb235f41a3a6cff0e74cee7' -> (Import Result ID: 'ec07e490576af46339fed30b174563ba') in 0.025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c3257784270882b2e76be98043d46962 DependenciesID=622f98cdbee3b61497f861e381df6d5b StaticDependenciesID=e5347a2981786ef315f6a2bd346f9669 
+Importing 'GUID: c17105ac6f7c77c41b339083f1ef3521 - Path: Assets/OpenPlan/Art/Models/OP_Cabinet.fbx' with importer (FBXImporter)
+Imported 'GUID: c17105ac6f7c77c41b339083f1ef3521' -> (Import Result ID: 'b300b7eab7b9ab0440de4bfc02378eec') in 0.032 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ac6543973c9e8bb30234b42df20150f3 DependenciesID=1a824e31bb6df41d0e77344d9a97b6b8 StaticDependenciesID=af06a251656d6ba1c70c360168a87687 
+Importing 'GUID: c186f373f14874a48bd5eb5d83fecfa5 - Path: Assets/OpenPlan/Art/Models/OP_WaterCooler.fbx' with importer (FBXImporter)
+Imported 'GUID: c186f373f14874a48bd5eb5d83fecfa5' -> (Import Result ID: '9b89a68f7db17b15cc7c192173bdbbcc') in 0.025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2f72723c0cd99fb7ba917e183b1e6463 DependenciesID=6c4dc5cd0504655868cc44bb25d7dc63 StaticDependenciesID=d8da4dfc7e3264f34b92b7b0e1aa14b2 
+Importing 'GUID: e1bc34fabc4c13c4d9a84b287f00f1bb - Path: Assets/OpenPlan/Art/Models/OP_CoffeeMachine.fbx' with importer (FBXImporter)
+Imported 'GUID: e1bc34fabc4c13c4d9a84b287f00f1bb' -> (Import Result ID: 'e06281607e6321b64b05c24092d79ded') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dad65f4ab742ae8c7412935ee7f25cb7 DependenciesID=0025c1297d66478fafcc7fdaa040aa4d StaticDependenciesID=986bc9f759af9ad6ffccf88febe6b214 
+Importing 'GUID: f1a5c50d0408fea4bbe5c96180694189 - Path: Assets/OpenPlan/Art/Models/OP_Monitor.fbx' with importer (FBXImporter)
+Imported 'GUID: f1a5c50d0408fea4bbe5c96180694189' -> (Import Result ID: 'e4fadf4a4f1f5ac58528b7ce0f0f7f4f') in 0.026 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bbe502caf5c47f597cbb82ee867bba1f DependenciesID=b78ab091991615327b1b853f4db24533 StaticDependenciesID=2fcf7b3f2224c0dbf66df64e44d9dc90 
+Importing 'GUID: f1af0c07e2964e34da94c9075c65ea79 - Path: Assets/OpenPlan/Art/Models/OP_CheapVendingMachine.fbx' with importer (FBXImporter)
+Imported 'GUID: f1af0c07e2964e34da94c9075c65ea79' -> (Import Result ID: '33cc7d2f950bebca6fab53429b7b6c24') in 0.041 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=42c11d2494017bf741a1865edca1d198 DependenciesID=56b4d88d585518f826bd20f9b6821c4d StaticDependenciesID=c1d17df6934e7dcb99fcf85fe88c7b6b 
+Importing 'GUID: 0222584f3f7300c4f8bda263ccfdb1ca - Path: Assets/OpenPlan/Art/Models/OP_ExitSign.fbx' with importer (FBXImporter)
+Imported 'GUID: 0222584f3f7300c4f8bda263ccfdb1ca' -> (Import Result ID: '8d1cdc38ce22ce644e3cfbfa93696722') in 0.027 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d60e4a1326bfe210e3549701325e0bda DependenciesID=7110e8c9c87e2e79cbba793185689e4e StaticDependenciesID=cac3280539889aa0420a884cf9c97d55 
+Importing 'GUID: 2224c257f16b94e4a986b51f93fd99d9 - Path: Assets/OpenPlan/Art/Models/OP_PartialWall.fbx' with importer (FBXImporter)
+Imported 'GUID: 2224c257f16b94e4a986b51f93fd99d9' -> (Import Result ID: '801d37e5f65dd174d94ffe3199b33834') in 0.026 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=97d4796caf5b0557beffc22f0a0e488e DependenciesID=5cc0479530dfc82364a567a1d93dcf3a StaticDependenciesID=7f55430dfa3783cd41125b1769796204 
+Importing 'GUID: 52445db1e6f585d489f5b96d1ce1f79e - Path: Assets/OpenPlan/Art/Models/OP_RecyclingBin.fbx' with importer (FBXImporter)
+Imported 'GUID: 52445db1e6f585d489f5b96d1ce1f79e' -> (Import Result ID: '407e0be224160ef094bccdf4d55b3b0a') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7cd2403cbda6d6f9b706d9160c9eafa2 DependenciesID=d58381fb304d379a14eb68a2042ff444 StaticDependenciesID=c2dbf19ecf0b6ce1d572dde52c1194fe 
+Importing 'GUID: b28fa67a0ff82c5478f27368dc627683 - Path: Packages/com.unity.render-pipelines.core/Runtime/RenderPipelineResources/Mesh/SamplesFixture.fbx' with importer (FBXImporter)
+Imported 'GUID: b28fa67a0ff82c5478f27368dc627683' -> (Import Result ID: 'c824b763ca1e132b0b08a3b2604014ae') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c882843c6c6fb771cd3deafc9a6dde08 DependenciesID=f21eec0f8ff5c9d292c66fa4c7a9ee18 StaticDependenciesID=3a6dd714a4f739d548624a707b75ed1c 
+Importing 'GUID: 837bb600570397641ba9d90fb5fde0f4 - Path: Assets/OpenPlan/Art/Models/OP_ConnectingWallTrim.fbx' with importer (FBXImporter)
+Imported 'GUID: 837bb600570397641ba9d90fb5fde0f4' -> (Import Result ID: '46f1ebe6233d72c280dbb7f497683ad1') in 0.026 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7c4c187838b4ba19a01b34da55e9ff54 DependenciesID=e599f2b6ccf8a5f321d2c3b807941288 StaticDependenciesID=6e89712a8fe04620e4310795c3c41436 
+Importing 'GUID: 9340a5e7540db464f8981e57ad0ffc7c - Path: Assets/OpenPlan/Art/Models/OP_NeighborSign.fbx' with importer (FBXImporter)
+Imported 'GUID: 9340a5e7540db464f8981e57ad0ffc7c' -> (Import Result ID: 'a3507cc1cfed7be7515adaccaee88227') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3d4fb67f06fa9e73b3b760485039297c DependenciesID=5f2d6cbfa0d5da78fff45bfc79ad64df StaticDependenciesID=216a9212c54768ff3886e2b7e8212319 
+Importing 'GUID: a3c79b517b8516e48afb4b88d00b9c0f - Path: Assets/PolyOne/Free Stickman/Model/SM_Plane.fbx' with importer (FBXImporter)
+Imported 'GUID: a3c79b517b8516e48afb4b88d00b9c0f' -> (Import Result ID: '5b1348ac41cd3411df7523ebdb72af78') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fd73682b8e3a488d3b1814e7a9de12c1 DependenciesID=4ebb7338feeced06aee6b9b9d2c6e897 StaticDependenciesID=d3561ed5f733fa15654cb077d6079651 
+Importing 'GUID: c3c8231c277e12f4cbbc36c91bd288d5 - Path: Assets/OpenPlan/Art/Models/OP_FileTray.fbx' with importer (FBXImporter)
+Imported 'GUID: c3c8231c277e12f4cbbc36c91bd288d5' -> (Import Result ID: '3359ea21354806f50e6231b6f4aee110') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=658ff98e09088b99632b8ec0289ea646 DependenciesID=3fcef8e2404583957759aeb57a723b8e StaticDependenciesID=2b7c7f4d366dc405c815b283dcf89318 
+Importing 'GUID: 14761e8bc519d324da3262a2dd1e0462 - Path: Assets/OpenPlan/Art/Models/OP_StructuralColumn.fbx' with importer (FBXImporter)
+Imported 'GUID: 14761e8bc519d324da3262a2dd1e0462' -> (Import Result ID: 'f776f032571bc79fd233cfdfddffb920') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6e0a0503955c8c20877f6321fa8582f7 DependenciesID=605cc068a3b4fcfd6cdaaba584f4d8d8 StaticDependenciesID=c0fba13a675c40779382123e2666088f 
+Importing 'GUID: 55f1a7922f6c7864a8913a8184cec68e - Path: Assets/OpenPlan/Art/Models/OP_Ashtray.fbx' with importer (FBXImporter)
+Imported 'GUID: 55f1a7922f6c7864a8913a8184cec68e' -> (Import Result ID: 'db1a35171daca6ed83b4a80d9201e730') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=cb5dcbaaea61916e558c8243e7e09759 DependenciesID=997cd4eff504f31e49f20208df43ab5c StaticDependenciesID=80589a3aaa3b3f287ed7b9c363f67089 
+Importing 'GUID: 85aa3febc820e314594f67bce8e19bb3 - Path: Assets/OpenPlan/Art/Models/OP_Mug.fbx' with importer (FBXImporter)
+Imported 'GUID: 85aa3febc820e314594f67bce8e19bb3' -> (Import Result ID: '76050ce4ad17411e1a24e94489dd5379') in 0.016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ce895c786410f50640f61ebf0aac3918 DependenciesID=9a4376291a34a021a2ac7fe50f2de03e StaticDependenciesID=196832a498ea6b3c4f9b9d9ae54273d1 
+Importing 'GUID: b52fb0640336b0143a5f6a98f92c4b08 - Path: Assets/OpenPlan/Art/Models/OP_TrashBin.fbx' with importer (FBXImporter)
+Imported 'GUID: b52fb0640336b0143a5f6a98f92c4b08' -> (Import Result ID: '823ecf22f616563a921c58786c6558a3') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=be577a75929214bff8e0fe2fab971be6 DependenciesID=6feb0a024e352f98969e8252595efb5b StaticDependenciesID=2a151b53f7cd96e4ff23c168a995cffe 
+Importing 'GUID: f545a160b6b55684b8aedb17cb533a11 - Path: Assets/OpenPlan/Art/Models/OP_CheapCRTMonitor.fbx' with importer (FBXImporter)
+Imported 'GUID: f545a160b6b55684b8aedb17cb533a11' -> (Import Result ID: 'a84111c0fb76f7b1bda0c55fff8320f7') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=026e52a8d173dffec7456b7d8aa47695 DependenciesID=8552df84492baef255de3bbbed3f05e3 StaticDependenciesID=e6cd00f703a303f588fa71936ba0a351 
+Importing 'GUID: a62a52d1b5425e041a2c800d0c0fd51e - Path: Assets/OpenPlan/Art/Models/OP_Cigarette.fbx' with importer (FBXImporter)
+Imported 'GUID: a62a52d1b5425e041a2c800d0c0fd51e' -> (Import Result ID: '9131e3fa33cbd57cf53736586641e915') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b7e3c8c8fafe6683737ad4a9df2d005f DependenciesID=6d94c96db438b0242a0587b1954031a8 StaticDependenciesID=6b645ffff61ec96e7387a4ff8b01759c 
+Importing 'GUID: d6b0477b39c0f2d43bf544d2c5ba2aa4 - Path: Assets/OpenPlan/Art/Models/OP_Whiteboard.fbx' with importer (FBXImporter)
+Imported 'GUID: d6b0477b39c0f2d43bf544d2c5ba2aa4' -> (Import Result ID: 'ee0932cd11a6d352c5eeced0644644d5') in 0.016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=44a7ec9510f6158ed82fd00983f23938 DependenciesID=aa27baffd2d2ac1ca7b20187b4ee0366 StaticDependenciesID=3b813bcedf64177386172607f161df6f 
+Importing 'GUID: 6797c7fdb32c80e4e8da7123a8a8a0d8 - Path: Assets/OpenPlan/Art/Models/OP_Bookshelf.fbx' with importer (FBXImporter)
+Imported 'GUID: 6797c7fdb32c80e4e8da7123a8a8a0d8' -> (Import Result ID: '03969c9ab0a0203668eafef9406bd02c') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c9ce8983ead0759d64b213c6c349a2b5 DependenciesID=e52220af33181cf2566a3cac89b0c0b6 StaticDependenciesID=df5fc9327f679313298a47c197c37cea 
+Importing 'GUID: e7b4a895caca6b249bc444e358ec075c - Path: Assets/OpenPlan/Art/Models/OP_CompanySign.fbx' with importer (FBXImporter)
+Imported 'GUID: e7b4a895caca6b249bc444e358ec075c' -> (Import Result ID: 'eed573b22fb5ec7eb69f15d402f1c453') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7afe502c1caffb9f0c01eee454646c62 DependenciesID=12e5b14e93e76163eab239e7e29af901 StaticDependenciesID=7692afb274d28ea36992272277f44a4d 
+Importing 'GUID: 38c6a0e75ecf333428f179659fdb9f60 - Path: Assets/OpenPlan/Art/Models/OP_DeskLamp.fbx' with importer (FBXImporter)
+Imported 'GUID: 38c6a0e75ecf333428f179659fdb9f60' -> (Import Result ID: '19526167a1828e2c2773c3d56338e2b1') in 0.016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d9433566ad3a576300bab441921d846b DependenciesID=ca7f0aea2db82d209b5e318e4138948b StaticDependenciesID=45d5327ab36eae387efa1555b3fc0629 
+Importing 'GUID: 7854bf4e45ea6034ea9530999824bb2f - Path: Assets/OpenPlan/Art/Models/OP_VendingMachine.fbx' with importer (FBXImporter)
+Imported 'GUID: 7854bf4e45ea6034ea9530999824bb2f' -> (Import Result ID: '8c1d6f1ab06683f164f28bc8b59ca8de') in 0.016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7d19d9052695f9b6efd703a4d0bcf6f4 DependenciesID=257e0bf61b4d5a55e772c6f7c2a81fc5 StaticDependenciesID=31d629a115f846adca6846cb076b5e3a 
+Importing 'GUID: 88c57e240d5fcc24db9c4196f16111be - Path: Assets/OpenPlan/Art/Models/OP_FloorSlab.fbx' with importer (FBXImporter)
+Imported 'GUID: 88c57e240d5fcc24db9c4196f16111be' -> (Import Result ID: '0d266d15900156dbfaaa45ab741ab12e') in 0.016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=64c2122cf61f89c76992365e68043161 DependenciesID=516327c8b8bf4399d336a6f5fc7b57c4 StaticDependenciesID=e6494cf8c9ed03e1f3b248f5fa205da1 
+Importing 'GUID: e872e61898fa5144ea936abe03f1b468 - Path: Assets/OpenPlan/Art/Models/OP_PaperStack.fbx' with importer (FBXImporter)
+Imported 'GUID: e872e61898fa5144ea936abe03f1b468' -> (Import Result ID: '872a67d17225c7d5d08967f6b8146b63') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4dcd6eba57bd4cc7311d514f78da06c4 DependenciesID=5705e2a1eddd96df6527a8e27af1c0c4 StaticDependenciesID=09461d9886246ab834772ab2b7cc50fc 
+Importing 'GUID: e8334744cf5275f4f9c0c3fc6048640a - Path: Assets/OpenPlan/Art/Models/OP_ConferenceTable.fbx' with importer (FBXImporter)
+Imported 'GUID: e8334744cf5275f4f9c0c3fc6048640a' -> (Import Result ID: '49bb9afc1d00b19411b77e6c70178567') in 0.016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=da2d51e01b68c4725a51849b238271bf DependenciesID=704ff6a5f76f7bafc4f649c6901c390e StaticDependenciesID=c50b53a5c8c3079eb00325b4b8be8b7d 
+Importing 'GUID: 39d234c9bbad44a46a13bc64176bcdb3 - Path: Assets/OpenPlan/Art/Models/OP_PottedPlant.fbx' with importer (FBXImporter)
+Imported 'GUID: 39d234c9bbad44a46a13bc64176bcdb3' -> (Import Result ID: 'd88489e82f17026b569dabaf28ff7ffa') in 0.019 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1569c4f245a1d8c68206dc0022c37ba7 DependenciesID=849e1e296d0d29d93ff756e8bf6d5d4a StaticDependenciesID=83e2c90fad39597125ebfac3968ecffd 
+Importing 'GUID: 5936b4cd3dc139641919715d3012a52e - Path: Assets/OpenPlan/Art/Models/OP_FilingCabinet.fbx' with importer (FBXImporter)
+Imported 'GUID: 5936b4cd3dc139641919715d3012a52e' -> (Import Result ID: 'cf2a4d3e2054a3a6f748ecdb4703e702') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7dd46c69e47f0f03bd16b79a5d0249d8 DependenciesID=e6fedecee31e65f5a100eed6b3641ae5 StaticDependenciesID=ccd063250635770a5b965c4f61c56ddd 
+Importing 'GUID: 59d86fe8e7ad7ff4cb3d26a61ce0d9df - Path: Assets/OpenPlan/Art/Models/OP_Keyboard.fbx' with importer (FBXImporter)
+Imported 'GUID: 59d86fe8e7ad7ff4cb3d26a61ce0d9df' -> (Import Result ID: '7822a8494cc756a28b18764b406a773f') in 0.024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e31e970de30e827d7377bb3fdb3291db DependenciesID=af78fcbb77bc3b2fbbb10c476156356c StaticDependenciesID=83e48e66c6ca7b75b1c8f19b3128ac2d 
+Importing 'GUID: 59bca0102e563224aa52fb4e16c029d5 - Path: Assets/OpenPlan/Art/Models/OP_Worker.fbx' with importer (FBXImporter)
+Imported 'GUID: 59bca0102e563224aa52fb4e16c029d5' -> (Import Result ID: 'a6fb28e42446402bf92d182b7d9cae99') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d839457677e036f88f126c52c91228f1 DependenciesID=bc639d51bd4df1e8723f05db554daa48 StaticDependenciesID=a60fc2751ffc8327163b2a5d3ef445d3 
+Importing 'GUID: c96d6d47f05a2b147b44f78ced99a18b - Path: Assets/OpenPlan/Art/Models/OP_Mouse.fbx' with importer (FBXImporter)
+Imported 'GUID: c96d6d47f05a2b147b44f78ced99a18b' -> (Import Result ID: 'e7fd532157fe840caec5605c0876ed84') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=71981010eed5f17341a0ab93ff79abf3 DependenciesID=25b220bba6c69514f606b19f594be5f5 StaticDependenciesID=27154d2e6e86d18e8bb254d07e4d04b0 
+Importing 'GUID: f9176760ce969ee46a1e8ca0d68fe1fe - Path: Assets/OpenPlan/Art/Models/OP_Printer.fbx' with importer (FBXImporter)
+Imported 'GUID: f9176760ce969ee46a1e8ca0d68fe1fe' -> (Import Result ID: 'b9315dc290b1df02cb4f193c40639f0b') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=65434cb7081d56876ee54479af9be29c DependenciesID=525946c771382702d1d74eef0b8b674a StaticDependenciesID=1a0b57a59d1a614ebd7f61a1c57843ce 
+Importing 'GUID: 5ab7434c3b36f194d97ba71e5ac92611 - Path: Assets/OpenPlan/Art/Models/OP_VisitorChair.fbx' with importer (FBXImporter)
+Imported 'GUID: 5ab7434c3b36f194d97ba71e5ac92611' -> (Import Result ID: 'a25a6ed6ed47ed8a56ea79700d8e2992') in 0.019 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=754eece66431ab2d4cf8d98aed1424fe DependenciesID=0257cc03d0ab9ad2e718eeef78d78e90 StaticDependenciesID=3221210335a8b35fdd20a8039daabd5b 
+Importing 'GUID: 8aec8b80454342548ad06465d9a85338 - Path: Assets/OpenPlan/Art/Models/OP_DisplayScreen.fbx' with importer (FBXImporter)
+Imported 'GUID: 8aec8b80454342548ad06465d9a85338' -> (Import Result ID: '529134161a528c8a8c9de87ffb9799f1') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=42364e2d847afd5a2e90fa1d2bdbed29 DependenciesID=f8b666f75b9ba42605e380fb55480898 StaticDependenciesID=f0c5040d143da3ad3229bbcf10abd4f7 
+Importing 'GUID: aabf028a40ad4354bbd363276a8d0b75 - Path: Assets/OpenPlan/Art/Models/OP_Desk_A.fbx' with importer (FBXImporter)
+Imported 'GUID: aabf028a40ad4354bbd363276a8d0b75' -> (Import Result ID: '91de35b0853d20afd321102e3bb391a5') in 0.018 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=57baccc04af9dc7b17bc530269a4f0cf DependenciesID=ed5f05fe6493fa06d64d945c9dd710f7 StaticDependenciesID=480fc9315763d670bcfdf428fe8fe009 
+Importing 'GUID: 1b74a06f36d244247871189df21b7b84 - Path: Assets/OpenPlan/Art/Models/OP_NoticeBoard.fbx' with importer (FBXImporter)
+Imported 'GUID: 1b74a06f36d244247871189df21b7b84' -> (Import Result ID: '9c0c74699a00781cb32ab6c1cdc47d85') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=47c3103e415f5f184e8dd3324427b7fc DependenciesID=9ec2dbb9c39c017eeacf48376b772d68 StaticDependenciesID=298f547b29fe894c8ab380532efa182d 
+Importing 'GUID: 8bc44b75cf1d5ab4c9b5dd1304f2ba07 - Path: Assets/OpenPlan/Art/Models/OP_TallPlant.fbx' with importer (FBXImporter)
+Imported 'GUID: 8bc44b75cf1d5ab4c9b5dd1304f2ba07' -> (Import Result ID: '433d807e69732b3bc6f0f1e2a6dcf567') in 0.025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=063f4487f1354da2fcbcebdea9444b66 DependenciesID=4f9a41528f6df8e3e666547734837e55 StaticDependenciesID=d4a960d696afebb7dbd562827a1c8a47 
+Importing 'GUID: cb63ca34db09a9e42bd154806d4321b3 - Path: Assets/OpenPlan/Art/Models/OP_DamagedDesk.fbx' with importer (FBXImporter)
+Imported 'GUID: cb63ca34db09a9e42bd154806d4321b3' -> (Import Result ID: '181954a219563bf2efb8454924c71b59') in 0.019 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=45946ec5f6358be2ce4d15a610a3d0c6 DependenciesID=81d28b520b5830570537dfb8231e3776 StaticDependenciesID=093c76f2f93bbd2ba90d8022908fac9a 
+Importing 'GUID: eb6c99234384f7c44966fc4a0ca2fa65 - Path: Assets/OpenPlan/Art/Models/OP_DeskPlant.fbx' with importer (FBXImporter)
+Imported 'GUID: eb6c99234384f7c44966fc4a0ca2fa65' -> (Import Result ID: '26df57c7c7fa3e579c3fba8a1a34b9c3') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=18aa148e058480954d6f5f1778ce2f3f DependenciesID=3e0add542644c053be7a3c605d82e3e1 StaticDependenciesID=a8b8eb16d404b9984b35c9242e35687a 
+Importing 'GUID: fb9deaf99686dd1409fdad8f31a64308 - Path: Assets/OpenPlan/Art/Models/OP_Door.fbx' with importer (FBXImporter)
+Imported 'GUID: fb9deaf99686dd1409fdad8f31a64308' -> (Import Result ID: '11ac81f74d2b6ade11a52d93f3cce821') in 0.015 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9feb7cc351ac8e5442f101cc709d6f7c DependenciesID=0e42e6ca49467d8c44ca8ec37391307c StaticDependenciesID=2cdf859da80ef441b36241b8724a0965 
+Importing 'GUID: 1ca2aea376e3f2a4f8a0a5d8171b651f - Path: Assets/OpenPlan/Art/Models/OP_Elevator.fbx' with importer (FBXImporter)
+Imported 'GUID: 1ca2aea376e3f2a4f8a0a5d8171b651f' -> (Import Result ID: 'eb41ffb02bc5bd99e80cd5250e0dfede') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=12569c339f30c033f2bb479cf3e49b81 DependenciesID=b44c94e25d9de5dc904a0e41c685ebb6 StaticDependenciesID=c93c1da9890e376c0d26b9584efb9db8 
+Importing 'GUID: 2cd02dbe28473ac4ea534762aec7fd04 - Path: Assets/OpenPlan/Art/Models/OP_OfficeChair.fbx' with importer (FBXImporter)
+Imported 'GUID: 2cd02dbe28473ac4ea534762aec7fd04' -> (Import Result ID: 'fa90f5a4150a76ddc11e005959ca63a9') in 0.022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=78a487493078196ba3f237220e89874b DependenciesID=38df48b74d6b17f9529c002a6034430a StaticDependenciesID=02e4317b7ab9e31ed4e6f0e9713d68e6 
+Importing 'GUID: 4ce11708557cf5e46b12414256c40752 - Path: Assets/OpenPlan/Art/Models/OP_Copier.fbx' with importer (FBXImporter)
+Imported 'GUID: 4ce11708557cf5e46b12414256c40752' -> (Import Result ID: '71b58b011fbc3f647c4a92c8fa8a5a19') in 0.017 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2394680cc24ae0996f7c996906e97106 DependenciesID=5fdd6adfff14c1cb3cd7f2cddff70bba StaticDependenciesID=5735026db4d2797556e87cd5d65b20e4 
+Importing 'GUID: cce0cd08e89693b4ca511c27640a444d - Path: Assets/OpenPlan/Art/Models/OP_Desk_B.fbx' with importer (FBXImporter)
+Imported 'GUID: cce0cd08e89693b4ca511c27640a444d' -> (Import Result ID: '806714b4168cabe9783f93343b859d6b') in 0.021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b804409000f9f8c9fbff3d975a3b206c DependenciesID=62c6ab217e3d4e218720b74a8ca55ed6 StaticDependenciesID=91211e8ad5d0940b661049683f9d0111 
+Importing 'GUID: fcedc29662e20b54eae1930f6a13643a - Path: Assets/OpenPlan/Art/Models/OP_ReceptionDesk.fbx' with importer (FBXImporter)
+Imported 'GUID: fcedc29662e20b54eae1930f6a13643a' -> (Import Result ID: 'a3aa17d4afff8e0e2e45bc90b0440f1c') in 0.019 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6fb4012b64927e7121b64971846d6132 DependenciesID=8adb0c90136b628d1c8781a225a3480d StaticDependenciesID=83421e313203c405a18f350fc5a121a7 
+Importing 'GUID: 1dbf28c1bb322474d981b2dc555e28b0 - Path: Packages/com.unity.render-pipelines.core/Runtime/RenderPipelineResources/Mesh/SamplesFloorSpotlight.fbx' with importer (FBXImporter)
+Imported 'GUID: 1dbf28c1bb322474d981b2dc555e28b0' -> (Import Result ID: '7370705563e4bf7d31b9d8c922aaa0db') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=35654b88420ef7d003a2bdf8842fb321 DependenciesID=10e76d2febb0f0659dcb3c570ed8f99c StaticDependenciesID=ed0c53d6e469f680df4bad61ff2270b9 
+Importing 'GUID: 3d336c6fa5de5804d991c2476558c707 - Path: Assets/OpenPlan/Art/Models/OP_CardboardBox.fbx' with importer (FBXImporter)
+Imported 'GUID: 3d336c6fa5de5804d991c2476558c707' -> (Import Result ID: '01d601ed719fca3e588d7295c3439ca2') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9c55327a49098d0de81cc9475869102b DependenciesID=ad9ebf8e8c90a585ee4472fd544f4eeb StaticDependenciesID=b3b5ca27a33ab2422847b2c054ebb9e8 
+Importing 'GUID: 7da8f5bf76b650f4099824332efd79e3 - Path: Assets/OpenPlan/Art/Models/OP_Clock.fbx' with importer (FBXImporter)
+Imported 'GUID: 7da8f5bf76b650f4099824332efd79e3' -> (Import Result ID: '0b2f3c37ea26963f96f07d9eb8565a1e') in 0.023 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ade6cd3c75b2c6a37964571c5e8d7613 DependenciesID=0f113f389b3174dda27c703dfa1ba4b6 StaticDependenciesID=88b3a1c7aadd4a714705ea8f21f5ea63 
+Importing 'GUID: 8d0f9853424e26546852c91b4a28c017 - Path: Assets/OpenPlan/Art/Models/OP_GlassWall.fbx' with importer (FBXImporter)
+Imported 'GUID: 8d0f9853424e26546852c91b4a28c017' -> (Import Result ID: 'd0fbf3589baf4dae50596e8a35686409') in 0.020 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=990a6545087433cbc5618f7d47923945 DependenciesID=6bd30731cbc779674f65614c1f19735d StaticDependenciesID=b0632c88007424573b8c26e28bfaab68 
+Importing 'GUID: aee2e1a6acc5c0c4f883cbc722f3b968 - Path: Assets/OpenPlan/Art/Models/OP_Counter.fbx' with importer (FBXImporter)
+Imported 'GUID: aee2e1a6acc5c0c4f883cbc722f3b968' -> (Import Result ID: '9b0620163f9e93ad19f76475df30277b') in 0.025 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=656ab7b651b293be42612396e86f3f02 DependenciesID=1283bf34b4dec37df927e44ab7c68b77 StaticDependenciesID=9d8a07f6a81d53a21dc021cbf8ad9f6b 
+Importing 'GUID: 2fbc8a8d85278de4b8ed79e728e27155 - Path: Assets/OpenPlan/Art/Models/OP_MeetingChair.fbx' with importer (FBXImporter)
+Imported 'GUID: 2fbc8a8d85278de4b8ed79e728e27155' -> (Import Result ID: 'ceb6c8fe6db8c4e3ea3fa6f6fb1e03dd') in 0.028 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dae062bd94c7422a7eff9f19f8d247fe DependenciesID=6f8eb2f211c494b4585d0153d1a7fe93 StaticDependenciesID=ca0fa17d03178d1fae4d5e92ad608827 
+Importing 'GUID: 7f2df5f580b6407458e73bc9dc8ee8d1 - Path: Assets/OpenPlan/Art/Models/OP_WindowModule.fbx' with importer (FBXImporter)
+Imported 'GUID: 7f2df5f580b6407458e73bc9dc8ee8d1' -> (Import Result ID: '7cc4919895c5e93d34c8d51373dfdb2c') in 0.029 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f6f5c3e8908df32a4845c5b749d2d9bc DependenciesID=0549dd31cb23b40a3eda806055c85182 StaticDependenciesID=8c472207d9b16e7f413a7bc0b005a5f8 
+Importing 'GUID: 2e498d1c8094910479dc3e1b768306a4 - Path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset' with importer (NativeFormatImporter)
+Imported 'GUID: 2e498d1c8094910479dc3e1b768306a4' -> (Import Result ID: '1cf23eebc794453c7fc9fc0cfc0dc935') in 0.013 seconds [static dependencies only]. Details - ImportResultOutputID=94ce4dace069634644df4d315a8acf11 DependenciesID=a5945acb26cf478c0aaf639c8b0e43fd StaticDependenciesID=82c4cacd850a2765ce771105c87b0b6c 
+Importing 'GUID: 8f586378b4e144a9851e7b34d9b748ee - Path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset' with importer (NativeFormatImporter)
+Imported 'GUID: 8f586378b4e144a9851e7b34d9b748ee' -> (Import Result ID: '3c8b323e7d320dcd0fe18f56eb6ab594') in 0.010 seconds [static dependencies only]. Details - ImportResultOutputID=240fd601d528dfe2404501a6b4c703ff DependenciesID=06bb1279a8342a44092c1a2615127508 StaticDependenciesID=5157efe91d1109108bc5056f5e2a9749 
+
+Asset Pipeline Refresh (id=5f7375329c6994e40a8ba02b72432fad): Total: 9.713 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=153 (actual=152, local cache=1, cache server=0)
+		Asset DB Process Time: managed=71 ms, native=9028 ms
+		Asset DB Callback time: managed=169 ms, native=443 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=885, non-scripts=1707
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 198
+	ApplyChangesToAssetFolders: 0.195ms
+	Scan: 49.366ms
+	Collect global state as custom dependencies: 0.453ms
+	CategorizeScriptCompilationAssets: 0.278ms
+	ProcessAssetsWithTransientArtifactChanges: 0.149ms
+	CategorizeAssets: 27.714ms
+	ImportOutOfDateAssets: 9003.083ms (8.128ms without children)
+		ImportManagerImport: 8950.408ms (208.749ms without children)
+			UpdateCategorizedAssets: 9.187ms
+		ReloadNativeAssets: 0.062ms
+		UnloadImportedAssets: 2.053ms
+		ReloadImportedAssets: 7.667ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.583ms
+		ImportSchedulerStart: 41.832ms
+	PostProcessAllAssets: 612.062ms
+		ShaderAssetModifiedCallback 400.621ms
+		XRBuildSystem.XRAssetImported 0.788ms
+		PostProcessCallbackCreateDeferredMaterials 0.750ms
+		RaytracingShaderImportPostprocess 0.441ms
+		ComputeShaderImportPostprocess 0.357ms
+		SpeedTreeImporter.PostprocessAllAssets 0.236ms
+		LocalizationDatabase.AssetDatabasePostprocessCallback 0.212ms
+		BlockShaderImporter.PostprocessAllAssets 0.179ms
+		AssemblyValidation.PostprocessAllAssets 0.109ms
+		MonoPostProcessAllAssets: 169.572ms
+			AssetPostprocessor.OnPostprocessAllAssets 69.822ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 23.131ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 16.436ms
+			MaterialPostprocessor.OnPostprocessAllAssets 11.994ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 10.938ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 6.266ms
+			AssetChangedListener.OnPostprocessAllAssets 2.430ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.550ms
+			PostProcessor.OnPostprocessAllAssets 1.345ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 1.037ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 1.001ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.774ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.645ms
+			AssetEvents.OnPostprocessAllAssets 0.532ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.380ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.363ms
+			SampleDependencyImporterPostProcessor.OnPostprocessAllAssets 0.335ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.214ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.154ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.142ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 0.105ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.089ms
+	PostAssetChangesProfiler: 1.034ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.250ms
+	UnloadStreamsBegin: 0.112ms
+	PersistCurrentRevisions: 0.148ms
+	UnloadStreamsEnd: 0.290ms
+	Untracked: 13.874ms
+
+[UnityConnectServicesConfig] config is NOT valid, switching to default
+Created GICache directory at C:/Users/danny/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.031s, timestamps: [9.202 - 9.232]
+Unloading 193 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 288 unused Assets / (13.3 MB). Loaded Objects now: 4495.
+Memory consumption went from 430.6 MB to 417.3 MB.
+Total: 22.747700 ms (FindLiveObjects: 0.269500 ms CreateObjectMapping: 0.588700 ms MarkObjects: 17.194100 ms  DeleteObjects: 4.693100 ms)
+
+Importing 'GUID: a99664fa98e4db1479464e26793b92da - Path: Assets/InitTestScenea226a836-8e73-41d9-af75-134f573db10b.unity' with importer (DefaultImporter)
+Imported 'GUID: a99664fa98e4db1479464e26793b92da' -> (Import Result ID: '93f54c2eb8a03b08b68156868167e079') in 0.004 seconds [static dependencies only]. Details - ImportResultOutputID=48f0245b97db72534b8d08eb10c56a44 DependenciesID=d520a3cf91bab1c626041e7701c95717 StaticDependenciesID=d597fd7a2b4a7d23ab6f2184eb15da66 
+Asset Pipeline Refresh (id=7cb4f3a291bb6194da598f2148463886): Total: 0.100 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Executing IPrebuildSetup for: Unity.PerformanceTesting.Editor.TestRunBuilder.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<ExecuteMethods>d__8<UnityEngine.TestTools.IPrebuildSetup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:48)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<Execute>d__7<UnityEngine.TestTools.IPrebuildSetup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:34)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteStep () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:194)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteCallback () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:129)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs Line: 48)
+
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:False
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.127 seconds
+Domain Reload Profiling: 1890ms
+	BeginReloadAssembly (459ms)
+		DisableScriptedObjects (30ms)
+		CreateAndSetChildDomain (268ms)
+	RebuildCommonClasses (10ms)
+	RebuildNativeTypeToScriptingClass (18ms)
+	initialDomainReloadingComplete (70ms)
+	LoadAllAssembliesAndSetupDomain (205ms)
+		LoadAssemblies (143ms)
+		AnalyzeDomain (17ms)
+			TypeCache.Refresh (6ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (1128ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			BeforeProcessingInitializeOnLoad (101ms)
+			ProcessInitializeOnLoadAttributes (180ms)
+			ProcessInitializeOnLoadMethodAttributes (239ms)
+			AfterProcessingInitializeOnLoad (10ms)
+		AwakeInstancesAfterBackupRestoration (51ms)
+No restricted APIs configured; Validation skipped.
+Checking 11 assemblies for restricted APIs found 0 usage(s) in 7 ms
+
+Asset Pipeline Refresh (id=1517f8bf615e5ae4bb99d49dbd8eff75): Total: 3.028 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1458 ms
+		Asset DB Callback time: managed=326 ms, native=423 ms
+		Scripting: domain reloads=1, domain reload time=818 ms, compile time=2 ms, other=0 ms
+		Project Asset Count: scripts=885, non-scripts=1708
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 2.604ms
+	ApplyChangesToAssetFolders: 0.408ms
+	Collect global state as custom dependencies: 3.635ms
+	ProcessAssetsWithTransientArtifactChanges: 176.355ms
+	CategorizeAssets: 52.875ms
+	CompileScripts: 1.947ms
+	ImportOutOfDateAssets: 1168.033ms (1136.927ms without children)
+		CollectScriptTypesHashes: 1.858ms
+		ReloadNativeAssets: 2.310ms
+		UnloadImportedAssets: 0.578ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.635ms
+		ImportSchedulerStart: 27.558ms
+	PostProcessAllAssets: 748.387ms
+		PostProcessCallbackCreateDeferredMaterials 31.643ms
+		AssemblyValidation.PostprocessAllAssets 27.956ms
+		ShaderAssetModifiedCallback 13.584ms
+		RaytracingShaderImportPostprocess 7.079ms
+		SpeedTreeImporter.PostprocessAllAssets 6.702ms
+		ComputeShaderImportPostprocess 5.641ms
+		BlockShaderImporter.PostprocessAllAssets 2.310ms
+		LocalizationDatabase.AssetDatabasePostprocessCallback 2.161ms
+		XRBuildSystem.XRAssetImported 0.169ms
+		MonoPostProcessAllAssets: 325.471ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 89.877ms
+			AssetPostprocessor.OnPostprocessAllAssets 30.227ms
+			PostProcessor.OnPostprocessAllAssets 22.191ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 21.322ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 16.266ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 15.752ms
+			MaterialPostprocessor.OnPostprocessAllAssets 15.440ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 15.049ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 11.655ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 10.240ms
+			AssetChangedListener.OnPostprocessAllAssets 9.199ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 4.596ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 3.976ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 3.398ms
+			SyncVS.PostprocessSyncProject 1.684ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.601ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.998ms
+			SampleDependencyImporterPostProcessor.OnPostprocessAllAssets 0.846ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.675ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.602ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.571ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.424ms
+			AssetEvents.OnPostprocessAllAssets 0.409ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.302ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.251ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.246ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.222ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.215ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.200ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.138ms
+	PostAssetChangesProfiler: 1.297ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.119ms
+	UnloadStreamsBegin: 0.153ms
+	PersistCurrentRevisions: 0.086ms
+	GenerateScriptTypeHashes: 5.454ms
+	GenerateScriptTypeSerializationHashes: 9.152ms
+	Untracked: 864.816ms
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            0.829 ms
+	Integration:            222.271 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.012 ms
+	Total Operation Time:   223.113 ms
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[Licensing::Client] Successfully resolved entitlement details
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.539500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            10.179 ms
+	Integration:            253.961 ms
+	Integration of assets:  0.014 ms
+	Thread Wait Time:       -0.004 ms
+	Total Operation Time:   264.150 ms
+Unloading 3180 unused Assets / (3.2 MB). Loaded Objects now: 6154.
+Memory consumption went from 368.3 MB to 365.1 MB.
+Total: 16.828400 ms (FindLiveObjects: 0.768800 ms CreateObjectMapping: 2.376100 ms MarkObjects: 10.228900 ms  DeleteObjects: 3.453500 ms)
+
+Unloading 95 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 18.836200 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.832 ms
+	Integration:            221.930 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.406 ms
+	Total Operation Time:   223.170 ms
+Unloading 86 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 385.4 MB to 384.5 MB.
+Total: 14.440800 ms (FindLiveObjects: 0.859000 ms CreateObjectMapping: 1.214900 ms MarkObjects: 11.099700 ms  DeleteObjects: 1.265600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.482200 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.853 ms
+	Integration:            211.059 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.107 ms
+	Total Operation Time:   212.021 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6286.
+Memory consumption went from 385.5 MB to 384.7 MB.
+Total: 14.884100 ms (FindLiveObjects: 0.615000 ms CreateObjectMapping: 1.552300 ms MarkObjects: 12.251700 ms  DeleteObjects: 0.461700 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.171900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.614 ms
+	Integration:            210.643 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   211.269 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 385.5 MB to 384.7 MB.
+Total: 13.104600 ms (FindLiveObjects: 0.557100 ms CreateObjectMapping: 1.397000 ms MarkObjects: 10.862400 ms  DeleteObjects: 0.286800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.750400 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.687 ms
+	Integration:            209.107 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   209.806 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 385.6 MB to 384.8 MB.
+Total: 10.590100 ms (FindLiveObjects: 0.431300 ms CreateObjectMapping: 0.990000 ms MarkObjects: 8.949500 ms  DeleteObjects: 0.218200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.464000 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.684 ms
+	Integration:            231.514 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.402 ms
+	Total Operation Time:   232.601 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6286.
+Memory consumption went from 385.6 MB to 384.8 MB.
+Total: 15.121800 ms (FindLiveObjects: 0.631700 ms CreateObjectMapping: 1.469400 ms MarkObjects: 12.649600 ms  DeleteObjects: 0.369200 ms)
+
+Unloading 17 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.046100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.850 ms
+	Integration:            142.827 ms
+	Integration of assets:  0.004 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   143.691 ms
+Unloading 96 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 386.0 MB to 385.2 MB.
+Total: 12.796000 ms (FindLiveObjects: 0.480500 ms CreateObjectMapping: 1.124300 ms MarkObjects: 10.814100 ms  DeleteObjects: 0.376000 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.859200 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.564 ms
+	Integration:            144.628 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.005 ms
+	Total Operation Time:   145.199 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 385.9 MB to 385.1 MB.
+Total: 10.052800 ms (FindLiveObjects: 0.337700 ms CreateObjectMapping: 0.853900 ms MarkObjects: 8.606100 ms  DeleteObjects: 0.253200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.650200 ms
+Loaded scene 'Assets/OpenPlan/Scenes/MainMenu.unity'
+	Deserialize:            8.351 ms
+	Integration:            149.141 ms
+	Integration of assets:  0.011 ms
+	Thread Wait Time:       0.007 ms
+	Total Operation Time:   157.510 ms
+Unloading 1882 unused Assets / (4.2 MB). Loaded Objects now: 4530.
+Memory consumption went from 386.2 MB to 381.9 MB.
+Total: 13.252000 ms (FindLiveObjects: 0.335800 ms CreateObjectMapping: 0.867300 ms MarkObjects: 8.720700 ms  DeleteObjects: 3.327400 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.414600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.557 ms
+	Integration:            208.146 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   208.715 ms
+Unloading 21 unused Assets / (1.0 KB). Loaded Objects now: 6176.
+Memory consumption went from 391.1 MB to 391.1 MB.
+Total: 9.657200 ms (FindLiveObjects: 0.345900 ms CreateObjectMapping: 0.893000 ms MarkObjects: 8.355700 ms  DeleteObjects: 0.061100 ms)
+
+Unloading 84 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.335900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.799 ms
+	Integration:            198.046 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.178 ms
+	Total Operation Time:   199.025 ms
+Unloading 79 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 385.4 MB to 384.7 MB.
+Total: 9.666900 ms (FindLiveObjects: 0.371700 ms CreateObjectMapping: 0.922700 ms MarkObjects: 8.108500 ms  DeleteObjects: 0.261800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.787500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.877 ms
+	Integration:            131.936 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.012 ms
+	Total Operation Time:   132.827 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 385.8 MB to 385.0 MB.
+Total: 10.648300 ms (FindLiveObjects: 0.332600 ms CreateObjectMapping: 0.969400 ms MarkObjects: 8.942100 ms  DeleteObjects: 0.402600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.312200 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.795 ms
+	Integration:            189.094 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.012 ms
+	Total Operation Time:   189.905 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 385.8 MB to 385.0 MB.
+Total: 15.223100 ms (FindLiveObjects: 0.477900 ms CreateObjectMapping: 1.370300 ms MarkObjects: 13.064000 ms  DeleteObjects: 0.308800 ms)
+
+Unloading 17 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.389100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.743 ms
+	Integration:            218.507 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.008 ms
+	Total Operation Time:   219.260 ms
+Unloading 94 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 386.1 MB to 385.3 MB.
+Total: 14.933800 ms (FindLiveObjects: 0.528500 ms CreateObjectMapping: 1.354300 ms MarkObjects: 12.732300 ms  DeleteObjects: 0.317200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.067800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.813 ms
+	Integration:            225.716 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.003 ms
+	Total Operation Time:   226.534 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 386.0 MB to 385.3 MB.
+Total: 15.298300 ms (FindLiveObjects: 0.625600 ms CreateObjectMapping: 1.401700 ms MarkObjects: 12.835700 ms  DeleteObjects: 0.432300 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.150400 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.768 ms
+	Integration:            228.202 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.080 ms
+	Total Operation Time:   229.051 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 386.1 MB to 385.3 MB.
+Total: 14.494800 ms (FindLiveObjects: 0.767600 ms CreateObjectMapping: 1.506300 ms MarkObjects: 11.863400 ms  DeleteObjects: 0.355200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.749700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.628 ms
+	Integration:            151.202 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   151.841 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 386.3 MB to 385.5 MB.
+Total: 12.708100 ms (FindLiveObjects: 0.743100 ms CreateObjectMapping: 1.515300 ms MarkObjects: 10.239300 ms  DeleteObjects: 0.208400 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.419600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.575 ms
+	Integration:            159.832 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.012 ms
+	Total Operation Time:   160.421 ms
+Unloading 96 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 386.4 MB to 385.6 MB.
+Total: 12.147700 ms (FindLiveObjects: 0.351400 ms CreateObjectMapping: 0.793200 ms MarkObjects: 10.553900 ms  DeleteObjects: 0.447700 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.308700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.660 ms
+	Integration:            242.662 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   243.335 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 386.7 MB to 385.9 MB.
+Total: 27.831200 ms (FindLiveObjects: 1.191600 ms CreateObjectMapping: 1.951000 ms MarkObjects: 21.233900 ms  DeleteObjects: 3.452500 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.374700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.889 ms
+	Integration:            230.243 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       -0.000 ms
+	Total Operation Time:   231.135 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 386.7 MB to 385.9 MB.
+Total: 25.704000 ms (FindLiveObjects: 1.124300 ms CreateObjectMapping: 2.858300 ms MarkObjects: 21.384700 ms  DeleteObjects: 0.334400 ms)
+
+TrimDiskCacheJob: Current cache size 0mb
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.772600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.813 ms
+	Integration:            209.436 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.001 ms
+	Total Operation Time:   210.251 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.4 MB to 386.6 MB.
+Total: 14.822200 ms (FindLiveObjects: 0.485500 ms CreateObjectMapping: 1.387700 ms MarkObjects: 12.632200 ms  DeleteObjects: 0.314400 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.531800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.730 ms
+	Integration:            212.727 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.005 ms
+	Total Operation Time:   213.465 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.3 MB to 386.6 MB.
+Total: 10.629200 ms (FindLiveObjects: 0.510500 ms CreateObjectMapping: 1.028900 ms MarkObjects: 8.907700 ms  DeleteObjects: 0.181000 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.076500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.981 ms
+	Integration:            245.736 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.264 ms
+	Total Operation Time:   246.984 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.4 MB to 386.6 MB.
+Total: 13.318900 ms (FindLiveObjects: 0.518600 ms CreateObjectMapping: 1.322300 ms MarkObjects: 11.121300 ms  DeleteObjects: 0.354600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 14.959100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/MainMenu.unity'
+	Deserialize:            0.872 ms
+	Integration:            242.934 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.224 ms
+	Total Operation Time:   244.032 ms
+Unloading 1881 unused Assets / (4.6 MB). Loaded Objects now: 4531.
+Memory consumption went from 387.5 MB to 382.9 MB.
+Total: 23.899900 ms (FindLiveObjects: 0.971300 ms CreateObjectMapping: 1.839600 ms MarkObjects: 14.738600 ms  DeleteObjects: 6.347000 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.936900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/MainMenu.unity'
+	Deserialize:            0.827 ms
+	Integration:            173.049 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.008 ms
+	Total Operation Time:   173.886 ms
+Unloading 22 unused Assets / (2.6 KB). Loaded Objects now: 4530.
+Memory consumption went from 379.3 MB to 379.3 MB.
+Total: 8.146100 ms (FindLiveObjects: 0.268000 ms CreateObjectMapping: 0.561300 ms MarkObjects: 7.267700 ms  DeleteObjects: 0.047800 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.629000 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.498 ms
+	Integration:            175.374 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       1.066 ms
+	Total Operation Time:   176.940 ms
+Unloading 21 unused Assets / (1.0 KB). Loaded Objects now: 6176.
+Memory consumption went from 392.4 MB to 392.4 MB.
+Total: 10.014200 ms (FindLiveObjects: 0.402500 ms CreateObjectMapping: 1.024500 ms MarkObjects: 8.494100 ms  DeleteObjects: 0.091500 ms)
+
+Unloading 84 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.227800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.534 ms
+	Integration:            146.865 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   147.411 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 386.7 MB to 385.9 MB.
+Total: 12.992400 ms (FindLiveObjects: 0.444900 ms CreateObjectMapping: 1.380400 ms MarkObjects: 10.845500 ms  DeleteObjects: 0.319900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.698100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.709 ms
+	Integration:            197.272 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   197.995 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 387.2 MB to 386.4 MB.
+Total: 15.420400 ms (FindLiveObjects: 0.453400 ms CreateObjectMapping: 1.136400 ms MarkObjects: 13.575100 ms  DeleteObjects: 0.254100 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.411700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.654 ms
+	Integration:            231.271 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.012 ms
+	Total Operation Time:   231.938 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6285.
+Memory consumption went from 387.2 MB to 386.4 MB.
+Total: 13.543700 ms (FindLiveObjects: 0.470500 ms CreateObjectMapping: 1.169400 ms MarkObjects: 11.597100 ms  DeleteObjects: 0.304900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.690500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.717 ms
+	Integration:            213.171 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   213.901 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6286.
+Memory consumption went from 387.2 MB to 386.4 MB.
+Total: 14.229900 ms (FindLiveObjects: 0.442100 ms CreateObjectMapping: 1.150800 ms MarkObjects: 12.395100 ms  DeleteObjects: 0.240600 ms)
+
+Unloading 17 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.191800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.788 ms
+	Integration:            206.917 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   207.718 ms
+Unloading 95 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 387.4 MB to 386.7 MB.
+Total: 14.530500 ms (FindLiveObjects: 0.693800 ms CreateObjectMapping: 1.585900 ms MarkObjects: 11.829600 ms  DeleteObjects: 0.418800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.234600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.670 ms
+	Integration:            173.591 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   174.274 ms
+Unloading 96 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.5 MB to 386.7 MB.
+Total: 12.469800 ms (FindLiveObjects: 0.429500 ms CreateObjectMapping: 1.006100 ms MarkObjects: 10.655300 ms  DeleteObjects: 0.377300 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.226500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.883 ms
+	Integration:            220.197 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.735 ms
+	Total Operation Time:   221.818 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 387.9 MB to 387.1 MB.
+Total: 8.369800 ms (FindLiveObjects: 0.386500 ms CreateObjectMapping: 0.914400 ms MarkObjects: 6.899500 ms  DeleteObjects: 0.168500 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.038000 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.625 ms
+	Integration:            154.017 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   154.654 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.1 MB.
+Total: 10.344500 ms (FindLiveObjects: 0.540200 ms CreateObjectMapping: 1.143300 ms MarkObjects: 8.467800 ms  DeleteObjects: 0.192200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.281900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.872 ms
+	Integration:            245.189 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   246.076 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.2 MB.
+Total: 20.182200 ms (FindLiveObjects: 0.984800 ms CreateObjectMapping: 2.096900 ms MarkObjects: 16.588900 ms  DeleteObjects: 0.508900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.844600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.688 ms
+	Integration:            233.462 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   234.162 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 387.9 MB to 387.2 MB.
+Total: 22.214600 ms (FindLiveObjects: 1.202900 ms CreateObjectMapping: 1.470300 ms MarkObjects: 19.092600 ms  DeleteObjects: 0.446600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.884500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.541 ms
+	Integration:            153.375 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.008 ms
+	Total Operation Time:   153.926 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 387.9 MB to 387.2 MB.
+Total: 10.592800 ms (FindLiveObjects: 0.463800 ms CreateObjectMapping: 1.188300 ms MarkObjects: 8.677500 ms  DeleteObjects: 0.261500 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.661500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.678 ms
+	Integration:            153.500 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   154.190 ms
+Unloading 96 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.0 MB to 387.3 MB.
+Total: 10.578400 ms (FindLiveObjects: 0.390400 ms CreateObjectMapping: 0.914400 ms MarkObjects: 8.935600 ms  DeleteObjects: 0.336600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.678100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.658 ms
+	Integration:            220.205 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.595 ms
+	Total Operation Time:   221.460 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 14.270100 ms (FindLiveObjects: 0.682100 ms CreateObjectMapping: 1.422300 ms MarkObjects: 11.867000 ms  DeleteObjects: 0.296900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.736100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.690 ms
+	Integration:            214.872 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.000 ms
+	Total Operation Time:   215.564 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 17.906600 ms (FindLiveObjects: 0.554400 ms CreateObjectMapping: 1.240000 ms MarkObjects: 15.804700 ms  DeleteObjects: 0.305200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.718800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.685 ms
+	Integration:            182.054 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   182.753 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 15.400000 ms (FindLiveObjects: 0.777700 ms CreateObjectMapping: 1.600300 ms MarkObjects: 12.746900 ms  DeleteObjects: 0.273300 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.395800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.662 ms
+	Integration:            206.594 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   207.268 ms
+Unloading 23 unused Assets / (0.5 MB). Loaded Objects now: 6379.
+Memory consumption went from 388.0 MB to 387.4 MB.
+Total: 13.156600 ms (FindLiveObjects: 0.627400 ms CreateObjectMapping: 1.102900 ms MarkObjects: 11.329900 ms  DeleteObjects: 0.095300 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.255500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/MainMenu.unity'
+	Deserialize:            0.692 ms
+	Integration:            236.353 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       1.648 ms
+	Total Operation Time:   238.695 ms
+Unloading 22 unused Assets / (0.5 MB). Loaded Objects now: 6400.
+Memory consumption went from 388.2 MB to 387.6 MB.
+Total: 15.784100 ms (FindLiveObjects: 0.650200 ms CreateObjectMapping: 1.658000 ms MarkObjects: 13.381300 ms  DeleteObjects: 0.093200 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.614500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.810 ms
+	Integration:            199.916 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   200.737 ms
+Unloading 78 unused Assets / (494.0 KB). Loaded Objects now: 6324.
+Memory consumption went from 387.5 MB to 387.1 MB.
+Total: 15.327900 ms (FindLiveObjects: 0.391500 ms CreateObjectMapping: 0.926000 ms MarkObjects: 13.662200 ms  DeleteObjects: 0.346600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.725400 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.880 ms
+	Integration:            167.750 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.013 ms
+	Total Operation Time:   168.647 ms
+Unloading 22 unused Assets / (0.5 MB). Loaded Objects now: 6379.
+Memory consumption went from 387.9 MB to 387.3 MB.
+Total: 11.021900 ms (FindLiveObjects: 0.527900 ms CreateObjectMapping: 1.190600 ms MarkObjects: 9.204400 ms  DeleteObjects: 0.097100 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.008400 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.682 ms
+	Integration:            144.751 ms
+	Integration of assets:  0.004 ms
+	Thread Wait Time:       0.012 ms
+	Total Operation Time:   145.449 ms
+Unloading 50 unused Assets / (0.8 MB). Loaded Objects now: 6379.
+Memory consumption went from 388.2 MB to 387.4 MB.
+Total: 9.232200 ms (FindLiveObjects: 0.325900 ms CreateObjectMapping: 0.849900 ms MarkObjects: 7.884200 ms  DeleteObjects: 0.170600 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.772600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.630 ms
+	Integration:            168.740 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   169.381 ms
+Unloading 105 unused Assets / (1.0 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.2 MB to 387.2 MB.
+Total: 16.040400 ms (FindLiveObjects: 0.989900 ms CreateObjectMapping: 1.488600 ms MarkObjects: 13.118200 ms  DeleteObjects: 0.442100 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.855100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.698 ms
+	Integration:            218.801 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.048 ms
+	Total Operation Time:   219.548 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 14.212100 ms (FindLiveObjects: 0.673600 ms CreateObjectMapping: 1.446500 ms MarkObjects: 11.720200 ms  DeleteObjects: 0.369800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.842900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.836 ms
+	Integration:            211.407 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   212.255 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 13.016900 ms (FindLiveObjects: 0.424500 ms CreateObjectMapping: 0.989600 ms MarkObjects: 11.425900 ms  DeleteObjects: 0.175400 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.366600 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.746 ms
+	Integration:            224.884 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.034 ms
+	Total Operation Time:   225.665 ms
+Unloading 95 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 388.1 MB to 387.3 MB.
+Total: 13.023800 ms (FindLiveObjects: 0.355300 ms CreateObjectMapping: 0.884900 ms MarkObjects: 11.421200 ms  DeleteObjects: 0.360200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.647700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.644 ms
+	Integration:            212.073 ms
+	Integration of assets:  0.004 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   212.730 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.1 MB.
+Total: 18.177700 ms (FindLiveObjects: 0.783100 ms CreateObjectMapping: 1.653700 ms MarkObjects: 15.375600 ms  DeleteObjects: 0.362800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.421500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.616 ms
+	Integration:            143.003 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.006 ms
+	Total Operation Time:   143.628 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 387.9 MB to 387.2 MB.
+Total: 8.930000 ms (FindLiveObjects: 0.321200 ms CreateObjectMapping: 0.948000 ms MarkObjects: 7.500600 ms  DeleteObjects: 0.159500 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.302700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.522 ms
+	Integration:            180.176 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   180.710 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.2 MB.
+Total: 14.048600 ms (FindLiveObjects: 0.476900 ms CreateObjectMapping: 1.143000 ms MarkObjects: 12.167900 ms  DeleteObjects: 0.258800 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.188500 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.660 ms
+	Integration:            210.112 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.011 ms
+	Total Operation Time:   210.786 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.2 MB.
+Total: 15.648000 ms (FindLiveObjects: 1.009400 ms CreateObjectMapping: 1.999500 ms MarkObjects: 12.352300 ms  DeleteObjects: 0.285300 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.100700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.679 ms
+	Integration:            215.661 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   216.352 ms
+Unloading 95 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.1 MB to 387.3 MB.
+Total: 16.154000 ms (FindLiveObjects: 0.660500 ms CreateObjectMapping: 1.352700 ms MarkObjects: 13.669100 ms  DeleteObjects: 0.463000 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.240400 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.979 ms
+	Integration:            210.290 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.524 ms
+	Total Operation Time:   211.795 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 11.491600 ms (FindLiveObjects: 0.374300 ms CreateObjectMapping: 1.022500 ms MarkObjects: 9.847500 ms  DeleteObjects: 0.245300 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.045100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.793 ms
+	Integration:            145.669 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.116 ms
+	Total Operation Time:   146.579 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 9.649400 ms (FindLiveObjects: 0.404600 ms CreateObjectMapping: 1.067500 ms MarkObjects: 7.953500 ms  DeleteObjects: 0.222500 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.948900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.755 ms
+	Integration:            185.941 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.139 ms
+	Total Operation Time:   186.837 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 9.096000 ms (FindLiveObjects: 0.285300 ms CreateObjectMapping: 0.699300 ms MarkObjects: 7.874400 ms  DeleteObjects: 0.235900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.041700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.482 ms
+	Integration:            142.042 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   142.536 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 15.971000 ms (FindLiveObjects: 0.541800 ms CreateObjectMapping: 1.182900 ms MarkObjects: 13.775300 ms  DeleteObjects: 0.469000 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.631400 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.559 ms
+	Integration:            148.213 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.007 ms
+	Total Operation Time:   148.781 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.1 MB.
+Total: 10.739200 ms (FindLiveObjects: 0.375100 ms CreateObjectMapping: 0.966500 ms MarkObjects: 9.102700 ms  DeleteObjects: 0.293200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.476800 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.833 ms
+	Integration:            213.595 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.106 ms
+	Total Operation Time:   214.537 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.1 MB.
+Total: 16.028700 ms (FindLiveObjects: 0.752700 ms CreateObjectMapping: 1.726100 ms MarkObjects: 13.178600 ms  DeleteObjects: 0.368500 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.376900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.694 ms
+	Integration:            144.855 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   145.561 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 387.9 MB to 387.1 MB.
+Total: 10.126800 ms (FindLiveObjects: 0.327200 ms CreateObjectMapping: 0.856800 ms MarkObjects: 8.752800 ms  DeleteObjects: 0.188900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.399000 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.819 ms
+	Integration:            226.799 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.109 ms
+	Total Operation Time:   227.729 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.0 MB to 387.2 MB.
+Total: 14.484100 ms (FindLiveObjects: 0.626400 ms CreateObjectMapping: 1.433700 ms MarkObjects: 12.122100 ms  DeleteObjects: 0.299600 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.324100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.744 ms
+	Integration:            225.213 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.044 ms
+	Total Operation Time:   226.003 ms
+Unloading 76 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 389.0 MB to 388.2 MB.
+Total: 15.939500 ms (FindLiveObjects: 0.670300 ms CreateObjectMapping: 1.437300 ms MarkObjects: 13.477100 ms  DeleteObjects: 0.352200 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.850100 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.693 ms
+	Integration:            156.168 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   156.873 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6325.
+Memory consumption went from 389.0 MB to 388.2 MB.
+Total: 10.937500 ms (FindLiveObjects: 0.378600 ms CreateObjectMapping: 1.018100 ms MarkObjects: 9.237200 ms  DeleteObjects: 0.301400 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.824700 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.791 ms
+	Integration:            211.602 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.326 ms
+	Total Operation Time:   212.721 ms
+Unloading 78 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 389.0 MB to 388.2 MB.
+Total: 16.247600 ms (FindLiveObjects: 0.680000 ms CreateObjectMapping: 1.525400 ms MarkObjects: 13.738200 ms  DeleteObjects: 0.301900 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 11.047900 ms
+Loaded scene 'Assets/OpenPlan/Scenes/Office.unity'
+	Deserialize:            0.727 ms
+	Integration:            226.037 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.049 ms
+	Total Operation Time:   226.815 ms
+Unloading 77 unused Assets / (0.8 MB). Loaded Objects now: 6324.
+Memory consumption went from 388.9 MB to 388.1 MB.
+Total: 16.528100 ms (FindLiveObjects: 0.812600 ms CreateObjectMapping: 1.527400 ms MarkObjects: 13.883700 ms  DeleteObjects: 0.303200 ms)
+
+Saving results to: C:/Users/danny/AppData/LocalLow/Liminal Ledger/OPEN PLAN\TestResults.xml
+Saving results to: C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\TestResults\Checkpoint00-Audit-PlayMode.xml
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            0.488 ms
+	Integration:            137.354 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.013 ms
+	Total Operation Time:   137.856 ms
+Unloading 1788 unused Assets / (3.5 MB). Loaded Objects now: 4510.
+Memory consumption went from 387.1 MB to 383.6 MB.
+Total: 12.139000 ms (FindLiveObjects: 0.350900 ms CreateObjectMapping: 0.914200 ms MarkObjects: 8.012500 ms  DeleteObjects: 2.860300 ms)
+
+[Licensing::Client] Successfully resolved entitlement details
+Executing IPostBuildCleanup for: Unity.PerformanceTesting.Editor.TestRunBuilder.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<ExecuteMethods>d__8<UnityEngine.TestTools.IPostBuildCleanup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:48)
+UnityEditor.TestTools.TestRunner.TestRun.Tasks.BuildActionTaskBase`1/<Execute>d__7<UnityEngine.TestTools.IPostBuildCleanup>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs:34)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteStep () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:194)
+UnityEditor.TestTools.TestRunner.TestRun.TestJobRunner:ExecuteCallback () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/TestJobRunner.cs:129)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs Line: 48)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (0 B). Loaded Objects now: 4515.
+Memory consumption went from 379.8 MB to 379.8 MB.
+Total: 9.642700 ms (FindLiveObjects: 0.283000 ms CreateObjectMapping: 0.551900 ms MarkObjects: 8.790700 ms  DeleteObjects: 0.015900 ms)
+
+Asset Pipeline Refresh (id=f83e587304d3a4743aca7c45de5222b5): Total: 0.081 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+DisplayProgressbar: Undo
+Test run completed. Exiting with code 0 (Ok). Run completed.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:ExitApplication (UnityEditor.TestTools.TestRunner.CommandLineTest.Executer/ReturnCodes,string) (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/CommandLineTest/Executer.cs:81)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:ExitIfRunIsCompleted () (at ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/CommandLineTest/Executer.cs:74)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@f3e6c9a02477/UnityEditor.TestRunner/CommandLineTest/Executer.cs Line: 81)
+
+MonoPathRemapper: Attempts to remap: 18829; Successful remaps: 1142
+Serialized file version minimum: 22, current 23
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-danny-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-danny channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1784549888486,"processId":12260,"allocatedMemory":17175796,"memoryLabels":[{"Default":192211},{"Permanent":15516},{"NewDelete":68923},{"Thread":4197600},{"Manager":33157},{"VertexData":8},{"Geometry":816},{"Texture":24},{"Shader":848766},{"Material":24},{"GfxDevice":55328},{"Animation":1095352},{"Font":2483050},{"FreeType":56434},{"FontEngine":736},{"Physics":2146},{"Physics2D":16},{"Serialization":1328},{"Input":42840},{"JobScheduler":256},{"TextLib":216},{"Mono":48},{"MonoCode":64},{"ScriptingNativeRuntime":1574468},{"BaseObject":1789720},{"Resource":1208},{"Renderer":3080},{"Transform":4685},{"File":15877},{"WebCam":616},{"Culling":32},{"Terrain":11442},{"Wind":24},{"STL":40},{"String":13351},{"StaticString":3808},{"Utility":2673238},{"Curl":2579},{"PoolAlloc":2264},{"AI":80},{"TypeTree":17165},{"CodeReload":448},{"RuntimeInitializeOnLoadManager":64},{"Sprites":102},{"SpriteAtlas":120},{"GI":7816},{"CloudService":432},{"WebRequest":848},{"VR":47114},{"SceneManager":608},{"Video":64},{"LazyScriptCache":32},{"Camera":17},{"Secure":2377},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":424},{"Hierarchy":1176},{"UIElements":72},{"CoreStats":13688},{"Identifiers":13536},{"Gui":128},{"EditorUtility":113908},{"VersionControl":8},{"Undo":931},{"AssetDatabase":2611812},{"AssetImporter":40},{"EditorGi":328},{"UnityConnect":38929},{"Upm":1912},{"UpmDiagnostics":8},{"AssetCompliance":64},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2625},{"Windowing":456},{"Licensing":1232},{"AssetReference":32},{"IPCStream":32}]}
