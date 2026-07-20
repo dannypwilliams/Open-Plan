@@ -6,7 +6,7 @@ namespace OpenPlan
 {
     public enum OfficeStage { StarterOffice, StarterOfficeExpanded, EstablishedOffice }
 
-    public enum PlacementActivity { Work, Rest, GetWater, BuySnack, Smoke, LeaveOffice, UseRestroom }
+    public enum PlacementActivity { Work, Rest, GetWater, BuySnack, Smoke, LeaveOffice, UseRestroom, GetCoffee }
 
     public enum AwayReason { Lunch, Errand, LongBreak, OffSiteTask }
 
@@ -130,6 +130,7 @@ namespace OpenPlan
         public int distractionsStarted;
         public int distractionsCompleted;
         public float distractionSeconds;
+        public WorkerDecisionRuntime decision = new WorkerDecisionRuntime();
         public WorkerState behavior = WorkerState.EnterOffice;
         public string positiveInfluence = "Ready for the day";
         public string negativeInfluence = "Settling in";
@@ -588,6 +589,7 @@ namespace OpenPlan
     {
         public const float RestDuration = 20f;
         public const float WaterDuration = 6f;
+        public const float CoffeeDuration = 2.8f;
         public const float VendingDuration = 8f;
         public const float SmokingDuration = 12f;
         public const float RestroomDuration = 8f;

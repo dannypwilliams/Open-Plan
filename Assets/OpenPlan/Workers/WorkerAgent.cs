@@ -38,10 +38,23 @@ namespace OpenPlan
                                       !IsPlayerCarried && !IsFired && !IsAway;
         public string CurrentActivityLabel => Runtime == null ? string.Empty :
             IsPhoneWorking ? "Working from phone" :
+            Runtime.behavior == WorkerState.WalkToPlacement && commandedZone != null ?
+                "Going to " + commandedZone.ActivityLabel :
             Runtime.behavior == WorkerState.Unassigned && Desk != null ? "Choosing next task" : PrettyState(Runtime.behavior);
         public string CurrentDestinationLabel => DestinationLabel();
+        public WorkerDecisionRuntime Decision => Runtime?.decision;
+        public string DecisionReasonLabel => Runtime?.decision?.reason ?? "Choosing next task";
+        public string DecisionOwnerLabel => Runtime?.decision == null ? "Autonomous" :
+            Runtime.decision.playerOrigin ? "Player instruction" : "Autonomous";
+        public string AddressedNeedLabel => Runtime?.decision != null && Runtime.decision.hasNeed ?
+            NeedCatalog.Get(Runtime.decision.need).DisplayName : "None";
+        public string ReservationLabel => Runtime?.decision == null ||
+            Runtime.decision.reservationStatus == ReservationStatus.None ? "No reservation" :
+            Runtime.decision.reservationStatus.ToString();
+        public string LastNavigationRecoveryReason { get; private set; }
         public DistractionKind CurrentDistraction { get; private set; }
         public bool HasPlayerCommandAuthority { get; private set; }
+        public float CoffeeCooldownRemaining => coffeeCooldown;
         public float StateAge => stateTime;
         public IReadOnlyCollection<WorkerState> ObservedStates => observedStates;
         public IReadOnlyDictionary<DistractionKind, int> DistractionCounts => distractionCounts;
@@ -60,6 +73,13 @@ namespace OpenPlan
         private float autonomousActivityDuration;
         private float stuckTime;
         private Vector3 previousPosition;
+        private Vector3 lastConfirmedReachablePosition;
+        private Vector3 navigationDestination;
+        private Vector3[] navigationPath;
+        private int navigationPathIndex;
+        private int navigationVersion;
+        private int evaluationIndex;
+        private float needEvaluationTimer;
         private GameObject carriedBox;
         private PlacementZone commandedZone;
         private PlacementActivity? activeActivity;
@@ -98,6 +118,8 @@ namespace OpenPlan
             Runtime.socialNeed = random.Range(.05f, .32f);
             transform.position = spawn;
             previousPosition = spawn;
+            lastConfirmedReachablePosition = spawn;
+            needEvaluationTimer = NeedAutonomyRules.InitialEvaluationDelay(Definition.displayName, random.Seed);
             Visuals = gameObject.AddComponent<WorkerVisuals>();
             Visuals.Initialize(Definition.displayName, Definition.clothing, director.Catalog.GetMaterial("cyan"));
             CapsuleCollider capsule = GetComponent<CapsuleCollider>();
@@ -135,6 +157,9 @@ namespace OpenPlan
 
             stateTime += dt;
             decisionTime -= dt;
+            needEvaluationTimer -= dt;
+            if (Runtime.decision.authoritySecondsRemaining > 0f)
+                Runtime.decision.authoritySecondsRemaining = Mathf.Max(0f, Runtime.decision.authoritySecondsRemaining - dt);
             coffeeCooldown = Mathf.Max(0f, coffeeCooldown - dt);
             socialCooldown = Mathf.Max(0f, socialCooldown - dt);
             earningsEmoteCooldown = Mathf.Max(0f, earningsEmoteCooldown - dt);
@@ -157,13 +182,120 @@ namespace OpenPlan
                 Desk == null ? 1f : Mathf.Lerp(.75f, 1.45f, Desk.Noise) *
                 PersonalityRules.For(Definition.trait).NoiseStressMultiplier;
             NeedSimulation.Tick(Runtime, Runtime.behavior, needDelta, workStressMultiplier);
+            office.AutonomyCounters.AccumulateNeedTime(Runtime, dt);
             UpdateProductivity();
+            TickNeedAutonomy(dt);
             TickState(dt);
             Visuals?.Tick(PresentationState(), IsMoving, Productivity);
         }
 
         private WorkerState PresentationState()
             => IsPhoneWorking ? WorkerState.LookAtPhone : Runtime.behavior;
+
+        private void TickNeedAutonomy(float dt)
+        {
+            NeedStatus worst = NeedAutonomyRules.WorstStatus(Runtime);
+            if (worst == NeedStatus.Critical && needEvaluationTimer > NeedAutonomyRules.CriticalEvaluationMax)
+                needEvaluationTimer = NeedAutonomyRules.CriticalEvaluationMax;
+            if (needEvaluationTimer > 0f || IsPlayerCarried || IsLeavingCompany || IsAway) return;
+            needEvaluationTimer = NeedAutonomyRules.NextEvaluationDelay(Runtime, Definition.displayName,
+                random.Seed, evaluationIndex++);
+            if (!office.TrySelectNeedRecovery(this, out NeedDecisionPlan plan)) return;
+
+            if (Runtime.decision.IsNeedRecovery && commandedZone != null)
+            {
+                NeedStatus currentStatus = NeedCatalog.Status(Runtime, Runtime.decision.need);
+                float currentPriority = NeedAutonomyRules.Priority(Runtime.decision.need, currentStatus);
+                float nextPriority = NeedAutonomyRules.Priority(plan.Need, plan.Status);
+                if (Runtime.decision.need == plan.Need || nextPriority <= currentPriority + .01f) return;
+            }
+
+            bool nearlyComplete = IsRecoveryActivityState(Runtime.behavior) &&
+                                  ActivitySecondsRemaining <= NeedAutonomyRules.NearCompletionProtection;
+            if (nearlyComplete) return;
+            if (HasPlayerCommandAuthority && activeActivity.HasValue &&
+                NeedAutonomyRules.ActivityImproves(activeActivity.Value, plan.Need)) return;
+            if (HasPlayerCommandAuthority && Runtime.decision.authoritySecondsRemaining > 0f)
+            {
+                Runtime.decision.criticalDeferralSeconds += Mathf.Min(dt + needEvaluationTimer,
+                    NeedAutonomyRules.CriticalEvaluationMax);
+                if (!NeedAutonomyRules.CanOverridePlayerAuthority(plan.Need, plan.Status,
+                        Runtime.decision.criticalDeferralSeconds)) return;
+                office.AutonomyCounters.criticalOverrides++;
+                office.ShowNotice(Definition.displayName + " abandoned the instruction - " +
+                                  NeedCatalog.Get(plan.Need).DisplayName.ToLowerInvariant() + " could not wait.");
+            }
+            BeginNeedRecovery(plan);
+        }
+
+        private bool BeginNeedRecovery(NeedDecisionPlan plan)
+        {
+            if (plan?.Candidate?.Zone == null) return false;
+            bool rerouting = Runtime.decision.category == WorkerDecisionCategory.NavigationRecovery;
+            ReleaseSocialForInterruption();
+            InterruptCurrentActivity();
+            office.ReleaseTransientPlacement(this);
+            if (!office.TryReserveNeedRecovery(this, plan, out string reason))
+            {
+                Runtime.decision.reason = "Rerouting: " + (reason ?? "destination unavailable");
+                Runtime.decision.fallbackLevel = DecisionFallbackLevel.AlternateStation;
+                office.AutonomyCounters.alternateDestinationsSelected++;
+                return false;
+            }
+            commandedZone = plan.Candidate.Zone;
+            pendingPlacementActivity = plan.Candidate.Activity;
+            activeActivity = null;
+            activityEffectApplied = false;
+            vendingChargedForCurrentUse = false;
+            autonomousActivityDuration = NeedAutonomyRules.ActivityDuration(plan.Candidate.Activity);
+            SetActivePlacementZone(commandedZone);
+            Runtime.decision.Begin(plan.Category, plan.Need, true, plan.Candidate.Activity,
+                plan.Candidate.StableId, plan.Score, rerouting ? "Rerouting: " + plan.Reason : plan.Reason,
+                office.SimulationTime, false, rerouting && plan.Candidate.Fallback == DecisionFallbackLevel.None ?
+                    DecisionFallbackLevel.AlternateStation : plan.Candidate.Fallback);
+            Runtime.decision.reservationStatus = plan.Candidate.Activity == PlacementActivity.LeaveOffice ?
+                ReservationStatus.None : ReservationStatus.Incoming;
+            Runtime.autonomyDecisions++;
+            navigationPath = plan.Path;
+            navigationPathIndex = 0;
+            navigationDestination = commandedZone.PositionFor(this);
+            navigationVersion = office.Navigation.Version;
+            ShowNeedDecisionEmote(plan.Need, plan.Candidate.Activity);
+            SetState(plan.Candidate.Activity == PlacementActivity.GetCoffee ?
+                WorkerState.SeekCoffee : WorkerState.WalkToPlacement, 30f);
+            return true;
+        }
+
+        private void ShowNeedDecisionEmote(NeedKind need, PlacementActivity activity)
+        {
+            StatusEmote emote = need == NeedKind.Bathroom ? StatusEmote.Restroom :
+                need == NeedKind.Hunger ? StatusEmote.Snack :
+                need == NeedKind.Energy ? StatusEmote.Tired :
+                need == NeedKind.Happiness ? StatusEmote.Sad : StatusEmote.Focus;
+            if (activity == PlacementActivity.GetWater) emote = StatusEmote.Water;
+            else if (activity == PlacementActivity.Smoke) emote = StatusEmote.Cigarette;
+            Visuals?.ShowEmote(emote, 2.2f);
+        }
+
+        private static bool IsRecoveryActivityState(WorkerState state)
+            => state == WorkerState.TakeBreak || state == WorkerState.UseWaterCooler ||
+               state == WorkerState.UseCoffeeMachine || state == WorkerState.BuySnack ||
+               state == WorkerState.Smoke || state == WorkerState.UseRestroom || state == WorkerState.Away;
+
+        private void ReleaseSocialForInterruption()
+        {
+            WorkerAgent partner = socialPartner;
+            socialPartner = null;
+            if (partner != null) partner.OnSocialInterrupted(this);
+        }
+
+        private void OnSocialInterrupted(WorkerAgent partner)
+        {
+            if (socialPartner != partner) return;
+            socialPartner = null;
+            if (Runtime != null && (Runtime.behavior == WorkerState.Socialize ||
+                                    Runtime.behavior == WorkerState.SeekCoworker)) ReturnToDesk();
+        }
 
         private void TickState(float dt)
         {
@@ -205,7 +337,11 @@ namespace OpenPlan
                 case WorkerState.UseCoffeeMachine:
                     if (stateTime >= stateLimit)
                     {
-                        ActivityRules.ApplyCoffee(Runtime, Definition.trait == WorkerTrait.Caffeinated);
+                        if (!activityEffectApplied)
+                        {
+                            ActivityRules.ApplyCoffee(Runtime, Definition.trait == WorkerTrait.Caffeinated);
+                            activityEffectApplied = true;
+                        }
                         coffeeCooldown = Definition.trait == WorkerTrait.Caffeinated ? 34f : 52f;
                         ReturnToDesk();
                     }
@@ -319,26 +455,9 @@ namespace OpenPlan
             decisionTime = random.Range(profile.DecisionMin, profile.DecisionMax);
             Runtime.autonomyDecisions++;
 
-            if ((Runtime.energy < .25f || Runtime.stress > .84f) &&
-                TryStartAutonomousActivity(PlacementActivity.Rest, ActivityRules.RestDuration,
-                    Definition.trait == WorkerTrait.Lazy ? DistractionKind.ExtendedBreak : DistractionKind.None)) return;
-            if (Runtime.energy < .39f && coffeeCooldown <= 0f && random.Chance(.72f))
-            {
-                SetTargetState(WorkerState.SeekCoffee, office.Coffee.UsePoint.position, 12f);
-                Visuals?.ShowEmote(StatusEmote.Tired, 1.8f);
-                return;
-            }
-            if ((Runtime.energy < .62f || Runtime.mood < .55f) && Runtime.vendingCooldown <= 0f &&
-                office.Cash.CanAfford(ActivityRules.SnackCost) && random.Chance(.20f) &&
-                TryStartAutonomousActivity(PlacementActivity.BuySnack, ActivityRules.VendingDuration,
-                    DistractionKind.None)) return;
             if (Runtime.waterCooldown <= 0f && random.Chance(.10f + (1f - Runtime.mood) * .12f) &&
                 TryStartAutonomousActivity(PlacementActivity.GetWater, ActivityRules.WaterDuration,
                     DistractionKind.None)) return;
-            if (Runtime.stress > .58f && Runtime.smokingCooldown <= 0f && random.Chance(.16f) &&
-                TryStartAutonomousActivity(PlacementActivity.Smoke,
-                    PersonalityRules.DistractionDuration(Definition.trait, DistractionKind.ExtendedSmoke),
-                    DistractionKind.ExtendedSmoke)) return;
             if (random.Chance(profile.DistractionChance))
             {
                 StartDistraction(PersonalityRules.ChooseDistraction(Definition.trait, random));
@@ -350,6 +469,8 @@ namespace OpenPlan
         private void BeginPhoneWorkInterval()
         {
             PersonalityProfile profile = PersonalityRules.For(Definition.trait);
+            Runtime.decision.Begin(WorkerDecisionCategory.PhoneWork, NeedKind.Happiness, false,
+                PlacementActivity.Work, "phone-work", 0f, "Working by phone", office.SimulationTime, false);
             SetState(WorkerState.Unassigned, random.Range(profile.DecisionMin, profile.DecisionMax));
         }
 
@@ -359,37 +480,6 @@ namespace OpenPlan
             PersonalityProfile profile = PersonalityRules.For(Definition.trait);
             decisionTime = random.Range(profile.DecisionMin, profile.DecisionMax);
             Runtime.autonomyDecisions++;
-
-            if (Runtime.energy < .20f && coffeeCooldown <= 0f)
-            {
-                SetTargetState(WorkerState.SeekCoffee, office.Coffee.UsePoint.position, 12f);
-                Visuals?.ShowEmote(StatusEmote.Tired, 1.8f);
-                return;
-            }
-
-            if (Runtime.energy < .25f || Runtime.stress > .84f)
-            {
-                if (TryStartAutonomousActivity(PlacementActivity.Rest, ActivityRules.RestDuration,
-                    Definition.trait == WorkerTrait.Lazy ? DistractionKind.ExtendedBreak : DistractionKind.None)) return;
-            }
-
-            if (Runtime.stress > .58f && Runtime.smokingCooldown <= 0f && random.Chance(.16f))
-            {
-                if (TryStartAutonomousActivity(PlacementActivity.Smoke,
-                    PersonalityRules.DistractionDuration(Definition.trait, DistractionKind.ExtendedSmoke),
-                    DistractionKind.ExtendedSmoke)) return;
-            }
-
-            if (Runtime.energy < .39f && coffeeCooldown <= 0f && random.Chance(.72f))
-            {
-                SetTargetState(WorkerState.SeekCoffee, office.Coffee.UsePoint.position, 12f);
-                Visuals?.ShowEmote(StatusEmote.Tired, 1.8f);
-                return;
-            }
-
-            if ((Runtime.energy < .62f || Runtime.mood < .55f) && Runtime.vendingCooldown <= 0f &&
-                office.Cash.CanAfford(ActivityRules.SnackCost) && random.Chance(.20f) &&
-                TryStartAutonomousActivity(PlacementActivity.BuySnack, ActivityRules.VendingDuration, DistractionKind.None)) return;
 
             float socialThreshold = Definition.trait == WorkerTrait.Social ? .52f : .78f;
             if (Runtime.socialNeed > socialThreshold && socialCooldown <= 0f)
@@ -413,9 +503,6 @@ namespace OpenPlan
                 StartDistraction(PersonalityRules.ChooseDistraction(Definition.trait, random));
                 return;
             }
-
-            if ((Runtime.energy < .42f || Runtime.mood < .40f || Runtime.stress > .70f) && random.Chance(.58f) &&
-                TryStartAutonomousActivity(PlacementActivity.Rest, ActivityRules.RestDuration, DistractionKind.None)) return;
 
             if (!random.Chance(profile.WorkPreference) && random.Chance(.24f))
             {
@@ -498,13 +585,7 @@ namespace OpenPlan
             Vector3 flat = target - transform.position;
             flat.y = 0f;
             if (flat.sqrMagnitude < .12f) target = office.GetWanderPoint(this);
-            else
-            {
-                IsMoving = true;
-                Vector3 direction = flat.normalized;
-                transform.position += direction * (1.35f * dt);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), dt * 7f);
-            }
+            else MoveTowards(target, dt * .60f, WorkerState.Wander);
         }
 
         private void CompleteDistraction()
@@ -591,6 +672,8 @@ namespace OpenPlan
         private void GoToDesk()
         {
             if (Desk == null) { BeginPhoneWorkInterval(); return; }
+            Runtime.decision.Begin(WorkerDecisionCategory.ReturningToWork, NeedKind.Happiness, false,
+                PlacementActivity.Work, Desk.StableIdentifier, 0f, "Returning to desk", office.SimulationTime, false);
             SetTargetState(WorkerState.WalkToDesk, Desk.WorkPoint.position, 16f);
         }
 
@@ -605,27 +688,74 @@ namespace OpenPlan
             autonomousActivityDuration = 0f;
             HasPlayerCommandAuthority = false;
             if (Desk == null) { BeginPhoneWorkInterval(); return; }
+            Runtime.decision.Begin(WorkerDecisionCategory.ReturningToWork, NeedKind.Happiness, false,
+                PlacementActivity.Work, Desk.StableIdentifier, 0f, "Returning to desk", office.SimulationTime, false);
             SetTargetState(WorkerState.ReturnToDesk, Desk.WorkPoint.position, 16f);
         }
 
         private void MoveTowards(Vector3 destination, float dt, WorkerState arrival)
         {
+            if (office.Navigation != null && (navigationPath == null || navigationPath.Length == 0 ||
+                navigationVersion != office.Navigation.Version ||
+                (new Vector2(navigationDestination.x, navigationDestination.z) -
+                 new Vector2(destination.x, destination.z)).sqrMagnitude > .04f))
+            {
+                if (!PrepareNavigation(destination))
+                {
+                    HandleNavigationFailure("No valid path to " + DestinationLabel());
+                    return;
+                }
+            }
             IsMoving = true;
             target = destination;
-            Vector3 flat = destination - transform.position;
+            Vector3 waypoint = navigationPath != null && navigationPathIndex < navigationPath.Length ?
+                navigationPath[navigationPathIndex] : destination;
+            Vector3 flat = waypoint - transform.position;
             flat.y = 0f;
-            if (flat.sqrMagnitude < .08f)
+            if (flat.sqrMagnitude < .08f && navigationPath != null && navigationPathIndex < navigationPath.Length - 1)
+            {
+                navigationPathIndex++;
+                Runtime.decision.lastProgressTime = office.SimulationTime;
+                return;
+            }
+            bool finalWaypoint = navigationPath == null || navigationPathIndex >= navigationPath.Length - 1;
+            Vector3 finalFlat = destination - transform.position;
+            finalFlat.y = 0f;
+            if (finalWaypoint && finalFlat.sqrMagnitude < .08f)
             {
                 IsMoving = false;
-                transform.position = new Vector3(destination.x, transform.position.y, destination.z);
+                Vector3 exactDestination = new Vector3(destination.x, transform.position.y, destination.z);
+                if (office.Navigation == null || office.Navigation.IsValidPoint(exactDestination))
+                    transform.position = exactDestination;
+                if (office.Navigation == null || office.Navigation.IsValidPoint(transform.position))
+                    lastConfirmedReachablePosition = transform.position;
+                navigationPath = null;
+                navigationPathIndex = 0;
                 if (arrival == WorkerState.Work)
                 {
                     if (Desk != null) transform.rotation = Desk.WorkPoint.rotation;
                     activeActivity = PlacementActivity.Work;
+                    Runtime.decision.Begin(WorkerDecisionCategory.Work, NeedKind.Happiness, false,
+                        PlacementActivity.Work, Desk == null ? "work" : Desk.StableIdentifier, 0f,
+                        "Working at assigned desk", office.SimulationTime, false);
                     SetState(WorkerState.Work, random.Range(7f, 12f));
                 }
                 else if (arrival == WorkerState.WalkToPlacement) ArriveAtPlayerPlacement();
-                else if (arrival == WorkerState.UseCoffeeMachine) SetState(arrival, 2.8f);
+                else if (arrival == WorkerState.UseCoffeeMachine)
+                {
+                    if (commandedZone != null && pendingPlacementActivity == PlacementActivity.GetCoffee)
+                    {
+                        if (!HasPlayerCommandAuthority && !office.Reservations.MarkArrived(this, out string reason))
+                        {
+                            NotifyReservationLost(reason);
+                            return;
+                        }
+                        activeActivity = PlacementActivity.GetCoffee;
+                        activityEffectApplied = false;
+                        if (!HasPlayerCommandAuthority) office.Reservations.MarkStarted(this);
+                    }
+                    SetState(arrival, ActivityRules.CoffeeDuration);
+                }
                 else if (arrival == WorkerState.UseWaterCooler)
                 {
                     activeActivity = PlacementActivity.GetWater;
@@ -642,20 +772,89 @@ namespace OpenPlan
             Vector3 direction = flat.normalized;
             transform.position += direction * (2.25f * dt);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), dt * 9f);
-            if ((transform.position - previousPosition).sqrMagnitude < .00005f) stuckTime += dt;
-            else { stuckTime = 0f; previousPosition = transform.position; }
-            if (stuckTime > 3f)
+            float progress = (transform.position - previousPosition).sqrMagnitude;
+            if (progress < .00005f) stuckTime += dt;
+            else
             {
-                transform.position += new Vector3(.35f, 0f, .35f);
-                SetState(WorkerState.RecoverFromStuck, .5f);
                 stuckTime = 0f;
+                previousPosition = transform.position;
+                lastConfirmedReachablePosition = transform.position;
+                Runtime.decision.lastProgressTime = office.SimulationTime;
             }
+            if (stuckTime > NeedAutonomyRules.ProgressTimeout)
+                HandleNavigationFailure("No movement progress");
         }
 
         private void SetTargetState(WorkerState state, Vector3 destination, float limit)
         {
             target = destination;
+            if (state == WorkerState.WalkOutForAway)
+            {
+                navigationDestination = destination;
+                navigationPath = new[] { destination };
+                navigationPathIndex = 0;
+                navigationVersion = office.Navigation == null ? 0 : office.Navigation.Version;
+            }
+            else PrepareNavigation(destination);
             SetState(state, limit);
+        }
+
+        private bool PrepareNavigation(Vector3 destination)
+        {
+            navigationDestination = destination;
+            navigationVersion = office.Navigation == null ? 0 : office.Navigation.Version;
+            navigationPathIndex = 0;
+            if (office.Navigation == null)
+            {
+                navigationPath = new[] { destination };
+                return true;
+            }
+            if (!office.Navigation.TryFindPath(transform.position, destination, out navigationPath, out _))
+            {
+                navigationPath = null;
+                return false;
+            }
+            return true;
+        }
+
+        private void HandleNavigationFailure(string reason)
+        {
+            Runtime.decision.retryCount++;
+            LastNavigationRecoveryReason = reason;
+            if (Runtime.decision.retryCount <= NeedAutonomyRules.MaximumRepathAttempts)
+            {
+                office.AutonomyCounters.repaths++;
+                navigationPath = null;
+                stuckTime = 0f;
+                Runtime.decision.category = WorkerDecisionCategory.NavigationRecovery;
+                Runtime.decision.reason = "Rerouting: " + reason;
+                Visuals?.ShowEmote(StatusEmote.Question, 1.5f);
+                if (PrepareNavigation(navigationDestination)) return;
+            }
+
+            office.AutonomyCounters.stuckRecoveries++;
+            office.ReleaseTransientPlacement(this);
+            commandedZone = null;
+            pendingPlacementActivity = null;
+            navigationPath = null;
+            if (office.Navigation != null && !office.Navigation.IsValidPoint(transform.position) &&
+                office.Navigation.IsValidPoint(lastConfirmedReachablePosition))
+            {
+                Vector3 invalidPosition = transform.position;
+                transform.position = lastConfirmedReachablePosition;
+                office.AutonomyCounters.emergencySafetyCorrections++;
+                office.AutonomyCounters.lastSafetyCorrection = Definition.displayName + ": " + reason +
+                    " from " + invalidPosition.ToString("F2") + " to " +
+                    lastConfirmedReachablePosition.ToString("F2");
+                Debug.LogWarning("NEED AUTONOMY SAFETY CORRECTION: " +
+                                 office.AutonomyCounters.lastSafetyCorrection);
+                Runtime.decision.fallbackLevel = DecisionFallbackLevel.SafetyCorrection;
+            }
+            Runtime.decision.category = WorkerDecisionCategory.NavigationRecovery;
+            Runtime.decision.reason = "Recovered from route failure";
+            needEvaluationTimer = .25f;
+            SetState(WorkerState.RecoverFromStuck, .5f);
+            stuckTime = 0f;
         }
 
         private void SetState(WorkerState state, float limit)
@@ -712,6 +911,11 @@ namespace OpenPlan
                 reason = $"Smoking cooldown: {Mathf.CeilToInt(Runtime.smokingCooldown)}s.";
                 return false;
             }
+            if (activity == PlacementActivity.GetCoffee && coffeeCooldown > 0f)
+            {
+                reason = $"Coffee cooldown: {Mathf.CeilToInt(coffeeCooldown)}s.";
+                return false;
+            }
             reason = null;
             return true;
         }
@@ -743,6 +947,7 @@ namespace OpenPlan
             preCarryDistraction = CurrentDistraction;
             IsPlayerCarried = true;
             IsMoving = false;
+            office.Reservations?.Suspend(this);
             Visuals?.SetCarried(true);
             return true;
         }
@@ -769,6 +974,7 @@ namespace OpenPlan
             CurrentDistraction = preCarryDistraction;
             IsPlayerCarried = false;
             carrySnapshotValid = false;
+            office.Reservations?.Resume(this);
             Visuals?.SetCarried(false);
         }
 
@@ -780,6 +986,14 @@ namespace OpenPlan
             commandedZone = command.destinationZone;
             pendingPlacementActivity = command.requestedActivity;
             HasPlayerCommandAuthority = true;
+            NeedKind addressed = BestNeedForActivity(command.requestedActivity);
+            Runtime.decision.Begin(WorkerDecisionCategory.PlayerCommand, addressed,
+                NeedAutonomyRules.ActivityImproves(command.requestedActivity, addressed), command.requestedActivity,
+                command.destinationZone.StableIdentifier, 0f,
+                "Following your instruction: " + command.destinationZone.ActivityLabel,
+                office.SimulationTime, true);
+            Runtime.decision.authoritySecondsRemaining = NeedAutonomyRules.PlayerAuthorityDefault;
+            if (Runtime.decision.hasNeed) office.AutonomyCounters.playerNeedInterventions++;
             activeActivity = null;
             activityEffectApplied = false;
             vendingChargedForCurrentUse = false;
@@ -804,8 +1018,26 @@ namespace OpenPlan
             carrySnapshotValid = false;
             Visuals?.SetCarried(false);
             transform.position = new Vector3(command.groundPoint.x, transform.position.y, command.groundPoint.z);
+            lastConfirmedReachablePosition = transform.position;
+            Runtime.decision.Begin(WorkerDecisionCategory.ReturningToWork, NeedKind.Happiness, false,
+                PlacementActivity.Work, "ordinary-ground", 0f, "Settling after ground placement",
+                office.SimulationTime, true);
             SetState(WorkerState.Unassigned, random.Range(2.5f, 4.5f));
             return true;
+        }
+
+        private NeedKind BestNeedForActivity(PlacementActivity activity)
+        {
+            NeedKind best = NeedKind.Happiness;
+            float bestValue = float.MinValue;
+            for (int i = 0; i < NeedCatalog.All.Length; i++)
+            {
+                NeedKind need = NeedCatalog.All[i].Kind;
+                float value = NeedAutonomyRules.ActivityBenefit(activity, need,
+                    Definition.trait == WorkerTrait.Caffeinated) * NeedAutonomyRules.Severity01(Runtime, need);
+                if (value > bestValue) { bestValue = value; best = need; }
+            }
+            return best;
         }
 
         public void SetActivePlacementZone(PlacementZone zone) => ActivePlacementZone = zone;
@@ -813,6 +1045,17 @@ namespace OpenPlan
         private void ArriveAtPlayerPlacement()
         {
             if (commandedZone == null || !pendingPlacementActivity.HasValue) { ReturnToDesk(); return; }
+            if (!commandedZone.IsZoneEnabled)
+            {
+                NotifyReservationLost("Destination was disabled before arrival");
+                return;
+            }
+            if (!HasPlayerCommandAuthority && pendingPlacementActivity.Value != PlacementActivity.LeaveOffice &&
+                !office.Reservations.MarkArrived(this, out string reason))
+            {
+                NotifyReservationLost(reason);
+                return;
+            }
             transform.rotation = commandedZone.PlacementPoint.rotation;
             BeginPlacementActivity(pendingPlacementActivity.Value);
         }
@@ -821,6 +1064,7 @@ namespace OpenPlan
         {
             activeActivity = activity;
             activityEffectApplied = false;
+            if (!HasPlayerCommandAuthority) office.Reservations?.MarkStarted(this);
             switch (activity)
             {
                 case PlacementActivity.Work:
@@ -841,6 +1085,10 @@ namespace OpenPlan
                     Visuals?.ShowEmote(HadWaterSocialOpportunity ? StatusEmote.Social : StatusEmote.Water, 2.0f);
                     SetState(WorkerState.UseWaterCooler, HasPlayerCommandAuthority ? ActivityRules.WaterDuration :
                         Mathf.Max(.25f, autonomousActivityDuration));
+                    break;
+                case PlacementActivity.GetCoffee:
+                    Visuals?.ShowEmote(StatusEmote.Tired, 2.0f);
+                    SetState(WorkerState.UseCoffeeMachine, ActivityRules.CoffeeDuration);
                     break;
                 case PlacementActivity.BuySnack:
                     BeginVending();
@@ -1075,6 +1323,31 @@ namespace OpenPlan
         }
 
         public void QueueVendingOutcome(bool malfunction) => nextVendingMalfunctionOverride = malfunction;
+
+        public void NotifyReservationLost(string reason)
+        {
+            if (Runtime == null || IsFired) return;
+            commandedZone = null;
+            pendingPlacementActivity = null;
+            navigationPath = null;
+            Runtime.decision.category = WorkerDecisionCategory.NavigationRecovery;
+            Runtime.decision.reason = "Rerouting: " + (reason ?? "destination unavailable");
+            Runtime.decision.fallbackLevel = DecisionFallbackLevel.AlternateStation;
+            Runtime.decision.reservationStatus = ReservationStatus.Released;
+            office.AutonomyCounters.alternateDestinationsSelected++;
+            needEvaluationTimer = .25f;
+            SetState(WorkerState.RecoverFromStuck, .5f);
+        }
+
+        public void RequestImmediateNeedEvaluation() => needEvaluationTimer = 0f;
+
+        public void ForceNavigationFailureForTesting()
+        {
+            if (!Application.isEditor || Runtime == null) return;
+            navigationPath = null;
+            navigationDestination = new Vector3(10000f, transform.position.y, 10000f);
+            HandleNavigationFailure("Injected route failure");
+        }
 
         public void BeginDistractionForTesting(DistractionKind kind)
         {

@@ -115,3 +115,19 @@ Checkpoint 01 adds a compact visible single-capacity restroom entrance with dete
 ## D029 - Prompt 01 preserves the exact verification extraction
 
 `Build-FiveNeedsCheckpoint.ps1` produces the required `Windows/`, ZIP, `VerifiedExtract/`, manifest, guide, issues, tests, captures, and logs from a clean commit. The archive is extracted once, that exact executable is launched visibly through public gameplay APIs, and the verified files remain beside the checkpoint instead of being replaced by a loose build or deleted as temporary evidence.
+
+## D030 - One worker state machine owns need autonomy
+
+Prompt 02 extends `WorkerAgent` instead of creating a competing scheduler. A structured decision record identifies ownership, need, activity, destination, score, reason, time, reservation, retries, progress, and fallback. Deterministic status-based intervals stagger evaluations. Central priority and hysteresis rules prevent per-frame scans, string-driven gameplay, target thrashing, and ordinary autonomy canceling player instructions.
+
+## D031 - Need destinations are scored and reserved transactionally
+
+`NeedAutonomyRules` owns need mappings, recovery benefit, hard priority, multi-need utility, travel/duration/cost/demand penalties, contextual hooks, and stable tie breaks. `ActivityReservationService` is owned by the scene, includes incoming reservations in capacity, converts them on arrival, and releases idempotently on every interruption and lifecycle boundary. Paid Vending is checked before selection and charged once only when use begins; free off-site recovery prevents cash from stranding Hunger or Bathroom.
+
+## D032 - Generated offices use a deterministic grid navigator
+
+`OfficeNavigationService` builds a 0.45 m four-neighbor A* grid with 0.28 m clearance from unlocked layout regions and registered obstacle volumes. It rejects locked property and void, smooths paths only through validated line of sight, reuses working buffers, and exposes invalidation for expansion and later construction. Workers prove arrival before activities begin. Two-second progress detection, at most three repaths, reservation release, alternate selection, and a validated last-position safety correction form the bounded failure path.
+
+## D033 - Prompt 02 packages natural public-gameplay evidence
+
+`Build-NeedAutonomyCheckpoint.ps1` requires clean committed source, refuses overwrite, reruns 138 EditMode and 110 PlayMode tests plus the 903-run deterministic matrix, builds a non-development player, creates and extracts a fresh ZIP, and launches that exact player visibly. The smoke uses public Water/Work placement and natural work income rather than need mutation or cash injection, records critical Bathroom override and desk/phone recovery, captures twelve 1920x1080 views, and returns through the real menu before clean quit. Human playtesting was explicitly waived, so this evidence is automated acceptance rather than a manual acceptance claim.

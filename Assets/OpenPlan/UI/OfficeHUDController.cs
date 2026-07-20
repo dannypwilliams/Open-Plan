@@ -478,7 +478,9 @@ namespace OpenPlan
             string desk, string away, string focused)
             => $"<size=31><b>{worker.Definition.displayName}</b></size>\n" +
                $"{worker.PersonalityLabel}  |  SKILL {worker.Definition.skill:0.00}  |  OUTPUT {state.effectiveProductivity:0.00}x\n" +
-               $"ACTIVITY  {worker.CurrentActivityLabel}\nDESTINATION  {worker.CurrentDestinationLabel}{away}{focused}";
+               $"ACTIVITY  {worker.CurrentActivityLabel}\nDESTINATION  {worker.CurrentDestinationLabel}\n" +
+               $"ORDER  {worker.DecisionOwnerLabel}: {worker.DecisionReasonLabel}\n" +
+               $"NEED  {worker.AddressedNeedLabel}  |  RESERVATION  {worker.ReservationLabel}{away}{focused}";
 
         public void ToggleNameTags()
         {

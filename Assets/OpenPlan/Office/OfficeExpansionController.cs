@@ -163,6 +163,7 @@ namespace OpenPlan
                     new Bounds(new Vector3(2f, 0f, 0f), new Vector3(26f, 1f, 10f)), 13.2f,
                     new Bounds(new Vector3(3f, 0f, 0f), new Vector3(22f, 1f, 10.6f)));
             office?.MarkExpansionComplete(animateCamera);
+            office?.InvalidateNavigation();
             Camera.main?.GetComponent<OfficeCameraRig>()?.ApplyLayoutChange(animateCamera);
         }
     }

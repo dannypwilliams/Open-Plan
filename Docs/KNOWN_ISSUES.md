@@ -1,23 +1,22 @@
 # Known Issues and Limitations
 
-No blocker or critical issue is known for Checkpoint `01_FiveNeeds`.
+No P0 or P1 issue is known for Checkpoint `02_NeedAutonomy`.
 
 ## Honest limitations
 
-- Comprehensive critical-need autonomy, destination selection, station reservation arbitration, retry/fallback, and navigation recovery arrive in Prompt 02. Manual proximity placement is the reliable intervention method now.
-- Existing personality autonomy still reacts to limited Energy, Happiness, and Stress conditions; it is not a complete five-need recovery policy.
-- The compact restroom is represented by a readable entrance and visible use point rather than a modeled interior.
-- The first expansion is the only property purchase. Hiring and need state are session-scoped because campaign save/load is not implemented.
-- The 12-strength and 12-liability catalogs remain foundational; live employees do not receive qualification pairs yet.
-- New hires do not have an onboarding queue or automatically claim later-vacated desks.
-- Movement is direct and deterministic rather than navmesh pathfinding, so busy routes can look mechanical.
-- Characters use procedural gestures and the audio/Foley library remains limited.
-- The seeded vending malfunction is uncommon and may not appear in a short playtest.
-- There is no contract/workday loop, payroll, reputation, incident scheduling, furniture construction, post-expansion objective, or persistence yet.
-- The Established Office remains a preserved future-stage sandbox and does not inherit Starter Office cash or need state.
-- There is no localization, remappable controls, graphics/settings menu, controller support, or accessibility narration.
-- Prompt 01 human feedback has not been collected. The automated, deterministic, and extracted-build gates pass, but the checkpoint still requires the supplied 15-20 minute comprehension playtest.
+- Navigation is a deterministic office grid with line-of-sight smoothing. Turns are readable but remain procedural and can look mechanical in dense traffic; there is no local crowd avoidance or authored locomotion animation.
+- The navigation index rebuilds when the neighboring unit opens. Future furniture construction must call the exposed invalidation hook and will need its own placement-time performance pass.
+- The simulation matrix exercises deterministic routing, reservation, fallback, pause, cost, and return contracts. Its managed-memory observation includes scenario setup allocations and is not profiler-grade per-frame allocation evidence.
+- Qualification preference hooks are neutral. Live employees do not receive one strength and one liability until Prompt 03.
+- The compact restroom is a readable entrance/use point rather than a modeled interior.
+- The seeded vending malfunction is uncommon and may not appear in a short session.
+- New hires do not have an onboarding queue or automatically claim a later-vacated desk.
+- Hiring, needs, and office state are session-scoped because campaign save/load is not implemented.
+- The first expansion is the only property purchase. Established Office remains a preserved future-stage sandbox and does not inherit Starter Office state.
+- Characters use procedural gestures; audio/Foley breadth, local avoidance, controller support, remappable controls, graphics settings, localization, and accessibility narration remain incomplete.
+- There is no live qualification growth, training, contract/workday loop, payroll, reputation, incident scheduling, furniture construction, or persistence.
+- Human playtesting was explicitly waived for this run. Automated suites, deterministic simulations, and exact-package smoke provide the acceptance evidence; no manual acceptance is claimed.
 
 ## Current non-goals
 
-Prompt 02 autonomy, assigned qualifications, training, workdays/contracts, payroll/reputation, incidents, furniture build mode, campaign persistence, and final Endless Office Alpha balance/packaging remain later checkpoints. Multiple cities/floors, manager roles, rival companies, promotions, relationships, and complex finance remain outside the current 30-day Alpha scope.
+Prompt 03 qualifications and growth, then contracts/workdays, payroll/reputation, incidents, furniture build mode, campaign persistence, and final Endless Office Alpha balance/packaging remain later checkpoints. Multiple cities/floors, manager roles, rival companies, promotions, relationships, and complex finance remain outside the current 30-day Alpha scope.

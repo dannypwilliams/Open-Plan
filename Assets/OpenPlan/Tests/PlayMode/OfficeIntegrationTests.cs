@@ -1695,14 +1695,15 @@ namespace OpenPlan.Tests
                     Assert.That(definition.Status(worker.Runtime.GetNeed(definition.Kind)), Is.EqualTo(NeedStatus.Healthy));
         }
 
-        [UnityTest] public IEnumerator TutorialCopyNamesFiveNeedsUrgenciesStressAndFutureAutonomy()
+        [UnityTest] public IEnumerator TutorialCopyNamesFiveNeedsUrgenciesStressAndLiveAutonomy()
         {
             yield return LoadOffice(OfficeStage.StarterOffice);
             string copy = TutorialCopy.Body(TutorialStep.ManageTheirNeeds);
             Assert.That(copy, Does.Contain("five live needs"));
             Assert.That(copy, Does.Contain("Hunger and Bathroom are urgency meters"));
             Assert.That(copy, Does.Contain("Stress is a separate temporary influence"));
-            Assert.That(copy, Does.Contain("next milestone"));
+            Assert.That(copy, Does.Contain("choose reachable recovery activities on their own"));
+            Assert.That(copy, Does.Contain("critical need"));
         }
 
         private static float[] SnapshotNeeds(WorkerRuntimeState state)

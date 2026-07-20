@@ -29,6 +29,10 @@ namespace OpenPlan
         public OfficeStageLayout Layout { get; private set; }
         public OfficeExpansionController Expansion { get; private set; }
         public TutorialController Tutorial { get; private set; }
+        public OfficeNavigationService Navigation { get; private set; }
+        public ActivityReservationService Reservations { get; private set; }
+        public AutonomyInstrumentation AutonomyCounters { get; } = new AutonomyInstrumentation();
+        public float SimulationTime { get; private set; }
         public bool InputLocked { get; private set; }
         public bool WorldInputBlocked => InputLocked || (HUD != null && HUD.HasModalOpen);
         public bool IsEstablishedPreview { get; private set; }
@@ -81,6 +85,8 @@ namespace OpenPlan
         private readonly List<Workstation> workstations = new List<Workstation>();
         private readonly List<PlacementZone> placementZones = new List<PlacementZone>();
         private readonly List<CandidateDefinition> candidates = new List<CandidateDefinition>();
+        private readonly List<PlacementZone> autonomyZones = new List<PlacementZone>();
+        private readonly List<NeedDestinationCandidate> autonomyCandidateBuffer = new List<NeedDestinationCandidate>(16);
         private int candidateSerial;
         private float overlayTick;
 
@@ -111,6 +117,10 @@ namespace OpenPlan
             Break = environment.Break;
             Elevator = environment.Elevator;
             Layout = environment.Layout;
+            Navigation = new OfficeNavigationService(Layout);
+            Reservations = new ActivityReservationService(AutonomyCounters);
+            autonomyZones.AddRange(placementZones);
+            autonomyZones.Sort((a, b) => string.CompareOrdinal(a?.StableIdentifier, b?.StableIdentifier));
             Tasks.Initialize(Random);
             Economy.Initialize(Tasks);
             Cash.Initialize();
@@ -147,6 +157,8 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneFoundationCheckpointDirector>().Initialize(this);
             if (StandaloneFiveNeedsCheckpointDirector.Requested)
                 gameObject.AddComponent<StandaloneFiveNeedsCheckpointDirector>().Initialize(this);
+            if (StandaloneNeedAutonomyCheckpointDirector.Requested)
+                gameObject.AddComponent<StandaloneNeedAutonomyCheckpointDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -185,6 +197,12 @@ namespace OpenPlan
 
         private void Update()
         {
+            float simulationDelta = Time.deltaTime;
+            if (simulationDelta > 0f)
+            {
+                SimulationTime += simulationDelta;
+                Reservations?.Tick(SimulationTime);
+            }
             if (WorldInputBlocked) return;
             Keyboard keyboard = Keyboard.current;
             if (keyboard != null)
@@ -344,6 +362,12 @@ namespace OpenPlan
             if (!worker.IsPlayerCarried) { reason = "Worker is not being carried."; return false; }
             if (destination == null) { reason = "Drop on a marked activity area."; return false; }
             if (!destination.CanAcceptWorker(worker, out reason)) return false;
+            if (Navigation != null && !Navigation.TryFindPath(worker.transform.position,
+                    destination.PositionFor(worker), out _, out _))
+            {
+                reason = destination.ActivityLabel + " cannot be reached from here.";
+                return false;
+            }
 
             PlacementZone previousActivity = worker.ActivePlacementZone;
             if (destination is Workstation destinationDesk)
@@ -366,6 +390,7 @@ namespace OpenPlan
             if (previousActivity != null && previousActivity != destination && previousActivity is not Workstation)
                 previousActivity.Vacate(worker);
             worker.SetActivePlacementZone(destination);
+            Reservations?.Release(worker, "Replaced by player instruction");
             command = new WorkerCommand(worker, destination, destination.Activity, Time.time, true);
             if (!worker.CommitPlayerCommand(command))
             {
@@ -405,6 +430,7 @@ namespace OpenPlan
         public void ReleaseTransientPlacement(WorkerAgent worker)
         {
             if (worker == null) return;
+            Reservations?.Release(worker, "Activity finished or interrupted");
             PlacementZone current = worker.ActivePlacementZone;
             if (current != null && current is not Workstation) current.Vacate(worker);
             worker.SetActivePlacementZone(worker.Desk);
@@ -523,7 +549,8 @@ namespace OpenPlan
                     if (zone == null || zone is Workstation || zone.Activity != activity) continue;
                     if (pass == 0 && zone == avoid) continue;
                     if (pass == 1 && zone != avoid) continue;
-                    if (!zone.TryOccupy(worker, out _)) continue;
+                    if (Reservations != null && !Reservations.TryCreate(worker, zone, activity,
+                            SimulationTime, out _, out _)) continue;
                     reserved = zone;
                     return true;
                 }
@@ -531,14 +558,139 @@ namespace OpenPlan
             return false;
         }
 
+        public bool TrySelectNeedRecovery(WorkerAgent worker, out NeedDecisionPlan plan)
+        {
+            plan = null;
+            if (worker == null || worker.Runtime == null || Navigation == null) return false;
+            AutonomyCounters.needEvaluations++;
+            if (!NeedAutonomyRules.TrySelectPriorityNeed(worker.Runtime, out NeedKind need,
+                    out NeedStatus status, out WorkerDecisionCategory category, out _)) return false;
+
+            autonomyCandidateBuffer.Clear();
+            for (int i = 0; i < autonomyZones.Count; i++)
+            {
+                PlacementZone zone = autonomyZones[i];
+                if (zone == null || zone is Workstation || !NeedAutonomyRules.ActivityImproves(zone.Activity, need)) continue;
+                autonomyCandidateBuffer.Add(BuildCandidate(worker, zone, need));
+            }
+            NeedDestinationCandidate selected = NeedAutonomyRules.SelectBest(worker.Runtime, need, status,
+                autonomyCandidateBuffer, worker.Definition.trait == WorkerTrait.Caffeinated);
+            if (selected == null)
+            {
+                AutonomyCounters.destinationRejections++;
+                return false;
+            }
+            float score = NeedAutonomyRules.Score(worker.Runtime, need, status, selected,
+                worker.Definition.trait == WorkerTrait.Caffeinated);
+            Vector3[] path = selected.Path;
+            if (path == null && !Navigation.TryFindPath(worker.transform.position, selected.Zone.PositionFor(worker),
+                    out path, out _))
+            {
+                AutonomyCounters.destinationRejections++;
+                return false;
+            }
+            string reason = category == WorkerDecisionCategory.StressRecovery ? "Stress is high" :
+                NeedCatalog.Get(need).DisplayName + " is " +
+                NeedCatalog.Get(need).StatusText(worker.Runtime.GetNeed(need)).ToLowerInvariant();
+            plan = new NeedDecisionPlan
+            {
+                Need = need,
+                Status = status,
+                Category = category,
+                Candidate = selected,
+                Score = score,
+                Reason = reason,
+                Path = path
+            };
+            return true;
+        }
+
+        public bool TryReserveNeedRecovery(WorkerAgent worker, NeedDecisionPlan plan, out string reason)
+        {
+            reason = null;
+            if (worker == null || plan?.Candidate?.Zone == null)
+            {
+                reason = "No recovery destination selected.";
+                return false;
+            }
+            if (plan.Candidate.Activity != PlacementActivity.LeaveOffice &&
+                !Reservations.TryCreate(worker, plan.Candidate.Zone, plan.Candidate.Activity,
+                    SimulationTime, out _, out reason))
+            {
+                AutonomyCounters.destinationRejections++;
+                return false;
+            }
+            AutonomyCounters.destinationSelections++;
+            AutonomyCounters.autonomousRecoveryDecisions++;
+            if (plan.Candidate.Fallback == DecisionFallbackLevel.OffSite) AutonomyCounters.offSiteFallbacks++;
+            return true;
+        }
+
+        private NeedDestinationCandidate BuildCandidate(WorkerAgent worker, PlacementZone zone, NeedKind need)
+        {
+            bool reachable = Navigation.TryFindPath(worker.transform.position, zone.PositionFor(worker),
+                out Vector3[] path, out float pathCost);
+            bool cooldown = true;
+            bool affordable = true;
+            float cashCost = 0f;
+            if (zone.Activity == PlacementActivity.GetWater) cooldown = worker.Runtime.waterCooldown <= 0f;
+            else if (zone.Activity == PlacementActivity.GetCoffee) cooldown = worker.CoffeeCooldownRemaining <= 0f;
+            else if (zone.Activity == PlacementActivity.BuySnack)
+            {
+                cooldown = worker.Runtime.vendingCooldown <= 0f;
+                affordable = Cash.CanAfford(ActivityRules.SnackCost);
+                cashCost = ActivityRules.SnackCost;
+            }
+            else if (zone.Activity == PlacementActivity.Smoke) cooldown = worker.Runtime.smokingCooldown <= 0f;
+            DecisionFallbackLevel fallback = zone.Activity == PlacementActivity.LeaveOffice ?
+                DecisionFallbackLevel.OffSite : DecisionFallbackLevel.None;
+            bool ownReservation = Reservations?.Get(worker)?.Zone == zone;
+            return new NeedDestinationCandidate
+            {
+                Zone = zone,
+                Activity = zone.Activity,
+                StableId = zone.StableIdentifier,
+                Enabled = zone.IsZoneEnabled,
+                Reachable = reachable,
+                HasCapacity = zone.Activity == PlacementActivity.LeaveOffice || ownReservation ||
+                              zone.EffectiveUsage < zone.Capacity,
+                CooldownReady = cooldown,
+                Affordable = affordable,
+                PathCost = pathCost,
+                Duration = NeedAutonomyRules.ActivityDuration(zone.Activity),
+                CashCost = cashCost,
+                ZonePriority = zone.InfluencePriority,
+                Reservations = zone.ReservationCount,
+                PreferenceBonus = worker.Desk == null && zone.Activity == PlacementActivity.Rest ? 24f :
+                    worker.Desk != null && zone.Activity == PlacementActivity.GetCoffee ? 18f : 0f,
+                Path = path,
+                Fallback = fallback
+            };
+        }
+
+        public void InvalidateNavigation()
+        {
+            Navigation?.Invalidate();
+            for (int i = 0; i < autonomyZones.Count; i++)
+                if (autonomyZones[i] != null && !autonomyZones[i].IsZoneEnabled)
+                    Reservations?.ReleaseForZone(autonomyZones[i], "Destination disabled");
+        }
+
         public Vector3 GetWanderPoint(WorkerAgent worker)
         {
-            Bounds bounds = Layout != null ? Layout.OverviewBounds : new Bounds(Vector3.zero, new Vector3(12f, 1f, 8f));
-            Vector3 extents = bounds.extents * .72f;
-            Vector3 point = bounds.center + new Vector3(Random.Range(-extents.x, extents.x), 0f,
-                Random.Range(-extents.z, extents.z));
-            point.y = worker == null ? 0f : worker.transform.position.y;
-            return point;
+            Bounds bounds = Layout != null ? Layout.WalkableBounds :
+                new Bounds(Vector3.zero, new Vector3(12f, 1f, 8f));
+            Vector3 extents = new Vector3(Mathf.Max(.25f, bounds.extents.x - .45f), 0f,
+                Mathf.Max(.25f, bounds.extents.z - .45f));
+            float y = worker == null ? 0f : worker.transform.position.y;
+            for (int attempt = 0; attempt < 16; attempt++)
+            {
+                Vector3 point = bounds.center + new Vector3(Random.Range(-extents.x, extents.x), 0f,
+                    Random.Range(-extents.z, extents.z));
+                point.y = y;
+                if (Navigation == null || Navigation.IsValidPoint(point)) return point;
+            }
+            return worker == null ? new Vector3(bounds.center.x, y, bounds.center.z) : worker.transform.position;
         }
 
         public void ToggleOverlay()
@@ -589,6 +741,7 @@ namespace OpenPlan
         public void Restart()
         {
             CarryController?.CancelCarry(true);
+            Reservations?.Clear("Restart");
             Time.timeScale = 1f;
             if (IsEstablishedPreview) OfficeStageSelection.SelectEstablishedPreview();
             else OfficeStageSelection.SelectForNextLoad(Stage);
@@ -598,9 +751,15 @@ namespace OpenPlan
         public void ReturnToMenu()
         {
             CarryController?.CancelCarry(true);
+            Reservations?.Clear("Return to menu");
             Time.timeScale = 1f;
             OfficeStageSelection.ClearPendingSelection();
             SceneManager.LoadScene("MainMenu");
+        }
+
+        private void OnDestroy()
+        {
+            Reservations?.Clear("Scene exit");
         }
     }
 }

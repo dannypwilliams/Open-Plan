@@ -159,7 +159,7 @@ The month ships a minimum build mode, not a complete construction game.
 
 Goal: five needs and paired qualifications drive autonomous, readable behavior in the existing starter office.
 
-Checkpoint status on 2026-07-20: Day 2's live five-need model, migrated activities, five-row inspector, restroom, and deterministic matrix ship in `01_FiveNeeds`. Day 3 comprehensive critical-need autonomy and every later item below remain future work; this roadmap is not complete.
+Checkpoint status on 2026-07-20: Day 2's live five-need model ships in `01_FiveNeeds`; Day 3's deterministic priority/scoring, reservations, obstacle-aware routing, fallbacks, explanations, and desk/phone return ship in `02_NeedAutonomy`. Qualifications, growth, and every later item below remain future work; this roadmap is not complete.
 
 ### Day 1 - Integration contract and instrumentation
 
@@ -179,7 +179,7 @@ Checkpoint status on 2026-07-20: Day 2's live five-need model, migrated activiti
 - Add EditMode tests for every decay, recovery, clamp, pause, and migration rule.
 - Gate: 100 deterministic simulated minutes produce no invalid values and no synchronized all-needs collapse.
 
-### Day 3 - Need autonomy and path decisions
+### Day 3 - Need autonomy and path decisions (delivered in `02_NeedAutonomy`)
 
 - Add bounded critical-need evaluation before normal distraction/work decisions.
 - Define destination selection, reservation, capacity, retry, timeout, and fallback behavior for each need.

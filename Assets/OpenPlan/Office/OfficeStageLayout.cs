@@ -37,6 +37,9 @@ namespace OpenPlan
         }
 
         public bool CanPlaceWorkerAt(Vector3 worldPoint, out string reason)
+            => CanNavigateWorkerAt(worldPoint, 0f, out reason);
+
+        public bool CanNavigateWorkerAt(Vector3 worldPoint, float clearance, out string reason)
         {
             if (ContainsXZ(LockedPropertyBounds, worldPoint))
             {
@@ -57,8 +60,9 @@ namespace OpenPlan
             {
                 if (obstacle == null || obstacle.VolumeCollider == null || !obstacle.VolumeCollider.enabled) continue;
                 Bounds bounds = obstacle.VolumeBounds;
-                if (worldPoint.x >= bounds.min.x && worldPoint.x <= bounds.max.x &&
-                    worldPoint.z >= bounds.min.z && worldPoint.z <= bounds.max.z)
+                float padding = Mathf.Max(0f, clearance);
+                if (worldPoint.x >= bounds.min.x - padding && worldPoint.x <= bounds.max.x + padding &&
+                    worldPoint.z >= bounds.min.z - padding && worldPoint.z <= bounds.max.z + padding)
                 {
                     reason = "That point is blocked by " + obstacle.StableIdentifier + ".";
                     return false;
@@ -66,6 +70,15 @@ namespace OpenPlan
             }
             reason = null;
             return true;
+        }
+
+        public bool IsUnlockedRegion(Vector3 worldPoint)
+        {
+            if (ContainsXZ(LockedPropertyBounds, worldPoint)) return false;
+            if (ContainsXZ(WalkableBounds, worldPoint)) return true;
+            for (int i = 0; i < additionalWalkableRegions.Count; i++)
+                if (ContainsXZ(additionalWalkableRegions[i], worldPoint)) return true;
+            return false;
         }
 
         private static bool ContainsXZ(Bounds bounds, Vector3 point)
@@ -119,6 +132,7 @@ namespace OpenPlan
                 if (zone == null) continue;
                 foreach (OfficeObstacleVolume obstacle in obstacles)
                 {
+                    if (obstacle == null || obstacle.transform == zone.transform) continue;
                     if (obstacle.VolumeBounds.Intersects(zone.FootprintBounds))
                     {
                         reason = zone.StableIdentifier + " overlaps " + obstacle.StableIdentifier;

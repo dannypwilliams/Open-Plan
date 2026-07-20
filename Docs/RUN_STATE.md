@@ -1,28 +1,29 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Endless Office Alpha `01_FiveNeeds`
-- Status: source, 168 automated tests, deterministic matrix, non-development Windows build, fresh ZIP, preserved exact extraction, public gameplay smoke, captures, manifest, guide, and documentation PASS
+- Current checkpoint: Endless Office Alpha `02_NeedAutonomy`
+- Status: source, 248 automated tests, deterministic autonomy matrix, non-development Windows build, fresh ZIP, preserved exact extraction, public-gameplay smoke, captures, manifest, guide, and documentation PASS
 - Date: 2026-07-20
-- Branch: `codex/endless-office-alpha`
+- Branch: `master` (explicit user direction)
 - Source commit: recorded in `manifest.md` beside the player
 - Default path: Main Menu -> Starter Office
 - Roster/economy: Morgan, Alex, Sam; three desks; `$0`; `$60` per effective-productivity minute; $1,000 deliberate expansion; no forced end
-- Live needs: Happiness high-good, Hunger high-urgent, Bathroom high-urgent, Inspiration high-good, Energy high-good; deterministic healthy offsets; all bounded 0-1
-- Stress: separate temporary influence, never a sixth need row
-- Inspector: five status rows, urgency wording, hover explanations, strongest helpful/harmful influences, verified at 1920x1080 and 1280x720
-- Restroom: visible single-capacity `starter.restroom.main` proximity activity; eight-second use; Bathroom -0.78; visible-worker and occupancy cleanup verified
-- Activities: Work, Rest, Water, Vending, Coffee, Smoking, Away, Social, and Restroom use centralized effects
-- Productivity: all five needs participate; Stress, skill, trait, workstation, and Focused Work retained; phone factor remains exactly 0.50 once
-- Time: scaled deterministic tick; pause freezes all five; 2x/4x proportional; selection/carry does not reset needs
-- Placement/hiring: Prompt 00 ordinary ground, influence, invalid restoration, pre-expansion hiring, physical expansion, and phone work remain green
-- Automated tests: 168/168 passing (98 EditMode, 70 PlayMode)
-- Deterministic matrix: 3/10/30 workers, 20 seeds, six contexts, 100 simulated minutes per row; zero invalid values, paused changes, unexpected identical workers, or repeat divergence
-- Package: `outputs/Playtests/EndlessOfficeAlpha/01_FiveNeeds/`
+- Live needs: Happiness, Hunger, Bathroom, Inspiration, and Energy; deterministic offsets; bounded 0-1; Stress remains separate
+- Autonomy: deterministic staggered evaluations, hard need priority, centralized multi-need destination scoring, 22-second player authority, three/five-second critical deferral, and 0.06 hysteresis margin
+- Destinations: Rest, Water, Vending, Coffee, Smoking, Restroom, and off-site recovery scored for benefit, path, capacity, cooldown, cost, reachability, and stable tie break
+- Navigation: deterministic 0.45 m four-neighbor A* with 0.28 m clearance, line-of-sight smoothing, registered obstacles, locked-property rejection, and expansion invalidation
+- Reservations: scene-owned incoming/arrived/active/suspended lifecycle; effective capacity includes incoming reservations; idempotent cleanup covers reroute, pickup, firing, disablement, timeout, restart, menu, destruction
+- Stuck recovery: progress timeout 2 s, maximum three repaths, alternate selection, validated last-position safety correction only as a final fallback
+- Return behavior: assigned desks survive recovery; deskless employees resume phone work at exact-once 0.50 workstation output
+- Inspector: activity, destination, autonomous/player owner, reason, addressed need, and reservation state
+- Automated tests: 248 passing (138 EditMode, 110 PlayMode)
+- Deterministic matrix: PASS; 903 runs; 20 seeds; 3/10/30 workers; 15 scenarios; three extended 100-minute runs; 0.74 s average critical response; 10.1% active advantage; zero invalid values/orphans/over-capacity/lost desks/duplicate charges/divergence
+- Package: `outputs/Playtests/EndlessOfficeAlpha/02_NeedAutonomy/`
 - Exact verification: `VerifiedExtract/OpenPlan.exe`, visible public-gameplay smoke PASS, menu return and clean quit
-- Evidence: eight required 1920x1080 captures plus one 1280x720 inspector regression
-- ZIP hash, bytes, timestamp, tests, commit, limitations, and source documents: `manifest.md`
-- Historical evidence: prior Checkpoint 00, PreviousRelease, ReleaseEvidence, and FriendDemo paths remain untouched
+- Evidence: twelve required 1920x1080 captures
+- ZIP hash, bytes, timestamp, tests, commit, navigation method, limitations, and source documents: `manifest.md`
+- Historical evidence: Checkpoint 00, Checkpoint 01, PreviousRelease, ReleaseEvidence, and FriendDemo paths remain untouched
 - Critical issues: none known
-- Prompt 02 boundary: comprehensive autonomous critical-need routing/reservations/fallback are not started
+- Human acceptance: explicitly waived by user; automated acceptance is complete and no manual acceptance is claimed
+- Prompt 03 boundary: qualification assignment and growth are not started
 - Later systems: qualifications, training, workdays/contracts, payroll/reputation, incidents, furniture, persistence, and final Alpha tuning remain future prompts
-- Next action: stop development and conduct the 15-20 minute Checkpoint 01 playtest before Prompt 02
+- Next action: stop after Checkpoint 02 delivery

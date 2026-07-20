@@ -55,6 +55,8 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneFoundationCheckpointMenuDriver>().Initialize();
             if (StandaloneFiveNeedsCheckpointDirector.Requested)
                 gameObject.AddComponent<StandaloneFiveNeedsCheckpointMenuDriver>().Initialize();
+            if (StandaloneNeedAutonomyCheckpointDirector.Requested)
+                gameObject.AddComponent<StandaloneNeedAutonomyCheckpointMenuDriver>().Initialize();
         }
 
         public void StartStarterOffice()

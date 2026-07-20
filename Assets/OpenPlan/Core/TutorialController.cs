@@ -39,7 +39,7 @@ namespace OpenPlan
                 case TutorialStep.PutThemToWork:
                     return "Release the worker at an available desk. Manual Work grants FOCUSED WORK: +20% productivity for 30 simulation seconds. Watch company cash begin to accrue.";
                 case TutorialStep.ManageTheirNeeds:
-                    return "Every employee has five live needs. Happiness, Inspiration, and Energy work best when high. Hunger and Bathroom are urgency meters, so lower is better. Stress is a separate temporary influence, not a sixth need.\n\nPlace a worker at Rest, Water, Vending, or the Restroom entrance. Full autonomous recovery arrives in the next milestone.";
+                    return "Every employee has five live needs. Happiness, Inspiration, and Energy work best when high. Hunger and Bathroom are urgency meters, so lower is better. Stress is a separate temporary influence, not a sixth need.\n\nEmployees now choose reachable recovery activities on their own, reserve limited stations, and return to desk or phone work. Your placement instruction takes priority unless a critical need cannot safely wait.";
                 case TutorialStep.RedirectADistraction:
                     return "Workers sometimes follow their personalities instead of the plan. The highlighted worker has entered a deterministic tutorial distraction.\n\nPick them up and redirect them to Work, Rest, or Water.";
                 case TutorialStep.TryTheOffice:
@@ -116,7 +116,8 @@ namespace OpenPlan
                                                     PackageVerificationDirector.Requested ||
                                                     StandaloneFriendDemoDirector.Requested ||
                                                     StandaloneFoundationCheckpointDirector.Requested ||
-                                                    StandaloneFiveNeedsCheckpointDirector.Requested;
+                                                    StandaloneFiveNeedsCheckpointDirector.Requested ||
+                                                    StandaloneNeedAutonomyCheckpointDirector.Requested;
             bool shouldAutoStart = StandaloneTutorialPlaythroughDirector.Requested ||
                                    (!Application.isBatchMode && !anotherAutomationOwnsTheSession);
             if (office.Stage == OfficeStage.StarterOffice && shouldAutoStart)

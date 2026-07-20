@@ -21,11 +21,14 @@ namespace OpenPlan
         public PlacementZoneVisualState CarryVisualState { get; private set; }
         public int Capacity { get; private set; }
         public int Occupancy => occupants.Count;
+        public int ReservationCount => incomingReservations.Count;
+        public int EffectiveUsage => occupants.Count + incomingReservations.Count;
         public Bounds FootprintBounds => FootprintCollider != null ? FootprintCollider.bounds : new Bounds(transform.position, Vector3.zero);
         public string AvailabilityLabel => carryStateText == null ? string.Empty : carryStateText.text;
         public bool IsTutorialHighlighted { get; private set; }
 
         private readonly HashSet<WorkerAgent> occupants = new HashSet<WorkerAgent>();
+        private readonly HashSet<WorkerAgent> incomingReservations = new HashSet<WorkerAgent>();
         private readonly List<WorkerAgent> occupantOrder = new List<WorkerAgent>();
         private Renderer[] renderers;
         private MeshRenderer footprintRenderer;
@@ -79,14 +82,30 @@ namespace OpenPlan
             if (!IsZoneEnabled) { reason = string.IsNullOrWhiteSpace(unavailableReason) ? ActivityLabel + " is locked." : unavailableReason; return false; }
             if (worker.Runtime != null && !worker.CanAcceptPlacementActivity(Activity, out reason)) return false;
             if (occupants.Contains(worker)) { reason = null; return true; }
-            if (occupants.Count >= Capacity) { reason = ActivityLabel + " is occupied."; return false; }
+            if (incomingReservations.Contains(worker)) { reason = null; return true; }
+            if (EffectiveUsage >= Capacity) { reason = ActivityLabel + " is occupied or reserved."; return false; }
             reason = null;
             return true;
+        }
+
+        public bool TryReserveIncoming(WorkerAgent worker, out string reason)
+        {
+            if (!CanAcceptWorker(worker, out reason)) return false;
+            if (occupants.Contains(worker) || incomingReservations.Contains(worker)) return true;
+            if (EffectiveUsage >= Capacity) { reason = ActivityLabel + " is fully reserved."; return false; }
+            incomingReservations.Add(worker);
+            return true;
+        }
+
+        public void ReleaseIncoming(WorkerAgent worker)
+        {
+            if (!ReferenceEquals(worker, null)) incomingReservations.Remove(worker);
         }
 
         public bool TryOccupy(WorkerAgent worker, out string reason)
         {
             if (!CanAcceptWorker(worker, out reason)) return false;
+            incomingReservations.Remove(worker);
             if (occupants.Add(worker)) occupantOrder.Add(worker);
             return true;
         }
@@ -103,8 +122,9 @@ namespace OpenPlan
 
         public void Vacate(WorkerAgent worker)
         {
-            if (worker == null) return;
+            if (ReferenceEquals(worker, null)) return;
             occupants.Remove(worker);
+            incomingReservations.Remove(worker);
             occupantOrder.Remove(worker);
         }
 
@@ -169,7 +189,7 @@ namespace OpenPlan
             if (carryStateText != null)
             {
                 carryStateText.text = valid ? "✓ VALID  " + ActivityLabel.ToUpperInvariant() :
-                    !IsZoneEnabled ? "× UNAVAILABLE" : Occupancy >= Capacity ? "× OCCUPIED" : "× NOT AVAILABLE";
+                    !IsZoneEnabled ? "× UNAVAILABLE" : EffectiveUsage >= Capacity ? "× OCCUPIED / RESERVED" : "× NOT AVAILABLE";
                 carryStateText.color = valid ? new Color(.38f,1f,.72f) : new Color(1f,.52f,.34f);
                 carryStateText.gameObject.SetActive(true);
             }
@@ -243,6 +263,7 @@ namespace OpenPlan
             switch (activity)
             {
                 case PlacementActivity.GetWater: return "Get Water";
+                case PlacementActivity.GetCoffee: return "Get Coffee";
                 case PlacementActivity.BuySnack: return "Buy Snack";
                 case PlacementActivity.LeaveOffice: return "Leave Office";
                 case PlacementActivity.UseRestroom: return "Use Restroom";

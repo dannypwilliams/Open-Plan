@@ -2,9 +2,9 @@
 
 ## Stage and time model
 
-`OfficeStageSelection` resolves `StarterOffice`, `StarterOfficeExpanded`, or `EstablishedOffice`. The Main Menu starts `StarterOffice`. Player stages remain open-ended: there is no countdown, automatic purchase, forced success, or forced failure.
+`OfficeStageSelection` resolves `StarterOffice`, `StarterOfficeExpanded`, or `EstablishedOffice`. The Main Menu starts `StarterOffice`. Player stages are open-ended: there is no countdown, automatic purchase, forced success, or forced failure.
 
-All continuous need updates use scaled `Time.deltaTime` through one `NeedSimulation.Tick` path. Pause and tutorial/help modals that pause the simulation produce zero need change. Two-times and four-times speed advance needs proportionally; equivalent simulated time is deterministic regardless of partitioning. Carrying does not reset or duplicate needs, and selection has no simulation effect.
+Continuous need updates, decision timers, navigation, reservations, activities, cooldowns, and income use scaled simulation time. Pause and blocking tutorial/help modals produce zero simulation progress. Two-times and four-times speed advance equivalent simulated time deterministically. Carrying suspends movement and reservation state without resetting needs.
 
 ## Authoritative five-need model
 
@@ -18,50 +18,57 @@ Exactly five player-facing definitions are centrally discoverable through `NeedC
 | Inspiration | high | 0.72 | -0.00026 |
 | Energy | high | 0.86 | -0.00025 |
 
-Employees receive a stable +/-0.02 offset derived from employee identity and campaign seed. Repeating the seed reproduces the same healthy starting values. `WorkerRuntimeState.mood` is a compatibility property that reads and writes authoritative Happiness; there is no independent Mood value. Stress starts near 0.22 and remains a separate temporary influence, not a need definition or sixth inspector bar.
+Employees receive a stable +/-0.02 identity/seed offset. High-is-good needs are Caution below 0.55, Urgent below 0.32, and Critical below 0.15. Urgency needs are Caution above 0.44, Urgent above 0.68, and Critical above 0.85. Values and Stress clamp to 0-1, with invalid floating-point inputs restored to defaults. `mood` is a compatibility alias for Happiness. Stress is a separate influence, never a sixth need.
 
-Status thresholds are shared by simulation and UI. High-is-good needs are Caution below 0.55, Urgent below 0.32, and Critical below 0.15. Urgency needs are Caution above 0.44, Urgent above 0.68, and Critical above 0.85. Values and Stress clamp to 0-1, with invalid floating-point inputs restored to their defaults.
+Qualification and incident hooks remain neutral in Checkpoint 02.
 
-Qualification and incident modifier hooks exist but return the neutral multiplier `1.0` in this checkpoint.
+## Autonomous decision ownership
 
-## State and activity effects
+`WorkerAgent` remains the single authoritative state machine. Its structured decision record identifies category, addressed need, selected activity and destination, score, reason, start time, player origin, reservation status, retry count, last progress, fallback, and remaining authority. Gameplay never parses player-facing strings.
 
-Work multiplies Energy drain by 4.5, Inspiration drain by 1.85, Happiness drain by 1.55, and Hunger/Bathroom progression by 1.10. Desk and phone work share this path. Restorative states continue normal Hunger and Bathroom progression; they only slow passive decay of high-is-good needs before applying their completion effect.
+Need evaluation is deterministic and staggered by employee identity, campaign seed, and evaluation index:
 
-Completion effects occur once:
+| Worst status | Reevaluation interval |
+|---|---:|
+| Healthy | 3-6 s |
+| Caution | 2-4 s |
+| Urgent | 1-2 s |
+| Critical | 0.35-1 s |
 
-- Rest: Energy +0.32, Happiness +0.14, Inspiration +0.12, Stress -0.22.
-- Water: Energy +0.06, Happiness +0.04, Inspiration +0.03, Bathroom +0.08, Stress -0.04.
-- Vending success: Hunger -0.72, Happiness +0.08, Energy +0.06, Stress -0.05. One use costs $15 once.
-- Vending malfunction: Hunger -0.08, Happiness -0.04, Energy +0.01; the one-time $15 charge remains.
-- Coffee: Energy +0.34, Inspiration +0.12, Happiness +0.04, Bathroom +0.06, Stress -0.08. Caffeinated Energy recovery is +0.50.
-- Smoking: Stress -0.30, Happiness +0.07, Inspiration +0.06; Hunger is unchanged.
-- Restroom: Bathroom -0.78, Happiness +0.02, Stress -0.04 after eight seconds.
-- Social time per second: Happiness +0.018, Inspiration +0.008, Stress -0.009.
-- Thirty seconds Away: Energy +0.38, Happiness +0.15, Inspiration +0.16, Hunger -0.35, Bathroom -0.40, Stress -0.35, applied continuously and never again on completion.
+The centralized hard-priority order is Critical Bathroom, Critical Hunger, Critical Energy, other Critical needs, Urgent Bathroom, Urgent Hunger, Urgent Energy, other Urgent needs, Stress recovery, ordinary personality behavior, then Work. Once recovery begins, hysteresis keeps its destination until success, invalidation, timeout, or a higher hard-priority emergency. A need decision clears only after it exits urgent range by 0.06.
 
-The restroom is an explicit single-capacity `UseRestroom` placement activity at `starter.restroom.main`. It has a proximity radius larger than its footprint. Completion, interruption, firing, restart, scene destruction, and returning to ordinary behavior all release transient occupancy and keep the worker visible.
+Player activity placement has 22 seconds of protected authority or lasts through completion. Critical Bathroom may override after three deferred simulation seconds; critical Hunger and other critical needs after five. Nearly complete recovery activities with three seconds or less remaining are protected. Ordinary ground preserves the final position, settles briefly, and then re-enters this same decision path.
 
-Prompt 02 will add comprehensive critical-need destination selection, reservation arbitration, retry/fallback, and navigation recovery. Existing personality decisions remain limited and must not be treated as that system.
+## Destination scoring and recovery mapping
 
-## Worker placement
+The cached, stable-ID-sorted station catalog is scanned only on a scheduled decision. The centralized score combines hard priority, severity, recovery amount, multi-need benefit, path cost, activity duration, cash cost, reservation demand, stable priority, context preference, and off-site cost. Locked, disabled, full, cooldown-blocked, unaffordable, irrelevant, or unreachable candidates receive no score. Ties use ordinal stable ID.
 
-The public placement activities are Work, Rest, Get Water, Buy Snack, Smoke, Leave Office, and Use Restroom. Zones expose an influence radius and priority. Overlap resolution is higher priority, shorter distance, then ordinal stable identifier.
+- Happiness: Rest, Water, Vending, Coffee, Smoking, or time away.
+- Hunger: affordable Vending; otherwise free off-site meal.
+- Bathroom: Restroom; otherwise slower free off-site restroom use.
+- Inspiration: Rest, Water, Coffee, Smoking, or time away.
+- Energy: Coffee, Rest, Water, Vending, or time away.
 
-Ordinary unlocked ground creates a `GroundPlacementCommand`, preserves all five needs and any desk assignment, pauses briefly, then resumes decisions. It does not spend, reserve capacity, or apply a cooldown. Walls, registered obstacles, voids, locked property, unavailable activities, and occupied stations reject with a specific explanation and restore the complete carry snapshot.
+Coffee loses utility when Bathroom urgency is elevated. Desk-assigned workers have a modest Coffee preference; phone workers have a Rest preference. These are current context hooks, not Prompt 03 qualifications.
 
-## Productivity and income
+## Reservation lifecycle
 
-```text
-effective = clamp(skill x Energy x Happiness x Inspiration x Hunger penalty x Bathroom penalty
-                  x inverse Stress x workstation x trait x focused-work, 0.10, 2.50)
-cash = effective productivity x simulation seconds x $60 / 60
-```
+`ActivityReservationService` is owned by the current `OfficeDirector`; no reservation survives a scene. A worker holds at most one reservation. Incoming reservations count against zone capacity, convert to occupancy on arrival, become active when the activity begins, and release idempotently on completion, reroute, pickup, firing, disablement, timeout, restart, menu return, or scene destruction. Destroyed workers are cleaned by stored reservation identity. A full destination causes deterministic alternate-station, alternate-activity, off-site, or delayed retry behavior; workers never intentionally stack beyond capacity.
 
-Energy maps from 0.55 to 1.10, Happiness from 0.70 to 1.10, Inspiration from 0.78 to 1.08, and inverse Stress from 1.15 to 0.55. Hunger and Bathroom have no penalty while healthy, then graduate from 1.00 toward 0.55 across caution, urgent, and critical ranges. Skill, contextual trait, workstation, and the non-stacking 1.20 Focused Work modifier remain intact.
+## Navigation and recovery
 
-Deskless employees use `WorkerState.Unassigned` internally but are presented as `Working from phone`. Their workstation factor is exactly `0.50` once; displayed output, cash accrual, pause behavior, and need simulation use the same effective value.
+`OfficeNavigationService` uses a deterministic 0.45 m four-neighbor A* grid with 0.28 m worker clearance over unlocked walkable regions. Registered walls, partitions, desks, permanent obstacles, locked property, and voids are excluded. Exact destinations are validated, A* paths are line-of-sight smoothed, and paths are cached on the decision rather than recalculated each frame. Expansion exposes a safe invalidation/rebuild hook for future geometry work.
 
-## Expansion and hiring
+Workers must follow the path and reach arrival tolerance before an activity starts or charges. Lack of meaningful progress for two seconds triggers at most three deterministic repath attempts. Repeated failure releases the reservation, schedules a new decision, and only uses the last confirmed valid position as a final safety correction. This bounded recovery cannot loop permanently.
 
-Starter Office begins at $0. The neighboring unit costs exactly $1,000 and never purchases automatically. Hiring is available whenever the candidate is affordable and is not capped by desk count. The HUD reports Team and Desks separately. Physical expansion still opens the wall, unlocks ground, and activates three additional desks.
+## Activity effects and return behavior
+
+Completion effects remain exact-once: Rest (+0.32 Energy, +0.14 Happiness, +0.12 Inspiration, -0.22 Stress), Water (+0.06 Energy, +0.04 Happiness, +0.03 Inspiration, +0.08 Bathroom), Vending (-0.72 Hunger on success, $15 once), Coffee (+0.34 Energy or +0.50 Caffeinated), Smoking (-0.30 Stress, +0.07 Happiness, +0.06 Inspiration), Restroom (-0.78 Bathroom), and 30-second Away recovery across all needs. Full values are in `FINAL_TUNING_VALUES.md`.
+
+After recovery, an assigned employee navigates back to the same desk. A deskless employee returns to readable `Working from phone` behavior. Phone output uses the exact 0.50 workstation factor once and the same five-need/autonomy path. Pause freezes both.
+
+## Placement, economy, and expansion
+
+Zones expose influence radius and priority; overlap resolution is higher priority, shorter distance, then ordinal stable ID. Ordinary ground creates a `GroundPlacementCommand`. Walls, registered obstacles, voids, locked property, unavailable activities, and occupied or reserved stations reject transactionally and restore the carry snapshot.
+
+Starter Office begins at $0. Desk and phone work earn $60 per effective-productivity minute. Hiring is available whenever affordable and is not capped by desks. The HUD reports Team and Desks separately. The neighboring unit costs exactly $1,000 and never purchases automatically.

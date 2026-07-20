@@ -87,6 +87,10 @@ namespace OpenPlan
                 float modifier = Mathf.Lerp(0.90f, 1.10f, light[i]) * Mathf.Lerp(1.06f, 0.94f, noise[i]);
                 station.Configure(i, noise[i], light[i], modifier, zones[i], i >= 8,
                     $"established.work.{i + 1:00}", true);
+                OfficeObstacleVolume deskObstacle = desk.AddComponent<OfficeObstacleVolume>();
+                deskObstacle.Configure($"furniture.established.work.{i + 1:00}",
+                    new Vector3(0f,.48f,0f), new Vector3(1.65f,1f,.82f));
+                Layout.RegisterObstacle(deskObstacle);
                 Workstations.Add(station);
                 Vector3 forward = facing * Vector3.forward;
                 catalog.Spawn("OfficeChair", root, positions[i] - forward * 0.92f, facing, Vector3.one * 0.92f);
@@ -110,6 +114,7 @@ namespace OpenPlan
             GameObject coffeeObject = catalog.Spawn("CoffeeMachine", root, new Vector3(10.8f, 0f, -6.9f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
             Coffee = coffeeObject.AddComponent<CoffeeStation>();
             Coffee.Configure(StationKind.Coffee, new Vector3(-1.05f, 0f, 0f));
+            AddPlacementZone(coffeeObject, PlacementActivity.GetCoffee, new Vector3(-1.05f, 0f, 0f));
             GameObject vending = catalog.Spawn("VendingMachine", root, new Vector3(10.8f, 0f, -8.5f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
             AddPlacementZone(vending, PlacementActivity.BuySnack, new Vector3(-1.05f, 0f, 0f));
             catalog.Spawn("Counter", root, new Vector3(8.6f, 0f, -9.0f), Quaternion.identity, Vector3.one);

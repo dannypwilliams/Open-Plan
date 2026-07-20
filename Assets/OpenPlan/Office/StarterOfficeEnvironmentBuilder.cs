@@ -65,7 +65,7 @@ namespace OpenPlan
                 expanded ? (Bounds?)null :
                     new Bounds(new Vector3(10f, 0f, 0f), new Vector3(8f, 1f, 10.6f)));
             Layout.RegisterWalkableRegion(new Bounds(new Vector3(-10.05f, 0f, 3.35f),
-                new Vector3(3f, 1f, 3.2f)));
+                new Vector3(4.2f, 1f, 3.2f)));
             Layout.AddOverviewPoint("starter-southwest", new Vector3(-8f, 0f, -5.5f));
             Layout.AddOverviewPoint("starter-northeast", new Vector3(6f, 0f, 5.5f));
             Layout.AddOverviewPoint("neighbor-southeast", new Vector3(14f, 0f, -5.5f));
@@ -170,6 +170,8 @@ namespace OpenPlan
             GameObject coffee = catalog.Spawn("CoffeeMachine", root, new Vector3(2.2f, 0f, 4.55f), Quaternion.identity, Vector3.one * .72f);
             Coffee = coffee.AddComponent<CoffeeStation>();
             Coffee.Configure(StationKind.Coffee, new Vector3(0f,0f,-.9f));
+            AddPlacementZone(coffee, PlacementActivity.GetCoffee, new Vector3(0f,0f,-.9f), "Get Coffee",
+                "starter.coffee.machine", true, new Vector2(1.2f, 1f), 1);
 
             GameObject restroom = new GameObject("Starter Restroom Entrance");
             restroom.transform.SetParent(root, false);
@@ -350,6 +352,8 @@ namespace OpenPlan
             float light = stableIdentifier.Contains("neighbor") ? .42f : index == 2 ? .78f : .60f;
             station.Configure(index, noise, light, Mathf.Lerp(.93f,1.05f,light),
                 expansion ? "Future desk location" : "Modest starter desk", expansion, stableIdentifier, zoneEnabled);
+            AddObstacle(desk, "furniture." + stableIdentifier, new Vector3(0f,.48f,0f),
+                new Vector3(1.65f,1f,.82f));
             Workstations.Add(station);
 
             Vector3 forward = facing * Vector3.forward;

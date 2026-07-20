@@ -1,38 +1,43 @@
-# Test Report - Endless Office Alpha Checkpoint 01
+# Test Report - Endless Office Alpha Checkpoint 02
 
-Checkpoint `01_FiveNeeds` on Unity 6000.5.1f1:
+Checkpoint `02_NeedAutonomy` on Unity 6000.5.1f1:
 
 | Suite | Passed | Failed |
 |---|---:|---:|
-| EditMode | 98 | 0 |
-| PlayMode | 70 | 0 |
-| Total | 168 | 0 |
+| EditMode | 138 | 0 |
+| PlayMode | 110 | 0 |
+| Total | 248 | 0 |
 
-The package workflow reruns both complete suites from the final committed source and records exact durations in `test-results/` and `manifest.md` beside the build.
+The package workflow reruns both complete suites from the final committed source and records XML and logs beside the player. The totals preserve all 98/70 Checkpoint 01 contracts and add 40 EditMode plus 40 PlayMode autonomy cases.
 
-EditMode coverage includes exactly five unique definitions; directions, defaults, thresholds, tooltips, access/change APIs, bounds and invalid-number recovery; Mood/Happiness aliasing; deterministic offsets; passive/work/phone/rest/away effects; zero delta and speed partitioning; all centralized activity effects; monotonic five-need productivity; graduated urgency penalties; the exact-once phone factor; neutral future hooks; large deltas; a 100-minute 30-worker soak; and deterministic repeat equivalence. All 58 Checkpoint 00 EditMode contracts remain covered.
+EditMode coverage includes deterministic evaluation intervals, need priority, critical bounds, mappings, centralized scoring, stable ties, multi-need choices, eligibility filters, unaffordable/off-site fallbacks, player authority, hysteresis, emergency interruption, reservation ownership/capacity/idempotence/expiration, pause equivalence, phone scoring, desk preservation, locked/void path rejection, bounded stuck recovery, cleanup, safety points, and finite scores.
 
-PlayMode coverage includes live changes to every need, pause/modal freezing, equivalent simulated partitions, selection and carry preservation, ordinary ground, Rest, Water, Vending, Smoking, Away, explicit Restroom influence/use/recovery/capacity/restart cleanup, phone-worker need changes and income, five inspector rows, urgency wording, no Stress row, 1280x720 warning readability, tutorial truthfulness, healthy non-synchronous starting offsets, hiring, expansion, proximity, invalid restoration, menu return, and preserved Established Office behavior.
+PlayMode coverage includes all five autonomous responses; affordable and unaffordable Hunger paths; Restroom contention and fallback; arrival-before-activity; wall/partition routing; locked-unit exclusion; arbitrary-ground recovery; desk and phone return; pickup, firing, disablement, restart, and scene-exit cleanup; pause/resume; critical interruption of distractions, social behavior, and player commands; bounded failure recovery; inspector/world explanations; preserved placement, proximity, phone productivity, hiring, exact-once costs, cooldowns; and a passive simulated workday.
 
-## Deterministic acceptance matrix
+## Deterministic autonomy matrix
 
-`01_FiveNeeds_Deterministic_Report.md` covers 3, 10, and 30 workers, 20 seeds, 100 simulated minutes per row, and Active Work, Phone Work, Resting, Mixed Activity, Pause/Resume, and Speed Changes.
+`02_NeedAutonomy_Simulation_Report.md` covers 20 seeds, 3/10/30 workers, 15 scenarios, ten simulated minutes per row, and one extended 100-minute run for each roster size: 903 runs total.
 
-- Invalid, NaN, infinite, or out-of-range values: 0.
-- Need changes while paused: 0.
-- Unexpected identical workers: 0; fully saturated boundary states are explicitly classified as expected, not hidden.
-- Deterministic repeat divergence: 0.
-- Mixed activity: no caution/urgent state and no simultaneous critical need across the 100-minute run.
-- Uninterrupted Active/Phone work first reached caution around 4.33 minutes and urgent around 7.75 minutes; those intentionally pathological 100-minute contexts eventually reached five simultaneous critical needs.
-- Every 30-worker row completed in under 1.2 seconds on the verification machine; the coarse managed-memory delta showed no runaway growth. This is not a replacement for profiler-grade allocation capture.
+- Outcome: PASS.
+- Critical needs observed: 28,331.
+- Average critical threshold-to-response: 0.74 s.
+- Average response-to-recovery: 30.13 s.
+- Maximum critical duration: 34.00 s, including documented slower off-site fallback.
+- Reservations created/released: 30,036 / 30,036.
+- Invalid need values, orphaned reservations, capacity violations, deterministic divergences, failed work resumes, lost desks, and duplicate charges: 0.
+- Active-management output advantage: 10.1%, inside the 10-25% target.
+- Runtime decision scans are staggered; stable stations are cached; selected paths are reused; no complete decision scan or path request runs every frame.
+- The matrix reports setup/candidate managed allocations rather than profiler-grade runtime allocation data.
+
+Live PlayMode tests separately force repath, stuck recovery, station disablement, cleanup, and final safety behavior. Zero matrix reroutes or stuck corrections means its normal deterministic scenarios did not require those exceptional paths, not that the paths are untested.
 
 ## Exact package gate
 
 - Windows x64, non-development, Mono player built from clean committed source.
-- Fresh `SillyOfficeSim_01_FiveNeeds_Windows.zip` generated from `Windows/`.
-- That exact ZIP extracted and preserved under `VerifiedExtract/`.
-- Exact extracted executable launched visibly and followed public gameplay paths from main menu through `$0` start, live needs, natural Water-driven warning, restroom influence/use/recovery, pause, real earnings, pre-expansion deskless hire, phone work, 1280 check, menu return, and clean quit.
-- No artificial cash, private need mutation, or editor-only screenshot mockup is used.
-- Nine genuine gameplay screenshots are dimension-checked: eight required 1920x1080 views plus a 1280x720 inspector regression capture.
+- Fresh `SillyOfficeSim_02_NeedAutonomy_Windows.zip` generated from `Windows/` without overwriting prior evidence.
+- That exact ZIP is extracted and preserved under `VerifiedExtract/`.
+- The exact extracted executable launches visibly at 1920x1080 and uses public gameplay APIs from Main Menu through natural cash, a deskless hire, natural need pressure, player commands, a critical Bathroom override, autonomous recovery, desk/phone return, ten simulated minutes, menu return, and clean quit.
+- No artificial cash or direct need mutation is used.
+- Twelve genuine 1920x1080 gameplay screenshots are dimension-checked and then visually inspected.
 
-Historical friend-demo and Checkpoint 00 evidence remains preserved and is not presented as Prompt 01 evidence.
+Historical Checkpoint 00, Checkpoint 01, friend-demo, previous-release, and release evidence remains preserved.
