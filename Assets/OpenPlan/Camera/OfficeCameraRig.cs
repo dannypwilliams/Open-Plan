@@ -34,6 +34,7 @@ namespace OpenPlan
         private Vector3 overviewCenter;
 
         public float OrthographicSize => cameraComponent != null ? cameraComponent.orthographicSize : targetSize;
+        public float TargetOrthographicSize => targetSize;
         public bool IsFollowing => follow.Active;
         public Vector3 OverviewCenter => overviewCenter;
         public Bounds PanBounds => office != null && office.Layout != null ? office.Layout.PanBounds : new Bounds(Vector3.zero, new Vector3(22f, 1f, 16f));
@@ -76,8 +77,7 @@ namespace OpenPlan
             if (mouse != null)
             {
                 float scroll = mouse.scroll.ReadValue().y;
-                if (Mathf.Abs(scroll) > .1f)
-                    targetSize = Mathf.Clamp(targetSize - scroll * profile.zoomSensitivity, profile.closeSize, OverviewSize());
+                if (Mathf.Abs(scroll) > .0001f) ApplyZoom(scroll);
                 if (mouse.middleButton.isPressed && (office == null || office.CarryController == null || !office.CarryController.BlocksWorldInput))
                 {
                     Vector2 delta = mouse.delta.ReadValue();
@@ -174,6 +174,19 @@ namespace OpenPlan
         }
 
         private float OverviewSize() => office != null && office.Layout != null ? office.Layout.OverviewOrthographicSize : profile.overviewSize;
+
+        public void ApplyZoom(float scrollY)
+        {
+            targetSize = ApplyZoomInput(targetSize, scrollY, profile.closeSize, OverviewSize(), profile.zoomSensitivity);
+        }
+
+        public static float ApplyZoomInput(float currentSize, float scrollY, float closeSize, float overviewSize, float sensitivity)
+        {
+            if (Mathf.Abs(scrollY) <= .0001f) return Mathf.Clamp(currentSize, closeSize, overviewSize);
+            float notches = scrollY / 120f;
+            float factor = Mathf.Pow(1f - Mathf.Clamp(sensitivity, .01f, .45f), notches);
+            return Mathf.Clamp(currentSize * factor, closeSize, overviewSize);
+        }
 
         private Vector3 CurrentPivot() => transform.position + transform.forward * 38f;
 

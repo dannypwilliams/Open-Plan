@@ -1,38 +1,57 @@
-# OPEN PLAN — Art Bible
+# SILLY OFFICE SIM - Art Bible
 
 ## Visual identity
 
-A cozy, authored 2.5D architectural miniature floating in a `#100B0A` void. Geometry is low-detail, beveled and silhouette-first. Architecture uses restrained broad color fields; workers are noticeably more saturated.
+A dense, slightly oppressive late-1990s/early-2000s office rendered as an authored low-poly isometric miniature. The office should feel overfilled, fluorescent, and recognizably human: repeating cubicle partitions and institutional finishes are broken up by personal clutter, glowing CRTs, paper, plants, mugs, and localized pools of dramatic light.
+
+The game is stylized rather than photorealistic. Geometry remains beveled, silhouette-first, and efficient enough for large crowds. Empty floor is treated as negative space with intent, not as unfinished space.
 
 ## Palette
 
-- Carpet `#2C2D30`, walnut `#704735`, slab edge `#60352D`
-- Cream walls `#D7C7A8`, burgundy fabric `#6A3440`
-- Teal shadow `#233D42`, warm metal `#716A62`
-- Warm key `#FFC27A`, practical amber `#FF9B52`, pale highlight `#FFE0B2`
-- Cool fill `#315C68`, cyan utility `#42B8C4`, monitor `#54A7CE`, exit green `#6FC38B`
+- Blue-gray carpet `#53616D`
+- Aged gray partitions `#B8B5AA`
+- Warm off-white walls and CRT plastic `#D8D2BF`
+- Charcoal desks and equipment `#343638`
+- Deep blue-black shadows and exterior void `#171C20`
+- Burgundy upholstery and warnings `#7E3F42`
+- Institutional teal `#3E7778`
+- Mustard paper and signage `#C79943`
+- Cyan monitor, water, and utility light `#6FD5E8`
+- Amber practical light `#FF9A55`
 
-## Camera and composition
-
-Orthographic, 45° yaw and roughly 58° downward pitch. Close size 4.8 frames a worker and desk; local size 10 shows a cluster; overview size 18.5 includes the 30×22 m floor and dark breathing room. No abrupt cuts or unrestricted rotation.
-
-## Proportions and materials
-
-Workers are about 1.55 m with oversized heads and compact limbs. Desks are 0.75 m high. Partial walls are 1.15–1.8 m. One- or two-segment bevels catch the warm key. Shared URP materials and property blocks provide color variants; high-frequency textures are avoided.
+Workers use stronger accents than the environment so they remain readable against cubicle repetition.
 
 ## Lighting
 
-One soft warm directional hero light establishes late afternoon. A restrained cool fill preserves silhouettes. Emissive monitors, signs, coffee and water fixtures identify activity zones; only selected practical lights illuminate locally. Ambient occlusion, shadows and bevels ground every prop.
+Use cool neutral fluorescent ambience as the office-wide base, then create drama with selective practical lights. Amber desk and break-room lights, cyan monitors, exit signs, and the water cooler form readable destinations. Soft shadows, bevel highlights, and stronger ambient occlusion ground every prop.
 
-## UI
+Do not solve readability by flooding the whole scene with light. Work clusters may be bright while circulation lanes and unused units remain darker. No playable activity space may collapse to pure black.
 
-World-first composition with compact edge panels: warm translucent charcoal, cream paper, burgundy borders, burnt orange actions and teal status. Hiring resembles résumé cards; the report resembles printed performance paperwork. UI must remain usable at 1280×720.
+The smoking area is a modeled exterior alcove with a visible floor, enclosing walls, bench, ashtray, warm wall light, cool spill from the office, and subtle haze. The water cooler receives a focused cyan-white pool of light and a strong highlight.
 
-## Animation and selection
+## Density and composition
 
-Movement is toy-like and readable: walk bob, arm typing, mug raise, talk gestures, stretch, shock, celebration and box carry. A thin teal/gold floor ring indicates selection. State icons are small, bounded and face the camera.
+- Build repeating cubicle rhythms with varied partition openings and orientations.
+- Every active desk receives a monitor, keyboard, mouse, and at least two pieces of controlled clutter.
+- Roughly half of desks receive a lamp, mug, plant, paper stack, or file tray.
+- Filing cabinets, bins, boxes, notice boards, clocks, and plants anchor circulation edges.
+- Keep primary walking routes clear and visually darker than activity clusters.
+- Locked future space may be sparse, but it must still look intentionally dormant rather than missing.
 
-## Overlay and screenshots
+## Camera
 
-Productive desks glow muted gold/green; distraction is coral; low energy is blue-gray; conversation uses rings. The overlay never becomes an opaque heat map. Captures preserve the void, warm/cool contrast and readable worker silhouettes.
+Orthographic, 45-degree yaw and roughly 58-degree downward pitch. The overview shows the owned office, adjacent opportunity, and dark breathing room. A standard wheel should travel from overview to close view in about ten notches. Panning remains bounded and rotation remains fixed.
 
+## UI and feedback
+
+UI uses translucent charcoal, warm paper, burgundy borders, mustard actions, and institutional teal status. Persistent panels stay compact so the office remains the focus. Placement feedback must communicate valid ground, nearby activity influence, obstacles, and locked space without relying on color alone.
+
+Employee cards prioritize name, two qualifications, current activity, productivity, and five needs: Happiness, Hunger, Bathroom, Inspiration, and Energy. Incident presentation uses the same visual language as internal office forms and warning notices.
+
+## Animation and effects
+
+Movement is readable and slightly toy-like: walk bob, typing, phone work, eating, urgency, conversation, trait idles, incident reactions, and box carry. Incident effects are temporary and legible—paper jams, sparks, puddles, blinking routers, smoke, or fallen furniture—and always restore cleanly when resolved.
+
+## Acceptance
+
+At overview scale the player can identify work clusters, amenities, locked space, and every worker. At close scale the office contains enough individualized clutter and lighting detail to reward inspection. Screenshots must preserve cool fluorescent ambience, warm/cyan practical contrast, readable silhouettes, and a complete smoking area.

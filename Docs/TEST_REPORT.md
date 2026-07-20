@@ -1,22 +1,38 @@
-# Test Report
+# Test Report - Endless Office Alpha Checkpoint 01
 
-Worker-placement friend-demo release on Unity 6000.5.1f1:
+Checkpoint `01_FiveNeeds` on Unity 6000.5.1f1:
 
-| Suite | Passed | Failed | Duration |
-|---|---:|---:|---:|
-| EditMode | 49 | 0 | 0.222 s |
-| PlayMode | 55 | 0 | 90.154 s |
-| Total | 104 | 0 | 90.376 s |
+| Suite | Passed | Failed |
+|---|---:|---:|
+| EditMode | 98 | 0 |
+| PlayMode | 70 | 0 |
+| Total | 168 | 0 |
 
-EditMode coverage includes deterministic simulation speed, cash, productivity, exact activity effects, personalities, expansion affordability, tutorial contracts, the runtime camera-profile resource, and five release scenarios across 20 fixed seeds. PlayMode covers stage initialization, pickup/drag/cancel/reject, all activity lifecycles and cleanup, needs, personality status, cash, expansion and wall state, hiring after expansion, tutorial progression, modal ownership, restart behavior, UI at 1280x720 and 1920x1080, and the Established Office systems.
+The package workflow reruns both complete suites from the final committed source and records exact durations in `test-results/` and `manifest.md` beside the build.
 
-## Standalone and package gates
+EditMode coverage includes exactly five unique definitions; directions, defaults, thresholds, tooltips, access/change APIs, bounds and invalid-number recovery; Mood/Happiness aliasing; deterministic offsets; passive/work/phone/rest/away effects; zero delta and speed partitioning; all centralized activity effects; monotonic five-need productivity; graduated urgency penalties; the exact-once phone factor; neutral future hooks; large deltas; a 100-minute 30-worker soak; and deterministic repeat equivalence. All 58 Checkpoint 00 EditMode contracts remain covered.
 
-- Input smoke: 12/12 at 1280x720 and 12/12 at 1920x1080.
-- Water lifecycle smoke: 9/9.
-- Twenty-minute simulated behavior soak at 20x: 27 observations passed; 57 distractions; no permanent stuck/idle worker, stale carry, orphaned smoking effect, missing roster member, or capacity violation.
-- Friend-demo extracted package: 86 checks, 0 failures, 21 real-game screenshots, no artificial purchase funds.
-- Package lifecycle checks passed for Starter, pre-expanded Starter, and Established stages, including restart, menu return, and clean quit. The Established run also passed hire, reassignment, fire, and finish-day behavior.
-- Build: non-development Windows x64 player succeeded at 103,051,945 reported bytes.
+PlayMode coverage includes live changes to every need, pause/modal freezing, equivalent simulated partitions, selection and carry preservation, ordinary ground, Rest, Water, Vending, Smoking, Away, explicit Restroom influence/use/recovery/capacity/restart cleanup, phone-worker need changes and income, five inspector rows, urgency wording, no Stress row, 1280x720 warning readability, tutorial truthfulness, healthy non-synchronous starting offsets, hiring, expansion, proximity, invalid restoration, menu return, and preserved Established Office behavior.
 
-The exact extracted executable completed pickup, valid and invalid placement, all six player activities, a natural distraction and redirection, live income to $1,000, exact purchase deduction, wall opening, continued earnings, a new hire placement, Established preview launch, menu return, and clean quit.
+## Deterministic acceptance matrix
+
+`01_FiveNeeds_Deterministic_Report.md` covers 3, 10, and 30 workers, 20 seeds, 100 simulated minutes per row, and Active Work, Phone Work, Resting, Mixed Activity, Pause/Resume, and Speed Changes.
+
+- Invalid, NaN, infinite, or out-of-range values: 0.
+- Need changes while paused: 0.
+- Unexpected identical workers: 0; fully saturated boundary states are explicitly classified as expected, not hidden.
+- Deterministic repeat divergence: 0.
+- Mixed activity: no caution/urgent state and no simultaneous critical need across the 100-minute run.
+- Uninterrupted Active/Phone work first reached caution around 4.33 minutes and urgent around 7.75 minutes; those intentionally pathological 100-minute contexts eventually reached five simultaneous critical needs.
+- Every 30-worker row completed in under 1.2 seconds on the verification machine; the coarse managed-memory delta showed no runaway growth. This is not a replacement for profiler-grade allocation capture.
+
+## Exact package gate
+
+- Windows x64, non-development, Mono player built from clean committed source.
+- Fresh `SillyOfficeSim_01_FiveNeeds_Windows.zip` generated from `Windows/`.
+- That exact ZIP extracted and preserved under `VerifiedExtract/`.
+- Exact extracted executable launched visibly and followed public gameplay paths from main menu through `$0` start, live needs, natural Water-driven warning, restroom influence/use/recovery, pause, real earnings, pre-expansion deskless hire, phone work, 1280 check, menu return, and clean quit.
+- No artificial cash, private need mutation, or editor-only screenshot mockup is used.
+- Nine genuine gameplay screenshots are dimension-checked: eight required 1920x1080 views plus a 1280x720 inspector regression capture.
+
+Historical friend-demo and Checkpoint 00 evidence remains preserved and is not presented as Prompt 01 evidence.

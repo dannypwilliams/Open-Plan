@@ -21,6 +21,7 @@ namespace OpenPlan
         public AudioDirector Audio { get; private set; }
         public WorkerCarryController CarryController { get; private set; }
         public WorkerCommand LastIssuedCommand { get; private set; }
+        public GroundPlacementCommand LastGroundPlacementCommand { get; private set; }
         public CoffeeStation Coffee { get; private set; }
         public WaterStation Water { get; private set; }
         public NeedStation Break { get; private set; }
@@ -35,7 +36,7 @@ namespace OpenPlan
                                          (Expansion != null && Expansion.IsExpanded);
         public bool CanPurchaseExpansion => Expansion != null &&
             ExpansionRules.CanPurchase(Cash.CurrentCash, Expansion.IsExpanded) && !Expansion.IsAnimating;
-        public bool CanHireWorkers => Stage == OfficeStage.EstablishedOffice || ExpansionComplete;
+        public bool CanHireWorkers => true;
         public float CombinedIncomePerMinute
         {
             get
@@ -54,7 +55,7 @@ namespace OpenPlan
             (Stage == OfficeStage.EstablishedOffice ? Vector3.forward * 2.1f : Vector3.forward * 2.0f);
         public Vector3 EntranceInsidePoint => Elevator == null ? Vector3.zero : Elevator.UsePoint.position +
             (Stage == OfficeStage.EstablishedOffice ? Vector3.back * .8f : Vector3.back * 1.25f);
-        public int WorkerCapacity
+        public int DeskCount
         {
             get
             {
@@ -64,6 +65,7 @@ namespace OpenPlan
                 return count;
             }
         }
+        public int WorkerCapacity => DeskCount;
         public int ActiveWorkerCount { get { int count = 0; foreach (WorkerAgent worker in workers) if (worker != null && !worker.IsFired) count++; return count; } }
         public int Hires { get; private set; }
         public int Firings { get; private set; }
@@ -72,6 +74,7 @@ namespace OpenPlan
         public event Action RosterChanged;
         public event Action<string> Notice;
         public event Action<WorkerCommand> WorkerCommandIssued;
+        public event Action<GroundPlacementCommand> GroundPlacementCommandIssued;
         public event Action ExpansionCompleted;
 
         private readonly List<WorkerAgent> workers = new List<WorkerAgent>();
@@ -140,6 +143,10 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneTutorialPlaythroughDirector>().Initialize(this);
             if (StandaloneFriendDemoDirector.Requested)
                 gameObject.AddComponent<StandaloneFriendDemoDirector>().Initialize(this);
+            if (StandaloneFoundationCheckpointDirector.Requested)
+                gameObject.AddComponent<StandaloneFoundationCheckpointDirector>().Initialize(this);
+            if (StandaloneFiveNeedsCheckpointDirector.Requested)
+                gameObject.AddComponent<StandaloneFiveNeedsCheckpointDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -245,10 +252,7 @@ namespace OpenPlan
         {
             reason = null;
             if (candidateIndex < 0 || candidateIndex >= candidates.Count) { reason = "Candidate is no longer available."; return false; }
-            if (!CanHireWorkers) { reason = "Purchase the neighboring unit to unlock hiring."; return false; }
-            if (ActiveWorkerCount >= WorkerCapacity) { reason = $"Office capacity reached ({WorkerCapacity})."; return false; }
             Workstation desk = FindAvailableDesk();
-            if (desk == null) { reason = "No available desk."; return false; }
             CandidateDefinition candidate = candidates[candidateIndex];
             bool starter = Stage != OfficeStage.EstablishedOffice;
             if (starter)
@@ -265,6 +269,11 @@ namespace OpenPlan
             candidates[candidateIndex] = NextCandidate();
             Economy.RecalculatePayroll(workers);
             RosterChanged?.Invoke();
+            if (desk == null)
+            {
+                Notice?.Invoke($"{candidate.worker.displayName} hired - working from their phone at 50% efficiency until a desk is available.");
+                return true;
+            }
             Notice?.Invoke(starter ? $"{candidate.worker.displayName} hired — drag them from the entrance to an open desk." :
                 $"{candidate.worker.displayName} hired — heading to desk {desk.Index + 1}.");
             return true;
@@ -371,6 +380,28 @@ namespace OpenPlan
             return true;
         }
 
+        public bool TryIssueGroundPlacementCommand(WorkerAgent worker, Vector3 groundPoint,
+            out GroundPlacementCommand command, out string reason)
+        {
+            command = null;
+            if (worker == null || !workers.Contains(worker)) { reason = "Worker is not part of this office."; return false; }
+            if (!worker.IsPlayerCarried) { reason = "Worker is not being carried."; return false; }
+            if (Layout == null) { reason = "The office floor is unavailable."; return false; }
+            if (!Layout.CanPlaceWorkerAt(groundPoint, out reason)) return false;
+
+            command = new GroundPlacementCommand(worker, groundPoint, Time.time, true);
+            if (!worker.CommitGroundPlacement(command))
+            {
+                reason = "Worker could not accept the placement command.";
+                return false;
+            }
+            ReleaseTransientPlacement(worker);
+            LastGroundPlacementCommand = command;
+            GroundPlacementCommandIssued?.Invoke(command);
+            reason = null;
+            return true;
+        }
+
         public void ReleaseTransientPlacement(WorkerAgent worker)
         {
             if (worker == null) return;
@@ -463,8 +494,6 @@ namespace OpenPlan
                     negative = "Distracted by conversation";
                     if (other.Definition.trait == WorkerTrait.Social)
                     {
-                        worker.Runtime.mood = Mathf.Clamp01(worker.Runtime.mood + Time.deltaTime * .0030f);
-                        worker.Runtime.stress = Mathf.Clamp01(worker.Runtime.stress - Time.deltaTime * .0008f);
                         positive = $"Cheered by {other.Definition.displayName}'s conversation";
                         modifier += .025f;
                     }

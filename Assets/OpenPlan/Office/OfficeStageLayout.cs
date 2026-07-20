@@ -9,20 +9,71 @@ namespace OpenPlan
         public Bounds PanBounds { get; private set; }
         public Vector3 OverviewCenter => OverviewBounds.center;
         public float OverviewOrthographicSize { get; private set; }
+        public Bounds WalkableBounds { get; private set; }
+        public Bounds? LockedPropertyBounds { get; private set; }
         public IReadOnlyList<Transform> RequiredOverviewPoints => overviewPoints;
         public IReadOnlyList<OfficeObstacleVolume> Obstacles => obstacles;
         public IReadOnlyList<PrimaryRouteVolume> PrimaryRoutes => primaryRoutes;
+        public IReadOnlyList<Bounds> AdditionalWalkableRegions => additionalWalkableRegions;
 
         private readonly List<Transform> overviewPoints = new List<Transform>();
         private readonly List<OfficeObstacleVolume> obstacles = new List<OfficeObstacleVolume>();
         private readonly List<PrimaryRouteVolume> primaryRoutes = new List<PrimaryRouteVolume>();
+        private readonly List<Bounds> additionalWalkableRegions = new List<Bounds>();
 
-        public void Configure(Bounds overviewBounds, Bounds panBounds, float overviewOrthographicSize)
+        public void Configure(Bounds overviewBounds, Bounds panBounds, float overviewOrthographicSize,
+            Bounds? walkableBounds = null, Bounds? lockedPropertyBounds = null)
         {
             OverviewBounds = overviewBounds;
             PanBounds = panBounds;
             OverviewOrthographicSize = overviewOrthographicSize;
+            WalkableBounds = walkableBounds ?? overviewBounds;
+            LockedPropertyBounds = lockedPropertyBounds;
         }
+
+        public void RegisterWalkableRegion(Bounds region)
+        {
+            additionalWalkableRegions.Add(region);
+        }
+
+        public bool CanPlaceWorkerAt(Vector3 worldPoint, out string reason)
+        {
+            if (ContainsXZ(LockedPropertyBounds, worldPoint))
+            {
+                reason = "That point is inside locked neighboring property.";
+                return false;
+            }
+
+            bool walkable = ContainsXZ(WalkableBounds, worldPoint);
+            if (!walkable)
+                foreach (Bounds region in additionalWalkableRegions)
+                    if (ContainsXZ(region, worldPoint)) { walkable = true; break; }
+            if (!walkable)
+            {
+                reason = "That point is outside the unlocked office.";
+                return false;
+            }
+            foreach (OfficeObstacleVolume obstacle in obstacles)
+            {
+                if (obstacle == null || obstacle.VolumeCollider == null || !obstacle.VolumeCollider.enabled) continue;
+                Bounds bounds = obstacle.VolumeBounds;
+                if (worldPoint.x >= bounds.min.x && worldPoint.x <= bounds.max.x &&
+                    worldPoint.z >= bounds.min.z && worldPoint.z <= bounds.max.z)
+                {
+                    reason = "That point is blocked by " + obstacle.StableIdentifier + ".";
+                    return false;
+                }
+            }
+            reason = null;
+            return true;
+        }
+
+        private static bool ContainsXZ(Bounds bounds, Vector3 point)
+            => point.x >= bounds.min.x && point.x <= bounds.max.x &&
+               point.z >= bounds.min.z && point.z <= bounds.max.z;
+
+        private static bool ContainsXZ(Bounds? bounds, Vector3 point)
+            => bounds.HasValue && ContainsXZ(bounds.Value, point);
 
         public Transform AddOverviewPoint(string identifier, Vector3 worldPosition)
         {

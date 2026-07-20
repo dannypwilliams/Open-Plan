@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -22,6 +23,17 @@ namespace OpenPlan
         public bool HiringPanelVisible => hiringPanel != null && hiringPanel.gameObject.activeSelf;
         public bool MilestonePanelVisible => milestonePanel != null && milestonePanel.gameObject.activeSelf;
         public bool InspectorVisible => inspector != null && inspector.gameObject.activeSelf;
+        public string InspectorText => inspectorText == null ? string.Empty : inspectorText.text;
+        public int VisibleNeedRowCount
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < needRows.Length; i++)
+                    if (needRows[i] != null && needRows[i].gameObject.activeSelf) count++;
+                return count;
+            }
+        }
         public bool ObjectiveVisible => objectivePanel != null && objectivePanel.gameObject.activeSelf;
 
         private OfficeDirector office;
@@ -29,6 +41,10 @@ namespace OpenPlan
         private TextMeshProUGUI hudText;
         private TextMeshProUGUI taskText;
         private TextMeshProUGUI inspectorText;
+        private TextMeshProUGUI influenceText;
+        private TextMeshProUGUI needTooltipText;
+        private RectTransform needTooltip;
+        private readonly EmployeeNeedRow[] needRows = new EmployeeNeedRow[5];
         private TextMeshProUGUI noticeText;
         private RectTransform inspector;
         private RectTransform objectivePanel;
@@ -126,8 +142,18 @@ namespace OpenPlan
                 new Vector2(.755f,.10f), new Vector2(.982f,.90f), Vector2.zero, Vector2.zero);
             OfficeUIFactory.Text(inspector, "Card Header", "EMPLOYEE ID / PERFORMANCE", 19f, OfficeUIFactory.Orange,
                 new Vector2(.06f,.90f), new Vector2(.94f,.97f), Vector2.zero, Vector2.zero, TextAlignmentOptions.MidlineLeft);
-            inspectorText = OfficeUIFactory.Text(inspector, "Details", string.Empty, 21f, OfficeUIFactory.Ink,
-                new Vector2(.06f,.23f), new Vector2(.94f,.90f), Vector2.zero, Vector2.zero);
+            inspectorText = OfficeUIFactory.Text(inspector, "Details", string.Empty, 18f, OfficeUIFactory.Ink,
+                new Vector2(.06f,.65f), new Vector2(.94f,.90f), Vector2.zero, Vector2.zero);
+            BuildNeedRows();
+            influenceText = OfficeUIFactory.Text(inspector, "Influences", string.Empty, 16f, OfficeUIFactory.Ink,
+                new Vector2(.06f,.215f), new Vector2(.94f,.39f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.TopLeft);
+            needTooltip = OfficeUIFactory.Panel(inspector, "Need Tooltip", new Color(.08f,.12f,.14f,.98f),
+                new Vector2(.035f,.205f), new Vector2(.965f,.405f), Vector2.zero, Vector2.zero);
+            needTooltipText = OfficeUIFactory.Text(needTooltip, "Tooltip Copy", string.Empty, 15f, Color.white,
+                new Vector2(.045f,.08f), new Vector2(.955f,.92f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.TopLeft);
+            needTooltip.gameObject.SetActive(false);
             Button follow = OfficeUIFactory.Button(inspector, "Follow", "FOLLOW", new Color(.12f,.42f,.44f), Color.white,
                 new Vector2(.05f,.13f), new Vector2(.31f,.205f), Vector2.zero, Vector2.zero);
             follow.onClick.AddListener(() => Camera.main?.GetComponent<OfficeCameraRig>()?.FocusWorker(WorkerSelection.Selected, true));
@@ -151,6 +177,41 @@ namespace OpenPlan
                 new Vector2(.24f,.035f), new Vector2(.76f,.09f), Vector2.zero, Vector2.zero, TextAlignmentOptions.Center);
             noticeText.gameObject.AddComponent<Outline>().effectColor = new Color(0f,0f,0f,.9f);
             noticeText.gameObject.SetActive(false);
+        }
+
+        private void BuildNeedRows()
+        {
+            const float top = .645f;
+            const float height = .047f;
+            for (int i = 0; i < NeedCatalog.All.Length; i++)
+            {
+                NeedDefinition definition = NeedCatalog.All[i];
+                RectTransform row = OfficeUIFactory.Panel(inspector, definition.DisplayName + " Need",
+                    new Color(.08f,.10f,.11f,.08f),
+                    new Vector2(.05f, top - (i + 1) * height),
+                    new Vector2(.95f, top - i * height - .004f), Vector2.zero, Vector2.zero);
+                TextMeshProUGUI value = OfficeUIFactory.Text(row, "Value", string.Empty, 15f, OfficeUIFactory.Ink,
+                    new Vector2(.02f,0f), new Vector2(.98f,1f), Vector2.zero, Vector2.zero,
+                    TextAlignmentOptions.MidlineLeft);
+                value.raycastTarget = false;
+                EmployeeNeedRow view = row.gameObject.AddComponent<EmployeeNeedRow>();
+                view.Initialize(definition, value, ShowNeedTooltip, HideNeedTooltip);
+                needRows[i] = view;
+            }
+        }
+
+        private void ShowNeedTooltip(NeedDefinition definition, float value)
+        {
+            if (needTooltip == null || needTooltipText == null) return;
+            string direction = definition.HighIsGood ? "Higher is better." : "Urgency meter - lower is better.";
+            needTooltipText.text = $"<b>{definition.DisplayName}: {definition.StatusText(value)}</b>\n" +
+                                   $"{direction} {definition.Description}\n<size=13>{definition.RecoveryHint}</size>";
+            needTooltip.gameObject.SetActive(true);
+        }
+
+        private void HideNeedTooltip()
+        {
+            if (needTooltip != null) needTooltip.gameObject.SetActive(false);
         }
 
         private void AddSpeedButton(Transform parent, string x, string label, float speed)
@@ -359,7 +420,7 @@ namespace OpenPlan
             {
                 string away = AwaySummary();
                 hudText.text = $"CASH  ${office.Cash.CurrentCash:N2}    EARNED  ${office.Cash.LifetimeEarned:N2}    " +
-                    $"INCOME  ${office.CombinedIncomePerMinute:N2}/MIN    TEAM  {office.ActiveWorkerCount}/{office.WorkerCapacity}    {speed}{away}";
+                    $"INCOME  ${office.CombinedIncomePerMinute:N2}/MIN    TEAM  {office.ActiveWorkerCount}    DESKS  {office.DeskCount}    {speed}{away}";
                 float progress = office.ExpansionComplete ? 1f : ExpansionRules.PurchaseProgress(office.Cash.CurrentCash);
                 string availability = office.ExpansionComplete ? "FIRST EXPANSION COMPLETE — continue growing at your pace." :
                     office.CanPurchaseExpansion ? "The neighboring unit is available." :
@@ -381,7 +442,7 @@ namespace OpenPlan
                 purchaseButton.gameObject.SetActive(office.Stage != OfficeStage.EstablishedOffice && !office.ExpansionComplete);
                 purchaseButton.interactable = office.CanPurchaseExpansion;
             }
-            if (hireButton != null) hireButton.interactable = office.CanHireWorkers;
+            if (hireButton != null) hireButton.interactable = true;
             if (previewButton != null) previewButton.gameObject.SetActive(office.ExpansionComplete);
             RefreshInspector();
             RefreshModalVisibility();
@@ -402,16 +463,22 @@ namespace OpenPlan
             WorkerRuntimeState state = worker.Runtime;
             string desk = worker.Desk != null ? $"Desk {worker.Desk.Index + 1} / {worker.Desk.ZoneLabel}" : "Unassigned";
             string away = state.behavior == WorkerState.Away ?
-                $"\nAWAY         {worker.AwayReasonLabel}  •  RETURN {Mathf.CeilToInt(state.awaySecondsRemaining)}s" : string.Empty;
+                $"\nAWAY  {worker.AwayReasonLabel} / RETURN {Mathf.CeilToInt(state.awaySecondsRemaining)}s" : string.Empty;
             string focused = state.focusedWorkSecondsRemaining > 0f ?
                 $"\nFOCUSED WORK +20%  {Mathf.CeilToInt(state.focusedWorkSecondsRemaining)}s" : string.Empty;
-            inspectorText.text = $"<size=36><b>{worker.Definition.displayName}</b></size>\n{worker.Definition.trait}\n\nSKILL        {worker.Definition.skill:0.00}\nPRODUCTIVITY {state.effectiveProductivity:0.00}×\nENERGY       {Bar(state.energy)} {state.energy:P0}\nMOOD         {Bar(state.mood)} {state.mood:P0}\nSTRESS       {Bar(state.stress)} {state.stress:P0}\n\nCURRENT      {Pretty(state.behavior)}{away}{focused}\n\n<size=19><color=#267C78>+ {state.positiveInfluence}</color>\n<color=#9C332B>– {state.negativeInfluence}</color>\n\nASSIGNED  {desk}</size>";
             inspectorText.text = BuildInspectorText(worker, state, desk, away, focused);
+            for (int i = 0; i < needRows.Length; i++) needRows[i]?.Refresh(state);
+            if (influenceText != null)
+                influenceText.text = $"<color=#267C78>HELPS: {state.positiveInfluence}</color>\n" +
+                                     $"<color=#9C332B>HURTS: {state.negativeInfluence}</color>\n" +
+                                     $"<size=14>ASSIGNED  {desk}</size>";
         }
 
         private static string BuildInspectorText(WorkerAgent worker, WorkerRuntimeState state,
             string desk, string away, string focused)
-            => $"<size=36><b>{worker.Definition.displayName}</b></size>\nPERSONALITY  {worker.PersonalityLabel}\n\nSKILL        {worker.Definition.skill:0.00}\nPRODUCTIVITY {state.effectiveProductivity:0.00}x\nENERGY       {SafeBar(state.energy)} {state.energy:P0}\nMOOD         {SafeBar(state.mood)} {state.mood:P0}\nSTRESS       {SafeBar(state.stress)} {state.stress:P0}\n\nACTIVITY     {worker.CurrentActivityLabel}\nDESTINATION  {worker.CurrentDestinationLabel}{away}{focused}\n\n<size=19><color=#267C78>HELPS: {state.positiveInfluence}</color>\n<color=#9C332B>HURTS: {state.negativeInfluence}</color>\n\nASSIGNED  {desk}</size>";
+            => $"<size=31><b>{worker.Definition.displayName}</b></size>\n" +
+               $"{worker.PersonalityLabel}  |  SKILL {worker.Definition.skill:0.00}  |  OUTPUT {state.effectiveProductivity:0.00}x\n" +
+               $"ACTIVITY  {worker.CurrentActivityLabel}\nDESTINATION  {worker.CurrentDestinationLabel}{away}{focused}";
 
         public void ToggleNameTags()
         {
@@ -421,11 +488,6 @@ namespace OpenPlan
 
         private void ToggleHiring()
         {
-            if (!office.CanHireWorkers)
-            {
-                ShowNotice("Purchase the neighboring unit to unlock hiring.");
-                return;
-            }
             bool visible = !hiringPanel.gameObject.activeSelf;
             if (visible)
             {
@@ -497,6 +559,56 @@ namespace OpenPlan
             string name = state.ToString();
             for (int i = 1; i < name.Length; i++) if (char.IsUpper(name[i])) { name = name.Insert(i, " "); i++; }
             return name;
+        }
+    }
+
+    public sealed class EmployeeNeedRow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    {
+        private NeedDefinition definition;
+        private TextMeshProUGUI valueText;
+        private Action<NeedDefinition, float> showTooltip;
+        private Action hideTooltip;
+        private float currentValue;
+
+        public NeedKind Kind => definition == null ? NeedKind.Happiness : definition.Kind;
+        public NeedStatus Status => definition == null ? NeedStatus.Healthy : definition.Status(currentValue);
+        public string DisplayedText => valueText == null ? string.Empty : valueText.text;
+
+        public void Initialize(NeedDefinition needDefinition, TextMeshProUGUI text,
+            Action<NeedDefinition, float> onShowTooltip, Action onHideTooltip)
+        {
+            definition = needDefinition;
+            valueText = text;
+            showTooltip = onShowTooltip;
+            hideTooltip = onHideTooltip;
+        }
+
+        public void Refresh(WorkerRuntimeState state)
+        {
+            if (definition == null || valueText == null || state == null) return;
+            currentValue = state.GetNeed(definition.Kind);
+            NeedStatus status = definition.Status(currentValue);
+            string label = definition.Kind == NeedKind.Happiness ? "HAPPY" :
+                           definition.Kind == NeedKind.Bathroom ? "BATH URG" :
+                           definition.Kind == NeedKind.Hunger ? "HUNGER URG" :
+                           definition.DisplayName.ToUpperInvariant();
+            valueText.text = $"{label,-10} [{SafeBar(currentValue)}] {definition.StatusText(currentValue),-11} {currentValue:P0}";
+            switch (status)
+            {
+                case NeedStatus.Critical: valueText.color = new Color(.68f,.08f,.08f); break;
+                case NeedStatus.Urgent: valueText.color = new Color(.88f,.24f,.12f); break;
+                case NeedStatus.Caution: valueText.color = new Color(.65f,.38f,.04f); break;
+                default: valueText.color = new Color(.08f,.25f,.23f); break;
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData) => showTooltip?.Invoke(definition, currentValue);
+        public void OnPointerExit(PointerEventData eventData) => hideTooltip?.Invoke();
+
+        private static string SafeBar(float value)
+        {
+            int filled = Mathf.RoundToInt(Mathf.Clamp01(value) * 6f);
+            return new string('#', filled) + new string('-', 6 - filled);
         }
     }
 }

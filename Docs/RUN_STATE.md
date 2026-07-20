@@ -1,31 +1,28 @@
 # OPEN PLAN - Run State
 
-- Current checkpoint: Worker-Placement Pivot 8 - Friend Demo Release
-- Status: source, tests, balance, build, screenshots, soak, performance, extracted package, and documentation PASS
-- Date: 2026-07-19
-- Branch: `codex/small-office-placement-pivot`
-- Previous checkpoint: `d3267b6` (`polish: teach and present the worker placement loop`)
-- Base Established release: `a638304`
+- Current checkpoint: Endless Office Alpha `01_FiveNeeds`
+- Status: source, 168 automated tests, deterministic matrix, non-development Windows build, fresh ZIP, preserved exact extraction, public gameplay smoke, captures, manifest, guide, and documentation PASS
+- Date: 2026-07-20
+- Branch: `codex/endless-office-alpha`
+- Source commit: recorded in `manifest.md` beside the player
 - Default path: Main Menu -> Starter Office
-- Roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
-- Economy: $100 start; $60 per productivity-minute; $1,000 deliberate expansion; no forced end
-- Focused Work: +20% for 30 simulation seconds, non-stacking
-- Capacity: three workers before expansion, six after expansion
-- Automated tests: 104/104 passing (49 EditMode, 55 PlayMode)
-- Balance matrix: 100/100 scenarios passing across 20 fixed seeds
-- Active manager: 7.55-7.78 minutes to $1,000, 7.67 mean
-- Passive observer: 10.08-12.00 minutes, 10.95 mean, zero commands, zero stuck runs
-- Poor manager: 8.18-9.42 minutes, $79.50 mean vending spend, 6.69 restorative worker-minutes
-- Recovery: measured productivity rises from 0.00 before intervention to 1.41 after
-- Expansion: 20/20 purchases, 20/20 hires, two additional simulation minutes completed, zero stuck runs
-- Twenty-minute soak: PASS at 20x; 57 distractions; 27 observations; no stuck/idle, stale carry, orphan smoke, missing worker, or capacity failure
-- UI/input: 12/12 at 1280x720 and 12/12 at 1920x1080
-- Exact extracted friend flow: 86 checks, 0 failures, 21 screenshots, live earnings, exact $1,000 deduction, expansion, hire placement, preview, menu, clean quit
-- Package lifecycle: Starter, expanded Starter, and Established launch/restart/menu/quit PASS
-- Performance: 119.88 fps average, 118.52 fps 1% low, 8.54 ms worst frame, 0 measured peak GC bytes at 1920x1080
-- Windows build: PASS (103,051,945 reported bytes)
-- ZIP: `outputs/OpenPlan-Friend-Demo-Windows.zip`, 38,343,954 bytes
-- ZIP SHA-256: `651A3AE36EDE4D3C793D29D65A1DE429BDEBA73FCD82E83EDB6C25E1AC149372`
-- Previous release evidence: `outputs/PreviousRelease/EstablishedOffice-a638304`
-- Critical issues: none
-- Next action: conduct the friend playtest and triage feedback before expanding scope
+- Roster/economy: Morgan, Alex, Sam; three desks; `$0`; `$60` per effective-productivity minute; $1,000 deliberate expansion; no forced end
+- Live needs: Happiness high-good, Hunger high-urgent, Bathroom high-urgent, Inspiration high-good, Energy high-good; deterministic healthy offsets; all bounded 0-1
+- Stress: separate temporary influence, never a sixth need row
+- Inspector: five status rows, urgency wording, hover explanations, strongest helpful/harmful influences, verified at 1920x1080 and 1280x720
+- Restroom: visible single-capacity `starter.restroom.main` proximity activity; eight-second use; Bathroom -0.78; visible-worker and occupancy cleanup verified
+- Activities: Work, Rest, Water, Vending, Coffee, Smoking, Away, Social, and Restroom use centralized effects
+- Productivity: all five needs participate; Stress, skill, trait, workstation, and Focused Work retained; phone factor remains exactly 0.50 once
+- Time: scaled deterministic tick; pause freezes all five; 2x/4x proportional; selection/carry does not reset needs
+- Placement/hiring: Prompt 00 ordinary ground, influence, invalid restoration, pre-expansion hiring, physical expansion, and phone work remain green
+- Automated tests: 168/168 passing (98 EditMode, 70 PlayMode)
+- Deterministic matrix: 3/10/30 workers, 20 seeds, six contexts, 100 simulated minutes per row; zero invalid values, paused changes, unexpected identical workers, or repeat divergence
+- Package: `outputs/Playtests/EndlessOfficeAlpha/01_FiveNeeds/`
+- Exact verification: `VerifiedExtract/OpenPlan.exe`, visible public-gameplay smoke PASS, menu return and clean quit
+- Evidence: eight required 1920x1080 captures plus one 1280x720 inspector regression
+- ZIP hash, bytes, timestamp, tests, commit, limitations, and source documents: `manifest.md`
+- Historical evidence: prior Checkpoint 00, PreviousRelease, ReleaseEvidence, and FriendDemo paths remain untouched
+- Critical issues: none known
+- Prompt 02 boundary: comprehensive autonomous critical-need routing/reservations/fallback are not started
+- Later systems: qualifications, training, workdays/contracts, payroll/reputation, incidents, furniture, persistence, and final Alpha tuning remain future prompts
+- Next action: stop development and conduct the 15-20 minute Checkpoint 01 playtest before Prompt 02

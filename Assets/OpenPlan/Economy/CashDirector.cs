@@ -6,7 +6,7 @@ namespace OpenPlan
     /// <summary>Open-ended placement economy: desk work earns cash continuously in simulation time.</summary>
     public sealed class CashDirector : MonoBehaviour
     {
-        public const float StartingCash = 100f;
+        public const float StartingCash = 0f;
         public const float IncomePerProductivityMinute = 60f;
 
         public event Action Changed;

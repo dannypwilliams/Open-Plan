@@ -199,6 +199,7 @@ namespace OpenPlan
                 case StatusEmote.Exclamation: return "!";
                 case StatusEmote.Social: return "...";
                 case StatusEmote.Focus: return "FOCUS";
+                case StatusEmote.Restroom: return "WC";
                 default: return "!";
             }
         }
@@ -303,6 +304,7 @@ namespace OpenPlan
                         break;
                     case WorkerState.UseCoffeeMachine:
                     case WorkerState.UseWaterCooler:
+                    case WorkerState.UseRestroom:
                         armR.localRotation = armRBase * Quaternion.Euler(78f, 0f, -20f);
                         armL.localRotation = armLBase;
                         break;

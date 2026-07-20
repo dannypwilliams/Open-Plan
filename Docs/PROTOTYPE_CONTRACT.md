@@ -9,7 +9,7 @@ The released large office from commit `a638304` remains intact as the Establishe
 ## Stage contract
 
 - `StarterOffice`: the default authored stage, with three workers, three occupied desks, one unavailable desk, and a visible locked neighboring unit.
-- `StarterOfficeExpanded`: the same business after its first physical expansion, with both units, six available desk locations, and capacity for three additional workers.
+- `StarterOfficeExpanded`: the same business after its first physical expansion, with both units and six available desk locations. Desk count is not an employee cap.
 - `EstablishedOffice`: the preserved six-worker, twelve-desk released office and its management systems.
 
 The Main Menu always starts `StarterOffice`. Explicit developer and automation launches can select a stage with `-openplan-stage <StarterOffice|StarterOfficeExpanded|EstablishedOffice>`. Existing capture, video, performance, and package-verification arguments default to `EstablishedOffice` when no stage override is supplied so prior release evidence remains reproducible.
@@ -21,29 +21,25 @@ The Main Menu always starts `StarterOffice`. Explicit developer and automation l
 - Reading panels pause simulation and restore the exact prior speed. Skip is available from every tutorial surface; Help shows complete controls and can replay the tutorial. Restart creates fresh per-session state with no persistence requirement.
 - Tutorial cards choose a clear screen quadrant away from both highlighted workers and zones. Only one tutorial, inspector, hiring, confirmation, purchase, Help, or expansion milestone surface owns modal focus at once.
 - Carrying alone reveals the placement legend and world labels for valid, unavailable, occupied, and otherwise invalid destinations. These states use text and symbols as well as color.
-- The HUD presents cash, earned cash, combined income, team capacity, speed, objective progress, restrained cash feedback, and away return time without daily-target language.
+- The HUD presents cash, earned cash, combined income, Team and Desks separately, speed, objective progress, restrained cash feedback, and away return time without daily-target language.
 
 ## Placement architecture contract
 
-Every player-directed placement is represented by a `WorkerCommand` containing the worker, destination `PlacementZone`, requested `PlacementActivity`, issue time, and player-placement origin. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office.
+Activity placement is represented by a `WorkerCommand`; ordinary unlocked ground uses `GroundPlacementCommand`. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, Use Restroom, and Leave Office. Every activity has proximity influence beyond its visible footprint.
 
 The player presses and holds on a worker, then moves more than six screen pixels or holds for 0.12 seconds to begin carrying. A simple click only selects. Valid release lowers the worker, issues a `WorkerCommand`, and walks the final segment; invalid release restores position and state without consuming gameplay resources. Escape and right-click cancel.
 
 ## Needs, productivity, and cash contract
 
-- Player-facing needs are Energy and Mood (higher is better) plus Stress (lower is better), each clamped to 0-1. The former Focus and Morale needs no longer exist.
-- Productivity is `skill × energy modifier × mood modifier × inverse stress modifier × workstation modifier × trait modifier × Focused Work modifier`, clamped to 0.10x-2.50x.
-- Starter cash begins at $100. Desk work earns `$60/min × effective productivity` continuously in simulation time; pause stops income. Current cash and lifetime earned are tracked separately.
+- Player-facing needs are Happiness, Hunger, Bathroom, Inspiration, and Energy. Happiness/Inspiration/Energy are high-good; Hunger/Bathroom are filling urgency meters. Stress is a temporary influence, not a sixth need.
+- Productivity combines all five needs with skill, inverse Stress, workstation, trait, and Focused Work, clamped to 0.10x-2.50x. Phone work applies one exact 0.50 workstation factor.
+- Starter cash begins at $0. Desk and phone work earn `$60/min × effective productivity` continuously in simulation time; pause stops income. Current cash and lifetime earned are tracked separately.
 - Manual Work placement refreshes a +20% Focused Work modifier to 30 seconds; it never stacks.
 
 ## Activity contract
 
-- Work drains Energy at 0.0018/s before trait persistence, raises Stress at 0.0012/s before workstation noise, and drains Mood at 0.0005/s above 0.70 Stress.
-- Rest lasts 20 seconds and grants Energy +0.35, Mood +0.12, Stress -0.25.
-- Get Water lasts 6 seconds and grants Energy +0.08, Mood +0.05, Stress -0.05, followed by a 35-second cooldown. A nearby worker permits a short social beat.
-- Buy Snack charges $15 exactly once when use begins, lasts 8 seconds, and then enters a 45-second cooldown. Normal: Energy +0.25, Mood +0.15, Stress -0.08. Seeded 10% malfunction: Energy +0.05, Mood -0.05, no Stress change; the charge remains.
-- Smoke lasts 12 seconds, grants Mood +0.05 and Stress -0.30, then enters a 45-second cooldown. Its worker-held cigarette and restrained particles are transient and always cleaned up.
-- Leave Office walks through the real exit, selects Lunch, Errand, Long break, or Off-site task, hides only outside, recovers Energy +0.45, Mood +0.12, and Stress -0.35 over 30 seconds, then reappears at the entrance and returns to autonomous work.
+- Activity effects and passive rates are centralized in `NeedCatalog`, `NeedSimulation`, and `ActivityRules`; exact shipping values live in `FINAL_TUNING_VALUES.md`.
+- Rest, Water, Vending, Coffee, Smoking, Restroom, Social, and Away affect logical combinations of the five needs and Stress. Charges/effects occur once and all transient visuals/occupancy clean up through interruption, firing, restart, and scene exit.
 
 ## Personality and status contract
 
@@ -54,7 +50,7 @@ The player presses and holds on a worker, then moves more than six screen pixels
 - A player placement overrides optional autonomy. Manual Work guarantees its 30-second Focused Work period; other manual activities retain their minimum duration unless interrupted by another player command or a critical invalidation.
 - Every worker has a camera-facing head-following name tag using the bundled font. Tags scale and fade at overview zoom and can be toggled with `N` or the HUD button.
 - Status emotes are brief event feedback, use ASCII-safe bundled-font text, expire cleanly, and remain separate from persistent name tags.
-- The employee inspector reports personality, activity, destination, Energy, Mood, Stress, productivity, focused time, away details, and plain-language positive/negative factors.
+- The employee inspector reports personality, activity, destination, five need rows, productivity, focused time, away details, and plain-language positive/negative factors. Hunger and Bathroom state their urgency direction; Stress appears only when it is an influence.
 
 ## Simulation contract
 

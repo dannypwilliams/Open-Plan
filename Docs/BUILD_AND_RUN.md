@@ -1,44 +1,61 @@
 # Build and Run
 
-Open `C:\Users\danny\Documents\GitHub\OpenPlan` with Unity 6000.5.1f1. The normal Main Menu starts the Starter Office.
+Open `C:\Users\danny\Documents\GitHub\Silly Office Sim` with Unity 6000.5.1f1. The normal Main Menu starts the Starter Office.
 
-## Windows release
+## Checkpoint 01 package
 
-Use **OPEN PLAN -> Build Windows Release**. It writes `outputs/OpenPlan-Windows/OpenPlan.exe` and copies `FRIEND_PLAYTEST_GUIDE.txt` beside the executable. The packaged friend build is `outputs/OpenPlan-Friend-Demo-Windows.zip`.
+After committing a clean Prompt 01 source checkpoint, run:
 
-Direct stage arguments are:
-
-```text
--openplan-stage StarterOffice
--openplan-stage StarterOfficeExpanded
--openplan-stage EstablishedOffice
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Tools\Packaging\Build-FiveNeedsCheckpoint.ps1
 ```
 
-Release verification arguments are:
+The workflow refuses to overwrite an existing checkpoint. It reruns complete EditMode and PlayMode suites, runs the deterministic 3/10/30-worker matrix, builds Windows x64 with Development mode disabled, creates a fresh ZIP from `Windows/`, extracts that exact archive into the preserved `VerifiedExtract/`, launches the extracted executable in a normal rendered window, runs the public gameplay smoke, validates all capture dimensions, records SHA-256, and publishes atomically to:
+
+`outputs/Playtests/EndlessOfficeAlpha/01_FiveNeeds/`
+
+Expected layout:
 
 ```text
--openplan-input-smoke
--openplan-activity-smoke
--openplan-behavior-soak
--openplan-expansion-capture
--openplan-tutorial-playthrough
--openplan-friend-demo
--openplan-performance
--openplan-verify-package
+01_FiveNeeds/
+  Windows/
+  SillyOfficeSim_01_FiveNeeds_Windows.zip
+  VerifiedExtract/
+  manifest.md
+  playtest-guide.md
+  known-issues.md
+  build.log
+  FIVE_NEEDS_SMOKE.txt
+  test-results/
+  captures/
 ```
 
-`-openplan-friend-demo` uses public gameplay APIs and live earnings to drive the full menu, placement, activities, natural distraction, $1,000 purchase, wall opening, hire placement, Established preview, menu return, and clean quit flow. It does not award artificial cash or call a capture-only activity setter.
+Generated package evidence is ignored by Git. Source guides and packaging code are tracked. Checkpoint 00, FriendDemo, PreviousRelease, ReleaseEvidence, and screenshot history are never deleted or overwritten.
 
-## Tests
+## Verification arguments
+
+```text
+-openplan-stage StarterOffice | StarterOfficeExpanded | EstablishedOffice
+-openplan-foundation-smoke -openplan-evidence-root <folder>
+-openplan-five-needs-smoke -openplan-evidence-root <folder>
+```
+
+`-openplan-five-needs-smoke` starts at the real menu and uses public placement, speed, hiring, and menu APIs. It creates a natural Bathroom warning through repeated Water uses, verifies Restroom influence and cleanup, earns candidate cash through normal work, and captures the real extracted player. It does not inject cash or directly set need values.
+
+## Direct tests
 
 ```powershell
 & 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
-  -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' -runTests -testPlatform EditMode `
-  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\outputs\TestResults\Prompt8-EditMode.xml'
+  -projectPath 'C:\Users\danny\Documents\GitHub\Silly Office Sim' -runTests -testPlatform EditMode `
+  -testResults 'C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\TestResults\01_FiveNeeds-EditMode.xml'
 
 & 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
-  -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' -runTests -testPlatform PlayMode `
-  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\outputs\TestResults\Prompt8-PlayMode.xml'
+  -projectPath 'C:\Users\danny\Documents\GitHub\Silly Office Sim' -runTests -testPlatform PlayMode `
+  -testResults 'C:\Users\danny\Documents\GitHub\Silly Office Sim\outputs\TestResults\01_FiveNeeds-PlayMode.xml'
+
+& 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
+  -projectPath 'C:\Users\danny\Documents\GitHub\Silly Office Sim' `
+  -executeMethod OpenPlan.Editor.FiveNeedsReportGenerator.GenerateFromCommandLine
 ```
 
-The release gate passes 49 EditMode and 55 PlayMode tests. The packaged checks and generated evidence are under `outputs/ReleaseEvidence` and `outputs/Screenshots`.
+Checkpoint 01 passes 98 EditMode and 70 PlayMode tests before packaging; the package workflow must reproduce or exceed those totals with zero failures.

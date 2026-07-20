@@ -33,7 +33,7 @@ namespace OpenPlan
             CaptureCamera("StarterOffice_BeforeExpansion.png");
 
             float beforePurchase = office.Cash.CurrentCash;
-            office.Cash.AccrueDeskIncome(15f, 60f);
+            office.Cash.AccrueDeskIncome(16.666667f, 60f);
             float affordableCash = office.Cash.CurrentCash;
             bool purchased = office.TryPurchaseExpansion(out string reason);
             float afterPurchase = office.Cash.CurrentCash;
