@@ -42,6 +42,10 @@ namespace OpenPlan.Editor
         public static void BuildWindows()
         {
             GenerateProject();
+            // GenerateProject rebuilds the shared asset catalog from the legacy
+            // procedural assets. Reapply the merged employee visual integration
+            // before packaging so release builds use the Stickman prefab too.
+            EmployeeStickmanSetup.Setup();
             string output = Path.GetFullPath("outputs/OpenPlan-Windows/OpenPlan.exe");
             Directory.CreateDirectory(Path.GetDirectoryName(output));
             BuildPlayerOptions options = new BuildPlayerOptions
