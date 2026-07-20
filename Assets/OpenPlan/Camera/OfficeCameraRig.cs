@@ -76,7 +76,7 @@ namespace OpenPlan
 
         private void Update()
         {
-            if (office != null && office.InputLocked)
+            if (office != null && office.WorldInputBlocked)
             {
                 UpdateTransform(CurrentPivot());
                 return;
@@ -126,6 +126,7 @@ namespace OpenPlan
 
         public void HandleWorldClick(Vector2 screenPosition)
         {
+            if (office != null && office.WorldInputBlocked) return;
             Ray ray = cameraComponent.ScreenPointToRay(screenPosition);
             if (!Physics.Raycast(ray, out RaycastHit hit, 120f)) { WorkerSelection.Clear(); return; }
             WorkerAgent worker = hit.collider.GetComponentInParent<WorkerAgent>();

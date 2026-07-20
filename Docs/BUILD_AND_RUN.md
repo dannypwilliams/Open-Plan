@@ -12,7 +12,7 @@ The normal Main Menu path starts the Starter Office. To open a stage directly fr
 -openplan-stage EstablishedOffice
 ```
 
-The existing `-openplan-capture`, `-openplan-video`, `-openplan-performance`, and `-openplan-verify-package` paths select Established Office by default unless paired with an explicit stage argument. `-openplan-expansion-capture` runs the Starter Office before/after purchase evidence pass.
+The existing `-openplan-capture`, `-openplan-video`, `-openplan-performance`, and `-openplan-verify-package` paths select Established Office by default unless paired with an explicit stage argument. `-openplan-expansion-capture` runs the Starter Office before/after purchase evidence pass. `-openplan-tutorial-playthrough` performs the event-driven tutorial and earns the expansion normally; add `-openplan-tutorial-capture-only` for the shorter tutorial-only resolution pass.
 
 ## Generate and build
 
@@ -30,4 +30,4 @@ The editor menu **OPEN PLAN -> Generate Complete Project** regenerates materials
   -testResults "$env:TEMP\OpenPlan-PlayMode.xml"
 ```
 
-Checkpoint 6 passes 41 EditMode and 47 PlayMode tests (88 total). Blender validation additionally passes all 54 assets. The packaged player supports `-openplan-input-smoke`, `-openplan-activity-smoke`, `-openplan-behavior-soak`, and `-openplan-expansion-capture`; all write evidence under `outputs/Screenshots`.
+Checkpoint 7 passes 43 EditMode and 55 PlayMode tests (98 total). Blender validation additionally passes all 54 assets. The packaged player supports `-openplan-input-smoke`, `-openplan-activity-smoke`, `-openplan-behavior-soak`, `-openplan-expansion-capture`, and `-openplan-tutorial-playthrough`; all write evidence under `outputs/Screenshots`.

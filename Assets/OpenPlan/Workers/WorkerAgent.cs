@@ -834,13 +834,13 @@ namespace OpenPlan
             ParticleSystem.MainModule main = smokeParticles.main;
             main.loop = true;
             main.duration = 1f;
-            main.startLifetime = 1.35f;
-            main.startSpeed = .18f;
-            main.startSize = .08f;
+            main.startLifetime = 1.8f;
+            main.startSpeed = .15f;
+            main.startSize = .12f;
             main.startColor = new Color(.72f, .78f, .80f, .42f);
             main.maxParticles = 24;
             ParticleSystem.EmissionModule emission = smokeParticles.emission;
-            emission.rateOverTime = 4f;
+            emission.rateOverTime = 3.2f;
             ParticleSystem.ShapeModule shape = smokeParticles.shape;
             shape.shapeType = ParticleSystemShapeType.Cone;
             shape.angle = 8f;

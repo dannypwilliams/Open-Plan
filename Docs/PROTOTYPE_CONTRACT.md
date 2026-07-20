@@ -14,6 +14,15 @@ The released large office from commit `a638304` remains intact as the Establishe
 
 The Main Menu always starts `StarterOffice`. Explicit developer and automation launches can select a stage with `-openplan-stage <StarterOffice|StarterOfficeExpanded|EstablishedOffice>`. Existing capture, video, performance, and package-verification arguments default to `EstablishedOffice` when no stage override is supplied so prior release evidence remains reproducible.
 
+## Tutorial and presentation contract
+
+- A fresh Starter Office session opens a dismissible seven-step tutorial: Meet the Team, Pick Them Up, Put Them to Work, Manage Their Needs, Redirect a Distraction, Try the Office, and Expand.
+- Selection, carry, placement, income, recovery, and redirect steps advance from observed gameplay events. Useful actions performed early are credited, and an invalid highlighted worker is replaced safely.
+- Reading panels pause simulation and restore the exact prior speed. Skip is available from every tutorial surface; Help shows complete controls and can replay the tutorial. Restart creates fresh per-session state with no persistence requirement.
+- Tutorial cards choose a clear screen quadrant away from both highlighted workers and zones. Only one tutorial, inspector, hiring, confirmation, purchase, Help, or expansion milestone surface owns modal focus at once.
+- Carrying alone reveals the placement legend and world labels for valid, unavailable, occupied, and otherwise invalid destinations. These states use text and symbols as well as color.
+- The HUD presents cash, earned cash, combined income, team capacity, speed, objective progress, restrained cash feedback, and away return time without daily-target language.
+
 ## Placement architecture contract
 
 Every player-directed placement is represented by a `WorkerCommand` containing the worker, destination `PlacementZone`, requested `PlacementActivity`, issue time, and player-placement origin. Supported activities are Work, Rest, Get Water, Buy Snack, Smoke, and Leave Office.
@@ -54,7 +63,7 @@ The player presses and holds on a worker, then moves more than six screen pixels
 - Confirmed purchase deducts exactly $1,000 once and, in the current world, lights the adjacent floor, opens the connecting wall, reveals trim, enables navigation, three desk zones and the secondary rest corner, and updates camera bounds.
 - The expanded starter stage unlocks three displayed-fee hires. Each enters unassigned and becomes productive only after the player drags them onto an available desk.
 - Expansion unlocks `VISIT ESTABLISHED OFFICE PREVIEW`; that route is marked as a future business stage, is untimed, and returns to the Starter Office main menu.
-- The Established Office retains its released worker simulation, hiring, firing, reassignment, task economy, amenities, camera composition, and optional five-minute legacy workday.
+- The Established Office retains its released worker simulation, hiring, firing, reassignment, task economy, amenities, and camera composition as an untimed sandbox.
 - Core worker, task, economy, UI, audio, and camera systems are shared across stages.
 
 ## Current non-goals

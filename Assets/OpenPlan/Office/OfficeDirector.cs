@@ -27,7 +27,9 @@ namespace OpenPlan
         public NeedStation Elevator { get; private set; }
         public OfficeStageLayout Layout { get; private set; }
         public OfficeExpansionController Expansion { get; private set; }
+        public TutorialController Tutorial { get; private set; }
         public bool InputLocked { get; private set; }
+        public bool WorldInputBlocked => InputLocked || (HUD != null && HUD.HasModalOpen);
         public bool IsEstablishedPreview { get; private set; }
         public bool ExpansionComplete => Stage == OfficeStage.StarterOfficeExpanded ||
                                          (Expansion != null && Expansion.IsExpanded);
@@ -70,6 +72,7 @@ namespace OpenPlan
         public event Action RosterChanged;
         public event Action<string> Notice;
         public event Action<WorkerCommand> WorkerCommandIssued;
+        public event Action ExpansionCompleted;
 
         private readonly List<WorkerAgent> workers = new List<WorkerAgent>();
         private readonly List<Workstation> workstations = new List<Workstation>();
@@ -123,6 +126,8 @@ namespace OpenPlan
             CarryController.Initialize(this, Camera.main.GetComponent<OfficeCameraRig>(), HUD, Audio);
             Expansion = world.GetComponent<OfficeExpansionController>();
             Expansion?.Initialize(this);
+            Tutorial = gameObject.AddComponent<TutorialController>();
+            Tutorial.Initialize(this);
             if (StandaloneInputSmokeDirector.Requested)
                 gameObject.AddComponent<StandaloneInputSmokeDirector>().Initialize(this);
             if (StandaloneActivityCycleDirector.Requested)
@@ -131,6 +136,8 @@ namespace OpenPlan
                 gameObject.AddComponent<StandaloneBehaviorSoakDirector>().Initialize(this);
             if (StandaloneExpansionCaptureDirector.Requested)
                 gameObject.AddComponent<StandaloneExpansionCaptureDirector>().Initialize(this);
+            if (StandaloneTutorialPlaythroughDirector.Requested)
+                gameObject.AddComponent<StandaloneTutorialPlaythroughDirector>().Initialize(this);
             if (AutomatedCaptureDirector.Requested)
                 gameObject.AddComponent<AutomatedCaptureDirector>().Initialize(this);
             else if (AutomatedVideoDirector.Requested)
@@ -169,7 +176,7 @@ namespace OpenPlan
 
         private void Update()
         {
-            if (InputLocked) return;
+            if (WorldInputBlocked) return;
             Keyboard keyboard = Keyboard.current;
             if (keyboard != null)
             {
@@ -383,10 +390,11 @@ namespace OpenPlan
 
         public void SetInputLocked(bool locked) => InputLocked = locked;
 
-        public void MarkExpansionComplete()
+        public void MarkExpansionComplete(bool announce = true)
         {
             if (Stage != OfficeStage.EstablishedOffice) Stage = OfficeStage.StarterOfficeExpanded;
             RosterChanged?.Invoke();
+            if (announce) ExpansionCompleted?.Invoke();
         }
 
         public void VisitEstablishedOfficePreview()

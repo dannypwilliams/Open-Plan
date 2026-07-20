@@ -11,11 +11,19 @@ namespace OpenPlan
         private AudioClip placementSuccess;
         private AudioClip placementRejected;
         private AudioClip expansionPurchase;
+        private AudioClip pickup;
+        private AudioClip validHover;
+        private AudioClip cashTick;
+        private AudioClip wallOpen;
+        private OfficeDirector office;
+        private float lastCashCueEarnings;
+        private float nextCashCueTime;
         private bool suppressNextNoticeCue;
         public string LastCue { get; private set; }
 
         public void Initialize(OfficeDirector office)
         {
+            this.office = office;
             ambience = gameObject.AddComponent<AudioSource>();
             ambience.loop = true;
             ambience.volume = .055f;
@@ -28,12 +36,39 @@ namespace OpenPlan
             placementSuccess = BuildTone("Placement success", .16f, 360f, 520f);
             placementRejected = BuildTone("Placement rejected", .18f, 210f, 145f);
             expansionPurchase = BuildTone("Expansion purchase", .48f, 260f, 820f);
+            pickup = BuildTone("Worker pickup", .12f, 240f, 340f);
+            validHover = BuildTone("Valid placement hover", .09f, 430f, 510f);
+            cashTick = BuildTone("Restrained cash feedback", .12f, 620f, 760f);
+            wallOpen = BuildTone("Connecting wall opens", .58f, 180f, 460f);
             office.Tasks.TaskCompleted += _ => oneShot.PlayOneShot(taskDone);
             office.Notice += _ =>
             {
                 if (suppressNextNoticeCue) { suppressNextNoticeCue = false; return; }
                 if (oneShot != null) oneShot.PlayOneShot(confirm, .55f);
             };
+        }
+
+        private void Update()
+        {
+            if (office == null || office.Cash == null) return;
+            float earned = office.Cash.LifetimeEarned;
+            if (earned - lastCashCueEarnings < 15f || Time.unscaledTime < nextCashCueTime) return;
+            lastCashCueEarnings = earned;
+            nextCashCueTime = Time.unscaledTime + 2.8f;
+            LastCue = "cash-earned";
+            if (oneShot != null) oneShot.PlayOneShot(cashTick, .28f);
+        }
+
+        public void PlayPickup()
+        {
+            LastCue = "pickup";
+            if (oneShot != null) oneShot.PlayOneShot(pickup, .55f);
+        }
+
+        public void PlayValidHover()
+        {
+            LastCue = "valid-hover";
+            if (oneShot != null) oneShot.PlayOneShot(validHover, .30f);
         }
 
         public void PlayPlacementSuccess()
@@ -54,6 +89,12 @@ namespace OpenPlan
             LastCue = "expansion-purchase";
             suppressNextNoticeCue = true;
             if (oneShot != null) oneShot.PlayOneShot(expansionPurchase, .90f);
+        }
+
+        public void PlayWallOpen()
+        {
+            LastCue = "wall-open";
+            if (oneShot != null) oneShot.PlayOneShot(wallOpen, .72f);
         }
 
         private static AudioClip BuildNoise(string name, float length, float amplitude, int seed)

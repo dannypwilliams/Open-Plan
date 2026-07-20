@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace OpenPlan
@@ -19,6 +20,8 @@ namespace OpenPlan
         public int Capacity { get; private set; }
         public int Occupancy => occupants.Count;
         public Bounds FootprintBounds => FootprintCollider != null ? FootprintCollider.bounds : new Bounds(transform.position, Vector3.zero);
+        public string AvailabilityLabel => carryStateText == null ? string.Empty : carryStateText.text;
+        public bool IsTutorialHighlighted { get; private set; }
 
         private readonly HashSet<WorkerAgent> occupants = new HashSet<WorkerAgent>();
         private readonly List<WorkerAgent> occupantOrder = new List<WorkerAgent>();
@@ -26,6 +29,7 @@ namespace OpenPlan
         private MeshRenderer footprintRenderer;
         private Material footprintMaterial;
         private Mesh footprintMesh;
+        private TextMeshPro carryStateText;
         private string unavailableReason;
 
         public virtual void Configure(PlacementActivity activity, Vector3 localPlacementPoint, string label = null,
@@ -53,6 +57,7 @@ namespace OpenPlan
             FootprintCollider.size = new Vector3(Mathf.Max(.2f, size.x), .12f, Mathf.Max(.2f, size.y));
             renderers = GetComponentsInChildren<Renderer>(true);
             BuildFootprintVisual(footprintObject.transform, size);
+            BuildCarryStateLabel(localPlacementPoint);
         }
 
         public virtual bool CanAcceptWorker(WorkerAgent worker, out string reason)
@@ -99,6 +104,18 @@ namespace OpenPlan
 
         public void SetUnavailableReason(string reason) => unavailableReason = reason;
 
+        public void SetTutorialHighlight(bool value)
+        {
+            IsTutorialHighlighted = value;
+            if (carryStateText != null)
+            {
+                carryStateText.text = value ? "TUTORIAL  " + ActivityLabel.ToUpperInvariant() : string.Empty;
+                carryStateText.color = new Color(.38f, 1f, .88f);
+                carryStateText.gameObject.SetActive(value || CarryVisualState != PlacementZoneVisualState.None);
+            }
+            SetHighlight(value, OfficeUIFactory.Teal);
+        }
+
         public virtual void SetHighlight(bool value, Color color)
         {
             IsHighlighted = value;
@@ -119,7 +136,12 @@ namespace OpenPlan
             if (state == PlacementZoneVisualState.None)
             {
                 if (footprintRenderer != null) footprintRenderer.enabled = false;
-                SetHighlight(false, Color.black);
+                if (carryStateText != null)
+                {
+                    carryStateText.text = IsTutorialHighlighted ? "TUTORIAL  " + ActivityLabel.ToUpperInvariant() : string.Empty;
+                    carryStateText.gameObject.SetActive(IsTutorialHighlighted);
+                }
+                SetHighlight(IsTutorialHighlighted, OfficeUIFactory.Teal);
                 return;
             }
 
@@ -132,7 +154,35 @@ namespace OpenPlan
                 footprintRenderer.enabled = true;
                 footprintMaterial.color = color;
             }
+            if (carryStateText != null)
+            {
+                carryStateText.text = valid ? "✓ VALID  " + ActivityLabel.ToUpperInvariant() :
+                    !IsZoneEnabled ? "× UNAVAILABLE" : Occupancy >= Capacity ? "× OCCUPIED" : "× NOT AVAILABLE";
+                carryStateText.color = valid ? new Color(.38f,1f,.72f) : new Color(1f,.52f,.34f);
+                carryStateText.gameObject.SetActive(true);
+            }
             SetHighlight(true, new Color(color.r, color.g, color.b, 1f) * (hovered ? 1.15f : .72f));
+        }
+
+        private void BuildCarryStateLabel(Vector3 localPlacementPoint)
+        {
+            GameObject label = new GameObject("Placement Availability Label");
+            label.transform.SetParent(transform, false);
+            label.transform.localPosition = localPlacementPoint + Vector3.up * .42f;
+            label.transform.localScale = Vector3.one * .32f;
+            carryStateText = label.AddComponent<TextMeshPro>();
+            carryStateText.font = OfficeUIFactory.EnsureFont();
+            carryStateText.fontSize = 3.1f;
+            carryStateText.fontStyle = FontStyles.Bold;
+            carryStateText.alignment = TextAlignmentOptions.Center;
+            carryStateText.rectTransform.sizeDelta = new Vector2(6.5f, 1.0f);
+            if (Application.isPlaying)
+            {
+                carryStateText.outlineColor = new Color(.05f,.025f,.02f,1f);
+                carryStateText.outlineWidth = .20f;
+            }
+            label.AddComponent<WorldSpaceOfficeLabel>();
+            label.SetActive(false);
         }
 
         private void BuildFootprintVisual(Transform parent, Vector2 size)

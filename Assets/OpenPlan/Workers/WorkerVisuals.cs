@@ -25,6 +25,7 @@ namespace OpenPlan
         private bool selected;
         private bool hovered;
         private bool carried;
+        private bool tutorialHighlighted;
         private string transientEmote;
         private float transientEmoteUntil;
 
@@ -94,6 +95,8 @@ namespace OpenPlan
             nameTag.fontStyle = FontStyles.Bold;
             nameTag.fontSize = 3.0f;
             nameTag.color = new Color(1f, .94f, .78f, 1f);
+            nameTag.outlineColor = new Color(.04f,.02f,.015f,1f);
+            nameTag.outlineWidth = .22f;
             nameTag.text = SafeText(workerName, "WORKER");
             nameTag.rectTransform.sizeDelta = new Vector2(3.2f, .55f);
         }
@@ -108,6 +111,8 @@ namespace OpenPlan
             stateIcon.fontStyle = FontStyles.Bold;
             stateIcon.fontSize = 3.5f;
             stateIcon.color = new Color(1f, 0.86f, 0.58f);
+            stateIcon.outlineColor = new Color(.04f,.02f,.015f,1f);
+            stateIcon.outlineWidth = .24f;
             stateIcon.text = string.Empty;
             stateIcon.rectTransform.sizeDelta = new Vector2(2.8f, 0.55f);
             stateIcon.gameObject.SetActive(false);
@@ -128,6 +133,12 @@ namespace OpenPlan
         public void SetCarried(bool value)
         {
             carried = value;
+            RefreshInteractionVisual();
+        }
+
+        public void SetTutorialHighlighted(bool value)
+        {
+            tutorialHighlighted = value;
             RefreshInteractionVisual();
         }
 
@@ -170,13 +181,16 @@ namespace OpenPlan
         private void RefreshInteractionVisual()
         {
             if (selectionRing == null) return;
-            selectionRing.enabled = selected || hovered || carried;
+            selectionRing.enabled = selected || hovered || carried || tutorialHighlighted;
             Color color = carried ? new Color(.24f, .96f, .82f) :
+                tutorialHighlighted ? new Color(1f,.58f,.18f) :
                 hovered ? new Color(1f, .72f, .24f) : new Color(.30f, .88f, .78f);
             selectionRing.startColor = color;
             selectionRing.endColor = color;
-            selectionRing.widthMultiplier = carried ? .085f : hovered ? .060f : .035f;
-            selectionRing.transform.localScale = carried ? Vector3.one * 1.22f : hovered ? Vector3.one * 1.10f : Vector3.one;
+            selectionRing.widthMultiplier = carried ? .085f : tutorialHighlighted ? .072f : hovered ? .060f : .035f;
+            selectionRing.transform.localScale = carried ? Vector3.one * 1.22f :
+                tutorialHighlighted ? Vector3.one * (1.12f + Mathf.Sin(Time.unscaledTime * 4f) * .05f) :
+                hovered ? Vector3.one * 1.10f : Vector3.one;
         }
 
         public void Tick(WorkerState state, bool moving, float productivity)
@@ -238,6 +252,10 @@ namespace OpenPlan
                         armL.localRotation = armLBase * Quaternion.Euler(72f, 0f, 24f);
                         armR.localRotation = armRBase * Quaternion.Euler(72f, 0f, -24f);
                         break;
+                    case WorkerState.Unassigned:
+                        armL.localRotation = armLBase * Quaternion.Euler(6f, 0f, 12f);
+                        armR.localRotation = armRBase * Quaternion.Euler(6f, 0f, -12f);
+                        break;
                     default:
                         armL.localRotation = Quaternion.Slerp(armL.localRotation, armLBase, Time.deltaTime * 8f);
                         armR.localRotation = Quaternion.Slerp(armR.localRotation, armRBase, Time.deltaTime * 8f);
@@ -248,6 +266,11 @@ namespace OpenPlan
             {
                 legL.localRotation = Quaternion.Euler(gesture * 20f, 0f, 0f);
                 legR.localRotation = Quaternion.Euler(-gesture * 20f, 0f, 0f);
+            }
+            else if (legL != null && legR != null)
+            {
+                legL.localRotation = Quaternion.Slerp(legL.localRotation, Quaternion.identity, Time.deltaTime * 8f);
+                legR.localRotation = Quaternion.Slerp(legR.localRotation, Quaternion.identity, Time.deltaTime * 8f);
             }
             if (stateIcon != null)
             {

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using TMPro;
 
 namespace OpenPlan.Tests
 {
@@ -53,7 +54,7 @@ namespace OpenPlan.Tests
                 new Vector2(Screen.width * .5f, Screen.height * .5f), true);
             Assert.True(office.CarryController.HasValidTarget, office.CarryController.FeedbackText);
             office.CarryController.ReleaseAtZone(zone);
-            yield return new WaitForSeconds(.20f);
+            yield return new WaitForSecondsRealtime(.20f);
             Assert.That(office.LastIssuedCommand?.destinationZone, Is.EqualTo(zone));
             worker.transform.position = zone.PlacementPoint.position;
             yield return null;
@@ -66,6 +67,15 @@ namespace OpenPlan.Tests
                 yield return null;
             Assert.NotNull(worker);
             Assert.That(worker.Runtime.behavior, Is.EqualTo(state));
+        }
+
+        private static IEnumerator WaitForTutorialStep(TutorialController tutorial, TutorialStep step, float realSeconds = 5f)
+        {
+            float deadline = Time.realtimeSinceStartup + realSeconds;
+            while (tutorial != null && tutorial.CurrentStep != step && Time.realtimeSinceStartup < deadline)
+                yield return null;
+            Assert.NotNull(tutorial);
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(step));
         }
 
         [UnityTest] public IEnumerator MainMenuLoads()
@@ -98,6 +108,7 @@ namespace OpenPlan.Tests
             Assert.That(office.Workers.Count, Is.EqualTo(3));
             Assert.That(office.Workstations.Count, Is.EqualTo(7));
             Assert.That(office.WorkerCapacity, Is.EqualTo(3));
+            Assert.NotNull(GameObject.Find("2×"));
             Assert.False(office.Workday.IsTimed);
             var expectedActiveZones = new Dictionary<PlacementActivity, int>
             {
@@ -642,10 +653,11 @@ namespace OpenPlan.Tests
             office.Cash.AccrueDeskIncome(15f, 60f);
             Assert.True(office.CanPurchaseExpansion);
             yield return new WaitForSecondsRealtime(.2f);
+            Assert.That(office.Audio.LastCue, Is.EqualTo("cash-earned"));
             Assert.True(office.HUD.PurchaseButtonInteractable);
             Assert.That(office.HUD.GoalText, Does.Contain("OBJECTIVE: Earn $1,000 and purchase the neighboring unit."));
-            Assert.That(office.HUD.GoalText, Does.Contain("EXPANSION PRICE  $1,000"));
-            Assert.That(office.HUD.GoalText, Does.Contain("COMBINED INCOME"));
+            Assert.That(office.HUD.GoalText, Does.Contain("NEXT DOOR  $1,000"));
+            Assert.That(office.HUD.HeaderText, Does.Contain("INCOME"));
             Assert.That(office.HUD.GoalText, Does.Contain("The neighboring unit is available."));
             Button purchase = GameObject.Find("Purchase Next Door").GetComponent<Button>();
             purchase.onClick.Invoke();
@@ -680,6 +692,7 @@ namespace OpenPlan.Tests
             yield return new WaitForSecondsRealtime(1.5f);
 
             Assert.True(office.ExpansionComplete);
+            Assert.That(office.Audio.LastCue, Is.EqualTo("wall-open"));
             Assert.That(office.Stage, Is.EqualTo(OfficeStage.StarterOfficeExpanded));
             Assert.True(office.Expansion.ConnectingWallOpen);
             Assert.True(office.Expansion.DoorwayTrimVisible);
@@ -688,6 +701,10 @@ namespace OpenPlan.Tests
             Assert.That(FindZone(office, "neighbor.rest.utility").IsZoneEnabled, Is.True);
             Assert.That(office.Layout.PanBounds.size.x, Is.GreaterThan(oldPanWidth));
             Assert.That(Camera.main.GetComponent<OfficeCameraRig>().OverviewCenter, Is.EqualTo(office.Layout.OverviewCenter));
+            Assert.True(office.HUD.MilestonePanelVisible);
+            Assert.False(office.HUD.PreviewButtonVisible);
+            Assert.True(office.HUD.CloseTopModal());
+            yield return null;
             Assert.True(office.HUD.PreviewButtonVisible);
         }
 
@@ -861,15 +878,265 @@ namespace OpenPlan.Tests
             Assert.That(office.Tasks.CompletedCount, Is.EqualTo(1));
         }
 
-        [UnityTest] public IEnumerator WorkdayEndDisplaysReportCanvas()
+        [UnityTest] public IEnumerator EstablishedOfficeIsUntimedAndHasNoDailyResultSurface()
         {
             yield return LoadOffice();
             OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            Assert.False(office.Workday.IsTimed);
             office.Workday.Finish();
             yield return null;
             GameObject report = GameObject.Find("Report");
-            Assert.NotNull(report);
-            Assert.True(report.activeInHierarchy);
+            Assert.IsNull(report);
+            Assert.That(office.HUD.GoalText, Does.Not.Contain("TARGET"));
+            Assert.That(office.HUD.GoalText, Does.Not.Contain("REPORT"));
+        }
+
+        [UnityTest] public IEnumerator TutorialCompletesFromObservedSelectionCarryPlacementIncomeNeedsAndRedirect()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            TutorialController tutorial = office.Tutorial;
+            Assert.NotNull(tutorial);
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.NotStarted));
+            SimulationSpeedController.Instance.SetSpeed(4f);
+
+            tutorial.StartTutorial(true);
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.MeetTheTeam));
+            Assert.True(tutorial.IsReading);
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.Zero);
+            tutorial.ContinueFromReading();
+
+            WorkerAgent morgan = office.Workers[0];
+            WorkerSelection.Select(morgan);
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.PickThemUp));
+            Assert.That(tutorial.HighlightedWorker, Is.EqualTo(morgan));
+            tutorial.ContinueFromReading();
+            yield return WaitForPickable(morgan);
+            StartCarry(office.CarryController, morgan);
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.PutThemToWork));
+            Assert.True(office.CarryController.PlacementLegendVisible);
+            Assert.False(office.HUD.InspectorVisible);
+            Rect tutorialAnchors = new Rect(tutorial.TutorialPanelRect.anchorMin,
+                tutorial.TutorialPanelRect.anchorMax - tutorial.TutorialPanelRect.anchorMin);
+            Assert.False(tutorialAnchors.Contains(Camera.main.WorldToViewportPoint(morgan.transform.position + Vector3.up)));
+            Assert.False(tutorialAnchors.Contains(Camera.main.WorldToViewportPoint(tutorial.HighlightedZone.PlacementPoint.position)));
+            office.CarryController.UpdateCarriedPosition(morgan.Desk.PlacementPoint.position, morgan.Desk,
+                new Vector2(Screen.width * .5f, Screen.height * .5f), true);
+            office.CarryController.ReleaseAtZone(morgan.Desk);
+            yield return WaitForTutorialStep(tutorial, TutorialStep.ManageTheirNeeds);
+            Assert.That(office.Cash.LifetimeEarned, Is.GreaterThan(0f));
+            Assert.That(morgan.Runtime.focusedWorkSecondsRemaining, Is.GreaterThan(0f));
+
+            tutorial.ContinueFromReading();
+            WorkerAgent alex = office.Workers[1];
+            yield return PlaceWorker(office, alex, FindZone(office, "starter.water.cooler"));
+            yield return WaitForTutorialStep(tutorial, TutorialStep.RedirectADistraction);
+            tutorial.ContinueFromReading();
+            WorkerAgent distracted = tutorial.HighlightedWorker;
+            Assert.NotNull(distracted);
+            Assert.That(distracted.Definition.displayName, Is.EqualTo("Sam"));
+            Assert.That(distracted.Runtime.behavior, Is.EqualTo(WorkerState.LookAtPhone));
+            yield return PlaceWorker(office, distracted, distracted.Desk);
+            yield return WaitForTutorialStep(tutorial, TutorialStep.TryTheOffice);
+            Assert.That(tutorial.CurrentBody, Does.Contain("EXIT sends a worker away temporarily"));
+
+            tutorial.ContinueFromReading();
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.Expand));
+            Assert.That(tutorial.CurrentBody, Does.Contain("never spends automatically"));
+            tutorial.ContinueFromReading();
+            Assert.True(tutorial.WasCompleted);
+            Assert.False(office.WorldInputBlocked);
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.EqualTo(4f));
+        }
+
+        [UnityTest] public IEnumerator TutorialSkipHelpAndReplayRestoreTheExactPriorSpeed()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            TutorialController tutorial = Object.FindFirstObjectByType<OfficeDirector>().Tutorial;
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            tutorial.StartTutorial(true);
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.Zero);
+            tutorial.SkipTutorial();
+            Assert.True(tutorial.WasSkipped);
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.EqualTo(4f));
+
+            tutorial.OpenHelp();
+            Assert.True(tutorial.HelpOpen);
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.Zero);
+            Assert.True(tutorial.CloseTopPanel());
+            Assert.False(tutorial.HelpOpen);
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.EqualTo(4f));
+
+            tutorial.OpenHelp();
+            tutorial.ReplayTutorial();
+            Assert.That(tutorial.ReplayCount, Is.EqualTo(1));
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.MeetTheTeam));
+            Assert.True(tutorial.IsReading);
+            Assert.False(tutorial.HelpOpen);
+            tutorial.SkipTutorial();
+            Assert.That(SimulationSpeedController.Instance.Speed, Is.EqualTo(4f));
+        }
+
+        [UnityTest] public IEnumerator TutorialCreditsUsefulActionsTakenBeforeItStarts()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            TutorialController tutorial = office.Tutorial;
+            SimulationSpeedController.Instance.SetSpeed(4f);
+            WorkerAgent morgan = office.Workers[0];
+            WorkerSelection.Select(morgan);
+            yield return PlaceWorker(office, morgan, morgan.Desk);
+            float deadline = Time.realtimeSinceStartup + 3f;
+            while (office.Cash.LifetimeEarned <= 0f && Time.realtimeSinceStartup < deadline) yield return null;
+            Assert.That(office.Cash.LifetimeEarned, Is.GreaterThan(0f));
+            yield return PlaceWorker(office, office.Workers[1], FindZone(office, "starter.water.cooler"));
+
+            tutorial.StartTutorial();
+            tutorial.ContinueFromReading();
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.PickThemUp));
+            tutorial.ContinueFromReading();
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.PutThemToWork));
+            tutorial.ContinueFromReading();
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.ManageTheirNeeds));
+            tutorial.ContinueFromReading();
+            Assert.That(tutorial.CurrentStep, Is.EqualTo(TutorialStep.RedirectADistraction));
+            tutorial.SkipTutorial();
+        }
+
+        [UnityTest] public IEnumerator ReloadingStarterOfficeResetsFirstRunTutorialState()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            TutorialController first = Object.FindFirstObjectByType<OfficeDirector>().Tutorial;
+            first.StartTutorial(true);
+            first.ContinueFromReading();
+            WorkerSelection.Select(Object.FindFirstObjectByType<OfficeDirector>().Workers[0]);
+            Assert.That(first.CurrentStep, Is.EqualTo(TutorialStep.PickThemUp));
+            first.ReplayTutorial();
+            Assert.That(first.ReplayCount, Is.EqualTo(1));
+
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            TutorialController restarted = Object.FindFirstObjectByType<OfficeDirector>().Tutorial;
+            Assert.That(restarted.CurrentStep, Is.EqualTo(TutorialStep.NotStarted));
+            Assert.That(restarted.ReplayCount, Is.Zero);
+            Assert.False(restarted.HelpOpen);
+            Assert.False(restarted.WasSkipped);
+        }
+
+        [UnityTest] public IEnumerator TutorialReplacesAHighlightedWorkerWhoBecomesInvalid()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            TutorialController tutorial = office.Tutorial;
+            tutorial.StartTutorial(true);
+            tutorial.ContinueFromReading();
+            WorkerAgent original = office.Workers[0];
+            WorkerSelection.Select(original);
+            Assert.That(tutorial.HighlightedWorker, Is.EqualTo(original));
+            Assert.True(office.TryFire(original, out string reason), reason);
+            yield return null;
+            Assert.NotNull(tutorial.HighlightedWorker);
+            Assert.That(tutorial.HighlightedWorker, Is.Not.EqualTo(original));
+            Assert.False(tutorial.HighlightedWorker.IsFired);
+            Assert.True(tutorial.HighlightedWorker.Visuals != null);
+            tutorial.SkipTutorial();
+        }
+
+        [UnityTest] public IEnumerator TutorialAndHelpOwnTheTopModalWithoutOverlaps()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            TutorialController tutorial = office.Tutorial;
+            tutorial.StartTutorial(true);
+            Assert.True(office.WorldInputBlocked);
+            Assert.False(office.CarryController.BeginPointerGesture(office.Workers[0], new Vector2(100f,100f), false));
+
+            tutorial.OpenHelp();
+            Assert.True(tutorial.HelpOpen);
+            Assert.False(tutorial.TutorialPanelRect.gameObject.activeSelf);
+            Assert.False(office.HUD.ObjectiveVisible);
+            Assert.True(office.HUD.CloseTopModal());
+            Assert.False(tutorial.HelpOpen);
+            Assert.True(tutorial.TutorialPanelRect.gameObject.activeSelf);
+            Assert.True(office.HUD.CloseTopModal());
+            Assert.False(office.WorldInputBlocked);
+            tutorial.SkipTutorial();
+
+            office.HUD.ShowHiringForCapture();
+            Assert.True(office.HUD.HiringPanelVisible);
+            tutorial.OpenHelp();
+            Assert.False(office.HUD.HiringPanelVisible);
+            Assert.True(tutorial.HelpOpen);
+            office.HUD.CloseTopModal();
+            tutorial.OpenHelp();
+            office.HUD.ShowHiringForCapture();
+            Assert.False(tutorial.HelpOpen);
+            Assert.True(office.HUD.HiringPanelVisible);
+            office.HUD.CloseTopModal();
+
+            office.Cash.AccrueDeskIncome(15f, 60f);
+            GameObject.Find("Purchase Next Door").GetComponent<Button>().onClick.Invoke();
+            Assert.True(office.HUD.PurchasePanelVisible);
+            tutorial.OpenHelp();
+            Assert.False(office.HUD.PurchasePanelVisible);
+            office.HUD.CloseTopModal();
+
+            office.MarkExpansionComplete();
+            Assert.True(office.HUD.MilestonePanelVisible);
+            Assert.False(office.HUD.ObjectiveVisible);
+            Assert.False(office.HUD.PreviewButtonVisible);
+            tutorial.OpenHelp();
+            Assert.False(office.HUD.MilestonePanelVisible);
+            Assert.True(tutorial.HelpOpen);
+            office.HUD.CloseTopModal();
+            Assert.False(office.HUD.HasModalOpen);
+        }
+
+        [UnityTest] public IEnumerator CarryModeShowsTextLegendAndAvailabilityLabelsThenClearsThem()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            WorkerAgent worker = office.Workers[0];
+            yield return WaitForPickable(worker);
+            Vector2 press = new Vector2(200f,200f);
+            Assert.True(office.CarryController.BeginPointerGesture(worker, press, false));
+            Assert.True(office.CarryController.EvaluateCarryStart(press + Vector2.right * 7f, .01f,
+                new Vector3(100f, worker.transform.position.y, 100f)));
+            Assert.That(office.Audio.LastCue, Is.EqualTo("pickup"));
+            office.CarryController.UpdateCarriedPosition(worker.Desk.PlacementPoint.position, worker.Desk,
+                new Vector2(Screen.width * .5f, Screen.height * .5f), true);
+            Assert.That(office.Audio.LastCue, Is.EqualTo("valid-hover"));
+            Assert.True(office.CarryController.PlacementLegendVisible);
+            bool sawValid = false;
+            bool sawUnavailable = false;
+            bool sawOccupied = false;
+            foreach (PlacementZone zone in office.PlacementZones)
+            {
+                sawValid |= zone.AvailabilityLabel.Contains("VALID");
+                sawUnavailable |= zone.AvailabilityLabel.Contains("UNAVAILABLE");
+                sawOccupied |= zone.AvailabilityLabel.Contains("OCCUPIED");
+            }
+            Assert.True(sawValid, "A valid destination needs a text label.");
+            Assert.True(sawUnavailable, "A locked destination needs a text label.");
+            Assert.True(sawOccupied, "An occupied destination needs a text label.");
+            office.CarryController.CancelCarry(true);
+            Assert.False(office.CarryController.PlacementLegendVisible);
+            foreach (PlacementZone zone in office.PlacementZones)
+                Assert.That(zone.CarryVisualState, Is.EqualTo(PlacementZoneVisualState.None));
+        }
+
+        [UnityTest] public IEnumerator WorkerLabelsAndEmotesUseHighContrastOutlines()
+        {
+            yield return LoadOffice(OfficeStage.StarterOffice);
+            OfficeDirector office = Object.FindFirstObjectByType<OfficeDirector>();
+            foreach (WorkerAgent worker in office.Workers)
+            {
+                TextMeshPro name = worker.Visuals.NameTagTransform.GetComponent<TextMeshPro>();
+                TextMeshPro emote = worker.Visuals.EmoteTransform.GetComponent<TextMeshPro>();
+                Assert.That(name.outlineWidth, Is.GreaterThanOrEqualTo(.20f));
+                Assert.That(emote.outlineWidth, Is.GreaterThanOrEqualTo(.20f));
+                Assert.That(name.outlineColor.a, Is.GreaterThan(.9f));
+                Assert.That(emote.outlineColor.a, Is.GreaterThan(.9f));
+            }
         }
 
         [UnityTest] public IEnumerator UiSmokeAt1280x720()
@@ -886,6 +1153,11 @@ namespace OpenPlan.Tests
             Assert.True(office.CarryController.FeedbackVisible);
             Assert.That(office.CarryController.FeedbackScreenPosition.x, Is.InRange(0f,(float)Screen.width));
             office.CarryController.CancelCarry(true);
+            office.Tutorial.StartTutorial(true);
+            Assert.That(office.Tutorial.ReferenceResolution, Is.EqualTo(new Vector2(1920f,1080f)));
+            Assert.That(office.Tutorial.TutorialPanelRect.anchorMin.x, Is.InRange(0f,1f));
+            Assert.That(office.Tutorial.TutorialPanelRect.anchorMax.x, Is.InRange(0f,1f));
+            office.Tutorial.SkipTutorial();
         }
 
         [UnityTest] public IEnumerator UiSmokeAt1920x1080()
@@ -902,6 +1174,11 @@ namespace OpenPlan.Tests
             Assert.True(office.CarryController.FeedbackVisible);
             Assert.That(office.CarryController.FeedbackScreenPosition.y, Is.InRange(0f,(float)Screen.height));
             office.CarryController.CancelCarry(true);
+            office.Tutorial.StartTutorial(true);
+            Assert.That(office.Tutorial.ReferenceResolution, Is.EqualTo(new Vector2(1920f,1080f)));
+            Assert.That(office.Tutorial.TutorialPanelRect.anchorMin.y, Is.InRange(0f,1f));
+            Assert.That(office.Tutorial.TutorialPanelRect.anchorMax.y, Is.InRange(0f,1f));
+            office.Tutorial.SkipTutorial();
         }
 
         [UnityTest] public IEnumerator NoWorkerStaysInRecoveryDuringScriptedSession()

@@ -356,5 +356,34 @@ namespace OpenPlan.Tests
             Assert.That(ExpansionRules.ExpectedStartingIncomePerMinute(), Is.EqualTo(149.124f).Within(.001f));
             Assert.That(ExpansionRules.ExpectedMinutesToAfford(), Is.InRange(6.2f, 6.3f));
         }
+
+        [Test] public void TutorialCopyCoversTheCompletePlacementLoopInOrder()
+        {
+            TutorialStep[] sequence =
+            {
+                TutorialStep.MeetTheTeam, TutorialStep.PickThemUp, TutorialStep.PutThemToWork,
+                TutorialStep.ManageTheirNeeds, TutorialStep.RedirectADistraction,
+                TutorialStep.TryTheOffice, TutorialStep.Expand
+            };
+            for (int i = 0; i < sequence.Length; i++)
+            {
+                Assert.That(TutorialCopy.Title(sequence[i]), Does.StartWith((i + 1) + " / 7"));
+                Assert.That(TutorialCopy.Body(sequence[i]), Is.Not.Empty);
+            }
+            Assert.That(TutorialCopy.Body(TutorialStep.PutThemToWork), Does.Contain("30 simulation seconds"));
+            Assert.That(TutorialCopy.Body(TutorialStep.ManageTheirNeeds), Does.Contain("Stress works best when low"));
+            Assert.That(TutorialCopy.Body(TutorialStep.RedirectADistraction), Does.Contain("deterministic tutorial distraction"));
+            Assert.That(TutorialCopy.Body(TutorialStep.TryTheOffice), Does.Contain("VENDING costs $15"));
+            Assert.That(TutorialCopy.Body(TutorialStep.Expand), Does.Contain("never spends automatically"));
+        }
+
+        [Test] public void HelpCopyDocumentsMouseKeyboardAndNonColorPlacementCues()
+        {
+            Assert.That(TutorialCopy.Controls, Does.Contain("HOLD + DRAG"));
+            Assert.That(TutorialCopy.Controls, Does.Contain("ESC / RIGHT CLICK"));
+            Assert.That(TutorialCopy.Controls, Does.Contain("WHEEL zoom"));
+            Assert.That(TutorialCopy.Controls, Does.Contain("SPACE pause"));
+            Assert.That(TutorialCopy.Controls, Does.Contain("1 / 2 / 3 simulation speed"));
+        }
     }
 }

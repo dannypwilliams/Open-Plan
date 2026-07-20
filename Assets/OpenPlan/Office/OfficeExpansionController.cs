@@ -91,13 +91,20 @@ namespace OpenPlan
             Vector3 startingScale = connectingWall == null ? Vector3.one : connectingWall.transform.localScale;
             const float duration = 1.05f;
             float elapsed = 0f;
+            bool openingCuePlayed = false;
             while (elapsed < duration)
             {
                 elapsed += Time.unscaledDeltaTime;
                 float t = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
-                if (neighborLight != null) neighborLight.intensity = Mathf.Lerp(startingLight, 1.8f, t);
+                if (neighborLight != null) neighborLight.intensity = Mathf.Lerp(startingLight, 2.25f, t);
                 if (connectingWall != null)
                     connectingWall.transform.localScale = Vector3.Scale(startingScale, new Vector3(1f, 1f - t, 1f));
+                if (!openingCuePlayed && t >= .42f)
+                {
+                    openingCuePlayed = true;
+                    if (doorwayTrim != null) doorwayTrim.SetActive(true);
+                    office.Audio?.PlayWallOpen();
+                }
                 yield return null;
             }
 
@@ -154,7 +161,7 @@ namespace OpenPlan
             if (office != null && office.Layout != null)
                 office.Layout.Configure(new Bounds(new Vector3(2f, 0f, 0f), new Vector3(25f, 4f, 15.5f)),
                     new Bounds(new Vector3(2f, 0f, 0f), new Vector3(26f, 1f, 10f)), 13.2f);
-            office?.MarkExpansionComplete();
+            office?.MarkExpansionComplete(animateCamera);
             Camera.main?.GetComponent<OfficeCameraRig>()?.ApplyLayoutChange(animateCamera);
         }
     }

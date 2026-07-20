@@ -1,17 +1,17 @@
 # Test Report
 
-Worker-placement pivot checkpoint 6 on Unity 6000.5.1f1:
+Worker-placement pivot checkpoint 7 on Unity 6000.5.1f1:
 
 | Suite | Passed | Failed | Duration |
 |---|---:|---:|---:|
-| EditMode | 41 | 0 | 0.066 s |
-| PlayMode | 47 | 0 | 88.319 s |
-| Total | 88 | 0 | 88.385 s |
+| EditMode | 43 | 0 | 0.129 s |
+| PlayMode | 55 | 0 | 92.658 s |
+| Total | 98 | 0 | 92.787 s |
 
 The pre-edit baseline passed 24 EditMode and 13 PlayMode tests (37 total).
 
-EditMode coverage retains the full placement, needs, personality, activity, and cash model and adds the exact $1,000 affordability boundary, purchase progress, no-repeat condition, and 6.26-minute starting-team affordability estimate.
+EditMode coverage retains the full placement, needs, personality, activity, cash, and expansion model and adds the ordered seven-step tutorial copy plus complete mouse, keyboard, speed, and non-color help language.
 
-PlayMode coverage retains all prior activity and behavior checks and adds below/above-price availability, vending disabling affordability, exact one-time purchase deduction, the live wall/light/trim/zone/navigation/camera transition, three-desk capacity increase, unassigned entrance hiring and drag placement, indefinite post-expansion stability, untimed Established preview return, and locked/expanded restart reconstruction.
+PlayMode coverage retains all prior behavior and expansion checks and adds the complete observed-event tutorial path, exact speed restoration, skip/replay, early action credit, restart reset, highlighted-worker invalidation, top-modal ownership, input blocking, carry-only text legend, unavailable/occupied labels, high-contrast worker text, audio cues, and tutorial layout at 1280x720 and 1920x1080.
 
-The Windows player build also passed. Its expansion evidence run deducted exactly $1,000, reported the wall open, trim visible, navigation enabled, capacity six, and pan width 26. Before/after overviews and the machine-readable report are preserved under `outputs/Screenshots`. Historical release evidence from `a638304` remains preserved.
+The Windows player build also passed. The packaged tutorial-only run passed 31/31 checks at 1280x720. The complete 1920x1080 friend flow passed 35/35 checks, generated all seven major-state screenshots, awarded no purchase funds, earned affordability from live desk work, deducted exactly $1,000, and reached the physical expansion. Reports and images are preserved under `outputs/Screenshots`. Historical release evidence from `a638304` remains preserved.

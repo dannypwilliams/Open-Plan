@@ -23,5 +23,6 @@ outputs/OpenPlan-Windows/
 outputs/PackageVerification*/
 outputs/OpenPlan-Windows-pre-*.zip
 outputs/TestResults/
+[Tt]est[Rr]esults/
 outputs/*-build.log
 Tools/Blender/Logs/*.log

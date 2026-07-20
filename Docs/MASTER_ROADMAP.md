@@ -1,6 +1,6 @@
 # OPEN PLAN - Master Roadmap
 
-Status: worker-placement pivot checkpoint 6 implemented on 2026-07-19.
+Status: worker-placement pivot checkpoint 7 implemented on 2026-07-19.
 
 ## Product direction
 
@@ -16,7 +16,7 @@ The first demo begins with a modest three-worker business and centers on picking
 | 4 | Make activity areas functional | PASS - all six loops have timed behavior, exact needs/economic effects, cleanup, and standalone evidence |
 | 5 | Add personality and readable status | PASS - needs, traits, names, states, emotes, and soak evidence explain behavior |
 | 6 | Add physical expansion | PASS - deliberate $1,000 purchase opens the unit in-world, adds three-worker capacity, and unlocks preview |
-| 7 | Build tutorial and presentation | A new player can understand and complete the loop |
+| 7 | Build tutorial and presentation | PASS - seven event-driven steps, polished feedback, accessible controls, modal-safe UI, dual-resolution evidence, and full tutorial-to-expansion playthrough |
 | 8 | Balance, validate, and package | Tests, soak, media, Windows ZIP, and friend-demo flow pass |
 
 ## Preserved release checkpoint

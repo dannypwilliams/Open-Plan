@@ -30,6 +30,9 @@ namespace OpenPlan
         public Vector2 FeedbackScreenPosition => feedbackRoot != null ? feedbackRoot.position : Vector2.zero;
         public bool ExternalPointerControl { get; set; }
         public Mouse InputMouseOverride { get; set; }
+        public bool PlacementLegendVisible => placementLegend != null && placementLegend.gameObject.activeSelf;
+        public event System.Action<WorkerAgent> CarryStarted;
+        public event System.Action<WorkerAgent, bool> CarryFinished;
 
         private OfficeDirector office;
         private OfficeCameraRig cameraRig;
@@ -49,6 +52,7 @@ namespace OpenPlan
         private RectTransform feedbackRoot;
         private Image feedbackBackground;
         private TextMeshProUGUI feedbackLabel;
+        private RectTransform placementLegend;
 
         public void Initialize(OfficeDirector director, OfficeCameraRig rig, OfficeHUDController officeHud, AudioDirector audio)
         {
@@ -149,7 +153,7 @@ namespace OpenPlan
 
         public bool BeginPointerGesture(WorkerAgent worker, Vector2 screenPosition, bool pointerOverUi)
         {
-            if (Phase != WorkerCarryPhase.Idle || (office != null && office.InputLocked)) return false;
+            if (Phase != WorkerCarryPhase.Idle || (office != null && office.WorldInputBlocked)) return false;
             pointerScreenPosition = pressScreenPosition = screenPosition;
             pressTime = Time.unscaledTime;
             uiGesture = pointerOverUi;
@@ -184,6 +188,8 @@ namespace OpenPlan
             Phase = WorkerCarryPhase.Carrying;
             SetHoveredWorker(null);
             WorkerSelection.Select(CarriedWorker);
+            audioDirector?.PlayPickup();
+            CarryStarted?.Invoke(CarriedWorker);
             ShowAllZoneStates();
             UpdateCarriedPosition(groundPoint, ZoneAtGroundPoint(groundPoint), currentScreenPosition, true);
             return true;
@@ -250,8 +256,10 @@ namespace OpenPlan
             }
             if (immediate)
             {
+                WorkerAgent cancelled = CarriedWorker;
                 CarriedWorker.CancelPlayerCarryImmediate();
                 ResetController();
+                CarryFinished?.Invoke(cancelled, false);
                 return;
             }
             BeginReturn(reason ?? "Placement cancelled.", false);
@@ -294,6 +302,7 @@ namespace OpenPlan
                 {
                     audioDirector?.PlayPlacementSuccess();
                     ResetController(false);
+                    CarryFinished?.Invoke(worker, true);
                 }
                 else
                 {
@@ -309,9 +318,11 @@ namespace OpenPlan
             }
             else
             {
+                WorkerAgent returned = CarriedWorker;
                 CarriedWorker.CancelPlayerCarryImmediate();
                 if (!string.IsNullOrWhiteSpace(pendingFailureReason)) office.ShowNotice(pendingFailureReason);
                 ResetController();
+                CarryFinished?.Invoke(returned, false);
             }
         }
 
@@ -326,6 +337,7 @@ namespace OpenPlan
                 ApplyZoneBaseState(TargetZone);
             TargetZone = zone;
             RefreshTargetFeedback();
+            if (HasValidTarget) audioDirector?.PlayValidHover();
         }
 
         private void RefreshTargetFeedback()
@@ -345,6 +357,7 @@ namespace OpenPlan
 
         private void ShowAllZoneStates()
         {
+            if (placementLegend != null) placementLegend.gameObject.SetActive(true);
             foreach (PlacementZone zone in office.PlacementZones) ApplyZoneBaseState(zone);
         }
 
@@ -362,6 +375,7 @@ namespace OpenPlan
                     if (zone != null) zone.SetCarryVisualState(PlacementZoneVisualState.None);
             TargetZone = null;
             HasValidTarget = false;
+            if (placementLegend != null) placementLegend.gameObject.SetActive(false);
         }
 
         private WorkerAgent WorkerUnderPointer(Vector2 screenPosition)
@@ -423,6 +437,17 @@ namespace OpenPlan
             feedbackLabel = OfficeUIFactory.Text(feedbackRoot, "Placement Status", string.Empty, 22f, Color.white,
                 Vector2.zero, Vector2.one, new Vector2(14f,4f), new Vector2(-14f,-4f), TextAlignmentOptions.MidlineLeft);
             feedbackRoot.gameObject.SetActive(false);
+
+            placementLegend = OfficeUIFactory.Panel(canvas.transform, "Placement Legend",
+                new Color(.055f,.038f,.035f,.94f), new Vector2(.25f,.018f), new Vector2(.75f,.073f), Vector2.zero, Vector2.zero);
+            Image legendBackground = placementLegend.GetComponent<Image>();
+            legendBackground.raycastTarget = false;
+            TextMeshProUGUI legendText = OfficeUIFactory.Text(placementLegend, "Legend Copy",
+                "✓ VALID: RELEASE TO PLACE     × UNAVAILABLE: LOCKED     × OCCUPIED: CHOOSE ANOTHER",
+                19f, OfficeUIFactory.Paper, Vector2.zero, Vector2.one, new Vector2(12f,0f), new Vector2(-12f,0f),
+                TextAlignmentOptions.Center);
+            legendText.raycastTarget = false;
+            placementLegend.gameObject.SetActive(false);
         }
 
         private void ShowFeedback(string message, bool valid, Vector2 screenPosition)

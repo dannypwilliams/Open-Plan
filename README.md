@@ -2,7 +2,7 @@
 
 OPEN PLAN is an isometric office-management simulation about guiding a tiny team and growing a struggling business. The current pivot starts with Morgan, Alex, and Sam in a cramped office. The player will pick workers up, place them at clear activity areas, earn money without a countdown, and purchase the neighboring unit to physically expand.
 
-Checkpoint 6 completes the first demo progression. The Starter Office is open-ended: cash reaching $1,000 enables a deliberate purchase instead of ending the day. Confirming it spends exactly $1,000, lights the neighboring unit, opens the connecting wall, reveals doorway trim, enables its utility corner and three desk zones, and widens the live camera bounds without reloading the scene. Hiring then unlocks for three additional workers; new hires arrive unassigned and must be dragged to a desk. The milestone also exposes the preserved Established Office as a clearly marked future-stage preview.
+Checkpoint 7 teaches and presents the complete first demo progression. A dismissible, event-driven first-run tutorial introduces the team, pickup and placement, Focused Work income, needs, a deterministic distraction, supporting activity labels, and the $1,000 expansion objective. Reading panels pause and restore the exact prior speed; Help can replay the tutorial, Escape owns the top modal, and skip is always available. The Starter Office remains open-ended: cash reaching $1,000 enables a deliberate purchase instead of ending the day. Confirming it spends exactly $1,000, lights the neighboring unit, opens the connecting wall, reveals doorway trim, enables its utility corner and three desk zones, and widens the live camera bounds without reloading the scene.
 
 The Starter Office begins with $100. Desk work earns `$60/min × effective productivity`; pausing stops simulation income. Manual desk placement grants a non-stacking +20% Focused Work bonus for 30 simulation seconds.
 
@@ -23,8 +23,10 @@ Run a specific development stage with `-openplan-stage <stage name>`. Existing r
 - Escape or right-click while carrying: cancel and return the worker safely.
 - `F`: follow the selected worker.
 - `H`: open hiring.
+- `N`: toggle worker name tags.
 - `Tab`: productivity overlay.
 - `Space`: pause/resume; `1`, `2`, `3`: normal, 2x, and 4x speed.
+- `HELP`: controls, needs, placement legend, economy explanation, and tutorial replay.
 
 ## Source workflow
 
@@ -34,6 +36,6 @@ Run a specific development stage with `-openplan-stage <stage name>`. Existing r
 - Rebuild through **OPEN PLAN -> Build Windows Release**.
 - See [BUILD_AND_RUN.md](Docs/BUILD_AND_RUN.md) and [TEST_REPORT.md](Docs/TEST_REPORT.md) for commands and verification.
 
-The Blender catalog contains 54 validated assets. Placement, behavior-soak, and physical-expansion evidence are preserved under `outputs/Screenshots`.
+The Blender catalog contains 54 validated assets. Placement, behavior-soak, physical-expansion, and tutorial evidence at 1280x720 and 1920x1080 are preserved under `outputs/Screenshots`.
 
 The previous Windows executable, screenshots, gameplay video, and package evidence remain preserved as the `a638304` Established Office release.

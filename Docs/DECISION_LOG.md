@@ -28,9 +28,9 @@ All stages use the existing Office scene and one `OfficeDirector`. The director 
 
 The Main Menu explicitly selects `StarterOffice`. Direct scene loads also default to Starter. `EstablishedOffice` is available only through an explicit developer/automation selection until a later expansion milestone exposes it in normal play.
 
-## D008 - Untimed starter, compatible established preview
+## D008 - Untimed player stages
 
-Starter stages never auto-finish. Their progress is tied to revenue. The Established Office retains its legacy timed workday so the released management loop and automated evidence paths stay operational during the pivot.
+Starter stages never auto-finish. Their progress is tied to cash and deliberate expansion. Established Office is also an untimed development/future-stage sandbox, so no player-facing daily target or report remains.
 
 ## D009 - Scope boundary for checkpoint 1
 
@@ -70,4 +70,12 @@ Every placement has one begin, completion, and interruption path. Costs occur on
 
 ## D018 - Placement work owns the open-ended cash ledger
 
-`CashDirector` starts at $100 and accrues fractional cash from desk work at $60 per productivity-minute. It tracks current cash, lifetime earned, and lifetime spent independently. The Established Office's prior `EconomyDirector` remains available only for its preserved task, hiring, payroll, and report compatibility path.
+`CashDirector` starts at $100 and accrues fractional cash from desk work at $60 per productivity-minute. It tracks current cash, lifetime earned, and lifetime spent independently. The Established Office's prior `EconomyDirector` remains available for its preserved task, hiring, and payroll systems.
+
+## D019 - Tutorial progress is observed, not scripted
+
+The tutorial subscribes to selection, carry, placement-command, roster, and cash events. Reading acknowledgement never substitutes for a required gameplay action. Early actions set durable per-session observations, while the deterministic distraction and safely accelerated needs make the friend flow reproducible without awarding expansion funds.
+
+## D020 - One modal owner and redundant feedback
+
+Tutorial, Help, inspector, hiring, confirmation, purchase, and expansion milestone surfaces share one input-blocking and visibility contract. Carry destinations communicate with footprint color, text labels, symbols, a bottom legend, cursor feedback, and restrained audio; name tags and emotes use dark outlines for both bright windows and dark floors.
