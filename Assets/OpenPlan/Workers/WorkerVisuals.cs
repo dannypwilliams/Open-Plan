@@ -5,6 +5,8 @@ namespace OpenPlan
 {
     public sealed class WorkerVisuals : MonoBehaviour
     {
+        public static bool GlobalNameTagsVisible { get; private set; } = true;
+
         private Transform body;
         private Transform head;
         private Transform armL;
@@ -15,14 +17,22 @@ namespace OpenPlan
         private Vector3 visualRootBase;
         private Quaternion armLBase;
         private Quaternion armRBase;
+        private Quaternion headBase;
         private LineRenderer selectionRing;
         private TextMeshPro stateIcon;
+        private TextMeshPro nameTag;
         private float phase;
+        private bool selected;
+        private bool hovered;
+        private bool carried;
+        private bool tutorialHighlighted;
+        private string transientEmote;
+        private float transientEmoteUntil;
 
-        // Animator-driven visuals (e.g. the rigged Stickman). When a valid humanoid
-        // Animator is present on the visual model we drive it by state instead of
-        // rotating named body-part transforms. Falls back to the legacy procedural
-        // path when no Animator exists (the original code-generated OP_Worker model).
+        // Rigged-character path (e.g. the Stickman). When a valid humanoid Animator is
+        // present on the visual model we drive it by state instead of rotating named
+        // body-part transforms. The legacy code-generated worker (no Animator) keeps the
+        // procedural path in TickProcedural.
         private Animator animator;
         private int currentStateHash;
         private static readonly int WalkHash = Animator.StringToHash("Walk");
@@ -30,22 +40,29 @@ namespace OpenPlan
         private static readonly int SittingHash = Animator.StringToHash("Sitting");
         private bool AnimatorMode => animator != null;
 
-        public void Initialize(Color clothing, Material ringMaterial)
+        public string CurrentEmote => transientEmoteUntil > Time.time ? transientEmote : string.Empty;
+        public Transform NameTagTransform => nameTag == null ? null : nameTag.transform;
+        public Transform EmoteTransform => stateIcon == null ? null : stateIcon.transform;
+        public string NameTagText => nameTag == null ? string.Empty : nameTag.text;
+        public float NameTagAlpha => nameTag == null ? 0f : nameTag.color.a;
+        public float NameTagScale => nameTag == null ? 0f : nameTag.transform.localScale.x;
+        public bool IsEmoteVisible => stateIcon != null && stateIcon.gameObject.activeSelf;
+
+        public void Initialize(string workerName, Color clothing, Material ringMaterial)
         {
             visualRoot = FindDeep(transform, "Worker_Visual");
             if (visualRoot != null) visualRootBase = visualRoot.localPosition;
 
-            // Prefer an Animator on the visual model (rigged-character path).
+            // Prefer a valid humanoid Animator on the visual model (rigged path).
             animator = GetComponentInChildren<Animator>(true);
             if (animator != null && (animator.avatar == null || !animator.avatar.isValid))
-                animator = null; // invalid rig -> fall back to procedural path
+                animator = null;
             if (animator != null)
             {
                 animator.applyRootMotion = false; // gameplay drives position/rotation
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             }
 
-            // Legacy named body parts (present only on the old OP_Worker model).
             body = FindDeep(transform, "Body");
             head = FindDeep(transform, "Head");
             armL = FindDeep(transform, "Arm_L");
@@ -54,9 +71,11 @@ namespace OpenPlan
             legR = FindDeep(transform, "Leg_R");
             if (armL != null) armLBase = armL.localRotation;
             if (armR != null) armRBase = armR.localRotation;
+            if (head != null) headBase = head.localRotation;
 
             ApplyClothing(clothing);
             BuildSelectionRing(ringMaterial);
+            BuildNameTag(workerName);
             BuildStateIcon();
         }
 
@@ -65,11 +84,11 @@ namespace OpenPlan
             MaterialPropertyBlock block = new MaterialPropertyBlock();
             foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
             {
-                if (renderer is LineRenderer) continue; // skip our own selection ring
-                bool isBodyPart = renderer.name.Contains("Body") || renderer.name.Contains("Arm");
-                // Legacy model: tint only the named shirt/arm parts. Rigged model: a
-                // single skinned mesh -> tint the whole figure with the clothing color.
-                bool tint = AnimatorMode ? renderer is SkinnedMeshRenderer : isBodyPart;
+                if (renderer is LineRenderer) continue; // our own selection ring
+                // Rigged model: one skinned mesh -> tint the whole figure. Legacy model:
+                // tint only the named shirt/arm parts.
+                bool tint = AnimatorMode ? renderer is SkinnedMeshRenderer
+                                         : (renderer.name.Contains("Body") || renderer.name.Contains("Arm"));
                 if (!tint) continue;
                 renderer.GetPropertyBlock(block);
                 block.SetColor("_BaseColor", clothing);
@@ -77,6 +96,8 @@ namespace OpenPlan
                 renderer.SetPropertyBlock(block);
             }
         }
+
+        public static void SetGlobalNameTagsVisible(bool visible) => GlobalNameTagsVisible = visible;
 
         private void BuildSelectionRing(Material ringMaterial)
         {
@@ -97,34 +118,136 @@ namespace OpenPlan
             selectionRing.enabled = false;
         }
 
+        private void BuildNameTag(string workerName)
+        {
+            GameObject label = new GameObject("WorkerNameTag");
+            label.transform.SetParent(transform, false);
+            nameTag = label.AddComponent<TextMeshPro>();
+            nameTag.font = OfficeUIFactory.EnsureFont();
+            nameTag.alignment = TextAlignmentOptions.Center;
+            nameTag.fontStyle = FontStyles.Bold;
+            nameTag.fontSize = 3.0f;
+            nameTag.color = new Color(1f, .94f, .78f, 1f);
+            nameTag.outlineColor = new Color(.04f,.02f,.015f,1f);
+            nameTag.outlineWidth = .22f;
+            nameTag.text = SafeText(workerName, "WORKER");
+            nameTag.rectTransform.sizeDelta = new Vector2(3.2f, .55f);
+        }
+
         private void BuildStateIcon()
         {
             GameObject label = new GameObject("StateIcon");
             label.transform.SetParent(transform, false);
-            label.transform.localPosition = new Vector3(0f, 2.15f, 0f);
             stateIcon = label.AddComponent<TextMeshPro>();
             stateIcon.font = OfficeUIFactory.EnsureFont();
             stateIcon.alignment = TextAlignmentOptions.Center;
+            stateIcon.fontStyle = FontStyles.Bold;
             stateIcon.fontSize = 3.5f;
             stateIcon.color = new Color(1f, 0.86f, 0.58f);
-            stateIcon.text = "●";
-            stateIcon.rectTransform.sizeDelta = new Vector2(2f, 0.5f);
+            stateIcon.outlineColor = new Color(.04f,.02f,.015f,1f);
+            stateIcon.outlineWidth = .24f;
+            stateIcon.text = string.Empty;
+            stateIcon.rectTransform.sizeDelta = new Vector2(2.8f, 0.55f);
+            stateIcon.gameObject.SetActive(false);
         }
 
-        public void SetSelected(bool selected) => selectionRing.enabled = selected;
+        public void SetSelected(bool value)
+        {
+            selected = value;
+            RefreshInteractionVisual();
+        }
+
+        public void SetHovered(bool value)
+        {
+            hovered = value;
+            RefreshInteractionVisual();
+        }
+
+        public void SetCarried(bool value)
+        {
+            carried = value;
+            RefreshInteractionVisual();
+        }
+
+        public void SetTutorialHighlighted(bool value)
+        {
+            tutorialHighlighted = value;
+            RefreshInteractionVisual();
+        }
+
+        public void ShowEmote(string text, float duration)
+        {
+            transientEmote = SafeText(text, "!");
+            transientEmoteUntil = Time.time + Mathf.Max(.1f, duration);
+        }
+
+        public void ShowEmote(StatusEmote emote, float duration) => ShowEmote(TextFor(emote), duration);
+
+        public static string TextFor(StatusEmote emote)
+        {
+            switch (emote)
+            {
+                case StatusEmote.Happy: return "HAPPY";
+                case StatusEmote.Sad: return "SAD";
+                case StatusEmote.Frustrated: return "!";
+                case StatusEmote.Tired: return "Zzz";
+                case StatusEmote.Water: return "H2O";
+                case StatusEmote.Snack: return "SNACK";
+                case StatusEmote.Cigarette: return "SMOKE";
+                case StatusEmote.Money: return "$";
+                case StatusEmote.Question: return "?";
+                case StatusEmote.Exclamation: return "!";
+                case StatusEmote.Social: return "...";
+                case StatusEmote.Focus: return "FOCUS";
+                default: return "!";
+            }
+        }
+
+        public static string SafeText(string value, string fallback)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return fallback;
+            for (int i = 0; i < value.Length; i++)
+                if (value[i] < 32 || value[i] > 126) return fallback;
+            return value;
+        }
+
+        private void RefreshInteractionVisual()
+        {
+            if (selectionRing == null) return;
+            selectionRing.enabled = selected || hovered || carried || tutorialHighlighted;
+            Color color = carried ? new Color(.24f, .96f, .82f) :
+                tutorialHighlighted ? new Color(1f,.58f,.18f) :
+                hovered ? new Color(1f, .72f, .24f) : new Color(.30f, .88f, .78f);
+            selectionRing.startColor = color;
+            selectionRing.endColor = color;
+            selectionRing.widthMultiplier = carried ? .085f : tutorialHighlighted ? .072f : hovered ? .060f : .035f;
+            selectionRing.transform.localScale = carried ? Vector3.one * 1.22f :
+                tutorialHighlighted ? Vector3.one * (1.12f + Mathf.Sin(Time.unscaledTime * 4f) * .05f) :
+                hovered ? Vector3.one * 1.10f : Vector3.one;
+        }
 
         public void Tick(WorkerState state, bool moving, float productivity)
         {
-            if (AnimatorMode)
-                TickAnimator(state, moving);
-            else
-                TickProcedural(state, moving);
-            TickStateIcon(state, productivity);
+            if (AnimatorMode) TickAnimator(state, moving);
+            else TickProcedural(state, moving);
+
+            if (stateIcon != null)
+            {
+                bool showing = transientEmoteUntil > Time.time;
+                stateIcon.gameObject.SetActive(showing);
+                stateIcon.text = showing ? transientEmote : string.Empty;
+                stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
+                    productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
+            }
+            PositionLabels(Camera.main);
         }
 
+        // Rigged-character animation: drive the Animator by state. Sitting reads well at
+        // desks; Walk while moving; Idle otherwise. The rigged model has no named
+        // body-part transforms, so the procedural pass is skipped for it.
         private void TickAnimator(WorkerState state, bool moving)
         {
-            int target = IdleHash;
+            int target;
             if (moving)
             {
                 target = WalkHash;
@@ -136,6 +259,8 @@ namespace OpenPlan
                     case WorkerState.Work:
                     case WorkerState.IdleAtDesk:
                     case WorkerState.Meeting:
+                    case WorkerState.TakeBreak:
+                    case WorkerState.Sleep:
                         target = SittingHash;
                         break;
                     default:
@@ -154,9 +279,13 @@ namespace OpenPlan
         {
             phase += Time.deltaTime * (moving ? 8f : 4f);
             float bob = moving ? Mathf.Abs(Mathf.Sin(phase)) * 0.075f : Mathf.Sin(phase * 0.35f) * 0.015f;
-            // The FBX child retains a 100x importer scale. Offset its root from the
-            // unscaled gameplay wrapper so a 7.5 cm bob stays 7.5 cm in world space.
-            if (visualRoot != null) visualRoot.localPosition = visualRootBase + Vector3.up * bob;
+            float activityOffset = state == WorkerState.TakeBreak || state == WorkerState.Sleep ? -.32f :
+                state == WorkerState.Work ? -.20f : 0f;
+            if (visualRoot != null) visualRoot.localPosition = visualRootBase + Vector3.up * (bob + activityOffset);
+
+            if (head != null)
+                head.localRotation = state == WorkerState.Sleep ? headBase * Quaternion.Euler(24f, 0f, 8f) :
+                    Quaternion.Slerp(head.localRotation, headBase, Time.deltaTime * 6f);
 
             float gesture = Mathf.Sin(phase * 1.7f);
             if (armL != null && armR != null)
@@ -177,9 +306,37 @@ namespace OpenPlan
                         armR.localRotation = armRBase * Quaternion.Euler(78f, 0f, -20f);
                         armL.localRotation = armLBase;
                         break;
+                    case WorkerState.TakeBreak:
+                        armL.localRotation = armLBase * Quaternion.Euler(-12f + gesture * 10f, 0f, 34f);
+                        armR.localRotation = armRBase * Quaternion.Euler(-8f - gesture * 10f, 0f, -34f);
+                        break;
+                    case WorkerState.BuySnack:
+                        armR.localRotation = armRBase * Quaternion.Euler(48f + gesture * 20f, 0f, -28f);
+                        armL.localRotation = armLBase * Quaternion.Euler(18f, 0f, 18f);
+                        break;
+                    case WorkerState.Smoke:
+                        armR.localRotation = armRBase * Quaternion.Euler(88f + gesture * 6f, 0f, -34f);
+                        armL.localRotation = armLBase * Quaternion.Euler(8f, 0f, 18f);
+                        break;
+                    case WorkerState.LookAtPhone:
+                        armL.localRotation = armLBase * Quaternion.Euler(70f, 8f, 18f);
+                        armR.localRotation = armRBase * Quaternion.Euler(72f, -8f, -18f);
+                        break;
+                    case WorkerState.StandConfused:
+                        armL.localRotation = armLBase * Quaternion.Euler(22f + gesture * 8f, 0f, 55f);
+                        armR.localRotation = armRBase * Quaternion.Euler(22f - gesture * 8f, 0f, -55f);
+                        break;
+                    case WorkerState.Sleep:
+                        armL.localRotation = armLBase * Quaternion.Euler(-18f, 0f, 26f);
+                        armR.localRotation = armRBase * Quaternion.Euler(-18f, 0f, -26f);
+                        break;
                     case WorkerState.CarryBox:
                         armL.localRotation = armLBase * Quaternion.Euler(72f, 0f, 24f);
                         armR.localRotation = armRBase * Quaternion.Euler(72f, 0f, -24f);
+                        break;
+                    case WorkerState.Unassigned:
+                        armL.localRotation = armLBase * Quaternion.Euler(6f, 0f, 12f);
+                        armR.localRotation = armRBase * Quaternion.Euler(6f, 0f, -12f);
                         break;
                     default:
                         armL.localRotation = Quaternion.Slerp(armL.localRotation, armLBase, Time.deltaTime * 8f);
@@ -192,34 +349,39 @@ namespace OpenPlan
                 legL.localRotation = Quaternion.Euler(gesture * 20f, 0f, 0f);
                 legR.localRotation = Quaternion.Euler(-gesture * 20f, 0f, 0f);
             }
-        }
-
-        private void TickStateIcon(WorkerState state, float productivity)
-        {
-            if (stateIcon == null) return;
-            stateIcon.text = IconFor(state);
-            stateIcon.color = productivity > 1.15f ? new Color(0.50f, 0.92f, 0.55f) :
-                productivity < 0.65f ? new Color(0.95f, 0.38f, 0.30f) : new Color(1f, 0.84f, 0.52f);
-            Camera camera = Camera.main;
-            if (camera != null) stateIcon.transform.rotation = camera.transform.rotation;
-        }
-
-        private static string IconFor(WorkerState state)
-        {
-            switch (state)
+            else if (legL != null && legR != null)
             {
-                case WorkerState.Work: return "W";
-                case WorkerState.SeekCoffee:
-                case WorkerState.UseCoffeeMachine: return "C";
-                case WorkerState.SeekWater:
-                case WorkerState.UseWaterCooler: return "◆";
-                case WorkerState.Socialize:
-                case WorkerState.SeekCoworker: return "•••";
-                case WorkerState.TakeBreak: return "Z";
-                case WorkerState.FiredReaction: return "!";
-                case WorkerState.PackDesk:
-                case WorkerState.CarryBox: return "BOX";
-                default: return "●";
+                legL.localRotation = Quaternion.Slerp(legL.localRotation, Quaternion.identity, Time.deltaTime * 8f);
+                legR.localRotation = Quaternion.Slerp(legR.localRotation, Quaternion.identity, Time.deltaTime * 8f);
+            }
+        }
+
+        public void ComputeNameTagPresentation(float orthographicSize)
+        {
+            if (nameTag == null) return;
+            float overview = Mathf.InverseLerp(8f, 13.5f, orthographicSize);
+            float scale = Mathf.Lerp(1f, .70f, overview);
+            float alpha = GlobalNameTagsVisible ? Mathf.Lerp(1f, .30f, overview) : 0f;
+            nameTag.transform.localScale = Vector3.one * scale;
+            Color color = nameTag.color;
+            color.a = alpha;
+            nameTag.color = color;
+            nameTag.gameObject.SetActive(GlobalNameTagsVisible);
+        }
+
+        private void PositionLabels(Camera camera)
+        {
+            Vector3 anchor = head != null ? head.position : transform.position + Vector3.up * 1.55f;
+            if (nameTag != null)
+            {
+                nameTag.transform.position = anchor + Vector3.up * .50f;
+                if (camera != null) nameTag.transform.rotation = camera.transform.rotation;
+                ComputeNameTagPresentation(camera != null && camera.orthographic ? camera.orthographicSize : 7f);
+            }
+            if (stateIcon != null)
+            {
+                stateIcon.transform.position = anchor + Vector3.up * 1.20f;
+                if (camera != null) stateIcon.transform.rotation = camera.transform.rotation;
             }
         }
 

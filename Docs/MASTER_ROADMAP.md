@@ -1,22 +1,28 @@
-# OPEN PLAN — Master Roadmap
+# OPEN PLAN - Master Roadmap
 
-Final status: all phases passed; release, media, tests, performance probe, and extracted-package verification completed on 2026-07-19.
+Status: all eight worker-placement pivot checkpoints complete on 2026-07-19.
 
-## Product contract
+## Product direction
 
-Build one polished, five-minute, miniature office-management workday. The prototype proves that workers are charming to watch, seating decisions change output, and an orthographic camera moves smoothly between an individual and the whole floor.
+The playable demo centers on managing three opinionated workers through direct pickup and placement. Work earns money without a countdown. The first milestone physically opens the neighboring unit, adds capacity, unlocks hiring, and offers the preserved Established Office as a future-stage preview.
 
-## Phases
+## Pivot checkpoints
 
-| Phase | Outcome | Gate |
+| Checkpoint | Outcome | Gate |
 |---|---|---|
-| 0 | Unity 6 URP baseline, source layout, contracts, Blender and Git verification | Project imports and scripts compile |
-| 1 | Lit diorama beauty slice, camera, two workers, first generated assets | Three useful camera scales and an attractive no-UI composition |
-| 2 | Four-worker autonomous simulation | Work, needs, socializing, recovery, follow, pause and speeds are legible |
-| 3 | Complete management loop | Six workers, hiring, firing, seating, economy, tasks and report work |
-| 4 | Complete one-floor art pass | Authored office zones, props, lighting and readable navigation |
-| 5 | UI, audio, tests, balance, media, Windows build and verified package | Playable release launches from extracted ZIP |
+| 1 | Establish stage architecture | PASS |
+| 2 | Build the Starter Office | PASS |
+| 3 | Implement pickup and placement | PASS |
+| 4 | Make all activity areas functional | PASS |
+| 5 | Add personality and readable status | PASS |
+| 6 | Add the physical expansion | PASS |
+| 7 | Build tutorial and presentation | PASS |
+| 8 | Balance, validate, capture, and package | PASS - 104 tests, 100 scenarios, 20-minute soak, dual-resolution input smoke, extracted friend flow, performance probe, fresh ZIP, and playtest guide |
 
-## Stable-checkpoint policy
+## Preserved release provenance
 
-Every phase ends with a report, an updated `RUN_STATE.md`, test or launch evidence, and a Git checkpoint. Scope remains one office floor; no campaign, city, building construction, multiplayer, or advanced persistence.
+Commit `a638304` remains the reference release for the original Established Office. Its media, performance, package, and ZIP evidence are archived under `outputs/PreviousRelease/EstablishedOffice-a638304`. The pivot reuses the original simulation and retains the larger office as a preview.
+
+## Next decision gate
+
+Run the ten-question friend test. Continue development only after feedback confirms that worker placement is understandable, redirection is entertaining, personalities are recognizable, and expansion motivates continued play. If it does, prioritize animation, sound, pathing, persistence, and a post-expansion objective before adding more properties or management layers.

@@ -1,39 +1,35 @@
 # OPEN PLAN
 
-OPEN PLAN is a five-minute isometric office simulation about watching a small team, understanding why its productivity changes, and making a few consequential management decisions. Six workers operate autonomously; the player can hire, fire, reassign desks, inspect influences, follow individuals, and review the company at day end.
+OPEN PLAN, also known as Silly Office Sim, is a small isometric office-management game about guiding individual workers through a cramped workplace. Pick up Morgan, Alex, and Sam, place them at desks or restorative activity areas, respond to their different personalities, and earn enough cash to buy the neighboring unit.
 
-The ready-to-run Windows executable is `C:\Users\danny\Documents\GitHub\OpenPlan\outputs\OpenPlan-Windows\OpenPlan.exe`. The verified portable package is `outputs/OpenPlan-Windows.zip`.
+The friend-demo build contains the complete worker-placement pivot. It starts with $100 and has no countdown or forced failure. Desk work earns `$60 per productivity-minute`; manually placing a worker at a desk grants a non-stacking +20% Focused Work bonus for 30 simulation seconds. Reaching $1,000 makes the neighboring unit purchasable. The confirmed purchase opens the connecting wall in-world, activates three new desk locations, unlocks hiring, and exposes the preserved Established Office preview.
+
+## Playable stages
+
+- `StarterOffice`: the normal entry path with three named workers, three desks, and Work, Rest, Water, Vending, Smoking, and Leave Office placement areas.
+- `StarterOfficeExpanded`: the same office after the physical expansion, with six desk locations and room for three new hires.
+- `EstablishedOffice`: the preserved larger-office simulation, available as an untimed future-stage preview.
 
 ## Controls
 
-- Mouse wheel: smooth zoom from close worker view to full-office view.
-- Middle-mouse drag: pan the office.
-- Click: select a worker or, while reassigning, choose a desk.
-- `F`: follow the selected worker.
-- `H`: open hiring.
-- `Tab`: productivity overlay.
-- `Space`: pause/resume; `1`, `2`, `3`: normal, 2×, and 4× speed.
-- The HUD buttons expose the same essential actions.
+- Click a worker to select and inspect them.
+- Hold and drag a worker to a labeled activity footprint.
+- Escape or right-click cancels a carry safely.
+- Mouse wheel zooms; middle-mouse drag pans; `F` follows a selected worker.
+- `N` toggles names; `H` opens hiring; `Tab` toggles productivity.
+- `Space` pauses; `1`, `2`, and `3` select 1x, 2x, and 4x speed.
+- `HELP` explains controls, needs, activities, cash, and can replay the tutorial.
 
-## The workday
+## Release status
 
-Each day lasts 300 simulation seconds. Workers contribute to a shared ordered task queue while energy, focus, morale, workstation quality, trait fit, and nearby coworkers alter effective productivity. Completed tasks pay revenue toward a $1,500 target. The report separates revenue, payroll, hiring costs, firing costs, task count, productivity, social time, and staff changes.
+- Unity 6000.5.1f1 Windows x64 build.
+- 104/104 automated tests passing: 49 EditMode and 55 PlayMode.
+- 100 deterministic balance scenarios across 20 fixed seeds passing.
+- Active-manager expansion average: 7.67 minutes at 1x; passive average: 10.95 minutes.
+- Twenty-minute accelerated standalone soak passing with no stuck worker, missing worker, stale carry, orphaned smoke, or capacity violation.
+- Exact extracted package passed the final 86-check menu-to-expansion-to-hire-to-preview flow with zero failures.
+- 1920x1080 performance: 119.88 fps average, 118.52 fps 1% low, zero measured peak per-frame GC allocation.
 
-Hiring presents three replacement resumes with salary, fee, trait, strength, and weakness. Firing requires confirmation, charges $110 severance, removes payroll, and sends the worker to the elevator carrying a generated box. Reassigning a selected worker to an available desk changes their noise/light modifier and can materially change output.
+The final executable is under `outputs/OpenPlan-Windows`; the fresh friend-demo ZIP is `outputs/OpenPlan-Friend-Demo-Windows.zip`. See [Build and Run](Docs/BUILD_AND_RUN.md), [Test Report](Docs/TEST_REPORT.md), and the [Friend Playtest Guide](Docs/FRIEND_PLAYTEST_GUIDE.md).
 
-Traits are Focused, Social, Ambitious, Lazy, Anxious, and Caffeinated. The inspector explains the current positive and negative influence so results are attributable rather than opaque.
-
-## Tool versions and source workflow
-
-- Unity `6000.5.1f1`, URP 17.5, Input System 1.19, TextMesh Pro/U GUI 2.5.
-- Blender `5.2.0 LTS` for all visible environment, prop, and worker meshes.
-- Open the folder in Unity Hub, or launch Unity with `-projectPath C:\Users\danny\Documents\GitHub\OpenPlan`.
-- Rebuild with **OPEN PLAN → Build Windows Release**, or use the command in [BUILD_AND_RUN.md](Docs/BUILD_AND_RUN.md).
-- Regenerate the Blender library with `Tools/Blender/generate_open_plan_assets.py`; exact commands and conventions are in [ASSET_PIPELINE_README.md](Docs/ASSET_PIPELINE_README.md).
-- Run the command-line test suites using the commands in [TEST_REPORT.md](Docs/TEST_REPORT.md).
-
-Screenshots are in `outputs/Screenshots`; the 108-second gameplay video is `outputs/Media/OpenPlan_Gameplay.mp4`; the contact sheet is `outputs/Media/OpenPlan_ContactSheet.png`.
-
-## Known limitations
-
-Navigation is lightweight deterministic steering rather than NavMesh pathfinding, worker animation is procedural rather than authored skeletal animation, settings are limited to in-game camera/speed controls, and audio is intentionally small. See [KNOWN_ISSUES.md](Docs/KNOWN_ISSUES.md) for the release assessment.
+Historical Established Office release evidence is preserved under `outputs/PreviousRelease/EstablishedOffice-a638304` rather than overwritten.

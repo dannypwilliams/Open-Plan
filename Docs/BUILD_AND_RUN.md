@@ -1,34 +1,44 @@
 # Build and Run
 
-## Run the release
+Open `C:\Users\danny\Documents\GitHub\OpenPlan` with Unity 6000.5.1f1. The normal Main Menu starts the Starter Office.
 
-Launch `C:\Users\danny\Documents\GitHub\OpenPlan\outputs\OpenPlan-Windows\OpenPlan.exe`, or extract `outputs/OpenPlan-Windows.zip` and run `OpenPlan.exe` from the extracted `OpenPlan-Windows` folder. No Unity, Blender, repository, or absolute source path is required by the player.
+## Windows release
 
-## Open and rebuild
+Use **OPEN PLAN -> Build Windows Release**. It writes `outputs/OpenPlan-Windows/OpenPlan.exe` and copies `FRIEND_PLAYTEST_GUIDE.txt` beside the executable. The packaged friend build is `outputs/OpenPlan-Friend-Demo-Windows.zip`.
 
-Use Unity Hub with Unity 6000.5.1f1 and open `C:\Users\danny\Documents\GitHub\OpenPlan`. The editor menu **OPEN PLAN → Generate Complete Project** regenerates materials, catalogs, URP settings, and scenes. **OPEN PLAN → Build Windows Release** writes the required player.
+Direct stage arguments are:
 
-Equivalent PowerShell command:
-
-```powershell
-& 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics -quit `
-  -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' `
-  -executeMethod OpenPlan.Editor.ReleasePipeline.BuildWindows `
-  -logFile 'C:\Users\danny\Documents\GitHub\OpenPlan\Logs\build-windows.log'
+```text
+-openplan-stage StarterOffice
+-openplan-stage StarterOfficeExpanded
+-openplan-stage EstablishedOffice
 ```
 
-The pipeline builds a non-development Windows x64 player at `outputs/OpenPlan-Windows/OpenPlan.exe`.
+Release verification arguments are:
+
+```text
+-openplan-input-smoke
+-openplan-activity-smoke
+-openplan-behavior-soak
+-openplan-expansion-capture
+-openplan-tutorial-playthrough
+-openplan-friend-demo
+-openplan-performance
+-openplan-verify-package
+```
+
+`-openplan-friend-demo` uses public gameplay APIs and live earnings to drive the full menu, placement, activities, natural distraction, $1,000 purchase, wall opening, hire placement, Established preview, menu return, and clean quit flow. It does not award artificial cash or call a capture-only activity setter.
 
 ## Tests
 
 ```powershell
 & 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
   -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' -runTests -testPlatform EditMode `
-  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\Logs\EditMode-results.xml'
+  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\outputs\TestResults\Prompt8-EditMode.xml'
 
 & 'C:\Program Files\Unity\Hub\Editor\6000.5.1f1\Editor\Unity.exe' -batchmode -nographics `
   -projectPath 'C:\Users\danny\Documents\GitHub\OpenPlan' -runTests -testPlatform PlayMode `
-  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\Logs\PlayMode-results.xml'
+  -testResults 'C:\Users\danny\Documents\GitHub\OpenPlan\outputs\TestResults\Prompt8-PlayMode.xml'
 ```
 
-The final run passed 24 EditMode and 13 PlayMode tests.
+The release gate passes 49 EditMode and 55 PlayMode tests. The packaged checks and generated evidence are under `outputs/ReleaseEvidence` and `outputs/Screenshots`.

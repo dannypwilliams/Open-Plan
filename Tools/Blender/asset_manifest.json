@@ -2,7 +2,7 @@
   "generator": "generate_open_plan_assets.py",
   "blender": "5.2.0 LTS",
   "unit": "meter",
-  "asset_count": 47,
+  "asset_count": 54,
   "assets": [
     {
       "name": "Desk_A",
@@ -21,6 +21,14 @@
       "triangles": 72
     },
     {
+      "name": "DamagedDesk",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_DamagedDesk.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_DamagedDesk.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_DamagedDesk.blend",
+      "objects": 7,
+      "triangles": 72
+    },
+    {
       "name": "OfficeChair",
       "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_OfficeChair.fbx",
       "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_OfficeChair.fbx",
@@ -35,6 +43,14 @@
       "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Monitor.blend",
       "objects": 5,
       "triangles": 48
+    },
+    {
+      "name": "CheapCRTMonitor",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_CheapCRTMonitor.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_CheapCRTMonitor.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CheapCRTMonitor.blend",
+      "objects": 6,
+      "triangles": 84
     },
     {
       "name": "Keyboard",
@@ -131,6 +147,14 @@
       "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_VendingMachine.blend",
       "objects": 4,
       "triangles": 36
+    },
+    {
+      "name": "CheapVendingMachine",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_CheapVendingMachine.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_CheapVendingMachine.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CheapVendingMachine.blend",
+      "objects": 15,
+      "triangles": 168
     },
     {
       "name": "Printer",
@@ -363,6 +387,38 @@
       "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_CardboardBox.blend",
       "objects": 4,
       "triangles": 36
+    },
+    {
+      "name": "Ashtray",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Ashtray.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Ashtray.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Ashtray.blend",
+      "objects": 5,
+      "triangles": 340
+    },
+    {
+      "name": "Cigarette",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_Cigarette.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_Cigarette.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_Cigarette.blend",
+      "objects": 4,
+      "triangles": 132
+    },
+    {
+      "name": "NeighborSign",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_NeighborSign.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_NeighborSign.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_NeighborSign.blend",
+      "objects": 5,
+      "triangles": 48
+    },
+    {
+      "name": "ConnectingWallTrim",
+      "fbx": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Exports\\OP_ConnectingWallTrim.fbx",
+      "unity": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Assets\\OpenPlan\\Art\\Models\\OP_ConnectingWallTrim.fbx",
+      "source": "C:\\Users\\danny\\Documents\\GitHub\\OpenPlan\\Tools\\Blender\\Source\\OP_ConnectingWallTrim.blend",
+      "objects": 6,
+      "triangles": 60
     },
     {
       "name": "ElevatorIndicator",

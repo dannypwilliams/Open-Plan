@@ -1,6 +1,6 @@
 {
   "name": "OpenPlan.PlayModeTests",
   "rootNamespace": "OpenPlan.Tests",
-  "references": ["OpenPlan.Runtime"],
+  "references": ["OpenPlan.Runtime", "Unity.TextMeshPro"],
   "optionalUnityReferences": ["TestAssemblies"]
 }

@@ -1,22 +1,35 @@
 # Final Implementation Report
 
-OPEN PLAN is a complete, playable Windows prototype built in a clean Unity 6000.5.1f1 project with a reproducible Blender 5.2 asset pipeline. The shipped loop covers autonomous workers, needs and traits, productivity interactions, task revenue, hiring, reassignment, firing with a box/elevator exit, five-minute day timing, and a complete report/restart/menu flow.
+OPEN PLAN's worker-placement pivot is complete as a verified friend-test build. The final loop begins with Morgan, Alex, and Sam in a cramped office, teaches pickup and placement, makes six activity areas functional, exposes readable needs and personality differences, earns cash without a timer, physically opens the neighboring unit for $1,000, unlocks hiring, and continues into a larger team or the Established Office preview.
 
-## Release evidence
+## Verification outcome
 
-- 47/47 Blender assets validated and imported as shared-material URP visuals.
-- 24/24 EditMode and 13/13 PlayMode tests passed.
-- Non-development Windows build succeeded at the exact required path.
-- 1920×1080 release probe: 119.88 fps average, 118.54 fps 1% low, zero measured peak per-frame GC allocation.
-- Fifteen required 1920×1080 screenshots captured from actual gameplay.
-- `outputs/Media/OpenPlan_Gameplay.mp4`: 108.00 seconds, 1920×1080, H.264 High, 30 fps, AAC 48 kHz audio; visually sampled at menu, hiring/reassignment, firing, and report checkpoints.
-- `outputs/Media/OpenPlan_ContactSheet.png`: six-frame gameplay contact sheet.
-- `outputs/OpenPlan-Windows.zip` is 38,236,124 bytes with SHA-256 `FC43434479A15196E035D75FEF86C2EEE95F574D2C83503DF59B496875333D3D`. It was extracted to a separate directory and its executable passed menu, start, selection, speed, hire, reassignment, firing, finish, restart, return-menu, and close checks. Evidence: `Logs/package-verification-release.log`.
+- Automated tests: 104/104 passing (49 EditMode, 55 PlayMode).
+- Balance: 100/100 deterministic scenarios across 20 fixed seeds; active mean 7.67 minutes, passive mean 10.95, poor mean 8.76 with $79.50 vending spend, recovery productivity 0.00 -> 1.41, expansion and hire 20/20, stuck 0/100.
+- Soak: 20.02 simulated minutes at 20x; 27 observations passed; 57 distractions; no permanent idle/stuck state, stale carry, orphaned smoke, missing worker, or capacity breach.
+- Resolution/input: 12/12 checks at 1280x720 and 12/12 at 1920x1080.
+- Activity smoke: 9/9 checks for pickup, Water lifecycle, exact need changes, cooldown, and autonomous return. The final 86-check friend flow additionally exercises Work, Rest, Vending, Smoking, Leave/Return, and natural-distraction redirection.
+- Performance at 1920x1080: 119.88 fps average, 118.52 fps 1% low, 8.54 ms worst frame, zero measured peak per-frame GC allocation.
+- Windows build: PASS, non-development x64, 103,051,945 reported bytes.
 
-## Playtest findings
+## Exact extracted-package proof
 
-The most charming/readable beats are the worker silhouettes at close zoom, state icons, water/social clusters, and the conspicuous cardboard-box exit. The full-office view makes staffing patterns and zones easy to parse; close follow view makes individual behavior worth watching. The weaker beats are repeated walking/typing gestures and the intentionally sparse audio bed. Modal UI is clear after suppressing inspector overlap. Multiple visual passes corrected FBX orientation/scale, character bobbing, modal stacking, and evidence framing.
+`outputs/OpenPlan-Friend-Demo-Windows.zip` was extracted fresh to `outputs/PackageVerificationFriendDemoFinal3`. The exact extracted `OpenPlan.exe` passed the public-API friend flow with 86 checks and zero failures. It launched the menu and Starter Office, selected and carried workers, showed valid and invalid placement, completed each activity, observed and redirected a natural seeded distraction, earned the purchase price without artificial funds, deducted exactly $1,000, opened the wall, earned a hire fee, hired and placed Riley, continued play, launched the Established preview, returned to menu, and quit cleanly.
 
-The honest product-readiness result is 79/100. The prototype should continue if the next investment targets skeletal animation, richer interaction Foley, better obstacle-aware paths, and a productivity-overlay legend—not more rooms or systems.
+Separate extracted-package runs passed pre-expansion restart, post-expansion restart, Established launch, hire/reassign/fire/day-end, menu return, and clean quit. Logs contain no managed exception, missing asset, missing-script warning, or failed release check. The harmless AMD D3D12 diagnostic that an optional debug info-queue interface is unavailable appears during engine initialization.
 
-OPEN PLAN: PASS — PLAYABLE PROTOTYPE COMPLETE
+## Release artifacts
+
+- ZIP size: 38,343,954 bytes.
+- ZIP SHA-256: `651A3AE36EDE4D3C793D29D65A1DE429BDEBA73FCD82E83EDB6C25E1AC149372`.
+- Executable SHA-256: `5526FB9C77B78FD6C568AAF784D354C579E0B814C98BC3E1C46701A940C92AD4`.
+- Screenshots: 21 PNGs under `outputs/Screenshots/FriendDemo`, covering all requested states.
+- Playtest guide: Markdown in `Docs` and plain text beside the executable.
+- Real-time video: intentionally omitted at the user's direction; the verified screenshot sequence is the visual release evidence.
+- Previous Established release evidence: `outputs/PreviousRelease/EstablishedOffice-a638304`.
+
+## Honest conclusion
+
+This is ready for a small friend playtest, not commercial release. It lacks persistence, controller/remapping support, localization, settings, skeletal animation, rich Foley, obstacle-aware pathfinding, and a deeper post-expansion objective. External feedback is the correct next gate. The concept should advance only if testers enjoy redirecting individual workers and want to continue after the first expansion.
+
+**OPEN PLAN: PASS - WORKER-PLACEMENT FRIEND DEMO PACKAGED**

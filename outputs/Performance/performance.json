@@ -3,7 +3,7 @@
   "sampleSeconds": 20,
   "frames": 2398,
   "averageFps": 119.88,
-  "onePercentLowFps": 118.54,
-  "worstFrameMs": 8.49,
+  "onePercentLowFps": 118.52,
+  "worstFrameMs": 8.54,
   "peakGcAllocatedInFrameBytes": 0
 }

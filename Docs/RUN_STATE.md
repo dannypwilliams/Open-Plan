@@ -1,14 +1,31 @@
-# OPEN PLAN — Run State
+# OPEN PLAN - Run State
 
-- Current phase: 5 — release complete
-- Status: PASS
-- Unity: 6000.5.1f1; Blender: 5.2.0 LTS
-- Blender assets: 47/47 validated
-- Automated tests: 37/37 passed (24 EditMode, 13 PlayMode)
-- Release performance: 119.88 fps average, 118.54 fps 1% low at 1920×1080
-- Windows player: `outputs/OpenPlan-Windows/OpenPlan.exe`
-- Package: `outputs/OpenPlan-Windows.zip`; final extracted-copy verification PASS
-- Evidence: 15 screenshots, 108-second gameplay MP4 with AAC audio, six-frame contact sheet
-- Product readiness: 79/100, all category floors passed
+- Current checkpoint: Worker-Placement Pivot 8 - Friend Demo Release
+- Status: source, tests, balance, build, screenshots, soak, performance, extracted package, and documentation PASS
+- Date: 2026-07-19
+- Branch: `codex/small-office-placement-pivot`
+- Previous checkpoint: `d3267b6` (`polish: teach and present the worker placement loop`)
+- Base Established release: `a638304`
+- Default path: Main Menu -> Starter Office
+- Roster: Morgan (Hardworking), Alex (Social), Sam (Lazy)
+- Economy: $100 start; $60 per productivity-minute; $1,000 deliberate expansion; no forced end
+- Focused Work: +20% for 30 simulation seconds, non-stacking
+- Capacity: three workers before expansion, six after expansion
+- Automated tests: 104/104 passing (49 EditMode, 55 PlayMode)
+- Balance matrix: 100/100 scenarios passing across 20 fixed seeds
+- Active manager: 7.55-7.78 minutes to $1,000, 7.67 mean
+- Passive observer: 10.08-12.00 minutes, 10.95 mean, zero commands, zero stuck runs
+- Poor manager: 8.18-9.42 minutes, $79.50 mean vending spend, 6.69 restorative worker-minutes
+- Recovery: measured productivity rises from 0.00 before intervention to 1.41 after
+- Expansion: 20/20 purchases, 20/20 hires, two additional simulation minutes completed, zero stuck runs
+- Twenty-minute soak: PASS at 20x; 57 distractions; 27 observations; no stuck/idle, stale carry, orphan smoke, missing worker, or capacity failure
+- UI/input: 12/12 at 1280x720 and 12/12 at 1920x1080
+- Exact extracted friend flow: 86 checks, 0 failures, 21 screenshots, live earnings, exact $1,000 deduction, expansion, hire placement, preview, menu, clean quit
+- Package lifecycle: Starter, expanded Starter, and Established launch/restart/menu/quit PASS
+- Performance: 119.88 fps average, 118.52 fps 1% low, 8.54 ms worst frame, 0 measured peak GC bytes at 1920x1080
+- Windows build: PASS (103,051,945 reported bytes)
+- ZIP: `outputs/OpenPlan-Friend-Demo-Windows.zip`, 38,343,954 bytes
+- ZIP SHA-256: `651A3AE36EDE4D3C793D29D65A1DE429BDEBA73FCD82E83EDB6C25E1AC149372`
+- Previous release evidence: `outputs/PreviousRelease/EstablishedOffice-a638304`
 - Critical issues: none
-- Last stable checkpoint: final release build and package verification
+- Next action: conduct the friend playtest and triage feedback before expanding scope

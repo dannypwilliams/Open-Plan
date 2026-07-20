@@ -33,6 +33,7 @@ PALETTE = {
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", required=True)
+    parser.add_argument("--only", nargs="+", action="append", default=[])
     args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     return parser.parse_args(args)
 
@@ -136,6 +137,77 @@ def monitor(name="Monitor"):
     box("ScreenGlow", (0, -0.062, 0.72), (0.65, 0.025, 0.39), r, "blue", 0.025)
     box("Stem", (0, 0, 0.35), (0.09, 0.09, 0.28), r, "metal", 0.02)
     box("Base", (0, 0, 0.19), (0.40, 0.28, 0.055), r, "metal", 0.025)
+    return r
+
+
+def cheap_crt_monitor(name="CheapCRTMonitor"):
+    r = root(name)
+    box("BulkyCase", (0, 0, 0.56), (0.82, 0.58, 0.68), r, "cream", 0.09)
+    box("ScreenBezel", (0, -0.306, 0.61), (0.64, 0.045, 0.44), r, "dark", 0.045)
+    box("GreenScreen", (0, -0.334, 0.62), (0.53, 0.018, 0.33), r, "green", 0.04)
+    cylinder("PowerKnob", (0.30, -0.35, 0.36), 0.045, 0.035, r, "burgundy", 10, (math.pi/2, 0, 0))
+    box("HeavyBase", (0, 0.03, 0.16), (0.58, 0.48, 0.12), r, "metal", 0.04)
+    return r
+
+
+def damaged_desk(name="DamagedDesk"):
+    r = root(name)
+    box("ScuffedTop", (0, 0, 0.73), (1.65, 0.78, 0.12), r, "light_wood", 0.035, (0, math.radians(1.2), 0))
+    box("LeftLeg", (-0.68, -0.25, 0.35), (0.11, 0.11, 0.70), r, "metal", 0.02)
+    box("BackLeg", (-0.68, 0.25, 0.34), (0.11, 0.11, 0.68), r, "metal", 0.02)
+    box("ShortLeg", (0.68, -0.25, 0.31), (0.11, 0.11, 0.61), r, "metal", 0.02)
+    box("BoxBrace", (0.68, 0.25, 0.22), (0.34, 0.32, 0.44), r, "cardboard", 0.035)
+    box("TapePatch", (0.30, -0.402, 0.75), (0.34, 0.018, 0.08), r, "paper", 0.008, (0, 0, math.radians(-7)))
+    return r
+
+
+def ashtray(name="Ashtray"):
+    r = root(name)
+    cylinder("Pedestal", (0, 0, 0.42), 0.08, 0.78, r, "metal", 12)
+    cylinder("Bowl", (0, 0, 0.86), 0.30, 0.14, r, "dark", 16)
+    torus("Rim", (0, 0, 0.94), 0.27, 0.035, r, "metal")
+    cylinder("Ash", (0, 0, 0.95), 0.18, 0.018, r, "cream", 12)
+    return r
+
+
+def cigarette(name="Cigarette"):
+    r = root(name)
+    cylinder("PaperTube", (0, 0, 0.16), 0.035, 0.42, r, "paper", 12, (0, math.pi/2, 0))
+    cylinder("Filter", (0.21, 0, 0.16), 0.038, 0.11, r, "amber", 12, (0, math.pi/2, 0))
+    cylinder("Ember", (-0.215, 0, 0.16), 0.038, 0.025, r, "coral", 12, (0, math.pi/2, 0))
+    return r
+
+
+def neighbor_sign(name="NeighborSign"):
+    r = root(name)
+    for x in (-0.86, 0.86):
+        box("Post", (x, 0, 0.72), (0.10, 0.10, 1.44), r, "metal", 0.025)
+    box("ModestSign", (0, 0, 1.15), (2.05, 0.13, 0.86), r, "cardboard", 0.06)
+    box("Inset", (0, -0.075, 1.15), (1.76, 0.025, 0.60), r, "dark", 0.025)
+    return r
+
+
+def connecting_wall_trim(name="ConnectingWallTrim"):
+    r = root(name)
+    box("BoardedOpening", (0, 0, 0.74), (3.35, 0.20, 1.38), r, "cardboard", 0.035)
+    for x in (-1.72, 1.72):
+        box("TrimSide", (x, 0, 0.78), (0.18, 0.30, 1.56), r, "metal", 0.035)
+    box("TrimTop", (0, 0, 1.52), (3.62, 0.30, 0.18), r, "metal", 0.035)
+    box("WarningStripe", (0, -0.13, 1.17), (2.15, 0.025, 0.13), r, "amber", 0.012, (0, 0, math.radians(-4)))
+    return r
+
+
+def cheap_vending_machine(name="CheapVendingMachine"):
+    r = root(name)
+    box("DentedBody", (0, 0, .91), (.92, .66, 1.82), r, "metal", .07, (0, 0, math.radians(.8)))
+    box("FadedWindow", (-.10, -.344, 1.20), (.55, .035, .72), r, "blue", .025)
+    for row in range(3):
+        for col in range(3):
+            box("Snack", (-.27 + col * .18, -.37, .98 + row * .20), (.12, .025, .11), r,
+                ("amber", "paper", "burgundy")[(row + col) % 3], .012)
+    box("CoinSlot", (.31, -.37, 1.15), (.12, .04, .30), r, "dark", .018)
+    box("StuckTray", (0, -.39, .36), (.50, .14, .22), r, "dark", .03, (math.radians(-5), 0, 0))
+    box("RepairTape", (.38, -.36, .66), (.12, .025, .34), r, "paper", .008, (0, 0, math.radians(7)))
     return r
 
 
@@ -378,11 +450,13 @@ def worker(name="Worker"):
 
 BUILDERS = [
     ("Desk_A", lambda: desk("Desk_A")), ("Desk_B", lambda: desk("Desk_B", True)),
-    ("OfficeChair", chair), ("Monitor", monitor), ("Keyboard", keyboard), ("Mouse", mouse),
+    ("DamagedDesk", damaged_desk), ("OfficeChair", chair), ("Monitor", monitor), ("CheapCRTMonitor", cheap_crt_monitor),
+    ("Keyboard", keyboard), ("Mouse", mouse),
     ("DeskLamp", lamp), ("Mug", mug), ("PaperStack", paper_stack), ("FileTray", file_tray),
     ("DeskPlant", desk_plant), ("CubicleDivider", cubicle), ("Nameplate", nameplate),
     ("WaterCooler", water_cooler), ("CoffeeMachine", lambda: appliance("CoffeeMachine", (0.78, 0.62, 1.42), "metal")),
     ("VendingMachine", lambda: appliance("VendingMachine", (1.05, 0.72, 1.95), "blue")),
+    ("CheapVendingMachine", cheap_vending_machine),
     ("Printer", lambda: appliance("Printer", (0.84, 0.66, 0.62), "cream", False)),
     ("Copier", lambda: appliance("Copier", (0.92, 0.72, 1.18), "cream", False)),
     ("FilingCabinet", filing_cabinet), ("TrashBin", bin_asset), ("RecyclingBin", lambda: bin_asset("RecyclingBin", True)),
@@ -397,7 +471,9 @@ BUILDERS = [
     ("StructuralColumn", column), ("Door", lambda: sign_asset("Door", (1.05, 0.16, 2.15), "walnut")),
     ("Bookshelf", bookshelf), ("Counter", counter), ("Cabinet", filing_cabinet),
     ("PottedPlant", plant), ("TallPlant", lambda: plant("TallPlant", True)),
-    ("CardboardBox", box_asset), ("ElevatorIndicator", lambda: sign_asset("ElevatorIndicator", (0.52, 0.10, 0.24), "amber")),
+    ("CardboardBox", box_asset), ("Ashtray", ashtray), ("Cigarette", cigarette),
+    ("NeighborSign", neighbor_sign), ("ConnectingWallTrim", connecting_wall_trim),
+    ("ElevatorIndicator", lambda: sign_asset("ElevatorIndicator", (0.52, 0.10, 0.24), "amber")),
     ("Worker", worker),
 ]
 
@@ -450,10 +526,27 @@ def main():
     log_dir = project / "Tools" / "Blender" / "Logs"
     for directory in (export_dir, source_dir, unity_dir, log_dir):
         directory.mkdir(parents=True, exist_ok=True)
-    records = []
-    for name, builder in BUILDERS:
+    selected = BUILDERS
+    if args.only:
+        requested = {name for group in args.only for name in group}
+        known = {name for name, _ in BUILDERS}
+        unknown = sorted(requested - known)
+        if unknown:
+            raise ValueError("Unknown asset names: " + ", ".join(unknown))
+        selected = [(name, builder) for name, builder in BUILDERS if name in requested]
+
+    generated = []
+    for name, builder in selected:
         print(f"[OPEN PLAN] Generating {name}")
-        records.append(export_asset(name, builder, export_dir, unity_dir, source_dir))
+        generated.append(export_asset(name, builder, export_dir, unity_dir, source_dir))
+
+    records_by_name = {}
+    manifest_path = project / "Tools" / "Blender" / "asset_manifest.json"
+    if args.only and manifest_path.exists():
+        existing = json.loads(manifest_path.read_text(encoding="utf-8"))
+        records_by_name.update({record["name"]: record for record in existing["assets"]})
+    records_by_name.update({record["name"]: record for record in generated})
+    records = [records_by_name[name] for name, _ in BUILDERS if name in records_by_name]
     manifest = {
         "generator": "generate_open_plan_assets.py",
         "blender": bpy.app.version_string,
@@ -461,7 +554,6 @@ def main():
         "asset_count": len(records),
         "assets": records,
     }
-    manifest_path = project / "Tools" / "Blender" / "asset_manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     (project / "Docs" / "ASSET_MANIFEST.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"[OPEN PLAN] Complete: {len(records)} assets; manifest {manifest_path}")

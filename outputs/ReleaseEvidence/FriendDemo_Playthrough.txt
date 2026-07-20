@@ -1,0 +1,92 @@
+STATUS PASS
+CAPTURE POLICY public gameplay APIs only; no capture-state setter
+ARTIFICIAL FUNDS FALSE
+BEATS main menu -> starter overview -> pickup -> valid -> invalid -> focus -> rest -> water -> vending -> smoke -> natural distraction -> away -> personalities -> affordable -> wall -> expansion -> hire -> continued play -> preview -> menu
+CHECKS 86
+FAILURES 0
+PASS  captured 00_Main_Menu.png
+PASS  main menu visible and readable
+PASS  captured 01_Starter_Overview.png
+PASS  starter office opens with three workers
+PASS  Morgan becomes pickable
+PASS  worker pointer press begins selection gesture
+PASS  pickup crosses the real drag threshold
+PASS  captured 02_Worker_Pickup.png
+PASS  captured 03_Valid_Placement.png
+PASS  valid release issues Work through the gameplay placement path
+PASS  Morgan becomes pickable
+PASS  captured 04_Invalid_Locked_Placement.png
+PASS  locked neighboring desk rejects placement
+PASS  captured 05_Focused_Work_Inspector.png
+PASS  manual Work grants the measured +20% focused state
+PASS  Alex becomes pickable
+PASS  pickup accepted for Rest
+PASS  Rest command accepted
+PASS  Rest lifecycle reaches its active state
+PASS  captured 06_Break_Restoration.png
+PASS  Morgan becomes pickable
+PASS  pickup accepted for Get Water
+PASS  Get Water command accepted
+PASS  Water lifecycle reaches its active state
+PASS  captured 07_Water_Recovery.png
+PASS  Sam becomes pickable
+PASS  pickup accepted for Buy Snack
+PASS  Buy Snack command accepted
+PASS  Vending lifecycle reaches its active state
+PASS  captured 08_Vending_Snack.png
+PASS  Alex becomes pickable
+PASS  pickup accepted for Smoke
+PASS  Smoke command accepted
+PASS  Smoke lifecycle reaches its active state
+PASS  captured 09_Smoking_Alternative.png
+PASS  seeded autonomy produces a readable distraction without a capture-only setter
+PASS  captured 10_Natural_Distraction.png
+PASS  Sam becomes pickable
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  manager redirects the natural distraction to focused work
+PASS  Morgan becomes pickable
+PASS  pickup accepted for Leave Office
+PASS  Leave Office command accepted
+PASS  Leave Office lifecycle reaches its active state
+PASS  captured 11_Away_Inspector.png
+PASS  Morgan becomes pickable
+PASS  captured 12_Personality_Morgan.png
+PASS  captured 12_Personality_Alex.png
+PASS  captured 12_Personality_Sam.png
+PASS  Morgan, Alex, and Sam present three distinct named personalities
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  live desk work earns the $1,000 expansion price
+PASS  captured 13_Expansion_Affordable.png
+PASS  expansion purchase succeeds
+PASS  captured 14_Connecting_Wall_Opening.png
+PASS  captured 15_Physical_Expansion.png
+PASS  physical expansion completes and deducts exactly $1,000
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  pickup accepted for Work
+PASS  Work command accepted
+PASS  first post-expansion hire succeeds
+PASS  new hire joins at the entrance
+PASS  Riley becomes pickable
+PASS  new-hire pointer gesture begins
+PASS  new-hire pickup begins
+PASS  captured 16_New_Hire_Placement.png
+PASS  new hire is placed at an unlocked neighboring desk
+PASS  captured 17_Continued_Play_After_Hire.png
+PASS  captured 18_Established_Office_Preview.png
+PASS  Established Office preview launches from the expanded starter office
+PASS  returned to main menu after preview

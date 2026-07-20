@@ -5,15 +5,18 @@ using UnityEngine.Rendering.Universal;
 
 namespace OpenPlan
 {
-    public sealed class OfficeEnvironmentBuilder
+    /// <summary>The preserved released large office, used by the Established Office stage.</summary>
+    public sealed class OfficeEnvironmentBuilder : IOfficeEnvironmentBuilder
     {
         private readonly OfficeAssetCatalog catalog;
         private readonly Transform root;
-        public readonly List<Workstation> Workstations = new List<Workstation>();
+        public List<Workstation> Workstations { get; } = new List<Workstation>();
+        public List<PlacementZone> PlacementZones { get; } = new List<PlacementZone>();
         public CoffeeStation Coffee { get; private set; }
         public WaterStation Water { get; private set; }
         public NeedStation Break { get; private set; }
         public NeedStation Elevator { get; private set; }
+        public OfficeStageLayout Layout { get; private set; }
 
         public OfficeEnvironmentBuilder(OfficeAssetCatalog assetCatalog, Transform parent)
         {
@@ -23,6 +26,11 @@ namespace OpenPlan
 
         public void Build()
         {
+            Layout = root.gameObject.AddComponent<OfficeStageLayout>();
+            Layout.Configure(new Bounds(Vector3.zero, new Vector3(30f, 4f, 22f)),
+                new Bounds(Vector3.zero, new Vector3(22f, 1f, 16f)), 18.5f);
+            Layout.AddOverviewPoint("established-southwest", new Vector3(-14f, 0f, -10f));
+            Layout.AddOverviewPoint("established-northeast", new Vector3(14f, 0f, 10f));
             catalog.Spawn("FloorSlab", root, Vector3.zero, Quaternion.identity, Vector3.one);
             BuildShell();
             BuildReception();
@@ -31,6 +39,7 @@ namespace OpenPlan
             BuildMeetingAndManager();
             BuildUtilityAndClutter();
             BuildLighting();
+            PlacementZones.AddRange(Workstations);
         }
 
         private void BuildShell()
@@ -52,6 +61,7 @@ namespace OpenPlan
             elevatorPoint.transform.position = new Vector3(-10.8f, 0f, 7.25f);
             Elevator = elevatorPoint.AddComponent<NeedStation>();
             Elevator.Configure(StationKind.Elevator, Vector3.zero);
+            AddPlacementZone(elevatorPoint, PlacementActivity.LeaveOffice, Vector3.zero);
             catalog.Spawn("ReceptionDesk", root, new Vector3(-7.3f, 0f, 6.9f), Quaternion.Euler(0f, 16f, 0f), Vector3.one);
             catalog.Spawn("CompanySign", root, new Vector3(-7.3f, 1.25f, 9.95f), Quaternion.identity, Vector3.one);
             catalog.Spawn("WaitingBench", root, new Vector3(-11.5f, 0f, 4.8f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
@@ -75,7 +85,8 @@ namespace OpenPlan
                 GameObject desk = catalog.Spawn(i % 4 == 3 ? "Desk_B" : "Desk_A", root, positions[i], facing, Vector3.one);
                 Workstation station = desk.AddComponent<Workstation>();
                 float modifier = Mathf.Lerp(0.90f, 1.10f, light[i]) * Mathf.Lerp(1.06f, 0.94f, noise[i]);
-                station.Configure(i, noise[i], light[i], modifier, zones[i], i >= 8);
+                station.Configure(i, noise[i], light[i], modifier, zones[i], i >= 8,
+                    $"established.work.{i + 1:00}", true);
                 Workstations.Add(station);
                 Vector3 forward = facing * Vector3.forward;
                 catalog.Spawn("OfficeChair", root, positions[i] - forward * 0.92f, facing, Vector3.one * 0.92f);
@@ -93,12 +104,14 @@ namespace OpenPlan
             GameObject waterObject = catalog.Spawn("WaterCooler", root, new Vector3(10.6f, 0f, -0.5f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
             Water = waterObject.AddComponent<WaterStation>();
             Water.Configure(StationKind.Water, new Vector3(-1.05f, 0f, 0f));
+            AddPlacementZone(waterObject, PlacementActivity.GetWater, new Vector3(-1.05f, 0f, 0f));
             catalog.Spawn("NoticeBoard", root, new Vector3(13.75f, 1.1f, 0f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
 
             GameObject coffeeObject = catalog.Spawn("CoffeeMachine", root, new Vector3(10.8f, 0f, -6.9f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
             Coffee = coffeeObject.AddComponent<CoffeeStation>();
             Coffee.Configure(StationKind.Coffee, new Vector3(-1.05f, 0f, 0f));
-            catalog.Spawn("VendingMachine", root, new Vector3(10.8f, 0f, -8.5f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
+            GameObject vending = catalog.Spawn("VendingMachine", root, new Vector3(10.8f, 0f, -8.5f), Quaternion.Euler(0f, -90f, 0f), Vector3.one);
+            AddPlacementZone(vending, PlacementActivity.BuySnack, new Vector3(-1.05f, 0f, 0f));
             catalog.Spawn("Counter", root, new Vector3(8.6f, 0f, -9.0f), Quaternion.identity, Vector3.one);
             catalog.Spawn("TrashBin", root, new Vector3(12.7f, 0f, -6.7f), Quaternion.identity, Vector3.one);
             catalog.Spawn("ConferenceTable", root, new Vector3(9.0f, 0f, -5.2f), Quaternion.identity, new Vector3(.58f,.9f,.58f));
@@ -107,6 +120,12 @@ namespace OpenPlan
             breakObject.transform.position = new Vector3(8.8f, 0f, -5.3f);
             Break = breakObject.AddComponent<NeedStation>();
             Break.Configure(StationKind.Break, Vector3.zero);
+            AddPlacementZone(breakObject, PlacementActivity.Rest, Vector3.zero);
+
+            GameObject smoking = new GameObject("Established Smoking Area");
+            smoking.transform.SetParent(root, false);
+            smoking.transform.position = new Vector3(12.2f, 0f, 9.0f);
+            AddPlacementZone(smoking, PlacementActivity.Smoke, Vector3.zero);
         }
 
         private void BuildMeetingAndManager()
@@ -183,6 +202,13 @@ namespace OpenPlan
             light.range = range;
             light.intensity = intensity;
             light.shadows = LightShadows.None;
+        }
+
+        private void AddPlacementZone(GameObject owner, PlacementActivity activity, Vector3 localPoint)
+        {
+            ActivityPlacementZone zone = owner.AddComponent<ActivityPlacementZone>();
+            zone.Configure(activity, localPoint);
+            PlacementZones.Add(zone);
         }
     }
 }

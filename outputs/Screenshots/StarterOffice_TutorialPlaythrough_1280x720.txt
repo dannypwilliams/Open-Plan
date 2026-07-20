@@ -1,0 +1,38 @@
+STATUS PASS
+RESOLUTION 1280x720
+ARTIFICIAL PURCHASE FUNDS FALSE
+TUTORIAL COMPLETE True
+EXPANSION REQUIRED False
+EXPANSION COMPLETE False
+CHECKS 31
+PASS  first-run tutorial opens at MEET THE TEAM
+PASS  captured Tutorial_01_MeetTeam_1280x720.png
+PASS  selection event advances to PICK THEM UP
+PASS  highlighted worker remains pickable
+PASS  pointer press begins worker gesture
+PASS  drag threshold starts pickup
+PASS  carry event advances to PUT THEM TO WORK and shows legend
+PASS  captured Tutorial_02_PutToWork_1280x720.png
+PASS  highlighted destination is valid
+PASS  release issues gameplay placement command
+PASS  real Work command advances to MANAGE THEIR NEEDS
+PASS  manual Work applies Focused Work
+PASS  captured Tutorial_03_ManageNeeds_1280x720.png
+PASS  highlighted worker remains pickable
+PASS  pointer press begins worker gesture
+PASS  drag threshold starts pickup
+PASS  highlighted destination is valid
+PASS  release issues gameplay placement command
+PASS  real Rest command advances to REDIRECT A DISTRACTION
+PASS  tutorial creates deterministic readable distraction
+PASS  captured Tutorial_04_RedirectDistraction_1280x720.png
+PASS  highlighted worker remains pickable
+PASS  pointer press begins worker gesture
+PASS  drag threshold starts pickup
+PASS  highlighted destination is valid
+PASS  release issues gameplay placement command
+PASS  redirect command advances to TRY THE OFFICE
+PASS  captured Tutorial_05_TryOffice_1280x720.png
+PASS  information step advances to EXPAND
+PASS  captured Tutorial_06_Expand_1280x720.png
+PASS  tutorial completes and normal play resumes

@@ -1,0 +1,16 @@
+STATUS PASS
+RESOLUTION 1920x1080
+INPUT Unity Input System virtual Mouse device
+CHECKS 12
+PASS  worker pickable
+PASS  simple click selects without carry
+PASS  seven-pixel drag begins carry
+PASS  drag enters valid carry feedback
+PASS  valid release issues REST command
+PASS  successful release lowers worker
+PASS  seven-pixel drag begins carry
+PASS  locked destination shows invalid feedback
+PASS  locked release rejects without command
+PASS  rejected release restores worker to ground
+PASS  seven-pixel drag begins carry
+PASS  right-click cancels and restores worker

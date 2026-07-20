@@ -25,7 +25,10 @@ def main():
                 failures.append(f"{record['name']}: missing/empty {key} {path}")
         if record["objects"] < 2:
             failures.append(f"{record['name']}: expected a root and authored mesh")
-    required = {"Worker", "Desk_A", "OfficeChair", "WaterCooler", "CoffeeMachine", "Elevator", "CardboardBox", "FloorSlab"}
+    required = {
+        "Worker", "Desk_A", "OfficeChair", "WaterCooler", "CoffeeMachine", "Elevator", "CardboardBox", "FloorSlab",
+        "DamagedDesk", "CheapCRTMonitor", "CheapVendingMachine", "Ashtray", "Cigarette", "NeighborSign", "ConnectingWallTrim",
+    }
     found = {record["name"] for record in manifest["assets"]}
     failures.extend(f"required asset absent: {name}" for name in sorted(required - found))
     report = {
@@ -41,4 +44,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

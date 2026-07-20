@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace OpenPlan
 {
-    public sealed class Workstation : MonoBehaviour
+    public sealed class Workstation : PlacementZone
     {
         public int Index { get; private set; }
         public float Noise { get; private set; }
@@ -12,11 +12,23 @@ namespace OpenPlan
         public bool IsExpansion { get; private set; }
         public WorkerAgent Assigned { get; private set; }
         public Transform WorkPoint { get; private set; }
-        private Renderer[] renderers;
 
-        public bool IsAvailable => Assigned == null;
+        public bool IsAvailable => IsZoneEnabled && Assigned == null;
 
-        public void Configure(int index, float noise, float light, float modifier, string zone, bool expansion)
+        public override bool CanAcceptWorker(WorkerAgent worker, out string reason)
+        {
+            if (!base.CanAcceptWorker(worker, out reason))
+            {
+                if (IsZoneEnabled && Assigned != null && Assigned != worker) reason = "Desk occupied.";
+                return false;
+            }
+            if (Assigned != null && Assigned != worker) { reason = "Desk occupied."; return false; }
+            reason = null;
+            return true;
+        }
+
+        public void Configure(int index, float noise, float light, float modifier, string zone, bool expansion,
+            string stableIdentifier = null, bool zoneEnabled = true)
         {
             Index = index;
             Noise = Mathf.Clamp01(noise);
@@ -24,20 +36,20 @@ namespace OpenPlan
             Modifier = Mathf.Clamp(modifier, 0.88f, 1.12f);
             ZoneLabel = zone;
             IsExpansion = expansion;
-            renderers = GetComponentsInChildren<Renderer>(true);
             BoxCollider clickCollider = gameObject.AddComponent<BoxCollider>();
             clickCollider.center = new Vector3(0f, 0.48f, 0f);
             clickCollider.size = new Vector3(1.85f, 1.0f, 1.05f);
-            GameObject point = new GameObject("WorkPoint");
-            point.transform.SetParent(transform, false);
-            point.transform.localPosition = new Vector3(0f, 0f, -0.95f);
-            WorkPoint = point.transform;
+            base.Configure(PlacementActivity.Work, new Vector3(0f, 0f, -0.95f), "Work",
+                stableIdentifier, zoneEnabled, new Vector2(1.45f, 1.15f), 1);
+            WorkPoint = PlacementPoint;
         }
 
         public void Assign(WorkerAgent worker)
         {
             if (Assigned == worker) return;
+            if (worker != null && !TryOccupy(worker, out _)) return;
             if (Assigned != null) Assigned.SetDesk(null);
+            if (Assigned != null) Vacate(Assigned);
             Assigned = worker;
             if (worker != null) worker.SetDesk(this);
         }
@@ -46,18 +58,7 @@ namespace OpenPlan
         {
             if (Assigned != worker) return;
             Assigned = null;
-        }
-
-        public void SetHighlight(bool value, Color color)
-        {
-            if (renderers == null) return;
-            MaterialPropertyBlock block = new MaterialPropertyBlock();
-            for (int i = 0; i < renderers.Length; i++)
-            {
-                renderers[i].GetPropertyBlock(block);
-                block.SetColor("_EmissionColor", value ? color * 1.4f : Color.black);
-                renderers[i].SetPropertyBlock(block);
-            }
+            Vacate(worker);
         }
     }
 
